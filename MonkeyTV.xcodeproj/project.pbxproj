@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C673F99FAE9E09912716DF5E /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4E5F893052549F185F35C9 /* Pods_MonkeyTV.framework */; };
+		CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */; };
+		CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */; };
+		CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */; };
+		CC0BF1B42AB00BF70075203C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1B32AB00BF70075203C /* Assets.xcassets */; };
+		CC0BF1B72AB00BF70075203C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */; };
+		CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1BE2AB010080075203C /* TabBarController.swift */; };
+		CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */; };
+		CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C42AB014C10075203C /* HomeViewController.swift */; };
+		CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */; };
+		CC0BF1C92AB02BBA0075203C /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */; };
+		CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */; };
+		CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CC2AB036BD0075203C /* PlayerViewController.swift */; };
+		CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1F4E5F893052549F185F35C9 /* Pods_MonkeyTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonkeyTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A55ED7082F31F876E76DBF3 /* Pods-MonkeyTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.debug.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.debug.xcconfig"; sourceTree = "<group>"; };
+		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		CC0BF1B32AB00BF70075203C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC0BF1B62AB00BF70075203C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CC0BF1B82AB00BF70075203C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC0BF1BE2AB010080075203C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		CC0BF1C42AB014C10075203C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CC0BF1CC2AB036BD0075203C /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KingFisherWrapper.swift; path = "../../../Stylish-iOS/STYLiSH/Third Party Wrappers/KingFisherWrapper.swift"; sourceTree = "<group>"; };
+		E5EC68862F95D9B4B2ABD862 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CC0BF1A42AB00BF60075203C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C673F99FAE9E09912716DF5E /* Pods_MonkeyTV.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03257186CE51492AFB889F9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F4E5F893052549F185F35C9 /* Pods_MonkeyTV.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BDDF742B41051EABE8D6BBDA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3A55ED7082F31F876E76DBF3 /* Pods-MonkeyTV.debug.xcconfig */,
+				E5EC68862F95D9B4B2ABD862 /* Pods-MonkeyTV.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CC0BF19E2AB00BF60075203C = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1A92AB00BF60075203C /* MonkeyTV */,
+				CC0BF1A82AB00BF60075203C /* Products */,
+				BDDF742B41051EABE8D6BBDA /* Pods */,
+				03257186CE51492AFB889F9B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CC0BF1A82AB00BF60075203C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1A72AB00BF60075203C /* MonkeyTV.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC0BF1A92AB00BF60075203C /* MonkeyTV */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */,
+				CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */,
+				CC0BF1CE2AB03D730075203C /* Third Party Wrappers */,
+				CC0BF1C22AB014000075203C /* Extensions */,
+				CC0BF1C32AB014920075203C /* Controllers */,
+				CC0BF1B32AB00BF70075203C /* Assets.xcassets */,
+				CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */,
+				CC0BF1B82AB00BF70075203C /* Info.plist */,
+			);
+			path = MonkeyTV;
+			sourceTree = "<group>";
+		};
+		CC0BF1C22AB014000075203C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */,
+				CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CC0BF1C32AB014920075203C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1BE2AB010080075203C /* TabBarController.swift */,
+				CC0BF1C42AB014C10075203C /* HomeViewController.swift */,
+				CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */,
+				CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */,
+				CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */,
+				CC0BF1CC2AB036BD0075203C /* PlayerViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CC0BF1CE2AB03D730075203C /* Third Party Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */,
+			);
+			path = "Third Party Wrappers";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CC0BF1A62AB00BF60075203C /* MonkeyTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC0BF1BB2AB00BF70075203C /* Build configuration list for PBXNativeTarget "MonkeyTV" */;
+			buildPhases = (
+				F30B3C4CB39B8B6F2F511C2D /* [CP] Check Pods Manifest.lock */,
+				CC0BF1A32AB00BF60075203C /* Sources */,
+				CC0BF1A42AB00BF60075203C /* Frameworks */,
+				CC0BF1A52AB00BF60075203C /* Resources */,
+				2D7F369618D9FF186AFBDF84 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MonkeyTV;
+			productName = MonkeyTV;
+			productReference = CC0BF1A72AB00BF60075203C /* MonkeyTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CC0BF19F2AB00BF60075203C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					CC0BF1A62AB00BF60075203C = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = CC0BF1A22AB00BF60075203C /* Build configuration list for PBXProject "MonkeyTV" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CC0BF19E2AB00BF60075203C;
+			productRefGroup = CC0BF1A82AB00BF60075203C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CC0BF1A62AB00BF60075203C /* MonkeyTV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CC0BF1A52AB00BF60075203C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC0BF1B72AB00BF70075203C /* LaunchScreen.storyboard in Resources */,
+				CC0BF1B42AB00BF70075203C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D7F369618D9FF186AFBDF84 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F30B3C4CB39B8B6F2F511C2D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MonkeyTV-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CC0BF1A32AB00BF60075203C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
+				CC0BF1C92AB02BBA0075203C /* UIViewController+Extension.swift in Sources */,
+				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
+				CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */,
+				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
+				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
+				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
+				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
+				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
+				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
+				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CC0BF1B62AB00BF70075203C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CC0BF1B92AB00BF70075203C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CC0BF1BA2AB00BF70075203C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CC0BF1BC2AB00BF70075203C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A55ED7082F31F876E76DBF3 /* Pods-MonkeyTV.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonkeyTV/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CC0BF1BD2AB00BF70075203C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5EC68862F95D9B4B2ABD862 /* Pods-MonkeyTV.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonkeyTV/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CC0BF1A22AB00BF60075203C /* Build configuration list for PBXProject "MonkeyTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC0BF1B92AB00BF70075203C /* Debug */,
+				CC0BF1BA2AB00BF70075203C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC0BF1BB2AB00BF70075203C /* Build configuration list for PBXNativeTarget "MonkeyTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC0BF1BC2AB00BF70075203C /* Debug */,
+				CC0BF1BD2AB00BF70075203C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CC0BF19F2AB00BF60075203C /* Project object */;
+}
