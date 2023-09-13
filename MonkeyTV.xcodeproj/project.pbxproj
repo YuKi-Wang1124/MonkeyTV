@@ -23,6 +23,10 @@
 		CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */; };
 		CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1D22AB0553D0075203C /* Constants.swift */; };
 		CC0BF1D62AB156F60075203C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1D52AB156F60075203C /* GoogleService-Info.plist */; };
+		CC0BF1D92AB1B1300075203C /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1D82AB1B1300075203C /* HTTPClient.swift */; };
+		CC0BF1DD2AB1B6880075203C /* HomeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */; };
+		CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DE2AB1B8130075203C /* Video.swift */; };
+		CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +49,10 @@
 		CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KingFisherWrapper.swift; path = "../../../Stylish-iOS/STYLiSH/Third Party Wrappers/KingFisherWrapper.swift"; sourceTree = "<group>"; };
 		CC0BF1D22AB0553D0075203C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CC0BF1D52AB156F60075203C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CC0BF1D82AB1B1300075203C /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRequest.swift; sourceTree = "<group>"; };
+		CC0BF1DE2AB1B8130075203C /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E5EC68862F95D9B4B2ABD862 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +111,7 @@
 				CC0BF1D42AB055450075203C /* Constants */,
 				CC0BF1CE2AB03D730075203C /* Third Party Wrappers */,
 				CC0BF1C22AB014000075203C /* Extensions */,
+				CC0BF1E02AB1B8190075203C /* Model */,
 				CC0BF1D12AB052B40075203C /* Manager */,
 				CC0BF1C32AB014920075203C /* Controllers */,
 				CC0BF1B32AB00BF70075203C /* Assets.xcassets */,
@@ -118,6 +127,7 @@
 			children = (
 				CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */,
 				CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */,
+				CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -146,6 +156,8 @@
 		CC0BF1D12AB052B40075203C /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */,
+				CC0BF1D82AB1B1300075203C /* HTTPClient.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -156,6 +168,14 @@
 				CC0BF1D22AB0553D0075203C /* Constants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		CC0BF1E02AB1B8190075203C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1DE2AB1B8130075203C /* Video.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,14 +314,18 @@
 			files = (
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
 				CC0BF1C92AB02BBA0075203C /* UIViewController+Extension.swift in Sources */,
+				CC0BF1D92AB1B1300075203C /* HTTPClient.swift in Sources */,
 				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
 				CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */,
+				CC0BF1DD2AB1B6880075203C /* HomeRequest.swift in Sources */,
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
+				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
+				CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */,
 				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
 				CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */,
 			);

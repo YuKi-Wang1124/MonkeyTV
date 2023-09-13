@@ -7,11 +7,13 @@
 
 import Foundation
 
-struct Constants {
+struct Constant {
     //swiftlint: disable identifier_name
     static var API_KEY = "AIzaSyAIIgG8wnY2bnMd9cXnSJaQWM5TnB63k7o"
     static var PLAYLIST_ID = "PL12UaAf_xzfrh9ZhI7S3lWTfUSwv84mzL"
     static var API_URL = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\(PLAYLIST_ID)&key=\(API_KEY)"
-
+    static let tapPayAppID = "STTapPayAppID"
+    static let tapPayAppKey = "STTapPayAppKey"
+    static let urlKey = "STBaseURL"
 }
 

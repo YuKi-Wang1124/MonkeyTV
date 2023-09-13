@@ -18,13 +18,36 @@ class HomeViewController: UIViewController {
     var dataSource: UITableViewDiffableDataSource<Section, String>!
     var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
     // MARK: - Life Cycle
-    //
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         tableView.delegate = self
+        getVideoCover()
         setUI()
     }
+    // MARK: - call api to get images and titles
+    func getVideoCover() {
+        let decoder = JSONDecoder()
+        HTTPClient.shared.request(HomeRequest.hots, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                do {
+                    let products = try decoder.decode(
+                        Video.self, from: data
+                    )
+                    
+                    DispatchQueue.main.async {
+                    }
+                } catch {
+                    print(Result<Any>.failure(error))
+                }
+            case .failure(let error):
+                print(Result<Any>.failure(error))
+            }
+        })
+    }
+    // MARK: - UI configuration
     func setUI() {
         tableView.backgroundColor = .systemYellow
         view.addSubview(tableView)
@@ -42,4 +65,17 @@ extension HomeViewController: UITableViewDelegate {
 
 enum Section {
     case main
+}
+
+struct STSuccessParser<T: Codable>: Codable {
+    let data: T
+    let paging: Int?
+    enum CodingKeys: String, CodingKey {
+        case data
+        case paging = "next_paging"
+    }
+}
+
+struct STFailureParser: Codable {
+    let errorMessage: String
 }
