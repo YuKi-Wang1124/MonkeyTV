@@ -17,7 +17,6 @@ import Foundation
 /// A model object representing a payload of heartbeat data intended for sending in network
 /// requests.
 @objc(FIRHeartbeatsPayload)
-//swiftlint: disable type_name
 public class _ObjC_HeartbeatsPayload: NSObject, HTTPHeaderRepresentable {
   /// The underlying Swift structure.
   private let heartbeatsPayload: HeartbeatsPayload

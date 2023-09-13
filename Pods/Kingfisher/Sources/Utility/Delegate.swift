@@ -123,7 +123,6 @@ extension Delegate where Output: OptionalProtocol {
 }
 
 public protocol OptionalProtocol {
-    //swiftlint: disable identifier_name
     static var _createNil: Self { get }
 }
 extension Optional : OptionalProtocol {

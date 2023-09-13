@@ -42,7 +42,7 @@ protocol Request {
 
 extension Request {
     func makeRequest() -> URLRequest {
-        let urlString = Bundle.valueForString(key: Constant.urlKey) + endPoint
+        let urlString = Constant.urlKey + endPoint
         let url = URL(string: urlString)!
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = headers
