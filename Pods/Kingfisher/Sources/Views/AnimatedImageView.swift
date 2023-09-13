@@ -89,10 +89,11 @@ open class AnimatedImageView: UIImageView {
 
         public static func ==(lhs: RepeatCount, rhs: RepeatCount) -> Bool {
             switch (lhs, rhs) {
+                //swiftlint: disable identifier_name
             case let (.finite(l), .finite(r)):
                 return l == r
             case (.once, .once),
-                 (.infinite, .infinite):
+                (.infinite, .infinite):
                 return true
             case (.once, .finite(let count)),
                  (.finite(let count), .once):
