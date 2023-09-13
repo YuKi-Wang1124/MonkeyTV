@@ -28,7 +28,7 @@ class HomeViewController: UIViewController {
     // MARK: - call api to get images and titles
     func getVideoCover() {
         let decoder = JSONDecoder()
-        HTTPClient.shared.request(HomeRequest.hots, completion: { [weak self] result in
+        HTTPClient.shared.request(HomeRequest.channel, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
@@ -36,7 +36,6 @@ class HomeViewController: UIViewController {
                     let products = try decoder.decode(
                         Video.self, from: data
                     )
-                    
                     DispatchQueue.main.async {
                     }
                 } catch {
