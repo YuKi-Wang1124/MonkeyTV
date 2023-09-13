@@ -21,14 +21,29 @@ class ProfileViewController: UIViewController {
         view.addSubview(signInBtn)
     }
    @objc func handleSignInButton() {
-       GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
-          guard error == nil else { return }
-
-          // If sign in succeeded, display the app's main content View.
-        }
-     }
+       guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+       let config = GIDConfiguration(clientID: clientID)
+       GIDSignIn.sharedInstance.configuration = config
+       GIDSignIn.sharedInstance.signIn(withPresenting: self) { signResult, error in
+           if let error = error {
+              return
+           }
+            guard let user = signResult?.user,
+                  let idToken = user.idToken else { return }
+            let accessToken = user.accessToken
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken.tokenString,
+                accessToken: accessToken.tokenString)
+           // Use the credential to authenticate with Firebase
+           print("========================")
+           print(accessToken.tokenString)
+           Auth.auth().signIn(with: credential) { authResult, error in
+//               print(authResult)
+           }
+       }
+   }
     @IBAction func signOut(sender: Any) {
-      GIDSignIn.sharedInstance.signOut()
+        GIDSignIn.sharedInstance.signOut()
     }
-
+    
 }
