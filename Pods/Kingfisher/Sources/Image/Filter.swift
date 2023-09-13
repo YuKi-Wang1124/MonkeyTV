@@ -97,6 +97,7 @@ public struct Filter {
     
     /// Represents color control elements. It is a tuple of
     /// `(brightness, contrast, saturation, inputEV)`
+    ///
     public typealias ColorElement = (CGFloat, CGFloat, CGFloat, CGFloat)
     
     /// Color control filter which will apply color control change to images.

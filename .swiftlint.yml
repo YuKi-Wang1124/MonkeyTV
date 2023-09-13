@@ -1,0 +1,6 @@
+
+included:
+  - MonkeyTV
+
+excluded:
+  - Pods
