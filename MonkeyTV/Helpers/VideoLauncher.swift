@@ -7,13 +7,24 @@
 
 import UIKit
 import AVFoundation
+import WebKit
 
 class VideoPlayerView: UIView {
+    private let controlContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        return view
+    }()
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupPlayerView()
+        controlContainerView.frame = frame
+        addSubview(controlContainerView)
         self.backgroundColor = .black
+    }
+    private func setupPlayerView() {
         let videoURL = URL(string: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
         player = AVPlayer(url: videoURL!)
         playerLayer = AVPlayerLayer(player: player)
@@ -29,6 +40,7 @@ class VideoPlayerView: UIView {
 
 class VideoLauncher: NSObject {
     private var videoPlayerView: VideoPlayerView?
+    private var webView: WKWebView?
     func showVideoPlayer() {
         if let keyWindow = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
@@ -39,12 +51,22 @@ class VideoLauncher: NSObject {
                                 width: 10,
                                 height: 10)
             let height = keyWindow.frame.width * 9 / 16
-            let videoPlayerFrame = CGRect(x: 0, y: 0,
+            let videoPlayerFrame = CGRect(x: 0, y: 50,
                                           width: keyWindow.frame.width,
                                           height: height)
-            videoPlayerView = VideoPlayerView(frame: videoPlayerFrame)
-            let playerFrame = videoPlayerFrame
-            view.addSubview(videoPlayerView!)
+            let webConfiguration = WKWebViewConfiguration()
+            let url = URL(string: "https://www.youtube.com/embed/DxT1Prn1Lko?playsinline=1")!
+            let request = URLRequest(url: url)
+            webConfiguration.mediaTypesRequiringUserActionForPlayback = []
+            webView = WKWebView(frame: CGRect(x: 0, y: 0,
+                                              width: view.frame.width,
+                                              height: 300),
+                                configuration: webConfiguration)
+            webView?.configuration.allowsInlineMediaPlayback = true
+    //        view.addSubview(ytview)
+            webView?.load(request)
+            webView?.frame = videoPlayerFrame
+            view.addSubview(webView!)
             keyWindow.addSubview(view)
             UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1,

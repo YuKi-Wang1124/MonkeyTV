@@ -23,5 +23,5 @@ target 'MonkeyTV' do
   pod 'FirebaseFirestore'
   pod 'GoogleSignIn'
   pod 'FirebaseAuth'
-
+  pod "youtube-ios-player-helper"
 end
