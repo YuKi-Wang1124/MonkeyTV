@@ -29,7 +29,6 @@
 		CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */; };
 		CC0BF1EC2AB2CA0A0075203C /* ChannelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */; };
 		CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */; };
-		CC0BF1F02AB2D5810075203C /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EF2AB2D5810075203C /* VideoPlayerView.swift */; };
 		CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
@@ -61,7 +60,6 @@
 		CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInfo.swift; sourceTree = "<group>"; };
 		CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListResponse.swift; sourceTree = "<group>"; };
-		CC0BF1EF2AB2D5810075203C /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,7 +186,6 @@
 				CC0BF1DE2AB1B8130075203C /* Video.swift */,
 				CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */,
 				CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */,
-				CC0BF1EF2AB2D5810075203C /* VideoPlayerView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -355,7 +352,6 @@
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
 				CC0BF1E42AB1DB0F0075203C /* UserRequest.swift in Sources */,
 				CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */,
-				CC0BF1F02AB2D5810075203C /* VideoPlayerView.swift in Sources */,
 				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
 				CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */,
 				CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */,

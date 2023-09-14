@@ -8,30 +8,19 @@
 import UIKit
 import AVFoundation
 
-class VideoPlayer: UIView {
+class VideoPlayerView: UIView {
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let playerLayer = AVPlayerLayer()
-        playerLayer.frame = self.bounds
-        playerLayer.videoGravity = .resizeAspectFill
-        self.layer.addSublayer(playerLayer)
-        player = AVPlayer()
-        playerLayer.player = player
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(playerEndplay),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: nil)
-        let urlString = "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-        if let url = URL(string: urlString) {
-            let playerItem = AVPlayerItem(url: url)
-            player?.replaceCurrentItem(with: playerItem)
-            player?.play()
-        }
-    }
-    @objc func playerEndplay() {
-        print("Player ends playing video")
+        self.backgroundColor = .black
+        let videoURL = URL(string: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+        player = AVPlayer(url: videoURL!)
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.frame = self.frame
+        playerLayer?.videoGravity = .resizeAspectFill
+        self.layer.addSublayer(playerLayer!)
+        player?.play()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,6 +28,7 @@ class VideoPlayer: UIView {
 }
 
 class VideoLauncher: NSObject {
+    private var videoPlayerView: VideoPlayerView?
     func showVideoPlayer() {
         if let keyWindow = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
@@ -52,9 +42,9 @@ class VideoLauncher: NSObject {
             let videoPlayerFrame = CGRect(x: 0, y: 0,
                                           width: keyWindow.frame.width,
                                           height: height)
-            let videoPlayerView = VideoPlayerView(frame: videoPlayerFrame)
-            videoPlayerView.backgroundColor = .black
-            view.addSubview(videoPlayerView)
+            videoPlayerView = VideoPlayerView(frame: videoPlayerFrame)
+            let playerFrame = videoPlayerFrame
+            view.addSubview(videoPlayerView!)
             keyWindow.addSubview(view)
             UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1,
@@ -62,7 +52,6 @@ class VideoLauncher: NSObject {
                 view.frame = keyWindow.frame
             }, completion: { (completedAnimation) in
                 // may be do something later
-                
             })
         }
     }
