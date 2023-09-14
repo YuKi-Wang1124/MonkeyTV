@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         tableView.delegate = self
-//        getVideoCover(request: HomeRequest.channel, decodeType: ChannelInfo.self)
+//        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
 //        getVideoCover(request: HomeRequest.show, decodeType: PlaylistListResponse.self)
         setUI()
     }

@@ -78,14 +78,16 @@ class HTTPClient {
                 let statusCode = httpResponse.statusCode
                 switch statusCode {
                 case 200..<300:
-                    print(statusCode)
+                    print("StatusCode: \(statusCode)")
                     completion(Result.success(data!))
                 case 400..<500:
-                    print(statusCode)
+                    print("StatusCode: \(statusCode)")
                     completion(Result.failure(HTTPClientError.clientError(data!)))
                 case 500..<600:
+                    print("StatusCode: \(statusCode)")
                     completion(Result.failure(HTTPClientError.serverError))
                 default:
+                    print("StatusCode: \(statusCode)")
                     completion(Result.failure(HTTPClientError.unexpectedError))
                 }
             }).resume()

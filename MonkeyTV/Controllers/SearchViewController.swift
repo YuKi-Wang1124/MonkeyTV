@@ -17,7 +17,12 @@ class SearchViewController: UIViewController {
         btn.frame = CGRect(x: 100, y: 300, width: 160, height: 90)
 //        imageView.frame = CGRect(x: 0, y: 0, width: 320, height: 180)
         displayThumbnailImage(from: thumbnailUrl)
+        btn.addTarget(self, action: #selector(showPlayerVC), for: .touchUpInside)
         view.addSubview(btn)
+    }
+    @objc func showPlayerVC() {
+        let videoLauncher = VideoLauncher()
+        videoLauncher.showVideoPlayer()
     }
     func displayThumbnailImage(from url: String) {
         if let imageUrl = URL(string: url) {
