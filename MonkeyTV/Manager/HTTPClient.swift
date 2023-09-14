@@ -42,7 +42,8 @@ protocol Request {
 
 extension Request {
     func makeRequest() -> URLRequest {
-        let urlString = Constant.urlKey + endPoint
+        let urlString = Bundle.valueForString(key: Constant.urlKey) + endPoint
+        print(Bundle.valueForString(key: Constant.urlKey) + endPoint)
         let url = URL(string: urlString)!
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = headers
@@ -71,15 +72,16 @@ class HTTPClient {
                 if let error = error {
                     return completion(Result.failure(error))
                 }
-
                 // swiftlint:disable force_cast
                 let httpResponse = response as! HTTPURLResponse
                 // swiftlint:enable force_cast
                 let statusCode = httpResponse.statusCode
                 switch statusCode {
                 case 200..<300:
+                    print(statusCode)
                     completion(Result.success(data!))
                 case 400..<500:
+                    print(statusCode)
                     completion(Result.failure(HTTPClientError.clientError(data!)))
                 case 500..<600:
                     completion(Result.failure(HTTPClientError.serverError))

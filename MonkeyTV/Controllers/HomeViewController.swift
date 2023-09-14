@@ -22,20 +22,20 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         tableView.delegate = self
-        getVideoCover()
+//        getVideoCover(request: HomeRequest.channel, decodeType: ChannelInfo.self)
+//        getVideoCover(request: HomeRequest.show, decodeType: PlaylistListResponse.self)
         setUI()
     }
     // MARK: - call api to get images and titles
-    func getVideoCover() {
+    func getVideoCover<T>(request: Request, decodeType: T.Type) where T: Decodable {
         let decoder = JSONDecoder()
-        HTTPClient.shared.request(HomeRequest.channel, completion: { [weak self] result in
+        HTTPClient.shared.request(request, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
                 do {
-                    let products = try decoder.decode(
-                        Video.self, from: data
-                    )
+                    let info = try decoder.decode(decodeType, from: data)
+                    print(info)
                     DispatchQueue.main.async {
                     }
                 } catch {
@@ -78,3 +78,4 @@ struct STSuccessParser<T: Codable>: Codable {
 struct STFailureParser: Codable {
     let errorMessage: String
 }
+

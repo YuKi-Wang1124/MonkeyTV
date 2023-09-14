@@ -8,28 +8,25 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    
     lazy var imageView = UIImageView()
-    let thumbnailUrl = "https://yt3.ggpht.com/V5mmM1zyMzwYeeFmYDvsIUnZ3DZ6GgC5J0TYUP4-QjA6LpmNU03st76cjmyzxFE07o_z-PmHCw=s240-c-k-c0x00ffffff-no-rj"
-    
+    lazy var btn = UIButton()
+    let thumbnailUrl = "https://i.ytimg.com/vi/lj6ZOD_k6sY/mqdefault.jpg"
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-        
+        btn.frame = CGRect(x: 100, y: 300, width: 160, height: 90)
+//        imageView.frame = CGRect(x: 0, y: 0, width: 320, height: 180)
         displayThumbnailImage(from: thumbnailUrl)
-
-        view.addSubview(imageView)
+        view.addSubview(btn)
     }
     func displayThumbnailImage(from url: String) {
         if let imageUrl = URL(string: url) {
             let session = URLSession.shared
-            let task = session.dataTask(with: imageUrl) { (data, response, error) in
+            let task = session.dataTask(with: imageUrl) { (data, _, error) in
                 if error == nil, let imageData = data {
                     DispatchQueue.main.async {
                         if let image = UIImage(data: imageData) {
-                            self.imageView.image = image
+                            self.btn.setImage(image, for: .normal)
                         }
                     }
                 } else {
@@ -39,8 +36,4 @@ class SearchViewController: UIViewController {
             task.resume()
         }
     }
-
-    // 在你的代码中调用这个函数，将从 YouTube API 获取的照片 URL 传递给它
-   
 }
-
