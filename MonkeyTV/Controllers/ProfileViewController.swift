@@ -45,5 +45,4 @@ class ProfileViewController: UIViewController {
     @IBAction func signOut(sender: Any) {
         GIDSignIn.sharedInstance.signOut()
     }
-    
 }

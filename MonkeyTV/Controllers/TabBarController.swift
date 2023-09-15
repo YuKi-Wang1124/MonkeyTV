@@ -10,14 +10,11 @@ import UIKit
 class TabBarViewController: UITabBarController {
 
     private let tabs: [Tab] = [.home, .search, .favorite, .profile]
-    
     private var trolleyTabBarItem: UITabBarItem?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         viewControllers = tabs.map { $0.makeViewController() }
-        
     }
 }
 
@@ -41,11 +38,9 @@ extension TabBarViewController {
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
             return controller
         }
-        
         private func makeTabBarItem() -> UITabBarItem {
             return UITabBarItem(title: title, image: image, selectedImage: selectedImage)
         }
-        
         private var title: String {
             switch self {
             case .home:
@@ -58,7 +53,6 @@ extension TabBarViewController {
                 return "個人"
             }
         }
-        
         private var image: UIImage? {
             switch self {
             case .home:
@@ -71,7 +65,6 @@ extension TabBarViewController {
                 return .systemAsset(.person)
             }
         }
-        
         private var selectedImage: UIImage? {
             switch self {
             case .home:

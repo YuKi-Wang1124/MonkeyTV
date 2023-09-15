@@ -31,5 +31,3 @@ struct PlaylistSnippet: Codable {
 //    let channelTitle: String
 //    let localized: Localized
 }
-
-

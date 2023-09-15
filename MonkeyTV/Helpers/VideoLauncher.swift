@@ -63,7 +63,6 @@ class VideoLauncher: NSObject {
                                               height: 300),
                                 configuration: webConfiguration)
             webView?.configuration.allowsInlineMediaPlayback = true
-    //        view.addSubview(ytview)
             webView?.load(request)
             webView?.frame = videoPlayerFrame
             view.addSubview(webView!)

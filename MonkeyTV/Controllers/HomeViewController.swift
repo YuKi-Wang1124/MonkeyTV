@@ -7,37 +7,62 @@
 
 import UIKit
 class HomeViewController: UIViewController {
-    lazy var tableView = {
+    private lazy var tableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.register(VideoTableViewCell.self,
+                           forCellReuseIdentifier: VideoTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    var dataSource: UITableViewDiffableDataSource<Section, String>!
-    var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
+    private var dataSource: UITableViewDiffableDataSource<Section, MKShow>!
+    private var snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         tableView.delegate = self
 //        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
-//        getVideoCover(request: HomeRequest.show, decodeType: PlaylistListResponse.self)
+        getVideoCover(request: HomeRequest.show)
         setUI()
+        updateTableViewDataSource()
+    }
+    func updateTableViewDataSource() {
+        dataSource =
+        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) {
+            tableView, indexPath, itemIdentifier in
+            let cell =
+            tableView.dequeueReusableCell(
+                withIdentifier: VideoTableViewCell.identifier,
+                for: indexPath) as? VideoTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            cell.showNameLabel.text = itemIdentifier.title
+            cell.selectionStyle = .none
+            return cell
+        }
+        tableView.dataSource = dataSource
+        snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
+        snapshot.appendSections([.animation])
+        let show = MKShow(image: "123", title: "123")
+        snapshot.appendItems([show], toSection: .animation)
     }
     // MARK: - call api to get images and titles
-    func getVideoCover<T>(request: Request, decodeType: T.Type) where T: Decodable {
+    func getVideoCover(request: Request) {
         let decoder = JSONDecoder()
         HTTPClient.shared.request(request, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
                 do {
-                    let info = try decoder.decode(decodeType, from: data)
-                    print(info)
-                    DispatchQueue.main.async {
-                    }
+                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
+                    info.items.forEach({
+                        let show = MKShow(image: $0.snippet.thumbnails.medium.url,
+                                          title: $0.snippet.title)
+                        self.snapshot.appendItems([show], toSection: .animation)
+                        self.dataSource.apply(self.snapshot)
+                    })
                 } catch {
                     print(Result<Any>.failure(error))
                 }
@@ -48,7 +73,6 @@ class HomeViewController: UIViewController {
     }
     // MARK: - UI configuration
     func setUI() {
-        tableView.backgroundColor = .systemYellow
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -63,10 +87,15 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 enum Section {
-    case main
+    case animation
 }
 
-struct STSuccessParser<T: Codable>: Codable {
+struct MKShow: Hashable {
+    var image: String
+    var title: String
+}
+
+struct SuccessParser<T: Codable>: Codable {
     let data: T
     let paging: Int?
     enum CodingKeys: String, CodingKey {
@@ -75,7 +104,6 @@ struct STSuccessParser<T: Codable>: Codable {
     }
 }
 
-struct STFailureParser: Codable {
+struct FailureParser: Codable {
     let errorMessage: String
 }
-

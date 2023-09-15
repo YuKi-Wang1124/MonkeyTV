@@ -8,13 +8,12 @@
 import UIKit
 
 enum ImageAsset: String {
-    
     case house
     case magnifyingglass
     case heart
     case person
     case selectedHouse = "house.fill"
-    case selectedMagnifyingglass 
+    case selectedMagnifyingglass
     case selectedHeart = "heart.fill"
     case selectedPerson = "person.fill"
 }
