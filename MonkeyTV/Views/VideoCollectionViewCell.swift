@@ -8,70 +8,37 @@
 import UIKit
 
 class VideoCollectionViewCell: UICollectionViewCell {
-    
     static let identifier = "\(VideoCollectionViewCell.self)"
-    
-    private let view = UIView()
-    
-    var coverImageView = {
+    var imageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
-    
-    var showNameLabel = {
+    var label: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.text = "厚實毛呢格子外套"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
-    
-    var showDescriptionLabel = {
-        let label = UILabel()
-        label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.text = "NT$2140"
-        return label
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(view)
-        view.addSubview(coverImageView)
-        view.addSubview(showNameLabel)
-        view.addSubview(showDescriptionLabel)
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        coverImageView.translatesAutoresizingMaskIntoConstraints = false
-        showNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        showDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        contentView.addSubview(imageView)
+        contentView.addSubview(label)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor),
-            view.topAnchor.constraint(equalTo: topAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            coverImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            coverImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14),
-            coverImageView.topAnchor.constraint(equalTo: view.topAnchor,constant: 18),
-            
-            coverImageView.heightAnchor.constraint(equalToConstant: 230),
-
-            showNameLabel.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-            showNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            showNameLabel.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 12),
-
-            showDescriptionLabel.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-            showDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            showDescriptionLabel.topAnchor.constraint(equalTo: showNameLabel.bottomAnchor, constant: 8),
-            showDescriptionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24)
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor),
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.36)
         ])
-    }
-    override func prepareForReuse() {
-        coverImageView.image = nil
-        showNameLabel.text = ""
-        showDescriptionLabel.text = ""
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

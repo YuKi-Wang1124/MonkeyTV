@@ -32,7 +32,8 @@
 		CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */; };
 		CC0BF1F62AB418E40075203C /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F52AB418E40075203C /* VideoTableViewCell.swift */; };
 		CC0BF1F82AB441830075203C /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F72AB441830075203C /* VideoCollectionViewCell.swift */; };
-		CC0BF1FA2AB446860075203C /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F92AB446860075203C /* File.swift */; };
+		CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */; };
+		CC0BF1FC2AB454230075203C /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +67,8 @@
 		CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
 		CC0BF1F52AB418E40075203C /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F72AB441830075203C /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
-		CC0BF1F92AB446860075203C /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
+		CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 				CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */,
 				CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */,
 				CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */,
+				CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -209,7 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1F52AB418E40075203C /* VideoTableViewCell.swift */,
-				CC0BF1F92AB446860075203C /* File.swift */,
+				CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */,
 				CC0BF1F72AB441830075203C /* VideoCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -358,13 +361,14 @@
 				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
 				CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */,
 				CC0BF1DD2AB1B6880075203C /* HomeRequest.swift in Sources */,
-				CC0BF1FA2AB446860075203C /* File.swift in Sources */,
+				CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */,
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
 				CC0BF1EC2AB2CA0A0075203C /* ChannelInfo.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
 				CC0BF1F82AB441830075203C /* VideoCollectionViewCell.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
 				CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */,
+				CC0BF1FC2AB454230075203C /* UIWindow+Extension.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
