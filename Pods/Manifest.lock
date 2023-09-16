@@ -808,6 +808,7 @@ PODS:
   - PromisesObjC (2.3.1)
   - RecaptchaInterop (100.0.0)
   - SwiftLint (0.52.4)
+  - youtube-ios-player-helper (1.0.4)
 
 DEPENDENCIES:
   - FirebaseAnalytics
@@ -816,6 +817,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - Kingfisher (~> 7.0)
   - SwiftLint
+  - youtube-ios-player-helper
 
 SPEC REPOS:
   trunk:
@@ -842,6 +844,7 @@ SPEC REPOS:
     - PromisesObjC
     - RecaptchaInterop
     - SwiftLint
+    - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
@@ -867,7 +870,8 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SwiftLint: 1cc5cd61ba9bacb2194e340aeb47a2a37fda00b3
+  youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 29e787d361ed7ea09670c39aa97ba211f398d130
+PODFILE CHECKSUM: 1e52e3d3b4283ed524e7b1789d3ebb0eaab526ab
 
 COCOAPODS: 1.12.1

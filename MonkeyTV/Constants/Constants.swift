@@ -16,7 +16,7 @@ struct Constant {
     static var API_URL = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\(PLAYLIST_ID)&key=\(API_KEY)"
     static let tapPayAppID = "STTapPayAppID"
     static let tapPayAppKey = "STTapPayAppKey"
-    static let urlKey = "STBaseURL"
+    static let urlKey = "MKBaseURL"
     //swiftlint: disable identifier_name
 }
 
