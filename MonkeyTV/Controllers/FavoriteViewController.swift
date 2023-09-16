@@ -37,7 +37,7 @@ class FavoriteViewController: UIViewController {
         webView.configuration.allowsInlineMediaPlayback = true
         webView.addSubview(redView)
         view.addSubview(ytview)
-        view.addSubview(webView)
+//        view.addSubview(webView)
         webView.load(request)
         let playButton = UIButton(type: .custom)
         playButton.setTitle("播放", for: .normal)
