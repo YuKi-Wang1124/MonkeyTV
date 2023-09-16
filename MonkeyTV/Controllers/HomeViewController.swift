@@ -107,23 +107,6 @@ class HomeViewController: UIViewController {
     }
 }
 
-//extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        3
-//    }
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell =
-//        tableView.dequeueReusableCell(
-//            withIdentifier: CollectionTableViewCell.identifier,
-//            for: indexPath) as? CollectionTableViewCell
-//        guard let cell = cell else { return UITableViewCell() }
-//        cell.model = self.model
-//        cell.updateDataSource()
-//        cell.selectionStyle = .none
-//        return cell
-//    }
-//}
-
 enum Section {
     case animation
 }

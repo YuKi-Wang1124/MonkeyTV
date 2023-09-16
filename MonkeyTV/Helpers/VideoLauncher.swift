@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
 import WebKit
 
 class VideoPlayerView: UIView {
@@ -15,23 +14,11 @@ class VideoPlayerView: UIView {
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         return view
     }()
-    private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupPlayerView()
         controlContainerView.frame = frame
         addSubview(controlContainerView)
         self.backgroundColor = .black
-    }
-    private func setupPlayerView() {
-        let videoURL = URL(string: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-        player = AVPlayer(url: videoURL!)
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.frame = self.frame
-        playerLayer?.videoGravity = .resizeAspectFill
-        self.layer.addSublayer(playerLayer!)
-        player?.play()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
