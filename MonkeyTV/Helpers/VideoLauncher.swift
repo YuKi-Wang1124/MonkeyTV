@@ -41,9 +41,9 @@ class VideoLauncher: NSObject {
         }
         ytVideoPlayerView.delegate = self
         setBtnsAddtarget()
-        setXD()
+        setDanMu()
     }
-    func setXD() {
+    func setDanMu() {
         danmuView.isHidden = true
         danmuView.minSpeed = 1
         danmuView.maxSpeed = 2
@@ -64,7 +64,7 @@ class VideoLauncher: NSObject {
             text += "嘿"
         }
         for _ in 0...Int.random(in: 1...2) {
-            danmuView.addDanMu(text: text, isMe: Bool.random())
+            danmuView.addDanMu(text: text, isMycomment: Bool.random())
         }
     }
    
@@ -96,7 +96,7 @@ class VideoLauncher: NSObject {
             btnsView.frame = ytVideoPlayerView.frame
             danmuView.frame = CGRect(x: 0, y: 0,
                                      width: btnsView.bounds.width,
-                                     height: btnsView.bounds.height - 110)
+                                     height: btnsView.bounds.height - 130)
             btnsView.backgroundColor = UIColor(white: 0, alpha: 0)
             addBtnsOnBtnView()
             setBtnsAutoLayout()

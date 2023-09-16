@@ -27,6 +27,7 @@ class DanMuView: UIView {
     var isPause: Bool = false
     var danmus: [DanMu] = []
     var danmuQueue: [(String, Bool)] = []
+    let danmuTimings: [TimeInterval] = [5.0, 10.0, 15.0] 
     var timer: Timer?
     func start() {
         displayLink = CADisplayLink(target: self, selector: #selector(update))
@@ -41,14 +42,14 @@ class DanMuView: UIView {
             return
         }
         let danmu = danmuQueue.removeFirst()
-        addDanMu(text: danmu.0, isMe: danmu.1)
+        addDanMu(text: danmu.0, isMycomment: danmu.1)
     }
-    @objc func addDanMu(text: String, isMe: Bool) {
+    @objc func addDanMu(text: String, isMycomment: Bool) {
         let danmu = DanMu()
         danmu.label.frame.origin.x = self.frame.size.width
         danmu.label.text = text
         danmu.label.sizeToFit()
-        if isMe {
+        if isMycomment {
             danmu.label.textColor = .systemYellow
         }
         var linelasts: [DanMu?] = []
@@ -76,9 +77,9 @@ class DanMuView: UIView {
                 let endx = dumu.label.frame.origin.x + dumu.label.frame.size.width + gap
                 if endx < self.frame.size.width {
                     danmu.row = index
-                    var ms = self.frame.size.width / endx * dumu.speed
-                    ms = CGFloat.minimum(ms, maxSpeed)
-                    danmu.speed = CGFloat.random(in: minSpeed...ms)
+                    var mySpeed = self.frame.size.width / endx * dumu.speed
+                    mySpeed = CGFloat.minimum(mySpeed, maxSpeed)
+                    danmu.speed = CGFloat.random(in: minSpeed...mySpeed)
                     isMatch = true
                     break
                 }
@@ -90,7 +91,7 @@ class DanMuView: UIView {
             }
         }
         if isMatch == false {
-            danmuQueue.append((text, isMe))
+            danmuQueue.append((text, isMycomment))
             return
         }
         danmu.label.frame.origin.y = lineHeight * CGFloat(danmu.row)
