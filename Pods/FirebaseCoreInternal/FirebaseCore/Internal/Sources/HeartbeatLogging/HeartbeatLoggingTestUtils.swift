@@ -44,7 +44,7 @@
 
       let decoder = JSONDecoder()
       decoder.dateDecodingStrategy = .formatted(HeartbeatsPayload.dateFormatter)
-        //swiftlint: disable force_try 
+
       let heartbeatsPayload = try! decoder.decode(HeartbeatsPayload.self, from: literalData)
       return _ObjC_HeartbeatsPayload(heartbeatsPayload)
     }

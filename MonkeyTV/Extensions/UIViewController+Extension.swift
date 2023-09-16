@@ -8,19 +8,15 @@
 import UIKit
 
 extension UINavigationController {
-    
     static var home: UINavigationController {
         return addNavigationController(viewController: HomeViewController())
     }
-    
     static var search: UINavigationController {
         return addNavigationController(viewController: SearchViewController())
     }
-    
     static var favorite: UINavigationController {
         return addNavigationController(viewController: FavoriteViewController())
     }
-    
     static var profile: UINavigationController {
         return addNavigationController(viewController: ProfileViewController())
     }

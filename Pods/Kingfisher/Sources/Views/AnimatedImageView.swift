@@ -44,17 +44,17 @@ public protocol AnimatedImageViewDelegate: AnyObject {
     /// - Parameters:
     ///   - imageView: The `AnimatedImageView` that is being animated.
     ///   - count: The looped count.
-    func animatedImageView(_ imageView: AnimatedImageView, didPlayAnimationLoops count: UInt)
+    func animatedImageView(_ coverImageView: AnimatedImageView, didPlayAnimationLoops count: UInt)
 
     /// Called after the `AnimatedImageView` has reached the max repeat count.
     ///
     /// - Parameter imageView: The `AnimatedImageView` that is being animated.
-    func animatedImageViewDidFinishAnimating(_ imageView: AnimatedImageView)
+    func animatedImageViewDidFinishAnimating(_ coverImageView: AnimatedImageView)
 }
 
 extension AnimatedImageViewDelegate {
-    public func animatedImageView(_ imageView: AnimatedImageView, didPlayAnimationLoops count: UInt) {}
-    public func animatedImageViewDidFinishAnimating(_ imageView: AnimatedImageView) {}
+    public func animatedImageView(_ coverImageView: AnimatedImageView, didPlayAnimationLoops count: UInt) {}
+    public func animatedImageViewDidFinishAnimating(_ coverImageView: AnimatedImageView) {}
 }
 
 let KFRunLoopModeCommon = RunLoop.Mode.common
@@ -89,11 +89,10 @@ open class AnimatedImageView: UIImageView {
 
         public static func ==(lhs: RepeatCount, rhs: RepeatCount) -> Bool {
             switch (lhs, rhs) {
-                //swiftlint: disable identifier_name
             case let (.finite(l), .finite(r)):
                 return l == r
             case (.once, .once),
-                (.infinite, .infinite):
+                 (.infinite, .infinite):
                 return true
             case (.once, .finite(let count)),
                  (.finite(let count), .once):

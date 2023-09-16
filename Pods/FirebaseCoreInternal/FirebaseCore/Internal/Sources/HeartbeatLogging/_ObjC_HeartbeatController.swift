@@ -11,13 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import Foundation
 
+import Foundation
 
 /// An object that provides API to log and flush heartbeats from a synchronized storage container.
 @objc(FIRHeartbeatController)
 @objcMembers
-//swiftlint: disable type_name
 public class _ObjC_HeartbeatController: NSObject {
   /// The underlying Swift object.
   private let heartbeatController: HeartbeatController
