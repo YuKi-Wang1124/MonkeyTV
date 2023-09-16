@@ -21,6 +21,8 @@ enum ImageAsset: String {
     case submitDanMu = "ellipsis.message.fill"
     case pause = "pause.circle.fill"
     case play = "play.circle.fill"
+    case shrink = "arrow.down.right.and.arrow.up.left"
+    case enlarge = "arrow.up.left.and.arrow.down.right"
 }
 
 extension UIImage {

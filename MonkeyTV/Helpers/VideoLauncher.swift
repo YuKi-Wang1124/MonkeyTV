@@ -16,27 +16,19 @@ class VideoLauncher: NSObject {
     private var isPlayerReady = false
     private var isDanMuDisplayed = false
     private var videoIsPlaying = true
+    private var playerIsShrink = false
     private var videoDuration = 7200.0
+    private lazy var changeOrientationBtn = {
+        return createPlayerBtn(image: UIImage.systemAsset(.enlarge, configuration: symbolConfig)!)
+    }()
     private lazy var showDanMuBtn = {
-        var btn = UIButton()
-        btn.setImage(UIImage.systemAsset(.square, configuration: symbolConfig), for: .normal)
-        btn.tintColor = .white
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
+        return createPlayerBtn(image: UIImage.systemAsset(.square, configuration: symbolConfig)!)
     }()
     private lazy var submitDanMuBtn = {
-        var btn = UIButton()
-        btn.setImage(UIImage.systemAsset(.submitDanMu, configuration: symbolConfig), for: .normal)
-        btn.tintColor = .white
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
+        return createPlayerBtn(image: UIImage.systemAsset(.submitDanMu, configuration: symbolConfig)!)
     }()
     private lazy var pauseBtn = {
-        var btn = UIButton()
-        btn.setImage(UIImage.systemAsset(.pause, configuration: pauseSymbolConfig), for: .normal)
-        btn.tintColor = .white
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
+        return createPlayerBtn(image: UIImage.systemAsset(.pause, configuration: pauseSymbolConfig)!)
     }()
     private var danmuView: DanMuView = DanMuView()
     private var timer: Timer?
@@ -75,6 +67,8 @@ class VideoLauncher: NSObject {
             danmuView.addDanMu(text: text, isMe: Bool.random())
         }
     }
+   
+    
     func showVideoPlayer(videoId: String) {
         if let keyWindow = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
@@ -104,9 +98,7 @@ class VideoLauncher: NSObject {
                                      width: btnsView.bounds.width,
                                      height: btnsView.bounds.height - 110)
             btnsView.backgroundColor = UIColor(white: 0, alpha: 0)
-            btnsView.addSubview(showDanMuBtn)
-            btnsView.addSubview(submitDanMuBtn)
-            btnsView.addSubview(pauseBtn)
+            addBtnsOnBtnView()
             setBtnsAutoLayout()
             view.addSubview(ytVideoPlayerView)
             view.addSubview(btnsView)
@@ -121,8 +113,25 @@ class VideoLauncher: NSObject {
             })
         }
     }
+    private func createPlayerBtn(image: UIImage) -> UIButton {
+        var btn = UIButton()
+        btn.setImage(image, for: .normal)
+        btn.tintColor = .white
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }
+    private func addBtnsOnBtnView() {
+        btnsView.addSubview(showDanMuBtn)
+        btnsView.addSubview(submitDanMuBtn)
+        btnsView.addSubview(pauseBtn)
+        btnsView.addSubview(changeOrientationBtn)
+    }
     private func setBtnsAutoLayout() {
         NSLayoutConstraint.activate([
+            changeOrientationBtn.trailingAnchor.constraint(equalTo: btnsView.trailingAnchor, constant: -130),
+            changeOrientationBtn.bottomAnchor.constraint(equalTo: btnsView.bottomAnchor, constant: -16),
+            changeOrientationBtn.widthAnchor.constraint(equalToConstant: 30),
+            changeOrientationBtn.heightAnchor.constraint(equalToConstant: 30),
             showDanMuBtn.trailingAnchor.constraint(equalTo: btnsView.trailingAnchor, constant: -160),
             showDanMuBtn.bottomAnchor.constraint(equalTo: btnsView.bottomAnchor, constant: -16),
             showDanMuBtn.widthAnchor.constraint(equalToConstant: 30),
@@ -141,10 +150,22 @@ class VideoLauncher: NSObject {
         showDanMuBtn.addTarget(self, action: #selector(tapBulletBtn(sender:)), for: .touchUpInside)
         submitDanMuBtn.addTarget(self, action: #selector(tapSubmitDanMuBtn(sender:)), for: .touchUpInside)
         pauseBtn.addTarget(self, action: #selector(tapPauseBtn(sender:)), for: .touchUpInside)
+        changeOrientationBtn.addTarget(self, action: #selector(tapChangeOrientationBtn(sender:)), for: .touchUpInside)
+
     }
     @objc func tapSubmitDanMuBtn(sender: UIButton) {
+       
+    }
+    @objc func tapChangeOrientationBtn(sender: UIButton) {
+        if playerIsShrink == false {
+            sender.setImage(UIImage.systemAsset(.shrink, configuration: pauseSymbolConfig), for: .normal)
+        } else {
+            sender.setImage(UIImage.systemAsset(.enlarge, configuration: pauseSymbolConfig), for: .normal)
+        }
+        playerIsShrink.toggle()
     }
     @objc func tapPauseBtn(sender: UIButton) {
+        danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
             sender.setImage(UIImage.systemAsset(.play, configuration: pauseSymbolConfig), for: .normal)
             ytVideoPlayerView.pauseVideo()

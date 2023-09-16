@@ -24,6 +24,7 @@ class DanMuView: UIView {
     var gap: CGFloat = 20
     var minSpeed: CGFloat = 1
     var maxSpeed: CGFloat = 2
+    var isPause: Bool = false
     var danmus: [DanMu] = []
     var danmuQueue: [(String, Bool)] = []
     var timer: Timer?
@@ -97,6 +98,9 @@ class DanMuView: UIView {
         self.danmus.append(danmu)
     }
     @objc func update(_ displayLink: CADisplayLink) {
+        if isPause == true {
+            return
+        }
         for index in 0..<danmus.count {
             let danmu = danmus[index]
             danmu.label.frame.origin.x -= danmu.speed
