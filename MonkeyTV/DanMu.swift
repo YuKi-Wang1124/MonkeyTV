@@ -27,7 +27,6 @@ class DanMuView: UIView {
     var isPause: Bool = false
     var danmus: [DanMu] = []
     var danmuQueue: [(String, Bool)] = []
-    let danmuTimings: [TimeInterval] = [5.0, 10.0, 15.0] 
     var timer: Timer?
     func start() {
         displayLink = CADisplayLink(target: self, selector: #selector(update))
