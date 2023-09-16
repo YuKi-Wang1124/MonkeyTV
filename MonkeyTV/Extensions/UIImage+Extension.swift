@@ -16,12 +16,13 @@ enum ImageAsset: String {
     case selectedMagnifyingglass
     case selectedHeart = "heart.fill"
     case selectedPerson = "person.fill"
+    case square
+    case checkmarkSquare = "checkmark.square"
 }
 
 extension UIImage {
-    
-    static func systemAsset(_ asset: ImageAsset) -> UIImage? {
-        return UIImage(systemName: asset.rawValue)
+    static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage? {
+        return UIImage(systemName: asset.rawValue, withConfiguration: configuration)
     }
     static func displayThumbnailImage(from url: String, completion: @escaping (UIImage?) -> Void) {
         if let imageUrl = URL(string: url) {

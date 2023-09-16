@@ -10,8 +10,17 @@ import youtube_ios_player_helper
 
 class VideoLauncher: NSObject {
     var ytVideoPlayerView = YTPlayerView()
+    private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private var bulletView = UIView()
     private var isPlayerReady = false
+    private var isBulletDisplayed = false
+    private lazy var bulletBtn = {
+        var btn = UIButton()
+        btn.setImage(UIImage.systemAsset(.square, configuration: symbolConfig), for: .normal)
+        btn.tintColor = .white
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
     override init() {
         super.init()
         ytVideoPlayerView.delegate = self
@@ -50,9 +59,12 @@ class VideoLauncher: NSObject {
             ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
             ytVideoPlayerView.frame = videoPlayerFrame
             bulletView.frame = ytVideoPlayerView.frame
-            bulletView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+            bulletView.backgroundColor = UIColor(white: 0, alpha: 0.25)
+            bulletView.addSubview(bulletBtn)
+            setBtnsAutoLayout()
+            setBtnsAddtarget()
             view.addSubview(ytVideoPlayerView)
-//            view.addSubview(bulletView)
+            view.addSubview(bulletView)
             keyWindow.addSubview(view)
             UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1,
@@ -63,6 +75,26 @@ class VideoLauncher: NSObject {
             })
         }
     }
+    private func setBtnsAutoLayout() {
+        NSLayoutConstraint.activate([
+            bulletBtn.trailingAnchor.constraint(equalTo: bulletView.trailingAnchor, constant: -160),
+            bulletBtn.bottomAnchor.constraint(equalTo: bulletView.bottomAnchor, constant: -16),
+            bulletBtn.widthAnchor.constraint(equalToConstant: 30),
+            bulletBtn.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+
+    func setBtnsAddtarget() {
+        bulletBtn.addTarget(self, action: #selector(tapBulletBtn(sender:)), for: .touchUpInside)
+    }
+    @objc func tapBulletBtn(sender: UIButton) {
+        if isBulletDisplayed {
+            sender.setImage(UIImage.systemAsset(.square, configuration: symbolConfig), for: .normal)
+        } else {
+            sender.setImage(UIImage.systemAsset(.checkmarkSquare, configuration: symbolConfig), for: .normal)
+        }
+        isBulletDisplayed.toggle()
+    }
 }
 
 extension VideoLauncher: YTPlayerViewDelegate {
@@ -71,7 +103,6 @@ extension VideoLauncher: YTPlayerViewDelegate {
         ytVideoPlayerView.playVideo()
     }
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
-        // Handle player state changes
         switch state {
         case .playing:
              print("Video is playing")
