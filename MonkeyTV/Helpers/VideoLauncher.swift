@@ -11,20 +11,35 @@ import youtube_ios_player_helper
 class VideoLauncher: NSObject {
     var ytVideoPlayerView = YTPlayerView()
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
-    private var addBtnsView = UIView()
+    private let pauseSymbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
+    private var btnsView = UIView()
     private var isPlayerReady = false
-    private var isBulletDisplayed = false
+    private var isDanMuDisplayed = false
+    private var videoIsPlaying = true
     private var videoDuration = 7200.0
-    private lazy var bulletBtn = {
+    private lazy var showDanMuBtn = {
         var btn = UIButton()
         btn.setImage(UIImage.systemAsset(.square, configuration: symbolConfig), for: .normal)
         btn.tintColor = .white
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
-    var bulletView: BulletView = BulletView()
-    var timer: Timer?
-
+    private lazy var submitDanMuBtn = {
+        var btn = UIButton()
+        btn.setImage(UIImage.systemAsset(.submitDanMu, configuration: symbolConfig), for: .normal)
+        btn.tintColor = .white
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    private lazy var pauseBtn = {
+        var btn = UIButton()
+        btn.setImage(UIImage.systemAsset(.pause, configuration: pauseSymbolConfig), for: .normal)
+        btn.tintColor = .white
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    private var danmuView: DanMuView = DanMuView()
+    private var timer: Timer?
     override init() {
         super.init()
         DispatchQueue.main.asyncAfter(deadline: .now() + videoDuration) {
@@ -34,32 +49,30 @@ class VideoLauncher: NSObject {
         }
         ytVideoPlayerView.delegate = self
         setBtnsAddtarget()
-        bulletView.frame = .init(x: 0, y: 100,
-                                 width: ytVideoPlayerView.frame.size.width,
-                                 height: ytVideoPlayerView.frame.size.height - 200)
-        ytVideoPlayerView.addSubview(bulletView)
-
-        bulletView.minSpeed = 1
-        bulletView.maxSpeed = 2
-        bulletView.gap = 20
-        bulletView.lineHeight = 30
-        addBtnsView.addSubview(bulletView)
-        bulletView.start()
-        timer = Timer.scheduledTimer(timeInterval: 0.4, target: self,
-                                     selector: #selector(addBullet),
+        setXD()
+    }
+    func setXD() {
+        danmuView.isHidden = true
+        danmuView.minSpeed = 1
+        danmuView.maxSpeed = 2
+        danmuView.gap = 20
+        danmuView.lineHeight = 30
+        danmuView.start()
+        timer = Timer.scheduledTimer(timeInterval: 0.4,
+                                     target: self, selector: #selector(addDanMuText),
                                      userInfo: nil, repeats: false)
     }
-    @objc func addBullet() {
+    @objc func addDanMuText() {
         let interval = CGFloat.random(in: 0.3...1.0)
         Timer.scheduledTimer(timeInterval: interval,
-                             target: self, selector: #selector(addBullet),
+                             target: self, selector: #selector(addDanMuText),
                              userInfo: nil, repeats: false)
         var text = ""
         for _ in 0...Int.random(in: 1...30) {
             text += "嘿"
         }
         for _ in 0...Int.random(in: 1...2) {
-            bulletView.addBullet(text: text, isMe: Bool.random())
+            danmuView.addDanMu(text: text, isMe: Bool.random())
         }
     }
     func showVideoPlayer(videoId: String) {
@@ -86,12 +99,18 @@ class VideoLauncher: NSObject {
              "rel": 0]
             ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
             ytVideoPlayerView.frame = videoPlayerFrame
-            addBtnsView.frame = ytVideoPlayerView.frame
-            addBtnsView.backgroundColor = UIColor(white: 0, alpha: 0)
-            addBtnsView.addSubview(bulletBtn)
+            btnsView.frame = ytVideoPlayerView.frame
+            danmuView.frame = CGRect(x: 0, y: 0,
+                                     width: btnsView.bounds.width,
+                                     height: btnsView.bounds.height - 110)
+            btnsView.backgroundColor = UIColor(white: 0, alpha: 0)
+            btnsView.addSubview(showDanMuBtn)
+            btnsView.addSubview(submitDanMuBtn)
+            btnsView.addSubview(pauseBtn)
             setBtnsAutoLayout()
             view.addSubview(ytVideoPlayerView)
-            view.addSubview(addBtnsView)
+            view.addSubview(btnsView)
+            btnsView.addSubview(danmuView)
             keyWindow.addSubview(view)
             UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1,
@@ -104,32 +123,46 @@ class VideoLauncher: NSObject {
     }
     private func setBtnsAutoLayout() {
         NSLayoutConstraint.activate([
-            bulletBtn.trailingAnchor.constraint(equalTo: addBtnsView.trailingAnchor, constant: -160),
-            bulletBtn.bottomAnchor.constraint(equalTo: addBtnsView.bottomAnchor, constant: -16),
-            bulletBtn.widthAnchor.constraint(equalToConstant: 30),
-            bulletBtn.heightAnchor.constraint(equalToConstant: 30)
+            showDanMuBtn.trailingAnchor.constraint(equalTo: btnsView.trailingAnchor, constant: -160),
+            showDanMuBtn.bottomAnchor.constraint(equalTo: btnsView.bottomAnchor, constant: -16),
+            showDanMuBtn.widthAnchor.constraint(equalToConstant: 30),
+            showDanMuBtn.heightAnchor.constraint(equalToConstant: 30),
+            submitDanMuBtn.trailingAnchor.constraint(equalTo: btnsView.trailingAnchor, constant: -200),
+            submitDanMuBtn.bottomAnchor.constraint(equalTo: btnsView.bottomAnchor, constant: -16),
+            submitDanMuBtn.widthAnchor.constraint(equalToConstant: 30),
+            submitDanMuBtn.heightAnchor.constraint(equalToConstant: 30),
+            pauseBtn.centerXAnchor.constraint(equalTo: btnsView.centerXAnchor),
+            pauseBtn.centerYAnchor.constraint(equalTo: btnsView.centerYAnchor),
+            pauseBtn.widthAnchor.constraint(equalToConstant: 60),
+            pauseBtn.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     private func setBtnsAddtarget() {
-        bulletBtn.addTarget(self, action: #selector(tapBulletBtn(sender:)), for: .touchUpInside)
+        showDanMuBtn.addTarget(self, action: #selector(tapBulletBtn(sender:)), for: .touchUpInside)
+        submitDanMuBtn.addTarget(self, action: #selector(tapSubmitDanMuBtn(sender:)), for: .touchUpInside)
+        pauseBtn.addTarget(self, action: #selector(tapPauseBtn(sender:)), for: .touchUpInside)
+    }
+    @objc func tapSubmitDanMuBtn(sender: UIButton) {
+    }
+    @objc func tapPauseBtn(sender: UIButton) {
+        if videoIsPlaying {
+            sender.setImage(UIImage.systemAsset(.play, configuration: pauseSymbolConfig), for: .normal)
+            ytVideoPlayerView.pauseVideo()
+        } else {
+            sender.setImage(UIImage.systemAsset(.pause, configuration: pauseSymbolConfig), for: .normal)
+            ytVideoPlayerView.playVideo()
+        }
+        videoIsPlaying.toggle()
     }
     @objc func tapBulletBtn(sender: UIButton) {
-        if !isBulletDisplayed {
+        if !isDanMuDisplayed {
             sender.setImage(UIImage.systemAsset(.checkmarkSquare, configuration: symbolConfig), for: .normal)
+            danmuView.isHidden = false
         } else {
             sender.setImage(UIImage.systemAsset(.square, configuration: symbolConfig), for: .normal)
+            danmuView.isHidden = true
         }
-        isBulletDisplayed.toggle()
-    }
-    func getVideoDuratiion() {
-        ytVideoPlayerView.duration { (duration, error) in
-            if let error = error {
-                print("無法取得時間：\(error.localizedDescription)")
-            } else {
-                self.videoDuration = duration
-                print("影片總時間：\(duration) 秒")
-            }
-        }
+        isDanMuDisplayed.toggle()
     }
 }
 
@@ -160,106 +193,14 @@ extension VideoLauncher: YTPlayerViewDelegate {
 
 //        print("\(playTime)")
     }
-}
-
-class Bullet {
-    var row: Int = 0
-    var label: UILabel = UILabel()
-    var speed: CGFloat = 0
-    var isMe: Bool = false
-}
-
-class BulletView: UIView {
-    var isPause: Bool = false
-    private var displayLink: CADisplayLink?
-    var lineHeight: CGFloat = 26
-    var gap: CGFloat = 20
-    var minSpeed: CGFloat = 1
-    var maxSpeed: CGFloat = 2
-    
-    private var bullets: [Bullet] = []
-    private var bulletQueues: [(String, Bool)] = []
-    private var timer: Timer?
-    
-    func start() {
-        displayLink = CADisplayLink(target: self, selector: #selector(update))
-        displayLink?.add(to: RunLoop.current, forMode: .common)
-        
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:  #selector(handleBulletQueues), userInfo: nil, repeats: true)
-    }
-    
-    @objc func update(_ displayLink: CADisplayLink) {
-        if isPause == true {
-            return
-        }
-        for index in 0 ..< bullets.count {
-            let bullet = bullets[index]
-            bullet.label.frame.origin.x -= bullet.speed
-            if bullet.label.frame.origin.x < -bullet.label.frame.size.width {
-                bullet.label.removeFromSuperview()
-                bullets.remove(at: index)
-            }
-        }
-    }
-    @objc func handleBulletQueues() {
-        if bulletQueues.isEmpty {
-            return
-        }
-        let bullet = bulletQueues.removeFirst()
-        addBullet(text: bullet.0, isMe: bullet.1)
-    }
-    @objc func addBullet(text: String, isMe: Bool) {
-        let bullet = Bullet()
-        bullet.label.frame.origin.x = self.frame.size.width
-        bullet.label.text = text
-        bullet.label.sizeToFit()
-        if isMe {
-            bullet.label.layer.borderWidth = 1
-        }
-        var lineLasts: [Bullet?] = []
-        let rows: Int = Int(self.frame.size.height / lineHeight)
-        for _ in 0 ..< rows {
-            lineLasts.append(nil)
-        }
-        for item in bullets {
-            if item.row >= lineLasts.count {
-                break
-            }
-            if lineLasts[item.row] != nil {
-                let endXPoint = bullet.label.frame.origin.x
-                let targetXPoint = lineLasts[item.row]!.label.frame.origin.x
-                if endXPoint > targetXPoint {
-                    lineLasts[item.row] = item
-                }
+    func getVideoDuratiion() {
+        ytVideoPlayerView.duration { (duration, error) in
+            if let error = error {
+                print("無法取得時間：\(error.localizedDescription)")
             } else {
-                lineLasts[item.row] = item
+                self.videoDuration = duration
+                print("影片總時間：\(duration) 秒")
             }
-        }
-        var isMatch = false
-        for index in 0 ..< lineLasts.count {
-            if let item = lineLasts[index] {
-                let endXPoint = item.label.frame.origin.x + item.label.frame.size.width + gap
-                if endXPoint < self.frame.size.width {
-                    bullet.row = index
-                    var bulletSpeed = self.frame.size.width / endXPoint * item.speed
-                    bulletSpeed = CGFloat.minimum(bulletSpeed, maxSpeed)
-                    bullet.speed = CGFloat.random(in: minSpeed...bulletSpeed)
-                    isMatch = true
-                    break
-                } else {
-                    bullet.row = index
-                    bullet.speed = CGFloat.random (in: minSpeed...maxSpeed)
-                    isMatch = true
-                    break
-                }
-            }
-            if isMatch == false {
-                bulletQueues.append ( (text, isMe) )
-                return
-            }
-            bullet.label.frame.origin.y = lineHeight * CGFloat(bullet.row)
-            self.addSubview(bullet.label)
-            self.bullets.append(bullet)
         }
     }
 }

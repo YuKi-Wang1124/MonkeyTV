@@ -34,6 +34,7 @@
 		CC0BF1F82AB441830075203C /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F72AB441830075203C /* VideoCollectionViewCell.swift */; };
 		CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */; };
 		CC0BF1FC2AB454230075203C /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */; };
+		CC0BF1FE2AB5E7BC0075203C /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FD2AB5E7BC0075203C /* File.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		CC0BF1F72AB441830075203C /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
+		CC0BF1FD2AB5E7BC0075203C /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 			children = (
 				CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */,
 				CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */,
+				CC0BF1FD2AB5E7BC0075203C /* File.swift */,
 				CC0BF1F32AB2F3B00075203C /* Helpers */,
 				CC0BF1D42AB055450075203C /* Constants */,
 				CC0BF1CE2AB03D730075203C /* Third Party Wrappers */,
@@ -355,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC0BF1FE2AB5E7BC0075203C /* File.swift in Sources */,
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
 				CC0BF1C92AB02BBA0075203C /* UIViewController+Extension.swift in Sources */,
 				CC0BF1D92AB1B1300075203C /* HTTPClient.swift in Sources */,

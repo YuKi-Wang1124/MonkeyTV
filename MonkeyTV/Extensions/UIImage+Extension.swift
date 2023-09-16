@@ -18,6 +18,9 @@ enum ImageAsset: String {
     case selectedPerson = "person.fill"
     case square
     case checkmarkSquare = "checkmark.square"
+    case submitDanMu = "ellipsis.message.fill"
+    case pause = "pause.circle.fill"
+    case play = "play.circle.fill"
 }
 
 extension UIImage {
