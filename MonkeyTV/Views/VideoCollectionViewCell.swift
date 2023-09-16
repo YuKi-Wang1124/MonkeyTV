@@ -9,11 +9,11 @@ import UIKit
 
 class VideoCollectionViewCell: UICollectionViewCell {
     static let identifier = "\(VideoCollectionViewCell.self)"
-    var imageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
+    var coverBtn = {
+        let btn = UIButton()
+        btn.contentMode = .scaleAspectFill
+        btn.clipsToBounds = true
+        return btn
     }()
     var label: UILabel = {
         let label = UILabel()
@@ -25,18 +25,18 @@ class VideoCollectionViewCell: UICollectionViewCell {
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(imageView)
+        contentView.addSubview(coverBtn)
         contentView.addSubview(label)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        coverBtn.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor),
+            coverBtn.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            coverBtn.topAnchor.constraint(equalTo: contentView.topAnchor),
+            coverBtn.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
+            coverBtn.widthAnchor.constraint(equalTo: coverBtn.heightAnchor),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            label.topAnchor.constraint(equalTo: coverBtn.bottomAnchor, constant: 8),
             label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.36)
         ])
     }

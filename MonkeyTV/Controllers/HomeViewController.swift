@@ -15,9 +15,14 @@ class HomeViewController: UIViewController {
         tableView.register(CollectionTableViewCell.self,
                            forCellReuseIdentifier:
                             CollectionTableViewCell.identifier)
+        tableView.register(VideoTableViewCell.self,
+                           forCellReuseIdentifier:
+                            VideoTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    private var snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
+    private var dataSource: UITableViewDiffableDataSource<Section, MKShow>!
     private let dispatchSemaphore = DispatchSemaphore(value: 1)
     private var model = [MKShow]()
     // MARK: - Life Cycle
@@ -25,37 +30,46 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 //        DispatchQueue.main.async {
 //            self.dispatchSemaphore.wait()
-//            self.getVideoCover(request: HomeRequest.show)
-//            self.dispatchSemaphore.wait()
-            tableView.dataSource = self
 //            self.dispatchSemaphore.signal()
-            tableView.delegate = self
+//            self.dispatchSemaphore.wait()
+            self.updateTableViewDataSource()
+//            self.dispatchSemaphore.signal()
+//            tableView.dataSource = self
+//            tableView.delegate = self
 //            self.dispatchSemaphore.wait()
 //        }
         view.backgroundColor = .white
 //        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
         setUI()
+        self.getVideoCover(request: HomeRequest.show)
     }
-//    func updateTableViewDataSource() {
-//        dataSource =
-//        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) {
-//            tableView, indexPath, itemIdentifier in
+    func updateTableViewDataSource() {
+        dataSource =
+        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) { tableView, indexPath, itemIdentifier in
+            if indexPath.row == 0 {
+                let cell =
+                tableView.dequeueReusableCell(
+                    withIdentifier: CollectionTableViewCell.identifier,
+                    for: indexPath) as? CollectionTableViewCell
+                guard let cell = cell else { return UITableViewCell() }
+                return cell
+            }
 //            let cell =
 //            tableView.dequeueReusableCell(
-//                withIdentifier: CollectionTableViewCell.identifier,
-//                for: indexPath) as? CollectionTableViewCell
+//                withIdentifier: VideoTableViewCell.identifier,
+//                for: indexPath) as? VideoTableViewCell
 //            guard let cell = cell else { return UITableViewCell() }
-//            cell.model = self.model
-//            cell.updateDataSource()
+//            cell.showNameLabel.text = itemIdentifier.title
 //            cell.selectionStyle = .none
 //            return cell
-//        }
-//        tableView.dataSource = dataSource
-//        snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
-//        snapshot.appendSections([.animation])
-//        let show = MKShow(image: "123", title: "123")
+            return UITableViewCell()
+        }
+        tableView.dataSource = dataSource
+        snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
+        snapshot.appendSections([.animation])
+//        let show = MKShow(image: "13", title: "123")
 //        snapshot.appendItems([show], toSection: .animation)
-//    }
+    }
     // MARK: - call api to get images and titles
     func getVideoCover(request: Request) {
         let decoder = JSONDecoder()
@@ -68,8 +82,10 @@ class HomeViewController: UIViewController {
                     info.items.forEach({
                         let show = MKShow(image: $0.snippet.thumbnails.medium.url,
                                           title: $0.snippet.title)
-                        self.model.append(show)
-                        print(show)
+//                        self.model.append(show)
+//                        print(show)
+                        self.snapshot.appendItems([show], toSection: .animation)
+                        self.dataSource.apply(self.snapshot)
                     })
                 } catch {
                     print(Result<Any>.failure(error))
@@ -91,22 +107,22 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =
-        tableView.dequeueReusableCell(
-            withIdentifier: CollectionTableViewCell.identifier,
-            for: indexPath) as? CollectionTableViewCell
-        guard let cell = cell else { return UITableViewCell() }
-        cell.model = self.model
-        cell.updateDataSource()
-        cell.selectionStyle = .none
-        return cell
-    }
-}
+//extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        3
+//    }
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell =
+//        tableView.dequeueReusableCell(
+//            withIdentifier: CollectionTableViewCell.identifier,
+//            for: indexPath) as? CollectionTableViewCell
+//        guard let cell = cell else { return UITableViewCell() }
+//        cell.model = self.model
+//        cell.updateDataSource()
+//        cell.selectionStyle = .none
+//        return cell
+//    }
+//}
 
 enum Section {
     case animation

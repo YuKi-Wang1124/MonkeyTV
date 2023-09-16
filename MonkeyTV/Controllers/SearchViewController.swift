@@ -35,7 +35,7 @@ class SearchViewController: UIViewController {
                         }
                     }
                 } else {
-                    print("下载图片时出错：\(error?.localizedDescription ?? "")")
+                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
                 }
             }
             task.resume()
