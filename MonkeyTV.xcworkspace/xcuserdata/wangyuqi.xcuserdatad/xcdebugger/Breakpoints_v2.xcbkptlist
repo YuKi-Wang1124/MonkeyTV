@@ -3,4 +3,54 @@
    uuid = "954907AB-F727-497E-A529-C0E1C095BAE2"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B4E40309-9283-47C5-BB61-325371A8C184"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Helpers/VideoLauncher.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "tapBulletBtn(sender:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B4E40309-9283-47C5-BB61-325371A8C184 - d617214a8ff4c78e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.VideoLauncher.setBtnsAddtarget() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Helpers/VideoLauncher.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "B4E40309-9283-47C5-BB61-325371A8C184 - cafaff0115ec615d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.VideoLauncher.tapBulletBtn(sender: __C.UIButton) -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Helpers/VideoLauncher.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
