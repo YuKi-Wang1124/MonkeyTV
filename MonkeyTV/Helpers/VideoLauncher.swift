@@ -39,6 +39,7 @@ class VideoLauncher: NSObject {
                 print("播放器未在超時前準備就緒。")
             }
         }
+        ytVideoPlayerView.backgroundColor = .black
         ytVideoPlayerView.delegate = self
         setBtnsAddtarget()
         setDanMu()
@@ -49,7 +50,6 @@ class VideoLauncher: NSObject {
         danmuView.maxSpeed = 2
         danmuView.gap = 20
         danmuView.lineHeight = 30
-        let danmuTimings: [TimeInterval] = [5.0, 10.0, 15.0]
         danmuView.start()
         timer = Timer.scheduledTimer(timeInterval: 0.4,
                                      target: self, selector: #selector(addDanMuText),
@@ -78,15 +78,20 @@ class VideoLauncher: NSObject {
             let topInset = safeAreaInsets.top
             let bottomInset = safeAreaInsets.bottom
             let notchHeight = max(topInset, bottomInset)
-            setYTViewLayout(view: view, notchHeight: notchHeight)
+            addYTView(view: view)
+//            setYTViewLayout(view: view, notchHeight: notchHeight)
+            setLandscapeYTViewLayout(view: view)
             addBtnsOnBtnView()
             setBtnsAutoLayout()
-            let playerVars: [AnyHashable: Any] =
-            ["playsigline": 1, "controls": 0,
-             "autohide": 1, "showinfo": 0,
-             "modestbranding": 1, "fs": 0,
-             "rel": 0]
+            let playerVars: [AnyHashable: Any] = [
+//                "playsinline": 1,
+//                "controls": 0,
+//                "autohide": 1,
+//                "modestbranding": 1,
+//                "fs": 0,
+                "rel": 0]
             ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
+
             UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1,
                            initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -130,7 +135,7 @@ class VideoLauncher: NSObject {
             pauseBtn.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
-    private func setYTViewLayout(view: UIView, notchHeight: CGFloat) {
+    private func addYTView(view: UIView) {
         btnsView.backgroundColor = UIColor(white: 0, alpha: 0.2)
         view.addSubview(ytVideoPlayerView)
         view.addSubview(btnsView)
@@ -138,12 +143,31 @@ class VideoLauncher: NSObject {
         btnsView.translatesAutoresizingMaskIntoConstraints = false
         ytVideoPlayerView.translatesAutoresizingMaskIntoConstraints = false
         danmuView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    private func setYTViewLayout(view: UIView, notchHeight: CGFloat) {
         NSLayoutConstraint.activate([
             ytVideoPlayerView.topAnchor.constraint(equalTo: view.topAnchor, constant: notchHeight),
             ytVideoPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ytVideoPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            ytVideoPlayerView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            ytVideoPlayerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 16 / 9),
+            btnsView.leadingAnchor.constraint(equalTo: ytVideoPlayerView.leadingAnchor),
+            btnsView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
+            btnsView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
+            btnsView.bottomAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor),
+            danmuView.leadingAnchor.constraint(equalTo: ytVideoPlayerView.leadingAnchor),
+            danmuView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
+            danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
+            danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10)
+        ])
+    }
+    private func setLandscapeYTViewLayout(view: UIView) {
+        NSLayoutConstraint.activate([
+            ytVideoPlayerView.topAnchor.constraint(equalTo: view.topAnchor),
+            ytVideoPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            ytVideoPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ytVideoPlayerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            ytVideoPlayerView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
+            ytVideoPlayerView.heightAnchor.constraint(equalTo: view.heightAnchor),
             btnsView.leadingAnchor.constraint(equalTo: ytVideoPlayerView.leadingAnchor),
             btnsView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
             btnsView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
@@ -167,9 +191,9 @@ class VideoLauncher: NSObject {
     }
     @objc func tapChangeOrientationBtn(sender: UIButton) {
         if playerIsShrink == false {
-            sender.setImage(UIImage.systemAsset(.shrink, configuration: pauseSymbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.shrink, configuration: symbolConfig), for: .normal)
         } else {
-            sender.setImage(UIImage.systemAsset(.enlarge, configuration: pauseSymbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.enlarge, configuration: symbolConfig), for: .normal)
         }
         playerIsShrink.toggle()
     }
