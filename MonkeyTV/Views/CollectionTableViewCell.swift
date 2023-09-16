@@ -61,7 +61,9 @@ class CollectionTableViewCell: UITableViewCell {
                     withReuseIdentifier: VideoCollectionViewCell.identifier,
                     for: indexPath) as? VideoCollectionViewCell
                 cell?.label.text = itemIdentifier.title
-                cell?.coverBtn.setImage(<#T##image: UIImage?##UIImage?#>, for: .normal)
+                UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
+                    cell?.coverBtn.setImage(image, for: .normal)
+                })
                 return cell
             })
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
