@@ -8,7 +8,14 @@
 import Foundation
 import UIKit
 
-class DanMu {
+class DanMu: Hashable {
+    static func == (lhs: DanMu, rhs: DanMu) -> Bool {
+        return true
+    }
+    func hash(into hasher: inout Hasher) {
+        
+    }
+    
     var row: Int = 0
     var label: UILabel = UILabel()
     var speed: CGFloat = 0
@@ -27,7 +34,9 @@ class DanMuView: UIView {
     var isPause: Bool = false
     var danmus: [DanMu] = []
     var danmuQueue: [(String, Bool)] = []
+    var removeDanmus = [DanMu]()
     var timer: Timer?
+    var removeTime: Timer?
     func start() {
         displayLink = CADisplayLink(target: self, selector: #selector(update))
         displayLink?.add(to: RunLoop.current, forMode: .common)
@@ -35,6 +44,15 @@ class DanMuView: UIView {
                                      target: self,
                                      selector: #selector(handleDanMuQueue),
                                      userInfo: nil, repeats: true)
+        removeTime = Timer.scheduledTimer(timeInterval: 3,
+                                     target: self,
+                                     selector: #selector(removeDanMuQueue),
+                                     userInfo: nil, repeats: true)
+    }
+    deinit {
+        displayLink?.remove(from: RunLoop.current, forMode: .common)
+        timer = nil
+        removeTime = nil
     }
     @objc func handleDanMuQueue() {
         if danmuQueue.isEmpty {
@@ -58,7 +76,6 @@ class DanMuView: UIView {
         }
         for dumu in danmus {
             if dumu.row >= linelasts.count {
-                break
             }
             if linelasts[dumu.row] != nil {
                 let endx = danmu.label.frame.origin.x
@@ -80,13 +97,11 @@ class DanMuView: UIView {
                     mySpeed = CGFloat.minimum(mySpeed, maxSpeed)
                     danmu.speed = CGFloat.random(in: minSpeed...mySpeed)
                     isMatch = true
-                    break
                 }
             } else {
                 danmu.row = index
                 danmu.speed = CGFloat.random(in: minSpeed...maxSpeed)
                 isMatch = true
-                break
             }
         }
         if isMatch == false {
@@ -101,14 +116,17 @@ class DanMuView: UIView {
         if isPause == true {
             return
         }
-        for index in 0..<danmus.count {
-            let danmu = danmus[index]
+        for danmu in danmus {
             danmu.label.frame.origin.x -= danmu.speed
             if danmu.label.frame.origin.x < -danmu.label.frame.size.width {
-                danmu.label.removeFromSuperview()
-                danmus.remove(at: index)
-                break
+                removeDanmus.append(danmu)
             }
+        }
+    }
+    @objc func removeDanMuQueue() {
+        if let danmu = removeDanmus.first {
+            danmu.label.removeFromSuperview()
+            removeDanmus.removeFirst()
         }
     }
 }
