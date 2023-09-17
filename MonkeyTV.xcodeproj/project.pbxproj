@@ -126,7 +126,6 @@
 			children = (
 				CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */,
 				CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */,
-				CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */,
 				CC0BF1F32AB2F3B00075203C /* Helpers */,
 				CC0BF1D42AB055450075203C /* Constants */,
 				CC0BF1CE2AB03D730075203C /* Third Party Wrappers */,
@@ -207,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */,
+				CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

@@ -36,6 +36,9 @@ class VideoLauncher: NSObject {
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
+    private lazy var danMuTextField = {
+       return createTextField(text: "輸入彈幕")
+    }()
     private var danmuView: DanMuView = DanMuView()
     private var timer: Timer?
     // MARK: - init
@@ -103,13 +106,24 @@ class VideoLauncher: NSObject {
             })
         }
     }
-    // MARK: - createPlayerBtn
+    // MARK: - Create UI Object
     private func createPlayerBtn(image: UIImage) -> UIButton {
         let btn = UIButton()
         btn.setImage(image, for: .normal)
         btn.tintColor = .white
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
+    }
+    private func createTextField(text: String) -> UITextField {
+        let textfield = UITextField()
+        textfield.attributedPlaceholder = NSAttributedString(
+            string: text,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.font = UIFont.systemFont(ofSize: 18)
+        textfield.borderStyle = .roundedRect
+        textfield.layer.borderColor = UIColor.lightGray.cgColor
+        return textfield
     }
     // MARK: - Layout
     private func addBtnsOnBtnView() {
@@ -140,10 +154,12 @@ class VideoLauncher: NSObject {
     }
     private func addYTView(view: UIView) {
         btnsView.backgroundColor = UIColor(white: 0, alpha: 0.2)
-        view.addSubview(submitDanMuBtn)
+        
         view.addSubview(ytVideoPlayerView)
         view.addSubview(btnsView)
         btnsView.addSubview(danmuView)
+        view.addSubview(danMuTextField)
+        view.addSubview(submitDanMuBtn)
         btnsView.translatesAutoresizingMaskIntoConstraints = false
         ytVideoPlayerView.translatesAutoresizingMaskIntoConstraints = false
         danmuView.translatesAutoresizingMaskIntoConstraints = false
@@ -152,8 +168,12 @@ class VideoLauncher: NSObject {
         NSLayoutConstraint.activate([
             submitDanMuBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             submitDanMuBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            submitDanMuBtn.widthAnchor.constraint(equalToConstant: 50),
+            submitDanMuBtn.widthAnchor.constraint(equalToConstant: 150),
             submitDanMuBtn.heightAnchor.constraint(equalToConstant: 50),
+            danMuTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            danMuTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
+            danMuTextField.widthAnchor.constraint(equalToConstant: 300),
+            danMuTextField.heightAnchor.constraint(equalToConstant: 50),
             ytVideoPlayerView.topAnchor.constraint(equalTo: view.topAnchor, constant: notchHeight),
             ytVideoPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ytVideoPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -186,16 +206,19 @@ class VideoLauncher: NSObject {
             danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10)
         ])
     }
-    // MARK: -
+    // MARK: - Buttons AddTaget
     private func setBtnsAddtarget() {
         showDanMuBtn.addTarget(self, action: #selector(tapBulletBtn(sender:)), for: .touchUpInside)
         addDanMuBtn.addTarget(self, action: #selector(tapSubmitDanMuBtn(sender:)), for: .touchUpInside)
         pauseBtn.addTarget(self, action: #selector(tapPauseBtn(sender:)), for: .touchUpInside)
         changeOrientationBtn.addTarget(self, action: #selector(tapChangeOrientationBtn(sender:)), for: .touchUpInside)
-        submitDanMuBtn.addTarget(self, action:  #selector(tapSubmitDanMuBtn(sender:)), for: .touchUpInside)
+        submitDanMuBtn.addTarget(self, action: #selector(tapSubmitDanMuBtn(sender:)), for: .touchUpInside)
     }
+    // MARK: - Buttons objc functions
     @objc func tapSubmitDanMuBtn(sender: UIButton) {
-        danmuView.danmuQueue.append(("222", false))
+        if let text = danMuTextField.text, text.isEmpty == false {
+            danmuView.danmuQueue.append((text, false))
+        }
     }
     @objc func tapChangeOrientationBtn(sender: UIButton) {
         if playerIsShrink == false {
@@ -252,7 +275,6 @@ extension VideoLauncher: YTPlayerViewDelegate {
 //
 //    }
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
-
 //        print("\(playTime)")
     }
     func getVideoDuratiion() {
