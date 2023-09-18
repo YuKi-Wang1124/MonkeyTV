@@ -2,13 +2,12 @@
 //  File.swift
 //  MonkeyTV
 //
-//  Created by 王昱淇 on 2023/9/15.
+//  Created by 王昱淇 on 2023/9/18.
 //
-
 import UIKit
 
-class VideoCollectionViewCell: UICollectionViewCell {
-    static let identifier = "\(VideoCollectionViewCell.self)"
+class ChatroomTableViewCell: UITableViewCell {
+    static let identifier = "\(ChatroomTableViewCell.self)"
     var coverButton = {
         let btn = UIButton()
         btn.contentMode = .scaleAspectFill
@@ -23,8 +22,8 @@ class VideoCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(coverButton)
         contentView.addSubview(label)
         coverButton.translatesAutoresizingMaskIntoConstraints = false

@@ -62,8 +62,9 @@ class CollectionTableViewCell: UITableViewCell {
                     for: indexPath) as? VideoCollectionViewCell
                 cell?.label.text = itemIdentifier.title
                 UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
-                    cell?.coverBtn.setImage(image, for: .normal)
+                    cell?.coverButton.setImage(image, for: .normal)
                 })
+                cell?.coverButton.addTarget(self, action: #selector(self.showVideoPlayer), for: .touchUpInside)
                 return cell
             })
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
@@ -115,10 +116,12 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showVideoPlayer()
+    }
+    @objc func showVideoPlayer() {
         let videoLauncher = VideoLauncher()
         videoLauncher.videoId = "FjJtmJteK58"
         videoLauncher.showVideoPlayer()
-//        videoLauncher.showVideoPlayer(videoId: "DuNAKgUb7k0")
     }
 }
 

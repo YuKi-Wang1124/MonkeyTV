@@ -25,11 +25,11 @@ class VideoLauncher: NSObject {
     private lazy var showDanMuButton = {
         return createPlayerBtn(image: UIImage.systemAsset(.square, configuration: symbolConfig)!)
     }()
-    private lazy var addDanMuButton = {
+    private lazy var showDanMuTextFieldButton = {
         return createPlayerBtn(image: UIImage.systemAsset(.submitDanMu, configuration: symbolConfig)!)
     }()
     private lazy var showChatRoomButton = {
-      return createPlayerBtn(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
+        return createPlayerBtn(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
     }()
     private lazy var pauseButton = {
         return createPlayerBtn(image: UIImage.systemAsset(.pause, configuration: pauseSymbolConfig)!)
@@ -55,15 +55,24 @@ class VideoLauncher: NSObject {
     // MARK: - init
     override init() {
         super.init()
+        setDanMu()
+        ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
         setBtnsAddtarget()
-        ytVideoPlayerView.delegate = self
+    }
+    deinit {
+        timer = nil
     }
     // MARK: - getDanMuData
     private func getDanMuData() {
-        FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
+        print("XXXXXXXXXXXXXXXXXXX")
+        FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments {
+            querySnapshot, error in
+            print(self.videoId)
+            print(querySnapshot?.count)
             if let querySnapshot = querySnapshot {
                 for document in querySnapshot.documents {
+                    print(document.data())
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                         let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
@@ -88,9 +97,6 @@ class VideoLauncher: NSObject {
                                      target: self, selector: #selector(addDanMuText),
                                      userInfo: nil, repeats: false)
     }
-    private func addDanMu() {
-        danmuView.danmuQueue.append(("text", false))
-    }
     @objc func addDanMuText() {
         let interval = CGFloat.random(in: 0.3...1.0)
         Timer.scheduledTimer(timeInterval: interval,
@@ -99,22 +105,23 @@ class VideoLauncher: NSObject {
     }
     // MARK: - showVideoPlayer
     func showVideoPlayer() {
-        getDanMuData()
-        setDanMu()
         if let keyWindow = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
-            let view = UIView(frame: keyWindow.frame)
-            view.backgroundColor = .white
+            getDanMuData()
+            let view = UIView(frame: CGRect(x: 0,
+                                            y: keyWindow.frame.height,
+                                            width: keyWindow.frame.width,
+                                            height: keyWindow.frame.height))
+            addYTView(view: view)
             keyWindow.addSubview(view)
+            addBtnsOnButtonView()
             let safeAreaInsets = keyWindow.safeAreaInsets
             let topInset = safeAreaInsets.top
             let bottomInset = safeAreaInsets.bottom
             let notchHeight = max(topInset, bottomInset)
-            addYTView(view: view)
             // TODO: change Orientation layout
             setYTViewLayout(view: view, notchHeight: notchHeight)
             //            setLandscapeYTViewLayout(view: view)
-            addBtnsOnBtnView()
             setBtnsAutoLayout()
             let playerVars: [AnyHashable: Any] = [
                 "frameborder": 0,
@@ -129,33 +136,42 @@ class VideoLauncher: NSObject {
                 "autoplay": 1
             ]
             ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
+            view.backgroundColor = .white
             UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1,
-                           initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                view.frame = keyWindow.frame
-            }, completion: { (completedAnimation) in
+                           initialSpringVelocity: 1,
+                           options: .curveEaseOut, animations: {
+                view.frame = CGRect(x: 0,
+                                    y: 0,
+                                    width: keyWindow.frame.width,
+                                    height: keyWindow.frame.height)
+            }, completion: { [self] (completedAnimation) in
                 // may be do something later
+               
             })
         }
     }
     // MARK: - Buttons AddTaget
     private func setBtnsAddtarget() {
-        showDanMuButton.addTarget(self, action: #selector(tapBulletBtn(sender:)),
+        showDanMuButton.addTarget(self, action: #selector(showDanMuView(sender:)),
                                   for: .touchUpInside)
-        addDanMuButton.addTarget(self, action: #selector(tapSubmitDanMuButton(sender:)),
-                                 for: .touchUpInside)
-        pauseButton.addTarget(self, action: #selector(pauseVideo(sender:)),for: .touchUpInside)
+        showDanMuTextFieldButton.addTarget(self, action: #selector(showDanMuTextField(sender:)),
+                                           for: .touchUpInside)
+        pauseButton.addTarget(self, action: #selector(pauseVideo(sender:)), for: .touchUpInside)
         changeOrientationButton.addTarget(self,
                                           action: #selector(changeOrientation(sender:)),
                                           for: .touchUpInside)
-        submitDanMuButton.addTarget(self, action: #selector(tapSubmitDanMuButton(sender:)),
+        submitDanMuButton.addTarget(self, action: #selector(submitMyDanMuButton(sender:)),
                                     for: .touchUpInside)
         videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
                               for: .valueChanged)
-        showChatRoomButton.addTarget(self, action: #selector(showChatRoom(sender:)),
-                              for: .touchUpInside)
+        showChatRoomButton.addTarget(self, action: #selector(showChatroom(sender:)),
+                                     for: .touchUpInside)
     }
-    @objc func showChatRoom(sender: UIButton) {
+    @objc func showDanMuTextField(sender: UIButton) {
+    }
+    // MARK: - Show Chatroom
+    @objc func showChatroom(sender: UIButton) {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
             let chatroomVC = ChatroomViewController()
@@ -167,19 +183,21 @@ class VideoLauncher: NSObject {
             }
         }
     }
-    // MARK: - Buttons objc functions
+    // MARK: - Handle Slider Change
     @objc func handleSliderChange(sender: UISlider) {
         let desiredTime = sender.value
         ytVideoPlayerView.seek(toSeconds: desiredTime, allowSeekAhead: true)
     }
-    @objc func tapSubmitDanMuButton(sender: UIButton) {
+    // MARK: - Submit My DanMuButton
+    @objc func submitMyDanMuButton(sender: UIButton) {
         if let text = danMuTextField.text, text.isEmpty == false {
+            danmuView.danmuQueue.append((text, false))
             let id = FirestoreManageer.bulletChatCollection.document().documentID
             let data: [String: Any] = ["bulletChat":
                                         ["chatId": UUID().uuidString,
                                          "content": text,
                                          "contentType": 0,
-                                         "popTime": videoSlider.value,
+                                         "popTime": videoSlider.value + 2,
                                          // TODO: userid
                                          "userId": "匿名"] as [String: Any],
                                        "videoId": videoId,
@@ -193,6 +211,7 @@ class VideoLauncher: NSObject {
             }
         }
     }
+    // MARK: - Change Orientation
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
             sender.setImage(UIImage.systemAsset(.shrink, configuration: symbolConfig), for: .normal)
@@ -201,6 +220,7 @@ class VideoLauncher: NSObject {
         }
         playerIsShrink.toggle()
     }
+    // MARK: - pauseVideo
     @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
@@ -212,7 +232,8 @@ class VideoLauncher: NSObject {
         }
         videoIsPlaying.toggle()
     }
-    @objc func tapBulletBtn(sender: UIButton) {
+    // MARK: - showDanMuView
+    @objc func showDanMuView(sender: UIButton) {
         if !isDanMuDisplayed {
             sender.setImage(UIImage.systemAsset(.checkmarkSquare, configuration: symbolConfig), for: .normal)
             danmuView.isHidden = false
@@ -247,6 +268,16 @@ extension VideoLauncher: YTPlayerViewDelegate {
     //    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
     //    }
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
+        bulletChats.sort()
+        bulletChats.forEach({
+            if playTime >= $0.popTime {
+                danmuView.danmuQueue.append(($0.content, false))
+                print(playTime)
+                print($0.popTime)
+                print($0.content)
+                self.bulletChats.remove(at: 0)
+            }
+        })
         if self.videoDuration != 0 {
             self.videoSlider.maximumValue = Float(self.videoDuration)
             videoSlider.value = playTime
@@ -265,9 +296,9 @@ extension VideoLauncher: YTPlayerViewDelegate {
 
 // MARK: - Layout
 extension VideoLauncher {
-    private func addBtnsOnBtnView() {
+    private func addBtnsOnButtonView() {
         buttonsView.addSubview(showDanMuButton)
-        buttonsView.addSubview(addDanMuButton)
+        buttonsView.addSubview(showDanMuTextFieldButton)
         buttonsView.addSubview(pauseButton)
         buttonsView.addSubview(changeOrientationButton)
         buttonsView.addSubview(videoSlider)
@@ -282,10 +313,10 @@ extension VideoLauncher {
             showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
             showDanMuButton.widthAnchor.constraint(equalToConstant: 30),
             showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
-            addDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -200),
-            addDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
-            addDanMuButton.widthAnchor.constraint(equalToConstant: 30),
-            addDanMuButton.heightAnchor.constraint(equalToConstant: 30),
+            showDanMuTextFieldButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -200),
+            showDanMuTextFieldButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
+            showDanMuTextFieldButton.widthAnchor.constraint(equalToConstant: 30),
+            showDanMuTextFieldButton.heightAnchor.constraint(equalToConstant: 30),
             pauseButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor),
             pauseButton.widthAnchor.constraint(equalToConstant: 50),
@@ -293,8 +324,7 @@ extension VideoLauncher {
             videoSlider.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
             videoSlider.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor, constant: 50),
             videoSlider.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: -30),
-            videoSlider.heightAnchor.constraint(equalToConstant: 10),
-            
+            videoSlider.heightAnchor.constraint(equalToConstant: 10)
         ])
     }
     private func addYTView(view: UIView) {
@@ -359,7 +389,7 @@ extension VideoLauncher {
     private func createPlayerBtn(image: UIImage) -> UIButton {
         let btn = UIButton()
         btn.setImage(image, for: .normal)
-        btn.tintColor = .gray
+        btn.tintColor = .systemGray6
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }

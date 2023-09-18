@@ -117,8 +117,10 @@ class DanMuView: UIView {
             return
         }
         for danmu in danmus {
-            danmu.label.frame.origin.x -= danmu.speed
-            if danmu.label.frame.origin.x < -danmu.label.frame.size.width {
+            if danmu.label.frame.origin.x >= -danmu.label.frame.size.width {
+                danmu.label.frame.origin.x -= danmu.speed
+            }
+            if danmu.label.frame.origin.x < -danmu.label.frame.size.width && !removeDanmus.contains(danmu) {
                 removeDanmus.append(danmu)
             }
         }

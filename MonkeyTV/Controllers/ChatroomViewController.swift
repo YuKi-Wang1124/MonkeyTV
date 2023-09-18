@@ -13,9 +13,8 @@ class ChatroomViewController: UIViewController {
         tableView.isHidden = true
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.register(UITableViewCell.self,
-                           forCellReuseIdentifier:
-                            "cell")
+        tableView.register(ChatroomTableViewCell.self,
+                           forCellReuseIdentifier:ChatroomTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -58,7 +57,6 @@ class ChatroomViewController: UIViewController {
             messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor),
             messageTextField.topAnchor.constraint(equalTo: tableView.bottomAnchor),
             messageTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
             submitMessageButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             submitMessageButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
             submitMessageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -71,7 +69,6 @@ class ChatroomViewController: UIViewController {
         view.addSubview(submitMessageButton)
     }
     private func fetchConversations() {
-        
     }
 }
 
@@ -79,7 +76,6 @@ extension ChatroomViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = "Hello World"
