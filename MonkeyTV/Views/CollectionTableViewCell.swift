@@ -116,7 +116,9 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let videoLauncher = VideoLauncher()
-        videoLauncher.showVideoPlayer(videoId: "FjJtmJteK58")
+        videoLauncher.videoId = "FjJtmJteK58"
+        videoLauncher.showVideoPlayer()
+//        videoLauncher.showVideoPlayer(videoId: "DuNAKgUb7k0")
     }
 }
 

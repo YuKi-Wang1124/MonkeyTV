@@ -35,6 +35,9 @@
 		CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */; };
 		CC0BF1FC2AB454230075203C /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */; };
 		CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */; };
+		CC963C082AB6F9A20047EEFA /* BulletChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* BulletChatData.swift */; };
+		CC963C0A2AB7F8BE0047EEFA /* FirestoreManageer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManageer.swift */; };
+		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +74,9 @@
 		CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1FB2AB454230075203C /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMu.swift; sourceTree = "<group>"; };
+		CC963C072AB6F9A20047EEFA /* BulletChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletChatData.swift; sourceTree = "<group>"; };
+		CC963C092AB7F8BE0047EEFA /* FirestoreManageer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManageer.swift; sourceTree = "<group>"; };
+		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +168,7 @@
 				CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */,
 				CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */,
 				CC0BF1CC2AB036BD0075203C /* PlayerViewController.swift */,
+				CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -180,6 +187,7 @@
 				CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */,
 				CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */,
 				CC0BF1D82AB1B1300075203C /* HTTPClient.swift */,
+				CC963C092AB7F8BE0047EEFA /* FirestoreManageer.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -198,6 +206,7 @@
 				CC0BF1DE2AB1B8130075203C /* Video.swift */,
 				CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */,
 				CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */,
+				CC963C072AB6F9A20047EEFA /* BulletChatData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -369,16 +378,19 @@
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
 				CC0BF1EC2AB2CA0A0075203C /* ChannelInfo.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
+				CC963C082AB6F9A20047EEFA /* BulletChatData.swift in Sources */,
 				CC0BF1F82AB441830075203C /* VideoCollectionViewCell.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
 				CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */,
 				CC0BF1FC2AB454230075203C /* UIWindow+Extension.swift in Sources */,
+				CC963C0A2AB7F8BE0047EEFA /* FirestoreManageer.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
 				CC0BF1E42AB1DB0F0075203C /* UserRequest.swift in Sources */,
 				CC0BF1F62AB418E40075203C /* VideoTableViewCell.swift in Sources */,
+				CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */,
 				CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */,
 				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
 				CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */,

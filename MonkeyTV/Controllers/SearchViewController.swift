@@ -22,7 +22,7 @@ class SearchViewController: UIViewController {
     }
     @objc func showPlayerVC() {
         let videoLauncher = VideoLauncher()
-        videoLauncher.showVideoPlayer(videoId: "FjJtmJteK58")
+        videoLauncher.showVideoPlayer()
     }
     func displayThumbnailImage(from url: String) {
         if let imageUrl = URL(string: url) {

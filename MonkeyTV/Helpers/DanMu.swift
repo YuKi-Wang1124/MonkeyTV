@@ -29,7 +29,7 @@ class DanMuView: UIView {
     var displayLink: CADisplayLink?
     var lineHeight: CGFloat = 26
     var gap: CGFloat = 20
-    var minSpeed: CGFloat = 1
+    var minSpeed: CGFloat = 0.1
     var maxSpeed: CGFloat = 2
     var isPause: Bool = false
     var danmus: [DanMu] = []
@@ -95,7 +95,7 @@ class DanMuView: UIView {
                     danmu.row = index
                     var mySpeed = self.frame.size.width / endx * dumu.speed
                     mySpeed = CGFloat.minimum(mySpeed, maxSpeed)
-                    danmu.speed = CGFloat.random(in: minSpeed...mySpeed)
+                    danmu.speed = CGFloat.random(in: minSpeed ... mySpeed)
                     isMatch = true
                 }
             } else {

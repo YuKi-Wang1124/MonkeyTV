@@ -23,6 +23,7 @@ enum ImageAsset: String {
     case play = "play.circle.fill"
     case shrink = "arrow.down.right.and.arrow.up.left"
     case enlarge = "arrow.up.left.and.arrow.down.right"
+    case chatroom = "text.bubble.rtl"
 }
 
 extension UIImage {
@@ -44,7 +45,7 @@ extension UIImage {
                         }
                     }
                 } else {
-                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
+//                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
                     DispatchQueue.main.async {
                         completion(nil)
                     }
