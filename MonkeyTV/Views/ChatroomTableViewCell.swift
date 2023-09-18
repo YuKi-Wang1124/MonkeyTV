@@ -8,35 +8,47 @@ import UIKit
 
 class ChatroomTableViewCell: UITableViewCell {
     static let identifier = "\(ChatroomTableViewCell.self)"
-    var coverButton = {
-        let btn = UIButton()
-        btn.contentMode = .scaleAspectFill
-        btn.clipsToBounds = true
-        return btn
+    var personalImageView = {
+        let imageview = UIImageView()
+        imageview.contentMode = .scaleAspectFill
+        imageview.translatesAutoresizingMaskIntoConstraints = false
+        return imageview
     }()
-    var label: UILabel = {
+    var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textAlignment = .center
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var messageLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(coverButton)
-        contentView.addSubview(label)
-        coverButton.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
+        setupCellUI()
+    }
+    private func setupCellUI() {
+        contentView.addSubview(personalImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(messageLabel)
         NSLayoutConstraint.activate([
-            coverButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            coverButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            coverButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
-            coverButton.widthAnchor.constraint(equalTo: coverButton.heightAnchor),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: coverButton.bottomAnchor, constant: 8),
-            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.36)
+            personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            personalImageView.trailingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: -16),
+            personalImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            personalImageView.heightAnchor.constraint(equalToConstant: 30),
+            personalImageView.widthAnchor.constraint(equalToConstant: 30),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            messageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
+            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     required init?(coder: NSCoder) {

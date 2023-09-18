@@ -10,11 +10,11 @@ import UIKit
 class ChatroomViewController: UIViewController {
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.isHidden = true
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(ChatroomTableViewCell.self,
-                           forCellReuseIdentifier:ChatroomTableViewCell.identifier)
+                           forCellReuseIdentifier: ChatroomTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -39,7 +39,8 @@ class ChatroomViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
+        tableView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         setupUI()
         setupTableView()
         fetchConversations()
@@ -74,11 +75,15 @@ class ChatroomViewController: UIViewController {
 
 extension ChatroomViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        30
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Hello World"
+        let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTableViewCell.identifier,
+                                                 for: indexPath) as? ChatroomTableViewCell
+        guard let cell else { return UITableViewCell() }
+        cell.nameLabel.text = "\(Int.random(in: 1...100000000))"
+        cell.messageLabel.text = "\(Int.random(in: 1...100000000000000000))"
+        cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
         return cell
     }
 }
