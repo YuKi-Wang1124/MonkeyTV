@@ -59,6 +59,7 @@ class HTTPClient {
 
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
+    private var cache = [String: Data]()
 
     private init() {}
 
@@ -66,6 +67,11 @@ class HTTPClient {
         _ request: Request,
         completion: @escaping (Result<Data>) -> Void
     ) {
+        let cacheData = cache[request.endPoint]
+        if cacheData != nil {
+            completion(Result.success(cacheData!))
+            return
+        }
         URLSession.shared.dataTask(
             with: request.makeRequest(),
             completionHandler: { (data, response, error) in
@@ -78,6 +84,7 @@ class HTTPClient {
                 let statusCode = httpResponse.statusCode
                 switch statusCode {
                 case 200..<300:
+                    self.cache[request.endPoint] = data
                     print("StatusCode: \(statusCode)")
                     completion(Result.success(data!))
                 case 400..<500:

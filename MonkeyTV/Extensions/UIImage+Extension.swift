@@ -16,12 +16,19 @@ enum ImageAsset: String {
     case selectedMagnifyingglass
     case selectedHeart = "heart.fill"
     case selectedPerson = "person.fill"
+    case square
+    case checkmarkSquare = "checkmark.square"
+    case submitDanMu = "ellipsis.message.fill"
+    case pause = "pause.circle.fill"
+    case play = "play.circle.fill"
+    case shrink = "arrow.down.right.and.arrow.up.left"
+    case enlarge = "arrow.up.left.and.arrow.down.right"
+    case chatroom = "text.bubble.rtl"
 }
 
 extension UIImage {
-    
-    static func systemAsset(_ asset: ImageAsset) -> UIImage? {
-        return UIImage(systemName: asset.rawValue)
+    static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage? {
+        return UIImage(systemName: asset.rawValue, withConfiguration: configuration)
     }
     static func displayThumbnailImage(from url: String, completion: @escaping (UIImage?) -> Void) {
         if let imageUrl = URL(string: url) {
@@ -38,7 +45,7 @@ extension UIImage {
                         }
                     }
                 } else {
-                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
+//                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
                     DispatchQueue.main.async {
                         completion(nil)
                     }
