@@ -29,15 +29,13 @@ class VideoLauncher: NSObject {
         return createPlayerBtn(image: UIImage.systemAsset(.submitDanMu, configuration: symbolConfig)!)
     }()
     private lazy var showChatRoomButton = {
-        let button = createPlayerBtn(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
-        button.tintColor = .black
-        return button
+      return createPlayerBtn(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
     }()
     private lazy var pauseButton = {
         return createPlayerBtn(image: UIImage.systemAsset(.pause, configuration: pauseSymbolConfig)!)
     }()
     private lazy var danMuTextField = {
-        return createTextField(text: "輸入彈幕")
+        return UITextField.createTextField(text: "輸入彈幕")
     }()
     private lazy var submitDanMuButton = {
         let button = UIButton()
@@ -146,21 +144,26 @@ class VideoLauncher: NSObject {
                                   for: .touchUpInside)
         addDanMuButton.addTarget(self, action: #selector(tapSubmitDanMuButton(sender:)),
                                  for: .touchUpInside)
-        pauseButton.addTarget(self, action: #selector(tapPauseBtn(sender:)),for: .touchUpInside)
+        pauseButton.addTarget(self, action: #selector(pauseVideo(sender:)),for: .touchUpInside)
         changeOrientationButton.addTarget(self,
-                                          action: #selector(tapChangeOrientationBtn(sender:)),
+                                          action: #selector(changeOrientation(sender:)),
                                           for: .touchUpInside)
         submitDanMuButton.addTarget(self, action: #selector(tapSubmitDanMuButton(sender:)),
                                     for: .touchUpInside)
         videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
                               for: .valueChanged)
-        showChatRoomButton.addTarget(self, action: #selector(tapshowChatRoomButton(sender:)),
-                              for: .valueChanged)
+        showChatRoomButton.addTarget(self, action: #selector(showChatRoom(sender:)),
+                              for: .touchUpInside)
     }
-    @objc func tapshowChatRoomButton(sender: UIButton) {
-        if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            keyWindow.rootViewController?.sheetPresentationController {
-                
+    @objc func showChatRoom(sender: UIButton) {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
+            let chatroomVC = ChatroomViewController()
+            if let sheet = chatroomVC.sheetPresentationController {
+                sheet.prefersGrabberVisible = true
+                sheet.detents = [.medium(), .large()]
+                sheet.largestUndimmedDetentIdentifier = .large
+                keyWindow.rootViewController?.present(chatroomVC, animated: true)
             }
         }
     }
@@ -190,7 +193,7 @@ class VideoLauncher: NSObject {
             }
         }
     }
-    @objc func tapChangeOrientationBtn(sender: UIButton) {
+    @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
             sender.setImage(UIImage.systemAsset(.shrink, configuration: symbolConfig), for: .normal)
         } else {
@@ -198,7 +201,7 @@ class VideoLauncher: NSObject {
         }
         playerIsShrink.toggle()
     }
-    @objc func tapPauseBtn(sender: UIButton) {
+    @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
             sender.setImage(UIImage.systemAsset(.play, configuration: pauseSymbolConfig), for: .normal)
@@ -268,7 +271,6 @@ extension VideoLauncher {
         buttonsView.addSubview(pauseButton)
         buttonsView.addSubview(changeOrientationButton)
         buttonsView.addSubview(videoSlider)
-        buttonsView.addSubview(showChatRoomButton)
     }
     private func setBtnsAutoLayout() {
         NSLayoutConstraint.activate([
@@ -292,10 +294,7 @@ extension VideoLauncher {
             videoSlider.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor, constant: 50),
             videoSlider.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: -30),
             videoSlider.heightAnchor.constraint(equalToConstant: 10),
-            showChatRoomButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            showChatRoomButton.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor, constant: 550),
-            showChatRoomButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: -30),
-            showChatRoomButton.heightAnchor.constraint(equalToConstant: 30)
+            
         ])
     }
     private func addYTView(view: UIView) {
@@ -305,6 +304,7 @@ extension VideoLauncher {
         buttonsView.addSubview(danmuView)
         view.addSubview(danMuTextField)
         view.addSubview(submitDanMuButton)
+        view.addSubview(showChatRoomButton)
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         ytVideoPlayerView.translatesAutoresizingMaskIntoConstraints = false
         danmuView.translatesAutoresizingMaskIntoConstraints = false
@@ -331,7 +331,11 @@ extension VideoLauncher {
             danmuView.leadingAnchor.constraint(equalTo: ytVideoPlayerView.leadingAnchor),
             danmuView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
-            danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10)
+            danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10),
+            showChatRoomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            showChatRoomButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150),
+            showChatRoomButton.widthAnchor.constraint(equalToConstant: 30),
+            showChatRoomButton.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     private func setLandscapeYTViewLayout(view: UIView) {
@@ -355,19 +359,8 @@ extension VideoLauncher {
     private func createPlayerBtn(image: UIImage) -> UIButton {
         let btn = UIButton()
         btn.setImage(image, for: .normal)
-        btn.tintColor = .white
+        btn.tintColor = .gray
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
-    }
-    private func createTextField(text: String) -> UITextField {
-        let textfield = UITextField()
-        textfield.attributedPlaceholder = NSAttributedString(
-            string: text,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        textfield.translatesAutoresizingMaskIntoConstraints = false
-        textfield.font = UIFont.systemFont(ofSize: 18)
-        textfield.borderStyle = .roundedRect
-        textfield.layer.borderColor = UIColor.lightGray.cgColor
-        return textfield
     }
 }
