@@ -50,8 +50,7 @@ class ChatroomViewModel {
                 let dict = data["chatroomChat"] as? [String: Any]
                 if let dict = dict,
                    let createdTime = dict["createdTime"] as? Timestamp,
-                    createdTime.dateValue() >= currentTime {
-                    print("+++++++", createdTime.dateValue())
+                   createdTime.dateValue() >= currentTime {
                     let object = ChatroomData(
                         chatroomChat: ChatroomChat(
                             chatId: dict["chatId"] as? String,
@@ -61,7 +60,9 @@ class ChatroomViewModel {
                             userId: dict["userId"] as? String),
                         videoId: data["videoId"] as? String ?? "",
                         id: data["id"] as? String ?? "")
-                    newItems.append(object)
+                    if !(self?.snapshot.itemIdentifiers.contains(object))! {
+                        newItems.append(object)
+                    }
                 }
             }
             guard let self = self else { return }
