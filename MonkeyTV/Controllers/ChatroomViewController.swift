@@ -6,45 +6,85 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
 
 class ChatroomViewController: UIViewController {
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.isHidden = true
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(ChatroomTableViewCell.self,
-                           forCellReuseIdentifier:ChatroomTableViewCell.identifier)
+                           forCellReuseIdentifier: ChatroomTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     private lazy var submitMessageButton = {
-        let button = UIButton()
-        button.setTitle("送出", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    private lazy var noConversationLabel: UILabel = {
-        let label = UILabel()
-        label.text = "沒有對話"
-        label.textAlignment = .center
-        label.textColor = .gray
-        label.font = .systemFont(ofSize: 21, weight: .medium)
-        label.isHidden = true
-        return label
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send)!)
     }()
     private lazy var messageTextField = {
         return UITextField.createTextField(text: "輸入訊息")
     }()
+    private var viewModel: ChatroomViewModel = ChatroomViewModel()
+    var videoId: String = ""
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
+        tableView.dataSource = viewModel.dataSource
+        viewModel.configureDataSource(tableView: self.tableView)
+        bindingViewModel()
         setupUI()
-        setupTableView()
-        fetchConversations()
+        submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
     }
+    deinit {
+    }
+    // MARK: - Submit Message To DB
+    @objc func submitMessage() {
+        if let text = messageTextField.text, text.isEmpty == false {
+            let id = FirestoreManageer.chatroomCollection.document().documentID
+            let data: [String: Any] =
+            ["chatroomChat":
+                ["chatId": UUID().uuidString,
+                 "content": text,
+                 "contentType": 0,
+                 "createdTime": FirebaseFirestore.Timestamp(),
+                 // TODO: userid
+                 "userId": "匿名"] as [String: Any],
+             "videoId": videoId,
+             "id": id]
+            FirestoreManageer.chatroomCollection.document(id).setData(data) { error in
+                if error != nil {
+                    print("Error adding document: (error)")
+                } else {
+                    self.messageTextField.text = ""
+                }
+            }
+        }
+    }
+    func bindingViewModel() {
+        let now = FirebaseFirestore.Timestamp().dateValue()
+        viewModel.fetchConversation(currentTime: now)
+        viewModel.isLoading.bind { [weak self] isLoading in
+            guard let self, let isLoading = isLoading else {
+                return
+            }
+            DispatchQueue.main.async {
+                if isLoading {
+                } else {
+                    return
+                }
+            }
+        }
+    }
+}
+// MARK: -
+extension ChatroomViewController {
+    // MARK: - Setup UI
     private func setupUI() {
+        view.addSubview(submitMessageButton)
         view.addSubview(tableView)
         view.addSubview(submitMessageButton)
         view.addSubview(messageTextField)
@@ -62,23 +102,5 @@ class ChatroomViewController: UIViewController {
             submitMessageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
         ])
-    }
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.addSubview(submitMessageButton)
-    }
-    private func fetchConversations() {
-    }
-}
-
-extension ChatroomViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Hello World"
-        return cell
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct BulletChatData: Codable {
     let id: String
@@ -30,4 +31,21 @@ struct BulletChat: Codable, Comparable {
        static func == (lhs: BulletChat, rhs: BulletChat) -> Bool {
            return lhs.popTime == rhs.popTime
        }
+}
+
+struct ChatroomData: Codable, Hashable {
+    let chatroomChat: ChatroomChat
+    let videoId: String
+    let id: String
+    static func == (lhs: ChatroomData, rhs: ChatroomData) -> Bool {
+           return lhs.id == rhs.id
+    }
+}
+
+struct ChatroomChat: Codable, Hashable {
+    let chatId: String?
+    let content: String?
+    let contentType: Int?
+    let createdTime: Date?
+    let userId: String?
 }

@@ -30,7 +30,7 @@ class VideoTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupUI()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor.white
     }
     override func prepareForReuse() {
         coverImageView.image = nil

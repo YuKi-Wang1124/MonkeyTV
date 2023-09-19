@@ -32,6 +32,7 @@ class CollectionTableViewCell: UITableViewCell {
         updateDataSource()
         collectionView.delegate = self
         collectionView.dataSource = dataSource
+        contentView.backgroundColor = UIColor.white
         contentView.addSubview(collectionView)
         setupUI()
     }
@@ -42,6 +43,7 @@ class CollectionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     private func setupUI() {
+        collectionView.backgroundColor = UIColor.white
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
