@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+
 class HomeViewController: UIViewController {
     private lazy var tableView = {
         var tableView = UITableView()
@@ -28,7 +30,36 @@ class HomeViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
+        
+        FirestoreManageer.chatroomCollection.addSnapshotListener { [weak self] querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            for document in documents {
+                let data = document.data()
+                print(data["id"] as? String as Any)
+                print(data["videoId"] as? String as Any)
+                let dict = data["chatroomChat"] as? [String: Any]
+                if let dict = dict {
+                    if let createdTime = dict["createdTime"] as? Timestamp {
+                        let object = ChatroomData(
+                            chatroomChat: ChatroomChat(
+                                chatId: dict["chatId"] as? String ?? "",
+                                content: dict["content"] as? String ?? "",
+                                contentType: dict["contentType"] as? Int ?? 0,
+                                createdTime: createdTime.dateValue(),
+                                userId: dict["userId"] as? String ?? ""),
+                            videoId: data["videoId"] as? String ?? "",
+                            id: data["id"] as? String ?? "")
+                        print(object)
+                    }
+                }
+            }
+        }
+        
+        
         view.backgroundColor = UIColor.white
         tableView.backgroundColor = UIColor.white
 //        DispatchQueue.main.async {

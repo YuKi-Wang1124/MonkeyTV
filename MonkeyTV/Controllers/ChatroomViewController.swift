@@ -24,31 +24,21 @@ class ChatroomViewController: UIViewController {
     private lazy var submitMessageButton = {
         return UIButton.createPlayerButton(image: UIImage.systemAsset(.send)!)
     }()
-//    private lazy var noConversationLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "沒有對話"
-//        label.textAlignment = .center
-//        label.textColor = .gray
-//        label.font = .systemFont(ofSize: 21, weight: .medium)
-//        label.isHidden = true
-//        return label
-//    }()
     private lazy var messageTextField = {
         return UITextField.createTextField(text: "輸入訊息")
     }()
     private var viewModel: ChatroomViewModel = ChatroomViewModel()
-    private var snapshot = NSDiffableDataSourceSnapshot<OneSection, ChatroomData>()
     private var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
     var videoId: String = ""
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        configureDataSource()
 //        tableView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         bindingViewModel()
         setupUI()
         tableView.dataSource = dataSource
-        configureDataSource()
         submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
     }
     deinit {
@@ -85,7 +75,8 @@ class ChatroomViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 if isLoading {
-                    self.tableView.reloadData()
+                    self.dataSource.apply(self.viewModel.snapshot)
+//                    self.tableView.reloadData()
                 } else {
                     return
                 }
@@ -99,8 +90,11 @@ extension ChatroomViewController {
         dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTableViewCell.identifier, for: indexPath) as? ChatroomTableViewCell
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: ChatroomTableViewCell.identifier,
+                    for: indexPath) as? ChatroomTableViewCell
                 guard let cell = cell else { return UITableViewCell() }
+                cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
                 cell.nameLabel.text = item.chatroomChat.userId
                 cell.messageLabel.text = item.chatroomChat.content
                 return cell
@@ -132,5 +126,4 @@ extension ChatroomViewController {
             messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
         ])
     }
-    
 }

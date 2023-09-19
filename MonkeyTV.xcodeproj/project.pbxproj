@@ -45,6 +45,7 @@
 		CC963C172AB92F7D0047EEFA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C162AB92F7D0047EEFA /* File.swift */; };
 		CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C182AB951180047EEFA /* UIBotton+Extension.swift */; };
 		CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1A2AB96B5C0047EEFA /* Observable.swift */; };
+		CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		CC963C162AB92F7D0047EEFA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CC963C182AB951180047EEFA /* UIBotton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBotton+Extension.swift"; sourceTree = "<group>"; };
 		CC963C1A2AB96B5C0047EEFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 				CC0BF1E02AB1B8190075203C /* Model */,
 				CC0BF1D12AB052B40075203C /* Manager */,
 				CC0BF1F42AB418CA0075203C /* Views */,
+				CC963C1C2AB996BA0047EEFA /* ViewModel */,
 				CC0BF1C32AB014920075203C /* Controllers */,
 				CC0BF1B32AB00BF70075203C /* Assets.xcassets */,
 				CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */,
@@ -257,6 +260,14 @@
 				CC963C142AB92CC00047EEFA /* BaseViewController.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		CC963C1C2AB996BA0047EEFA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,6 +432,7 @@
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
+				CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */,
 				CC0BF1E42AB1DB0F0075203C /* UserRequest.swift in Sources */,
 				CC0BF1F62AB418E40075203C /* VideoTableViewCell.swift in Sources */,
 				CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */,
