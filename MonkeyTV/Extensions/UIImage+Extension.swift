@@ -25,6 +25,7 @@ enum ImageAsset: String {
     case enlarge = "arrow.up.left.and.arrow.down.right"
     case chatroom = "text.bubble.fill"
     case personalPicture = "person.crop.circle"
+    case send = "paperplane"
 }
 
 extension UIImage {

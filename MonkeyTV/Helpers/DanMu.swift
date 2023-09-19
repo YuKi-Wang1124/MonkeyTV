@@ -13,9 +13,7 @@ class DanMu: Hashable {
         return true
     }
     func hash(into hasher: inout Hasher) {
-        
     }
-    
     var row: Int = 0
     var label: UILabel = UILabel()
     var speed: CGFloat = 0

@@ -3,4 +3,262 @@
    uuid = "954907AB-F727-497E-A529-C0E1C095BAE2"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F31C03A-0D14-4424-9DCA-2CB2BF8EA8E3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ChatroomViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2F31C03A-0D14-4424-9DCA-2CB2BF8EA8E3 - 357448b33ff3ad37"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "524">
+               </Location>
+               <Location
+                  uuid = "2F31C03A-0D14-4424-9DCA-2CB2BF8EA8E3 - 357448b33ff3ad37"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "384">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DF86B1BD-42D1-4606-8449-CADC11CD0A21"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ChatroomViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "79FAEF0D-7589-4DB8-8DD3-D2792C8DDF1B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ChatroomViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "79FAEF0D-7589-4DB8-8DD3-D2792C8DDF1B - 357448b33ff3ad10"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "556">
+               </Location>
+               <Location
+                  uuid = "79FAEF0D-7589-4DB8-8DD3-D2792C8DDF1B - 357448b33ff3ad10"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "416">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1B2EB484-FAEA-44B1-A6C3-26C172AD19BC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ChatroomViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1B2EB484-FAEA-44B1-A6C3-26C172AD19BC - 357448b33ff3adf1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "564">
+               </Location>
+               <Location
+                  uuid = "1B2EB484-FAEA-44B1-A6C3-26C172AD19BC - 357448b33ff3adf1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "424">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E9A49A4-EC3B-433A-8170-01715EF5CDE4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ChatroomViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9E9A49A4-EC3B-433A-8170-01715EF5CDE4 - 357448b33ff3add2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "668">
+               </Location>
+               <Location
+                  uuid = "9E9A49A4-EC3B-433A-8170-01715EF5CDE4 - 357448b33ff3add2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "528">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85DE78C2-3BFD-4A9A-819E-0412CA5425CF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ChatroomViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "85DE78C2-3BFD-4A9A-819E-0412CA5425CF - 357448b33ff3adb3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "676">
+               </Location>
+               <Location
+                  uuid = "85DE78C2-3BFD-4A9A-819E-0412CA5425CF - 357448b33ff3adb3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.ChatroomViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ChatroomViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "536">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

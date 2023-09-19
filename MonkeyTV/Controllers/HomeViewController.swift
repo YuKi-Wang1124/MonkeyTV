@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         view.backgroundColor = UIColor.white
         tableView.backgroundColor = UIColor.white
 //        DispatchQueue.main.async {

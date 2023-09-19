@@ -22,46 +22,51 @@ class ChatroomViewController: UIViewController {
         return tableView
     }()
     private lazy var submitMessageButton = {
-        let button = UIButton()
-        button.setTitle("送出", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send)!)
     }()
-    private lazy var noConversationLabel: UILabel = {
-        let label = UILabel()
-        label.text = "沒有對話"
-        label.textAlignment = .center
-        label.textColor = .gray
-        label.font = .systemFont(ofSize: 21, weight: .medium)
-        label.isHidden = true
-        return label
-    }()
+//    private lazy var noConversationLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "沒有對話"
+//        label.textAlignment = .center
+//        label.textColor = .gray
+//        label.font = .systemFont(ofSize: 21, weight: .medium)
+//        label.isHidden = true
+//        return label
+//    }()
     private lazy var messageTextField = {
         return UITextField.createTextField(text: "輸入訊息")
     }()
-    var videoId = ""
+    private var viewModel: ChatroomViewModel = ChatroomViewModel()
+    private var snapshot = NSDiffableDataSourceSnapshot<OneSection, ChatroomData>()
+    private var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
+    var videoId: String = ""
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        tableView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+//        tableView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        bindingViewModel()
         setupUI()
-        setupTableView()
-        fetchConversations()
+        tableView.dataSource = dataSource
+        configureDataSource()
         submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
     }
+    deinit {
+    }
+    // MARK: -
     @objc func submitMessage() {
         if let text = messageTextField.text, text.isEmpty == false {
             let id = FirestoreManageer.chatroomCollection.document().documentID
-            let data: [String: Any] = ["chatroomChat":
-                                        ["chatId": UUID().uuidString,
-                                         "content": text,
-                                         "contentType": 0,
-                                         "createdTime": FirebaseFirestore.Timestamp(),
-                                         // TODO: userid
-                                         "userId": "匿名"] as [String: Any],
-                                       "videoId": videoId,
-                                       "id": id]
+            let data: [String: Any] =
+            ["chatroomChat":
+                ["chatId": UUID().uuidString,
+                 "content": text,
+                 "contentType": 0,
+                 "createdTime": FirebaseFirestore.Timestamp(),
+                 // TODO: userid
+                 "userId": "匿名"] as [String: Any],
+             "videoId": videoId,
+             "id": id]
             FirestoreManageer.chatroomCollection.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")
@@ -71,8 +76,44 @@ class ChatroomViewController: UIViewController {
             }
         }
     }
+
+    func bindingViewModel() {
+        viewModel.fetchConversation()
+        viewModel.isLoading.bind { [weak self] isLoading in
+            guard let self, let isLoading = isLoading else {
+                return
+            }
+            DispatchQueue.main.async {
+                if isLoading {
+                    self.tableView.reloadData()
+                } else {
+                    return
+                }
+            }
+        }
+    }
+}
+// MARK: -
+extension ChatroomViewController {
+    private func configureDataSource() {
+        dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
+            tableView: tableView,
+            cellProvider: { tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTableViewCell.identifier, for: indexPath) as? ChatroomTableViewCell
+                guard let cell = cell else { return UITableViewCell() }
+                cell.nameLabel.text = item.chatroomChat.userId
+                cell.messageLabel.text = item.chatroomChat.content
+                return cell
+            }
+        )
+    }
+}
+
+// MARK: -
+extension ChatroomViewController {
     // MARK: - Setup UI
     private func setupUI() {
+        view.addSubview(submitMessageButton)
         view.addSubview(tableView)
         view.addSubview(submitMessageButton)
         view.addSubview(messageTextField)
@@ -91,44 +132,5 @@ class ChatroomViewController: UIViewController {
             messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
         ])
     }
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.addSubview(submitMessageButton)
-    }
-    private func fetchConversations() {
-        FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments {
-            querySnapshot, error in
-            print(self.videoId)
-            print(querySnapshot?.count)
-            if let querySnapshot = querySnapshot {
-                for document in querySnapshot.documents {
-                    print(document.data())
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
-                        self.bulletChats.append(decodedObject.bulletChat)
-                        print(self.bulletChats)
-                    } catch {
-                        print("\(error)")
-                    }
-                }
-            }
-        }
-    }
-}
-
-extension ChatroomViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        30
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTableViewCell.identifier,
-                                                 for: indexPath) as? ChatroomTableViewCell
-        guard let cell else { return UITableViewCell() }
-        cell.nameLabel.text = "\(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + +++++++++++++++++++++++ "
-        cell.messageLabel.text = "\(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000000000000))"
-        cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
-        return cell
-    }
+    
 }

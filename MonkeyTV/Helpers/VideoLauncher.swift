@@ -20,19 +20,19 @@ class VideoLauncher: NSObject {
     private var videoDuration = 0
     private var bulletChats = [BulletChat]()
     private lazy var changeOrientationButton = {
-        return createPlayerBtn(image: UIImage.systemAsset(.enlarge, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.enlarge, configuration: symbolConfig)!)
     }()
     private lazy var showDanMuButton = {
-        return createPlayerBtn(image: UIImage.systemAsset(.square, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.square, configuration: symbolConfig)!)
     }()
     private lazy var showDanMuTextFieldButton = {
-        return createPlayerBtn(image: UIImage.systemAsset(.submitDanMu, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.submitDanMu, configuration: symbolConfig)!)
     }()
     private lazy var showChatRoomButton = {
-        return createPlayerBtn(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
     }()
     private lazy var pauseButton = {
-        return createPlayerBtn(image: UIImage.systemAsset(.pause, configuration: pauseSymbolConfig)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.pause, configuration: pauseSymbolConfig)!)
     }()
     private lazy var danMuTextField = {
         return UITextField.createTextField(text: "輸入彈幕")
@@ -67,16 +67,12 @@ class VideoLauncher: NSObject {
     private func getDanMuData() {
         FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments {
             querySnapshot, error in
-            print(self.videoId)
-            print(querySnapshot?.count)
             if let querySnapshot = querySnapshot {
                 for document in querySnapshot.documents {
-                    print(document.data())
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                         let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
                         self.bulletChats.append(decodedObject.bulletChat)
-                        print(self.bulletChats)
                     } catch {
                         print("\(error)")
                     }
@@ -270,9 +266,6 @@ extension VideoLauncher: YTPlayerViewDelegate {
         bulletChats.forEach({
             if playTime >= $0.popTime {
                 danmuView.danmuQueue.append(($0.content, false))
-                print(playTime)
-                print($0.popTime)
-                print($0.content)
                 self.bulletChats.remove(at: 0)
             }
         })
@@ -382,13 +375,5 @@ extension VideoLauncher {
             danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
             danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10)
         ])
-    }
-    // MARK: - Create UI Object
-    private func createPlayerBtn(image: UIImage) -> UIButton {
-        let btn = UIButton()
-        btn.setImage(image, for: .normal)
-        btn.tintColor = .systemGray6
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }
+    }    
 }
