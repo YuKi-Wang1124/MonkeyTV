@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
 
 class ChatroomViewController: UIViewController {
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -37,6 +40,7 @@ class ChatroomViewController: UIViewController {
     private lazy var messageTextField = {
         return UITextField.createTextField(text: "輸入訊息")
     }()
+    var videoId = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -44,7 +48,30 @@ class ChatroomViewController: UIViewController {
         setupUI()
         setupTableView()
         fetchConversations()
+        submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
     }
+    @objc func submitMessage() {
+        if let text = messageTextField.text, text.isEmpty == false {
+            let id = FirestoreManageer.chatroomCollection.document().documentID
+            let data: [String: Any] = ["chatroomChat":
+                                        ["chatId": UUID().uuidString,
+                                         "content": text,
+                                         "contentType": 0,
+                                         "createdTime": FirebaseFirestore.Timestamp(),
+                                         // TODO: userid
+                                         "userId": "匿名"] as [String: Any],
+                                       "videoId": videoId,
+                                       "id": id]
+            FirestoreManageer.chatroomCollection.document(id).setData(data) { error in
+                if error != nil {
+                    print("Error adding document: (error)")
+                } else {
+                    self.messageTextField.text = ""
+                }
+            }
+        }
+    }
+    // MARK: - Setup UI
     private func setupUI() {
         view.addSubview(tableView)
         view.addSubview(submitMessageButton)
@@ -70,6 +97,24 @@ class ChatroomViewController: UIViewController {
         view.addSubview(submitMessageButton)
     }
     private func fetchConversations() {
+        FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments {
+            querySnapshot, error in
+            print(self.videoId)
+            print(querySnapshot?.count)
+            if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
+                    print(document.data())
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                        let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
+                        self.bulletChats.append(decodedObject.bulletChat)
+                        print(self.bulletChats)
+                    } catch {
+                        print("\(error)")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -81,8 +126,8 @@ extension ChatroomViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTableViewCell.identifier,
                                                  for: indexPath) as? ChatroomTableViewCell
         guard let cell else { return UITableViewCell() }
-        cell.nameLabel.text = "\(Int.random(in: 1...100000000))"
-        cell.messageLabel.text = "\(Int.random(in: 1...100000000000000000))"
+        cell.nameLabel.text = "\(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + +++++++++++++++++++++++ "
+        cell.messageLabel.text = "\(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000)) + \(Int.random(in: 1...100000000000000000))"
         cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
         return cell
     }

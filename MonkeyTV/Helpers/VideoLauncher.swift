@@ -55,17 +55,16 @@ class VideoLauncher: NSObject {
     // MARK: - init
     override init() {
         super.init()
+        setBtnsAddtarget()
         setDanMu()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
-        setBtnsAddtarget()
     }
     deinit {
         timer = nil
     }
     // MARK: - getDanMuData
     private func getDanMuData() {
-        print("XXXXXXXXXXXXXXXXXXX")
         FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments {
             querySnapshot, error in
             print(self.videoId)
@@ -179,6 +178,7 @@ class VideoLauncher: NSObject {
                 sheet.prefersGrabberVisible = true
                 sheet.detents = [.medium(), .large()]
                 sheet.largestUndimmedDetentIdentifier = .large
+                chatroomVC.videoId = self.videoId
                 keyWindow.rootViewController?.present(chatroomVC, animated: true)
             }
         }
@@ -247,9 +247,7 @@ class VideoLauncher: NSObject {
 // MARK: - YTPlayerViewDelegate
 extension VideoLauncher: YTPlayerViewDelegate {
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        //        ytVideoPlayerView.playVideo()
         getVideoDuratiion()
-        print("video is ready")
     }
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         switch state {

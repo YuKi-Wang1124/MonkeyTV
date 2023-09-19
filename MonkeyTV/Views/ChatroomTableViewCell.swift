@@ -33,22 +33,23 @@ class ChatroomTableViewCell: UITableViewCell {
         setupCellUI()
     }
     private func setupCellUI() {
+        let screenWidth = UIScreen.main.bounds.width
+        contentView.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         contentView.addSubview(personalImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(messageLabel)
         NSLayoutConstraint.activate([
             personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             personalImageView.trailingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: -16),
-            personalImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            personalImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             personalImageView.heightAnchor.constraint(equalToConstant: 30),
             personalImageView.widthAnchor.constraint(equalToConstant: 30),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            messageLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             messageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         ])
     }
     required init?(coder: NSCoder) {
