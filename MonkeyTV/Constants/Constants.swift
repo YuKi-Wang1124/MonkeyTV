@@ -19,4 +19,3 @@ struct Constant {
     static let urlKey = "MKBaseURL"
     //swiftlint: disable identifier_name
 }
-

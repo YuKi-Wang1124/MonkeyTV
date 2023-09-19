@@ -16,39 +16,48 @@ enum ImageAsset: String {
     case selectedMagnifyingglass
     case selectedHeart = "heart.fill"
     case selectedPerson = "person.fill"
+    case square
+    case checkmarkSquare = "checkmark.square"
+    case submitDanMu = "ellipsis.message.fill"
+    case pause = "pause.circle.fill"
+    case play = "play.circle.fill"
+    case shrink = "arrow.down.right.and.arrow.up.left"
+    case enlarge = "arrow.up.left.and.arrow.down.right"
+    case chatroom = "text.bubble.fill"
+    case personalPicture = "person.crop.circle"
+    case send = "paperplane"
 }
 
 extension UIImage {
-
-    static func systemAsset(_ asset: ImageAsset) -> UIImage? {
-        return UIImage(systemName: asset.rawValue)
+    static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage? {
+        return UIImage(systemName: asset.rawValue, withConfiguration: configuration)
     }
     static func displayThumbnailImage(from url: String, completion: @escaping (UIImage?) -> Void) {
-           if let imageUrl = URL(string: url) {
-               let session = URLSession.shared
-               let task = session.dataTask(with: imageUrl) { (data, _, error) in
-                   if error == nil, let imageData = data {
-                       if let image = UIImage(data: imageData) {
-                           DispatchQueue.main.async {
-                               completion(image)
-                           }
-                       } else {
-                           DispatchQueue.main.async {
-                               completion(nil)
-                           }
-                       }
-                   } else {
-                       print("下载图片时错误：\(error?.localizedDescription ?? "")")
-                       DispatchQueue.main.async {
-                           completion(nil)
-                       }
-                   }
-               }
-               task.resume()
-           } else {
-               DispatchQueue.main.async {
-                   completion(nil) 
-               }
-           }
-       }
+        if let imageUrl = URL(string: url) {
+            let session = URLSession.shared
+            let task = session.dataTask(with: imageUrl) { (data, _, error) in
+                if error == nil, let imageData = data {
+                    if let image = UIImage(data: imageData) {
+                        DispatchQueue.main.async {
+                            completion(image)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(nil)
+                        }
+                    }
+                } else {
+//                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                }
+            }
+            task.resume()
+        } else {
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+        }
+    }
 }

@@ -24,4 +24,5 @@ target 'MonkeyTV' do
   pod 'GoogleSignIn'
   pod 'FirebaseAuth'
   pod "youtube-ios-player-helper"
+  pod 'IQKeyboardManagerSwift'
 end

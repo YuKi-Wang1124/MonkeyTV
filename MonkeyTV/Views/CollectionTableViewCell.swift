@@ -27,11 +27,12 @@ class CollectionTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         model.append(MKShow(image: "11",
-                            title: "111233333"))
+                            title: "111233333", playlistId: "123"))
         getVideoCover(request: HomeRequest.show)
         updateDataSource()
         collectionView.delegate = self
         collectionView.dataSource = dataSource
+        contentView.backgroundColor = UIColor.white
         contentView.addSubview(collectionView)
         setupUI()
     }
@@ -42,6 +43,7 @@ class CollectionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     private func setupUI() {
+        collectionView.backgroundColor = UIColor.white
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -62,8 +64,9 @@ class CollectionTableViewCell: UITableViewCell {
                     for: indexPath) as? VideoCollectionViewCell
                 cell?.label.text = itemIdentifier.title
                 UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
-                    cell?.coverBtn.setImage(image, for: .normal)
+                    cell?.coverButton.setImage(image, for: .normal)
                 })
+                cell?.coverButton.addTarget(self, action: #selector(self.showVideoPlayer), for: .touchUpInside)
                 return cell
             })
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
@@ -78,7 +81,9 @@ class CollectionTableViewCell: UITableViewCell {
                     let info = try decoder.decode(PlaylistListResponse.self, from: data)
                     info.items.forEach({
                         let show = MKShow(image: $0.snippet.thumbnails.medium.url,
-                                          title: $0.snippet.title)
+                                          title: $0.snippet.title,
+                                          playlistId: $0.id)
+                        print($0.id)
                         DispatchQueue.main.async {
                             self.snapshot.appendItems([show], toSection: .main)
                             self.dataSource.apply(self.snapshot)
@@ -99,9 +104,8 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 返回每个项目的大小
-        return CGSize(width: 200,
-                      height: collectionView.frame.height) // 這裡設定寬度，高度使用collectionView的高度
+    return CGSize(width: 200,
+                      height: collectionView.frame.height)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -112,6 +116,14 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showVideoPlayer()
+    }
+    @objc func showVideoPlayer() {
+        let videoLauncher = VideoLauncher()
+        videoLauncher.videoId = "FjJtmJteK58"
+        videoLauncher.showVideoPlayer()
     }
 }
 

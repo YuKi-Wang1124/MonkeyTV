@@ -9,7 +9,7 @@ import UIKit
 
 class VideoCollectionViewCell: UICollectionViewCell {
     static let identifier = "\(VideoCollectionViewCell.self)"
-    var coverBtn = {
+    var coverButton = {
         let btn = UIButton()
         btn.contentMode = .scaleAspectFill
         btn.clipsToBounds = true
@@ -25,18 +25,18 @@ class VideoCollectionViewCell: UICollectionViewCell {
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(coverBtn)
+        contentView.addSubview(coverButton)
         contentView.addSubview(label)
-        coverBtn.translatesAutoresizingMaskIntoConstraints = false
+        coverButton.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            coverBtn.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            coverBtn.topAnchor.constraint(equalTo: contentView.topAnchor),
-            coverBtn.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
-            coverBtn.widthAnchor.constraint(equalTo: coverBtn.heightAnchor),
+            coverButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            coverButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            coverButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
+            coverButton.widthAnchor.constraint(equalTo: coverButton.heightAnchor),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: coverBtn.bottomAnchor, constant: 8),
+            label.topAnchor.constraint(equalTo: coverButton.bottomAnchor, constant: 8),
             label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.36)
         ])
     }

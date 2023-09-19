@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+
 class HomeViewController: UIViewController {
     private lazy var tableView = {
         var tableView = UITableView()
@@ -28,6 +30,8 @@ class HomeViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor.white
 //        DispatchQueue.main.async {
 //            self.dispatchSemaphore.wait()
 //            self.dispatchSemaphore.signal()
@@ -38,7 +42,6 @@ class HomeViewController: UIViewController {
 //            tableView.delegate = self
 //            self.dispatchSemaphore.wait()
 //        }
-        view.backgroundColor = .white
 //        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
         setUI()
         self.getVideoCover(request: HomeRequest.show)
@@ -67,8 +70,6 @@ class HomeViewController: UIViewController {
         tableView.dataSource = dataSource
         snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
         snapshot.appendSections([.animation])
-//        let show = MKShow(image: "13", title: "123")
-//        snapshot.appendItems([show], toSection: .animation)
     }
     // MARK: - call api to get images and titles
     func getVideoCover(request: Request) {
@@ -81,9 +82,9 @@ class HomeViewController: UIViewController {
                     let info = try decoder.decode(PlaylistListResponse.self, from: data)
                     info.items.forEach({
                         let show = MKShow(image: $0.snippet.thumbnails.medium.url,
-                                          title: $0.snippet.title)
-//                        self.model.append(show)
-//                        print(show)
+                                          title: $0.snippet.title, playlistId: $0.id)
+                        self.model.append(show)
+//                        print($0.id)
                         self.snapshot.appendItems([show], toSection: .animation)
                         self.dataSource.apply(self.snapshot)
                     })
@@ -107,23 +108,6 @@ class HomeViewController: UIViewController {
     }
 }
 
-//extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        3
-//    }
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell =
-//        tableView.dequeueReusableCell(
-//            withIdentifier: CollectionTableViewCell.identifier,
-//            for: indexPath) as? CollectionTableViewCell
-//        guard let cell = cell else { return UITableViewCell() }
-//        cell.model = self.model
-//        cell.updateDataSource()
-//        cell.selectionStyle = .none
-//        return cell
-//    }
-//}
-
 enum Section {
     case animation
 }
@@ -131,6 +115,7 @@ enum Section {
 struct MKShow: Hashable {
     var image: String
     var title: String
+    var playlistId: String
 }
 
 struct SuccessParser<T: Codable>: Codable {
