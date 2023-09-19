@@ -65,14 +65,14 @@ class ChatroomViewController: UIViewController {
         }
     }
     func bindingViewModel() {
-        viewModel.fetchConversation()
+        let now = FirebaseFirestore.Timestamp().dateValue()
+        viewModel.fetchConversation(currentTime: now)
         viewModel.isLoading.bind { [weak self] isLoading in
             guard let self, let isLoading = isLoading else {
                 return
             }
             DispatchQueue.main.async {
                 if isLoading {
-                    self.viewModel.fetchConversation()
                 } else {
                     return
                 }

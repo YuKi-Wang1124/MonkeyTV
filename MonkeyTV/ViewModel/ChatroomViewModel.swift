@@ -33,7 +33,7 @@ class ChatroomViewModel {
             }
         )
     }
-    func fetchConversation() {
+    func fetchConversation(currentTime: Date) {
         if isLoading.value ?? true {
             return
         }
@@ -44,38 +44,32 @@ class ChatroomViewModel {
                 print("Error fetching documents: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
+            var newItems = [ChatroomData]()
             for document in documents {
                 let data = document.data()
-                print(data["id"] as? String as Any)
-                print(data["videoId"] as? String as Any)
                 let dict = data["chatroomChat"] as? [String: Any]
-                if let dict = dict {
-                    if let createdTime = dict["createdTime"] as? Timestamp {
+                if let dict = dict,
+                   let createdTime = dict["createdTime"] as? Timestamp,
+                    createdTime.dateValue() >= currentTime {
+                    print("+++++++", createdTime.dateValue())
                     let object = ChatroomData(
-                        chatroomChat: ChatroomChat(chatId: dict["chatId"] as? String,
-                                                   content: dict["content"] as? String,
-                                                   contentType: dict["contentType"] as? Int,
-                                                   createdTime: createdTime.dateValue(),
-                                                   userId: dict["userId"] as? String),
+                        chatroomChat: ChatroomChat(
+                            chatId: dict["chatId"] as? String,
+                            content: dict["content"] as? String,
+                            contentType: dict["contentType"] as? Int,
+                            createdTime: createdTime.dateValue(),
+                            userId: dict["userId"] as? String),
                         videoId: data["videoId"] as? String ?? "",
                         id: data["id"] as? String ?? "")
-                        print(object)
-                        guard let self = self else { return }
-                        if !(self.snapshot.sectionIdentifiers.contains(OneSection.main)) {
-                            self.snapshot.appendSections([OneSection.main])
-                        }
-//                        if self.snapshot.itemIdentifiers.isEmpty == false {
-//                            let items = snapshot.itemIdentifiers(inSection: .main)
-//                            snapshot.deleteItems(items)
-//                            snapshot.appendItems([object] + items, toSection: .main)
-//                        } else {
-                            self.snapshot.appendItems([object], toSection: .main)
-                            self.dataSource.apply(self.snapshot)
-                            print(self.snapshot as Any)
-//                        }
-                    }
+                    newItems.append(object)
                 }
             }
+            guard let self = self else { return }
+            if !(self.snapshot.sectionIdentifiers.contains(OneSection.main)) {
+                self.snapshot.appendSections([OneSection.main])
+            }
+            self.snapshot.appendItems(newItems, toSection: .main)
+            self.dataSource.apply(self.snapshot)
         }
     }
 }

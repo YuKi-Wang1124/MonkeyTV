@@ -37,6 +37,9 @@ struct ChatroomData: Codable, Hashable {
     let chatroomChat: ChatroomChat
     let videoId: String
     let id: String
+    static func == (lhs: ChatroomData, rhs: ChatroomData) -> Bool {
+           return lhs.id == rhs.id
+    }
 }
 
 struct ChatroomChat: Codable, Hashable {

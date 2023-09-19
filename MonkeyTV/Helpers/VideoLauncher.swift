@@ -58,7 +58,7 @@ class VideoLauncher: NSObject {
         setBtnsAddtarget()
         setDanMu()
         ytVideoPlayerView.delegate = self
-        ytVideoPlayerView.backgroundColor = .black
+        ytVideoPlayerView.backgroundColor = .clear
     }
     deinit {
         timer = nil
