@@ -28,17 +28,16 @@ class ChatroomViewController: UIViewController {
         return UITextField.createTextField(text: "輸入訊息")
     }()
     private var viewModel: ChatroomViewModel = ChatroomViewModel()
-    private var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
+//    private var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
     var videoId: String = ""
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        configureDataSource()
-//        tableView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        tableView.dataSource = viewModel.dataSource
+        viewModel.configureDataSource(tableView: self.tableView)
         bindingViewModel()
         setupUI()
-        tableView.dataSource = dataSource
         submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
     }
     deinit {
@@ -75,8 +74,7 @@ class ChatroomViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 if isLoading {
-                    self.dataSource.apply(self.viewModel.snapshot)
-//                    self.tableView.reloadData()
+                    self.viewModel.fetchConversation()
                 } else {
                     return
                 }
@@ -86,21 +84,21 @@ class ChatroomViewController: UIViewController {
 }
 // MARK: -
 extension ChatroomViewController {
-    private func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
-            tableView: tableView,
-            cellProvider: { tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(
-                    withIdentifier: ChatroomTableViewCell.identifier,
-                    for: indexPath) as? ChatroomTableViewCell
-                guard let cell = cell else { return UITableViewCell() }
-                cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
-                cell.nameLabel.text = item.chatroomChat.userId
-                cell.messageLabel.text = item.chatroomChat.content
-                return cell
-            }
-        )
-    }
+//    private func configureDataSource() {
+//        dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
+//            tableView: tableView,
+//            cellProvider: { tableView, indexPath, item in
+//                let cell = tableView.dequeueReusableCell(
+//                    withIdentifier: ChatroomTableViewCell.identifier,
+//                    for: indexPath) as? ChatroomTableViewCell
+//                guard let cell = cell else { return UITableViewCell() }
+//                cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
+//                cell.nameLabel.text = item.chatroomChat.userId
+//                cell.messageLabel.text = item.chatroomChat.content
+//                return cell
+//            }
+//        )
+//    }
 }
 
 // MARK: -

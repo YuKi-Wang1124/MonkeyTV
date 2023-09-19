@@ -43,18 +43,18 @@ class ChatroomTableViewCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(messageLabel)
         NSLayoutConstraint.activate([
-            personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             personalImageView.trailingAnchor.constraint(equalTo: nameLabel.leadingAnchor,
-                                                        constant: -16),
-            personalImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+                                                        constant: -4),
+            personalImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             personalImageView.heightAnchor.constraint(equalToConstant: 30),
             personalImageView.widthAnchor.constraint(equalToConstant: 30),
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
             messageLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            messageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
+            messageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4)
         ])
     }
     required init?(coder: NSCoder) {
