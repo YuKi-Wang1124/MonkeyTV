@@ -28,7 +28,6 @@ class ChatroomViewController: UIViewController {
         return UITextField.createTextField(text: "輸入訊息")
     }()
     private var viewModel: ChatroomViewModel = ChatroomViewModel()
-//    private var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
     var videoId: String = ""
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -42,7 +41,7 @@ class ChatroomViewController: UIViewController {
     }
     deinit {
     }
-    // MARK: -
+    // MARK: - Submit Message To DB
     @objc func submitMessage() {
         if let text = messageTextField.text, text.isEmpty == false {
             let id = FirestoreManageer.chatroomCollection.document().documentID
@@ -65,7 +64,6 @@ class ChatroomViewController: UIViewController {
             }
         }
     }
-
     func bindingViewModel() {
         viewModel.fetchConversation()
         viewModel.isLoading.bind { [weak self] isLoading in
@@ -82,25 +80,6 @@ class ChatroomViewController: UIViewController {
         }
     }
 }
-// MARK: -
-extension ChatroomViewController {
-//    private func configureDataSource() {
-//        dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
-//            tableView: tableView,
-//            cellProvider: { tableView, indexPath, item in
-//                let cell = tableView.dequeueReusableCell(
-//                    withIdentifier: ChatroomTableViewCell.identifier,
-//                    for: indexPath) as? ChatroomTableViewCell
-//                guard let cell = cell else { return UITableViewCell() }
-//                cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
-//                cell.nameLabel.text = item.chatroomChat.userId
-//                cell.messageLabel.text = item.chatroomChat.content
-//                return cell
-//            }
-//        )
-//    }
-}
-
 // MARK: -
 extension ChatroomViewController {
     // MARK: - Setup UI

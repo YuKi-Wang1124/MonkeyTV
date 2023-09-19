@@ -52,12 +52,11 @@ class ChatroomViewModel {
                 if let dict = dict {
                     if let createdTime = dict["createdTime"] as? Timestamp {
                     let object = ChatroomData(
-                        chatroomChat: ChatroomChat(
-                            chatId: dict["chatId"] as? String,
-                            content: dict["content"] as? String,
-                            contentType: dict["contentType"] as? Int,
-                            createdTime: createdTime.dateValue(),
-                            userId: dict["userId"] as? String),
+                        chatroomChat: ChatroomChat(chatId: dict["chatId"] as? String,
+                                                   content: dict["content"] as? String,
+                                                   contentType: dict["contentType"] as? Int,
+                                                   createdTime: createdTime.dateValue(),
+                                                   userId: dict["userId"] as? String),
                         videoId: data["videoId"] as? String ?? "",
                         id: data["id"] as? String ?? "")
                         print(object)
