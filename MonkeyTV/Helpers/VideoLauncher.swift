@@ -65,6 +65,7 @@ class VideoLauncher: NSObject {
     }()
     private var danmuView: DanMuView = DanMuView()
     private var timer: Timer?
+    private let keyWindow = UIWindow.getLastWindow()
     // MARK: - init
     override init() {
         super.init()
@@ -74,6 +75,7 @@ class VideoLauncher: NSObject {
         timer = nil
     }
     @objc func showButtonView() {
+        self.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.2)
         self.changeOrientationButton.isHidden = false
         self.showDanMuButton.isHidden = false
         self.showDanMuTextFieldButton.isHidden = false
@@ -83,10 +85,12 @@ class VideoLauncher: NSObject {
             self?.showDanMuButton.isHidden = true
             self?.showDanMuTextFieldButton.isHidden = true
             self?.pauseButton.isHidden = true
+            self?.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0)
         }
     }
     // MARK: - setupVideoLauncher
     private func setupVideoLauncher() {
+        buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.0)
         danMuTextField.isHidden = true
         submitDanMuButton.isHidden = true
         changeOrientationButton.isHidden = true
@@ -106,18 +110,18 @@ class VideoLauncher: NSObject {
     private func getDanMuData() {
         FirestoreManageer.bulletChatCollection.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
-            if let querySnapshot = querySnapshot {
-                for document in querySnapshot.documents {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
-                        self.bulletChats.append(decodedObject.bulletChat)
-                    } catch {
-                        print("\(error)")
+                if let querySnapshot = querySnapshot {
+                    for document in querySnapshot.documents {
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                            let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
+                            self.bulletChats.append(decodedObject.bulletChat)
+                        } catch {
+                            print("\(error)")
+                        }
                     }
                 }
             }
-        }
     }
     // MARK: - setDanMu
     private func setDanMu() {
@@ -139,50 +143,49 @@ class VideoLauncher: NSObject {
     }
     // MARK: - showVideoPlayer
     func showVideoPlayer() {
-        if let keyWindow = UIApplication.shared.connectedScenes
-            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
-            getDanMuData()
-            let view = UIView(frame: CGRect(x: 0,
-                                            y: keyWindow.frame.height,
-                                            width: keyWindow.frame.width,
-                                            height: keyWindow.frame.height))
-            addYTView(view: view)
-            keyWindow.addSubview(view)
-            addBtnsOnButtonView()
-            let safeAreaInsets = keyWindow.safeAreaInsets
-            let topInset = safeAreaInsets.top
-            let bottomInset = safeAreaInsets.bottom
-            let notchHeight = max(topInset, bottomInset)
-            // TODO: change Orientation layout
-            setYTViewLayout(view: view, notchHeight: notchHeight)
-//                        setLandscapeYTViewLayout(view: view)
-            setBtnsAutoLayout()
-            let playerVars: [AnyHashable: Any] = [
-                "frameborder": 0,
-                "width": 100,
-                "loop": 0,
-                "playsigline": 1,
-                "controls": 0,
-                //                "autohide": 1,
-                "showinfo": 0,
-                "fs": 0,
-                //                "rel": 0,
-                "autoplay": 1
-            ]
-            ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
-            view.backgroundColor = .white
-            UIView.animate(withDuration: 0.5, delay: 0,
-                           usingSpringWithDamping: 1,
-                           initialSpringVelocity: 1,
-                           options: .curveEaseOut, animations: {
-                view.frame = CGRect(x: 0,
-                                    y: 0,
-                                    width: keyWindow.frame.width,
-                                    height: keyWindow.frame.height)
-            }, completion: { [self] (completedAnimation) in
-                // may be do something later
-            })
-        }
+        getDanMuData()
+        let view = UIView(frame: CGRect(x: 0,
+                                        y: keyWindow.frame.height,
+                                        width: keyWindow.frame.width,
+                                        height: keyWindow.frame.height))
+        addYTView(view: view)
+        keyWindow.addSubview(view)
+        addBtnsOnButtonView()
+        let safeAreaInsets = keyWindow.safeAreaInsets
+        let topInset = safeAreaInsets.top
+        let bottomInset = safeAreaInsets.bottom
+        let notchHeight = max(topInset, bottomInset)
+        // TODO: change Orientation layout
+        setYTViewLayout(view: view, notchHeight: notchHeight)
+//                                setLandscapeYTViewLayout(view: view)
+        setBtnsAutoLayout()
+        let playerVars: [AnyHashable: Any] = [
+            "margin": 0,
+            "width": 100,
+//            "height": 100,
+            "frameborder": 0,
+            "loop": 0,
+            "playsigline": 1,
+            "controls": 0,
+            //                "autohide": 1,
+            "showinfo": 0,
+            "fs": 0,
+            "rel": 0,
+            "autoplay": 1
+        ]
+        ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
+        view.backgroundColor = .white
+        UIView.animate(withDuration: 0.5, delay: 0,
+                       usingSpringWithDamping: 1,
+                       initialSpringVelocity: 1,
+                       options: .curveEaseOut, animations: {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                width: self.keyWindow.frame.width,
+                                height: self.keyWindow.frame.height)
+        }, completion: { [self] (completedAnimation) in
+            // may be do something later
+        })
     }
     // MARK: - Buttons AddTaget
     private func setBtnsAddtarget() {
@@ -204,26 +207,38 @@ class VideoLauncher: NSObject {
     // MARK: - Change Orientation
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
-            if let keyWindow = UIApplication.shared.connectedScenes
-                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
-              
-                //                self.ytVideoPlayerView.frame = CGRect(x: 0,
-                //                                                      y: 0,
-                //                                                      width: keyWindow.frame.width,
-                //                                                      height: keyWindow.frame.width * 9 / 16)
-            }
             sender.setImage(UIImage.systemAsset(.shrink, configuration: smallSymbolConfig), for: .normal)
-        } else {
-            if let keyWindow = UIApplication.shared.connectedScenes
-                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
-                sender.setImage(UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig), for: .normal)
+            UIView.animate(withDuration: 0.5, animations: {
                 self.ytVideoPlayerView.transform = CGAffineTransform(rotationAngle: .pi / 2)
-                //                        self.ytVideoPlayerView.frame = CGRect(x: keyWindow.frame.width,
-                //                                                              y: keyWindow.frame.height,
-                //                                                              width: keyWindow.frame.height,
-                //                                                              height: keyWindow.frame.height * 9 / 16)
-                }
-            }
+                self.buttonsView.transform = CGAffineTransform(rotationAngle: .pi / 2)
+                self.danmuView.transform = CGAffineTransform(rotationAngle: .pi / 2)
+                let safeAreaInsets = self.keyWindow.safeAreaInsets
+                let topInset = safeAreaInsets.top
+                let bottomInset = safeAreaInsets.bottom
+                let notchHeight = max(topInset, bottomInset)
+                self.ytVideoPlayerView.frame = CGRect(x: 0,
+                                                      y: 0,
+                                                      width: self.keyWindow.frame.width,
+                                                      height: self.keyWindow.frame.height)
+                self.buttonsView.frame = CGRect(x: 0,
+                                                 y: 0,
+                                                 width: self.keyWindow.frame.width,
+                                                 height: self.keyWindow.frame.height)
+                print(self.ytVideoPlayerView.frame)
+                print(self.buttonsView.frame)
+                print(self.keyWindow.frame)
+            })
+        } else {
+            sender.setImage(UIImage.systemAsset(.enlarge,
+                                                configuration: smallSymbolConfig), for: .normal)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.ytVideoPlayerView.transform = .identity
+                self.buttonsView.transform = .identity
+                self.danmuView.transform = .identity
+                print(self.ytVideoPlayerView.frame)
+                
+            })
+        }
         playerIsShrink.toggle()
     }
     // MARK: - showDanMuTextField
@@ -384,7 +399,6 @@ extension VideoLauncher {
         ])
     }
     private func addYTView(view: UIView) {
-        buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.2)
         view.addSubview(ytVideoPlayerView)
         view.addSubview(danmuView)
         view.addSubview(buttonsView)

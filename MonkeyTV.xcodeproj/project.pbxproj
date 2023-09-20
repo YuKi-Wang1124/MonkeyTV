@@ -41,7 +41,7 @@
 		CC963C102AB898F90047EEFA /* ChatroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */; };
 		CC963C122AB8A3190047EEFA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C112AB8A3190047EEFA /* UIColor+Extension.swift */; };
 		CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C142AB92CC00047EEFA /* BaseViewController.swift */; };
-		CC963C172AB92F7D0047EEFA /* OrientationChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C162AB92F7D0047EEFA /* OrientationChangeDelegate.swift */; };
+		CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C162AB92F7D0047EEFA /* Delegate.swift */; };
 		CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C182AB951180047EEFA /* UIBotton+Extension.swift */; };
 		CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1A2AB96B5C0047EEFA /* Observable.swift */; };
 		CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */; };
@@ -88,7 +88,7 @@
 		CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomTableViewCell.swift; sourceTree = "<group>"; };
 		CC963C112AB8A3190047EEFA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CC963C142AB92CC00047EEFA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		CC963C162AB92F7D0047EEFA /* OrientationChangeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationChangeDelegate.swift; sourceTree = "<group>"; };
+		CC963C162AB92F7D0047EEFA /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		CC963C182AB951180047EEFA /* UIBotton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBotton+Extension.swift"; sourceTree = "<group>"; };
 		CC963C1A2AB96B5C0047EEFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
@@ -209,7 +209,7 @@
 				CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */,
 				CC0BF1D82AB1B1300075203C /* HTTPClient.swift */,
 				CC963C092AB7F8BE0047EEFA /* FirestoreManageer.swift */,
-				CC963C162AB92F7D0047EEFA /* OrientationChangeDelegate.swift */,
+				CC963C162AB92F7D0047EEFA /* Delegate.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -441,7 +441,7 @@
 				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
 				CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */,
 				CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */,
-				CC963C172AB92F7D0047EEFA /* OrientationChangeDelegate.swift in Sources */,
+				CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */,
 				CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,8 +587,8 @@
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,8 +615,8 @@
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
