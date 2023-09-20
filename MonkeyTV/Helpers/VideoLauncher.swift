@@ -12,7 +12,7 @@ class VideoLauncher: NSObject {
     var ytVideoPlayerView = YTPlayerView()
     var videoId = ""
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
-    private let pauseSymbolConfig = UIImage.SymbolConfiguration(pointSize: 50)
+    private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 15)
     private var buttonsView = UIView()
     private var isDanMuDisplayed = false
     private var videoIsPlaying = true
@@ -20,19 +20,29 @@ class VideoLauncher: NSObject {
     private var videoDuration = 0
     private var bulletChats = [BulletChat]()
     private lazy var changeOrientationButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.enlarge, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig),
+            color: .white, cornerRadius: 15)
     }()
     private lazy var showDanMuButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.square, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.square, configuration: smallSymbolConfig),
+            color: .white, cornerRadius: 15)
     }()
     private lazy var showDanMuTextFieldButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.submitDanMu, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.submitDanMu, configuration: smallSymbolConfig),
+            color: .white, cornerRadius: 15)
     }()
     private lazy var showChatRoomButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.chatroom, configuration: symbolConfig)!)
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.chatroom, configuration: smallSymbolConfig),
+            color: .systemBlue, cornerRadius: 15)
     }()
     private lazy var pauseButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.pause, configuration: pauseSymbolConfig)!)
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.pause, configuration: symbolConfig),
+            color: .white, cornerRadius: 25)
     }()
     private lazy var danMuTextField = {
         return UITextField.createTextField(text: "輸入彈幕")
@@ -46,7 +56,9 @@ class VideoLauncher: NSObject {
     }()
     private lazy var videoSlider: UISlider = {
         let slider = UISlider()
+        let thumbImage = UIImage.systemAsset(.thumbImage)
         slider.minimumValue = 0
+        slider.setThumbImage(thumbImage, for: .normal)
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
@@ -55,18 +67,38 @@ class VideoLauncher: NSObject {
     // MARK: - init
     override init() {
         super.init()
+        self.changeOrientationButton.isHidden = true
+        self.showDanMuButton.isHidden = true
+        self.showDanMuTextFieldButton.isHidden = true
+        self.pauseButton.isHidden = true
         setBtnsAddtarget()
         setDanMu()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .clear
+        let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
+        singleFinger.numberOfTapsRequired = 1
+        singleFinger.numberOfTouchesRequired = 1
+        self.buttonsView.addGestureRecognizer(singleFinger)
     }
     deinit {
         timer = nil
     }
+    @objc func showButtonView() {
+        self.changeOrientationButton.isHidden = false
+        self.showDanMuButton.isHidden = false
+        self.showDanMuTextFieldButton.isHidden = false
+        self.pauseButton.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            self?.changeOrientationButton.isHidden = true
+            self?.showDanMuButton.isHidden = true
+            self?.showDanMuTextFieldButton.isHidden = true
+            self?.pauseButton.isHidden = true
+        }
+    }
     // MARK: - getDanMuData
     private func getDanMuData() {
-        FirestoreManageer.bulletChatCollection.whereField("videoId", isEqualTo: videoId).getDocuments {
-            querySnapshot, error in
+        FirestoreManageer.bulletChatCollection.whereField(
+            "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
             if let querySnapshot = querySnapshot {
                 for document in querySnapshot.documents {
                     do {
@@ -116,7 +148,7 @@ class VideoLauncher: NSObject {
             let notchHeight = max(topInset, bottomInset)
             // TODO: change Orientation layout
             setYTViewLayout(view: view, notchHeight: notchHeight)
-            //            setLandscapeYTViewLayout(view: view)
+//                        setLandscapeYTViewLayout(view: view)
             setBtnsAutoLayout()
             let playerVars: [AnyHashable: Any] = [
                 "frameborder": 0,
@@ -142,7 +174,6 @@ class VideoLauncher: NSObject {
                                     height: keyWindow.frame.height)
             }, completion: { [self] (completedAnimation) in
                 // may be do something later
-               
             })
         }
     }
@@ -220,10 +251,12 @@ class VideoLauncher: NSObject {
     @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
-            sender.setImage(UIImage.systemAsset(.play, configuration: pauseSymbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.play, configuration: symbolConfig),
+                            for: .normal)
             ytVideoPlayerView.pauseVideo()
         } else {
-            sender.setImage(UIImage.systemAsset(.pause, configuration: pauseSymbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.pause, configuration: symbolConfig),
+                            for: .normal)
             ytVideoPlayerView.playVideo()
         }
         videoIsPlaying.toggle()
@@ -297,15 +330,15 @@ extension VideoLauncher {
     private func setBtnsAutoLayout() {
         NSLayoutConstraint.activate([
             changeOrientationButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -130),
-            changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
+            changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
             changeOrientationButton.widthAnchor.constraint(equalToConstant: 30),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 30),
             showDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -160),
-            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
+            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
             showDanMuButton.widthAnchor.constraint(equalToConstant: 30),
             showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
             showDanMuTextFieldButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -200),
-            showDanMuTextFieldButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
+            showDanMuTextFieldButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
             showDanMuTextFieldButton.widthAnchor.constraint(equalToConstant: 30),
             showDanMuTextFieldButton.heightAnchor.constraint(equalToConstant: 30),
             pauseButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
@@ -313,16 +346,16 @@ extension VideoLauncher {
             pauseButton.widthAnchor.constraint(equalToConstant: 50),
             pauseButton.heightAnchor.constraint(equalToConstant: 50),
             videoSlider.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            videoSlider.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor, constant: 50),
-            videoSlider.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: -30),
+            videoSlider.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: 6),
+            videoSlider.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: 2),
             videoSlider.heightAnchor.constraint(equalToConstant: 10)
         ])
     }
     private func addYTView(view: UIView) {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.2)
         view.addSubview(ytVideoPlayerView)
+        view.addSubview(danmuView)
         view.addSubview(buttonsView)
-        buttonsView.addSubview(danmuView)
         view.addSubview(danMuTextField)
         view.addSubview(submitDanMuButton)
         view.addSubview(showChatRoomButton)
@@ -344,7 +377,7 @@ extension VideoLauncher {
             ytVideoPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ytVideoPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ytVideoPlayerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            ytVideoPlayerView.heightAnchor.constraint(equalTo: ytVideoPlayerView.widthAnchor, multiplier: 9 / 16),
+            ytVideoPlayerView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
             buttonsView.leadingAnchor.constraint(equalTo: ytVideoPlayerView.leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
             buttonsView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
@@ -375,5 +408,5 @@ extension VideoLauncher {
             danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
             danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10)
         ])
-    }    
+    }
 }

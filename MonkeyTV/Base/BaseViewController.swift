@@ -8,6 +8,8 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
+    weak var orientationDelegate: OrientationChangeDelegate?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -18,11 +20,10 @@ class BaseViewController: UIViewController {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
-
+    
     @objc func deviceOrientationDidChange() {
-       
     }
-
+    
     override var shouldAutorotate: Bool {
         return true
     }

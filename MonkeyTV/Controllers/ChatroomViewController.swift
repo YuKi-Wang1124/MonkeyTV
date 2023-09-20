@@ -22,7 +22,7 @@ class ChatroomViewController: UIViewController {
         return tableView
     }()
     private lazy var submitMessageButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send), color: .white,  cornerRadius: 15)
     }()
     private lazy var messageTextField = {
         return UITextField.createTextField(text: "輸入訊息")

@@ -11,10 +11,9 @@ import FirebaseFirestore
 
 class ChatroomViewModel {
     var isLoading: Observable<Bool> = Observable(false)
-    private var listener: ListenerRegistration?
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, ChatroomData>()
     var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
-
+    private var listener: ListenerRegistration?
     deinit {
         listener?.remove()
     }

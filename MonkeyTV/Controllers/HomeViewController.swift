@@ -30,7 +30,6 @@ class HomeViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
         tableView.backgroundColor = UIColor.white
 //        DispatchQueue.main.async {
 //            self.dispatchSemaphore.wait()
@@ -45,10 +44,12 @@ class HomeViewController: UIViewController {
 //        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
         setUI()
         self.getVideoCover(request: HomeRequest.show)
+        view.backgroundColor = UIColor.white
     }
     func updateTableViewDataSource() {
         dataSource =
-        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) { tableView, indexPath, itemIdentifier in
+        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView)
+        { tableView, indexPath, itemIdentifier in
             if indexPath.row == 0 {
                 let cell =
                 tableView.dequeueReusableCell(

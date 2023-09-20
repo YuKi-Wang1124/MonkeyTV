@@ -19,18 +19,22 @@ enum ImageAsset: String {
     case square
     case checkmarkSquare = "checkmark.square"
     case submitDanMu = "ellipsis.message.fill"
-    case pause = "pause.circle.fill"
-    case play = "play.circle.fill"
+    case pause = "pause.fill"
+    case play = "play.fill"
     case shrink = "arrow.down.right.and.arrow.up.left"
     case enlarge = "arrow.up.left.and.arrow.down.right"
     case chatroom = "text.bubble.fill"
     case personalPicture = "person.crop.circle"
     case send = "paperplane"
+    case thumbImage = "circle.fill"
 }
-
 extension UIImage {
-    static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage? {
-        return UIImage(systemName: asset.rawValue, withConfiguration: configuration)
+    static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage {
+        if let image = UIImage(systemName: asset.rawValue, withConfiguration: configuration) {
+            return image
+        } else {
+            return UIImage()
+        }
     }
     static func displayThumbnailImage(from url: String, completion: @escaping (UIImage?) -> Void) {
         if let imageUrl = URL(string: url) {
