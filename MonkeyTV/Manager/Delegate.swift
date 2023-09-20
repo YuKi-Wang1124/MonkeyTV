@@ -14,4 +14,3 @@ protocol OrientationChangeDelegate: AnyObject {
 protocol ShowVideoPlayerDelegate: AnyObject {
     func showVideoPlayer()
 }
-

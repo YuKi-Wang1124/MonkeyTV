@@ -31,41 +31,42 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = UIColor.white
-//        DispatchQueue.main.async {
-//            self.dispatchSemaphore.wait()
-//            self.dispatchSemaphore.signal()
-//            self.dispatchSemaphore.wait()
-            self.updateTableViewDataSource()
-//            self.dispatchSemaphore.signal()
-//            tableView.dataSource = self
-//            tableView.delegate = self
-//            self.dispatchSemaphore.wait()
-//        }
-//        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
+        //        DispatchQueue.main.async {
+        //            self.dispatchSemaphore.wait()
+        //            self.dispatchSemaphore.signal()
+        //            self.dispatchSemaphore.wait()
+        self.updateTableViewDataSource()
+        //            self.dispatchSemaphore.signal()
+        //            tableView.dataSource = self
+        //            tableView.delegate = self
+        //            self.dispatchSemaphore.wait()
+        //        }
+        //        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
         setUI()
         self.getVideoCover(request: HomeRequest.show)
         view.backgroundColor = UIColor.white
     }
     func updateTableViewDataSource() {
         dataSource =
-        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView)
-        { tableView, indexPath, itemIdentifier in
+        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) {
+            tableView, indexPath, itemIdentifier in
             if indexPath.row == 0 {
                 let cell =
                 tableView.dequeueReusableCell(
                     withIdentifier: CollectionTableViewCell.identifier,
                     for: indexPath) as? CollectionTableViewCell
                 guard let cell = cell else { return UITableViewCell() }
+                cell.delegate = self
                 return cell
             }
-//            let cell =
-//            tableView.dequeueReusableCell(
-//                withIdentifier: VideoTableViewCell.identifier,
-//                for: indexPath) as? VideoTableViewCell
-//            guard let cell = cell else { return UITableViewCell() }
-//            cell.showNameLabel.text = itemIdentifier.title
-//            cell.selectionStyle = .none
-//            return cell
+            //            let cell =
+            //            tableView.dequeueReusableCell(
+            //                withIdentifier: VideoTableViewCell.identifier,
+            //                for: indexPath) as? VideoTableViewCell
+            //            guard let cell = cell else { return UITableViewCell() }
+            //            cell.showNameLabel.text = itemIdentifier.title
+            //            cell.selectionStyle = .none
+            //            return cell
             return UITableViewCell()
         }
         tableView.dataSource = dataSource
@@ -85,7 +86,7 @@ class HomeViewController: UIViewController {
                         let show = MKShow(image: $0.snippet.thumbnails.medium.url,
                                           title: $0.snippet.title, playlistId: $0.id)
                         self.model.append(show)
-//                        print($0.id)
+                        //                        print($0.id)
                         self.snapshot.appendItems([show], toSection: .animation)
                         self.dataSource.apply(self.snapshot)
                     })
@@ -97,8 +98,19 @@ class HomeViewController: UIViewController {
             }
         })
     }
+}
+
+extension HomeViewController: ShowVideoPlayerDelegate {
+    func showVideoPlayer() {
+        let videoLauncher = VideoLauncher()
+        videoLauncher.videoId = "FjJtmJteK58"
+        videoLauncher.showVideoPlayer()
+    }
+}
+
+extension HomeViewController {
     // MARK: - UI configuration
-    func setUI() {
+    private func setUI() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -107,32 +119,4 @@ class HomeViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-}
-
-enum Section {
-    case animation
-}
-
-struct MKShow: Hashable {
-    var image: String
-    var title: String
-    var playlistId: String
-}
-
-struct SuccessParser<T: Codable>: Codable {
-    let data: T
-    let paging: Int?
-    enum CodingKeys: String, CodingKey {
-        case data
-        case paging = "next_paging"
-    }
-}
-
-struct FailureParser: Codable {
-    let errorMessage: String
-}
-
-struct Model: Hashable {
-    var text: String
-    var image: String
 }

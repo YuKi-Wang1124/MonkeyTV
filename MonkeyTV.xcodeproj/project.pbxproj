@@ -247,8 +247,8 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1F52AB418E40075203C /* VideoTableViewCell.swift */,
-				CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */,
 				CC0BF1F72AB441830075203C /* VideoCollectionViewCell.swift */,
+				CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */,
 				CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */,
 			);
 			path = Views;

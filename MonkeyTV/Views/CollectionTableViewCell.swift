@@ -8,7 +8,8 @@
 import UIKit
 
 class CollectionTableViewCell: UITableViewCell {
-    static let identifier = "CollectionTableViewCell"
+    static let identifier = "\(CollectionTableViewCell.self)"
+    var delegate: ShowVideoPlayerDelegate?
     var model = [MKShow]()
     private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
     private var dataSource: UICollectionViewDiffableDataSource<OneSection, MKShow>!
@@ -66,7 +67,7 @@ class CollectionTableViewCell: UITableViewCell {
                 UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
                     cell?.coverButton.setImage(image, for: .normal)
                 })
-                cell?.coverButton.addTarget(self, action: #selector(self.showVideoPlayer), for: .touchUpInside)
+//                cell?.coverButton.addTarget(self, action: #selector(self.showVideoPlayer), for: .touchUpInside)
                 return cell
             })
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
@@ -118,12 +119,7 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showVideoPlayer()
-    }
-    @objc func showVideoPlayer() {
-        let videoLauncher = VideoLauncher()
-        videoLauncher.videoId = "FjJtmJteK58"
-        videoLauncher.showVideoPlayer()
+        delegate?.showVideoPlayer()
     }
 }
 
