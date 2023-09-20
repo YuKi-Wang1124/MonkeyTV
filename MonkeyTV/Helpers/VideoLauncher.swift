@@ -15,6 +15,7 @@ class VideoLauncher: NSObject {
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 15)
     private var buttonsView = UIView()
     private var isDanMuDisplayed = false
+    private var danMuTextFiedIsShow = false
     private var videoIsPlaying = true
     private var playerIsShrink = false
     private var videoDuration = 0
@@ -67,18 +68,7 @@ class VideoLauncher: NSObject {
     // MARK: - init
     override init() {
         super.init()
-        self.changeOrientationButton.isHidden = true
-        self.showDanMuButton.isHidden = true
-        self.showDanMuTextFieldButton.isHidden = true
-        self.pauseButton.isHidden = true
-        setBtnsAddtarget()
-        setDanMu()
-        ytVideoPlayerView.delegate = self
-        ytVideoPlayerView.backgroundColor = .clear
-        let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
-        singleFinger.numberOfTapsRequired = 1
-        singleFinger.numberOfTouchesRequired = 1
-        self.buttonsView.addGestureRecognizer(singleFinger)
+        setupVideoLauncher()
     }
     deinit {
         timer = nil
@@ -94,6 +84,23 @@ class VideoLauncher: NSObject {
             self?.showDanMuTextFieldButton.isHidden = true
             self?.pauseButton.isHidden = true
         }
+    }
+    // MARK: - setupVideoLauncher
+    private func setupVideoLauncher() {
+        danMuTextField.isHidden = true
+        submitDanMuButton.isHidden = true
+        changeOrientationButton.isHidden = true
+        showDanMuButton.isHidden = true
+        showDanMuTextFieldButton.isHidden = true
+        pauseButton.isHidden = true
+        setBtnsAddtarget()
+        setDanMu()
+        ytVideoPlayerView.delegate = self
+        ytVideoPlayerView.backgroundColor = .clear
+        let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
+        singleFinger.numberOfTapsRequired = 1
+        singleFinger.numberOfTouchesRequired = 1
+        self.buttonsView.addGestureRecognizer(singleFinger)
     }
     // MARK: - getDanMuData
     private func getDanMuData() {
@@ -194,7 +201,41 @@ class VideoLauncher: NSObject {
         showChatRoomButton.addTarget(self, action: #selector(showChatroom(sender:)),
                                      for: .touchUpInside)
     }
+    // MARK: - Change Orientation
+    @objc func changeOrientation(sender: UIButton) {
+        if playerIsShrink == false {
+            if let keyWindow = UIApplication.shared.connectedScenes
+                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
+              
+                //                self.ytVideoPlayerView.frame = CGRect(x: 0,
+                //                                                      y: 0,
+                //                                                      width: keyWindow.frame.width,
+                //                                                      height: keyWindow.frame.width * 9 / 16)
+            }
+            sender.setImage(UIImage.systemAsset(.shrink, configuration: smallSymbolConfig), for: .normal)
+        } else {
+            if let keyWindow = UIApplication.shared.connectedScenes
+                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
+                sender.setImage(UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig), for: .normal)
+                self.ytVideoPlayerView.transform = CGAffineTransform(rotationAngle: .pi / 2)
+                //                        self.ytVideoPlayerView.frame = CGRect(x: keyWindow.frame.width,
+                //                                                              y: keyWindow.frame.height,
+                //                                                              width: keyWindow.frame.height,
+                //                                                              height: keyWindow.frame.height * 9 / 16)
+                }
+            }
+        playerIsShrink.toggle()
+    }
+    // MARK: - showDanMuTextField
     @objc func showDanMuTextField(sender: UIButton) {
+        if danMuTextFiedIsShow == false {
+            danMuTextField.isHidden = false
+            submitDanMuButton.isHidden = false
+        } else {
+            danMuTextField.isHidden = true
+            submitDanMuButton.isHidden = true
+        }
+        danMuTextFiedIsShow.toggle()
     }
     // MARK: - Show Chatroom
     @objc func showChatroom(sender: UIButton) {
@@ -238,15 +279,6 @@ class VideoLauncher: NSObject {
             }
         }
     }
-    // MARK: - Change Orientation
-    @objc func changeOrientation(sender: UIButton) {
-        if playerIsShrink == false {
-            sender.setImage(UIImage.systemAsset(.shrink, configuration: symbolConfig), for: .normal)
-        } else {
-            sender.setImage(UIImage.systemAsset(.enlarge, configuration: symbolConfig), for: .normal)
-        }
-        playerIsShrink.toggle()
-    }
     // MARK: - pauseVideo
     @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
@@ -264,10 +296,10 @@ class VideoLauncher: NSObject {
     // MARK: - showDanMuView
     @objc func showDanMuView(sender: UIButton) {
         if !isDanMuDisplayed {
-            sender.setImage(UIImage.systemAsset(.checkmarkSquare, configuration: symbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.checkmarkSquare, configuration: smallSymbolConfig), for: .normal)
             danmuView.isHidden = false
         } else {
-            sender.setImage(UIImage.systemAsset(.square, configuration: symbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.square, configuration: smallSymbolConfig), for: .normal)
             danmuView.isHidden = true
         }
         isDanMuDisplayed.toggle()
@@ -373,11 +405,11 @@ extension VideoLauncher {
             danMuTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
             danMuTextField.widthAnchor.constraint(equalToConstant: 300),
             danMuTextField.heightAnchor.constraint(equalToConstant: 50),
-            ytVideoPlayerView.topAnchor.constraint(equalTo: view.topAnchor, constant: notchHeight),
             ytVideoPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ytVideoPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ytVideoPlayerView.widthAnchor.constraint(equalTo: view.widthAnchor),
             ytVideoPlayerView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
+            ytVideoPlayerView.topAnchor.constraint(equalTo: view.topAnchor, constant: notchHeight),
             buttonsView.leadingAnchor.constraint(equalTo: ytVideoPlayerView.leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
             buttonsView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),

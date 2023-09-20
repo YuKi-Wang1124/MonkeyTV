@@ -1,26 +1,18 @@
 //
-//  File.swift
+//  UIWindow+Extension.swift
 //  MonkeyTV
 //
-//  Created by 王昱淇 on 2023/9/15.
+//  Created by 王昱淇 on 2023/9/20.
 //
 
 import UIKit
 
 extension UIWindow {
-    static var current: UIWindow? {
-        for scene in UIApplication.shared.connectedScenes {
-            guard let windowScene = scene as? UIWindowScene else { continue }
-            for window in windowScene.windows {
-                if window.isKeyWindow { return window }
-            }
+    static func getLastWindow() -> UIWindow {
+        if let keyWindow = UIApplication.shared.connectedScenes
+            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
+            return keyWindow
         }
-        return nil
-    }
-}
-
-extension UIScreen {
-    static var current: UIScreen? {
-        UIWindow.current?.screen
+        return UIWindow()
     }
 }
