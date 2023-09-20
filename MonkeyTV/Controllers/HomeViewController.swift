@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     private lazy var tableView = {
         var tableView = UITableView()
         tableView.rowHeight = 300
@@ -46,10 +46,10 @@ class HomeViewController: UIViewController {
         self.getVideoCover(request: HomeRequest.show)
         view.backgroundColor = UIColor.white
     }
+    // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
         dataSource =
-        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) {
-            tableView, indexPath, itemIdentifier in
+        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) { tableView, indexPath, itemIdentifier in
             if indexPath.row == 0 {
                 let cell =
                 tableView.dequeueReusableCell(
@@ -102,9 +102,8 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: ShowVideoPlayerDelegate {
     func showVideoPlayer() {
-        let videoLauncher = VideoLauncher()
-        videoLauncher.videoId = "FjJtmJteK58"
-        videoLauncher.showVideoPlayer()
+        VideoLauncher.shared.videoId = "FjJtmJteK58"
+        VideoLauncher.shared.showVideoPlayer()
     }
 }
 

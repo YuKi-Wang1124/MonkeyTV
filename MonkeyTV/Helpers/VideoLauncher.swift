@@ -9,8 +9,10 @@ import UIKit
 import youtube_ios_player_helper
 
 class VideoLauncher: NSObject {
-    var ytVideoPlayerView = YTPlayerView()
+    var baseView = UIView()
     var videoId = ""
+    static let shared = VideoLauncher()
+    private var ytVideoPlayerView = YTPlayerView()
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 15)
     private var buttonsView = UIView()
@@ -70,12 +72,24 @@ class VideoLauncher: NSObject {
     override init() {
         super.init()
         setupVideoLauncher()
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(notification:)),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
     }
     deinit {
         timer = nil
     }
+    // MARK: - Update Landscape & Portrait Layout
+    @objc func deviceOrientationDidChange(notification: Notification) {
+        if let userInfoData = notification.userInfo?["orientation"] as? UIDeviceOrientation {
+            if userInfoData.isPortrait {
+                print("UIDevice.current.orientation＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋＋")
+            }
+        }
+    }
+    // MARK: - Show Button View
     @objc func showButtonView() {
-        self.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        self.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         self.changeOrientationButton.isHidden = false
         self.showDanMuButton.isHidden = false
         self.showDanMuTextFieldButton.isHidden = false
@@ -143,20 +157,21 @@ class VideoLauncher: NSObject {
     }
     // MARK: - showVideoPlayer
     func showVideoPlayer() {
+        
         getDanMuData()
-        let view = UIView(frame: CGRect(x: 0,
+        baseView = UIView(frame: CGRect(x: 0,
                                         y: keyWindow.frame.height,
                                         width: keyWindow.frame.width,
                                         height: keyWindow.frame.height))
-        addYTView(view: view)
-        keyWindow.addSubview(view)
+        keyWindow.addSubview(baseView)
+        addYTView(view: baseView)
         addBtnsOnButtonView()
         let safeAreaInsets = keyWindow.safeAreaInsets
         let topInset = safeAreaInsets.top
         let bottomInset = safeAreaInsets.bottom
         let notchHeight = max(topInset, bottomInset)
         // TODO: change Orientation layout
-        setYTViewLayout(view: view, notchHeight: notchHeight)
+        setYTViewLayout(view: baseView, notchHeight: notchHeight)
 //                                setLandscapeYTViewLayout(view: view)
         setBtnsAutoLayout()
         let playerVars: [AnyHashable: Any] = [
@@ -174,13 +189,12 @@ class VideoLauncher: NSObject {
             "autoplay": 1
         ]
         ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
-        view.backgroundColor = .white
+        baseView.backgroundColor = .white
         UIView.animate(withDuration: 0.5, delay: 0,
                        usingSpringWithDamping: 1,
                        initialSpringVelocity: 1,
                        options: .curveEaseOut, animations: {
-            view.frame = CGRect(x: 0,
-                                y: 0,
+            self.baseView.frame = CGRect(x: 0, y: 0,
                                 width: self.keyWindow.frame.width,
                                 height: self.keyWindow.frame.height)
         }, completion: { [self] (completedAnimation) in
