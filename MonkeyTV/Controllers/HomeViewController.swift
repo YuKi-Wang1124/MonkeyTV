@@ -30,17 +30,9 @@ class HomeViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        VideoLauncher.shared
         tableView.backgroundColor = UIColor.white
-        //        DispatchQueue.main.async {
-        //            self.dispatchSemaphore.wait()
-        //            self.dispatchSemaphore.signal()
-        //            self.dispatchSemaphore.wait()
         self.updateTableViewDataSource()
-        //            self.dispatchSemaphore.signal()
-        //            tableView.dataSource = self
-        //            tableView.delegate = self
-        //            self.dispatchSemaphore.wait()
-        //        }
         //        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
         setUI()
         self.getVideoCover(request: HomeRequest.show)

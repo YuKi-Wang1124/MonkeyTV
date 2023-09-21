@@ -10,6 +10,7 @@ import UIKit
 class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        VideoLauncher.shared
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -22,10 +23,11 @@ class BaseViewController: UIViewController {
         if UIDevice.current.orientation.isPortrait {
             NotificationCenter.default.post(name: UIDevice.orientationDidChangeNotification,
                                             object: nil, userInfo: ["orientation": UIDevice.current.orientation])
+            print("+", view.frame)
         } else if UIDevice.current.orientation.isLandscape {
             NotificationCenter.default.post(name: UIDevice.orientationDidChangeNotification,
                                             object: nil, userInfo: ["orientation": UIDevice.current.orientation])
+            print("-", view.frame)
         }
     }
 }
-

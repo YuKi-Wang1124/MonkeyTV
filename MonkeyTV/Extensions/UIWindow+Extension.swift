@@ -7,12 +7,12 @@
 
 import UIKit
 
-extension UIWindow {
-    static func getLastWindow() -> UIWindow {
-        if let keyWindow = UIApplication.shared.connectedScenes
-            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
-            return keyWindow
+extension UIViewController {
+    static func getFirstViewController() -> UIViewController {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
+            return keyWindow.rootViewController!
         }
-        return UIWindow()
+        return UIViewController()
     }
 }

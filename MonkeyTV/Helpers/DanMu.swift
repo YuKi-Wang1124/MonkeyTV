@@ -60,6 +60,8 @@ class DanMuView: UIView {
         addDanMu(text: danmu.0, isMycomment: danmu.1)
     }
     @objc func addDanMu(text: String, isMycomment: Bool) {
+        return
+        
         let danmu = DanMu()
         danmu.label.frame.origin.x = self.frame.size.width
         danmu.label.text = text
