@@ -356,8 +356,8 @@ extension VideoLauncher {
             buttonsView.heightAnchor.constraint(equalTo: rootViewController.view.widthAnchor),
             
             changeOrientationButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
-//            changeOrientationButton.rightAnchor.constraint(equalTo: rootViewController.view.rightAnchor, constant: 20),
-            changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
+            changeOrientationButton.rightAnchor.constraint(equalTo: rootViewController.view.rightAnchor, constant: 20),
+//            changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
             changeOrientationButton.widthAnchor.constraint(equalToConstant: 40),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 40),
             
