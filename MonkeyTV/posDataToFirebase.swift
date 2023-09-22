@@ -21,3 +21,30 @@ import Foundation
 //
 //    }
 //}
+
+//    // MARK: - call api to get images and titles
+//    func getVideoCover(request: Request) {
+//        let decoder = JSONDecoder()
+//        HTTPClient.shared.request(request, completion: { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let data):
+//                do {
+//                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
+//                    info.items.forEach({
+//                        let show = MKShow(image: $0.snippet.thumbnails.medium.url,
+//                                          title: $0.snippet.title, playlistId: $0.id)
+////                        self.model.append(show)
+//                        //                        print($0.id)
+////                        self.snapshot.appendItems([show], toSection: .main)
+////                        self.dataSource.apply(self.snapshot)
+//
+//                    })
+//                } catch {
+//                    print(Result<Any>.failure(error))
+//                }
+//            case .failure(let error):
+//                print(Result<Any>.failure(error))
+//            }
+//        })
+//    }

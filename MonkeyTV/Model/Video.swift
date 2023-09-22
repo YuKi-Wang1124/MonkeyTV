@@ -15,11 +15,6 @@ struct Video: Codable {
     var published: String
 }
 
-
-enum Section {
-    case animation
-}
-
 struct MKShow: Hashable {
     var image: String
     var title: String

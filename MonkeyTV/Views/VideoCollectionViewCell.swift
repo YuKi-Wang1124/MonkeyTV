@@ -19,7 +19,7 @@ class VideoCollectionViewCell: UICollectionViewCell {
     var label: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 17)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -33,15 +33,17 @@ class VideoCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             coverImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            coverImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5, constant: -10),
+            coverImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.55, constant: -10),
             coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 16 / 9),
-            
-            
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             label.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 8),
-            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2)
+            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.4)
         ])
+    }
+    override func prepareForReuse() {
+        label.text = ""
+        coverImageView.image = nil
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

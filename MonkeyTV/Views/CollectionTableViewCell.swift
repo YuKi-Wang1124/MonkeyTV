@@ -7,13 +7,21 @@
 
 import UIKit
 
-class CollectionTableViewCell: UITableViewCell {
+class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayout {
     static let identifier = "\(CollectionTableViewCell.self)"
     var delegate: ShowVideoPlayerDelegate?
     var model = [MKShow]()
-    private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
-    private var dataSource: UICollectionViewDiffableDataSource<OneSection, MKShow>!
-    private lazy var collectionView = {
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.lightGray
+        label.text = "多一點健康"
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    lazy var collectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         var collectionView = UICollectionView(frame: .zero,
@@ -27,18 +35,13 @@ class CollectionTableViewCell: UITableViewCell {
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        model.append(MKShow(image: "11",
-                            title: "111233333", playlistId: "123"))
-        getVideoCover(request: HomeRequest.show)
-        updateDataSource()
+//        getVideoCover(request: HomeRequest.show)
+//        updateDataSource()
         collectionView.delegate = self
-        collectionView.dataSource = dataSource
         contentView.backgroundColor = UIColor.white
         contentView.addSubview(collectionView)
+        contentView.addSubview(titleLabel)
         setupUI()
-    }
-    override func prepareForReuse() {
-        collectionView.dataSource = nil
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,66 +49,48 @@ class CollectionTableViewCell: UITableViewCell {
     private func setupUI() {
         collectionView.backgroundColor = UIColor.white
         NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
+            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    func updateDataSource() {
-        snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(model, toSection: .main)
-        dataSource =
-        UICollectionViewDiffableDataSource<OneSection, MKShow>(
-            collectionView: collectionView,
-            cellProvider: { (colloctionvVew, indexPath, itemIdentifier) -> UICollectionViewCell? in
-                let cell = colloctionvVew.dequeueReusableCell(
-                    withReuseIdentifier: VideoCollectionViewCell.identifier,
-                    for: indexPath) as? VideoCollectionViewCell
-                cell?.label.text = itemIdentifier.title
-                UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
-                    cell?.coverImageView.image = image
-                })
-
-                return cell
-            })
-        dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
-    }
-    func getVideoCover(request: Request) {
-        let decoder = JSONDecoder()
-        HTTPClient.shared.request(request, completion: { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                do {
-                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
-                    info.items.forEach({
-                        let show = MKShow(image: $0.snippet.thumbnails.medium.url,
-                                          title: $0.snippet.title,
-                                          playlistId: $0.id)
-                        DispatchQueue.main.async {
-                            self.snapshot.appendItems([show], toSection: .main)
-                            self.dataSource.apply(self.snapshot)
-                            self.collectionView.reloadData()
-                        }
-                    })
-                } catch {
-                    print(Result<Any>.failure(error))
-                }
-            case .failure(let error):
-                print(Result<Any>.failure(error))
-            }
-        })
-    }
-}
-
-extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
+   
+//    func getVideoCover(request: Request) {
+//        let decoder = JSONDecoder()
+//        HTTPClient.shared.request(request, completion: { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let data):
+//                do {
+//                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
+//                    info.items.forEach({
+//                        let show = MKShow(image: $0.snippet.thumbnails.medium.url,
+//                                          title: $0.snippet.title,
+//                                          playlistId: $0.id)
+//                        DispatchQueue.main.async {
+//                            self.snapshot.appendItems([show], toSection: .main)
+//                            self.dataSource.apply(self.snapshot)
+//                            self.collectionView.reloadData()
+//                        }
+//                    })
+//                } catch {
+//                    print(Result<Any>.failure(error))
+//                }
+//            case .failure(let error):
+//                print(Result<Any>.failure(error))
+//            }
+//        })
+//    }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 200,
-                      height: collectionView.frame.height)
+        return CGSize(width: 200, height: 230)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -122,6 +107,3 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     }
 }
 
-enum OneSection {
-    case main
-}
