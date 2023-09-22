@@ -22,7 +22,6 @@ class DanMu: Hashable {
         label.textColor = .white
     }
 }
-
 class DanMuView: UIView {
     var displayLink: CADisplayLink?
     var lineHeight: CGFloat = 26
@@ -60,8 +59,7 @@ class DanMuView: UIView {
         addDanMu(text: danmu.0, isMycomment: danmu.1)
     }
     @objc func addDanMu(text: String, isMycomment: Bool) {
-        return
-        
+//        return
         let danmu = DanMu()
         danmu.label.frame.origin.x = self.frame.size.width
         danmu.label.text = text
@@ -76,6 +74,7 @@ class DanMuView: UIView {
         }
         for dumu in danmus {
             if dumu.row >= linelasts.count {
+                return
             }
             if linelasts[dumu.row] != nil {
                 let endx = danmu.label.frame.origin.x

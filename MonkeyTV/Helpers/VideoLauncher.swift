@@ -9,21 +9,20 @@ import UIKit
 import youtube_ios_player_helper
 
 class VideoLauncher: NSObject {
-    
-    var baseView = {
+    var videoId = ""
+    static let shared = VideoLauncher()
+    private let rootViewController = UIViewController.getFirstViewController()
+    private var baseView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    var videoId = ""
-    static let shared = VideoLauncher()
     private var ytVideoPlayerView = {
         let view = YTPlayerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
-    private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
+  
     private var buttonsView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -41,34 +40,38 @@ class VideoLauncher: NSObject {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.backgroundColor = .systemMint
-        //        tableView.register(CollectionTableViewCell.self,
-        //                           forCellReuseIdentifier:
-        //                            CollectionTableViewCell.identifier)
+        tableView.register(PlayerTableViewCell.self,
+                           forCellReuseIdentifier:
+                            PlayerTableViewCell.identifier)
         //        tableView.register(VideoTableViewCell.self,
         //                           forCellReuseIdentifier:
         //                            VideoTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
+    private var dataSource: UITableViewDiffableDataSource<OneSection, MKShow>!
     private lazy var changeOrientationButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig),
             color: .white, cornerRadius: 20)
     }()
     private lazy var showDanMuButton = {
-        return UIButton.createPlayerButton(
+        let button = UIButton.createPlayerButton(
             image: UIImage.systemAsset(.square, configuration: smallSymbolConfig),
-            color: .white, cornerRadius: 15)
+            color: .white, cornerRadius: 12)
+        button.setTitle("彈幕", for: .normal)
+        return button
     }()
     private lazy var showDanMuTextFieldButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.submitDanMu, configuration: smallSymbolConfig),
             color: .white, cornerRadius: 15)
     }()
-    private lazy var showChatRoomButton = {
+    private lazy var showChatroomButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.chatroom, configuration: smallSymbolConfig),
-            color: .systemBlue, cornerRadius: 15)
+            color: .white, cornerRadius: 15)
     }()
     private lazy var pauseButton = {
         return UIButton.createPlayerButton(
@@ -98,11 +101,17 @@ class VideoLauncher: NSObject {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
+    private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var timer: Timer?
-    private let rootViewController = UIViewController.getFirstViewController()
     // MARK: - init
     override init() {
         super.init()
+        configureDataSource(tableView: tableView)
+        snapshot.appendSections([.main])
+        snapshot.appendItems([MKShow(image: "first", title: "first", playlistId: "first")])
+        tableView.dataSource = dataSource
+        dataSource.apply(snapshot)
         baseView.backgroundColor = .yellow
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(notification:)),
                                                name: UIDevice.orientationDidChangeNotification,
@@ -125,12 +134,12 @@ class VideoLauncher: NSObject {
     }
     // MARK: - Show Button View
     @objc func showButtonView() {
-        self.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.3)
-        self.changeOrientationButton.isHidden = false
-        self.showDanMuButton.isHidden = false
-        self.showDanMuTextFieldButton.isHidden = false
-        self.pauseButton.isHidden = false
-        self.videoSlider.isHidden = false
+        buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.3)
+        changeOrientationButton.isHidden = false
+        showDanMuButton.isHidden = false
+        showDanMuTextFieldButton.isHidden = false
+        pauseButton.isHidden = false
+        videoSlider.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
             self?.changeOrientationButton.isHidden = true
             self?.showDanMuButton.isHidden = true
@@ -141,6 +150,12 @@ class VideoLauncher: NSObject {
         }
     }
     // MARK: - setupVideoLauncher
+    private func addButtonViewGesture() {
+        let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
+        singleFinger.numberOfTapsRequired = 1
+        singleFinger.numberOfTouchesRequired = 1
+        self.buttonsView.addGestureRecognizer(singleFinger)
+    }
     private func setupVideoLauncher() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.0)
         danMuTextField.isHidden = true
@@ -154,10 +169,7 @@ class VideoLauncher: NSObject {
         setDanMu()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .clear
-        let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
-        singleFinger.numberOfTapsRequired = 1
-        singleFinger.numberOfTouchesRequired = 1
-        self.buttonsView.addGestureRecognizer(singleFinger)
+        addButtonViewGesture()
     }
     // MARK: - getDanMuData
     private func getDanMuData() {
@@ -204,20 +216,6 @@ class VideoLauncher: NSObject {
             submitDanMuButton.isHidden = true
         }
         danMuTextFiedIsShow.toggle()
-    }
-    // MARK: - Show Chatroom
-    @objc func showChatroom(sender: UIButton) {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
-            let chatroomVC = ChatroomViewController()
-            if let sheet = chatroomVC.sheetPresentationController {
-                sheet.prefersGrabberVisible = true
-                sheet.detents = [.medium(), .large()]
-                sheet.largestUndimmedDetentIdentifier = .large
-                chatroomVC.videoId = self.videoId
-                keyWindow.rootViewController?.present(chatroomVC, animated: true)
-            }
-        }
     }
     // MARK: - Handle Slider Change
     @objc func handleSliderChange(sender: UISlider) {
@@ -286,8 +284,6 @@ class VideoLauncher: NSObject {
                                     for: .touchUpInside)
         videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
                               for: .valueChanged)
-        showChatRoomButton.addTarget(self, action: #selector(showChatroom(sender:)),
-                                     for: .touchUpInside)
     }
 }
 // MARK: - YTPlayerViewDelegate
@@ -334,13 +330,11 @@ extension VideoLauncher: YTPlayerViewDelegate {
         }
     }
 }
-
 // MARK: -
 extension VideoLauncher {
     private func setLandscapeAutoLayOut() {
         tableView.removeFromSuperview()
         removeAllContraints()
-
         NSLayoutConstraint.activate([
             baseView.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
             baseView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
@@ -354,19 +348,28 @@ extension VideoLauncher {
             buttonsView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
             buttonsView.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor),
             buttonsView.heightAnchor.constraint(equalTo: rootViewController.view.widthAnchor),
-            
+            danmuView.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
+            danmuView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
+            danmuView.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor),
+            danmuView.heightAnchor.constraint(equalTo: rootViewController.view.widthAnchor),
+            pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
+            pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
+            videoSlider.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
+            videoSlider.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor, constant: 80),
+            videoSlider.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor, constant: -450),
+            videoSlider.heightAnchor.constraint(equalToConstant: 10),
             changeOrientationButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
-            changeOrientationButton.rightAnchor.constraint(equalTo: rootViewController.view.rightAnchor, constant: 20),
-//            changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
+            changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor, constant: 150),
             changeOrientationButton.widthAnchor.constraint(equalToConstant: 40),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 40),
-            
-            
-            
+            showDanMuButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor, constant: 90),
+            showDanMuButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor, constant: 150),
+            showDanMuButton.widthAnchor.constraint(equalToConstant: 100),
+            showDanMuButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     private func setPortraitAutoLayOut() {
-        baseView.addSubview(tableView)
+        rootViewController.view.addSubview(tableView)
         removeAllContraints()
         NSLayoutConstraint.activate([
             baseView.leadingAnchor.constraint(equalTo: rootViewController.view.leadingAnchor),
@@ -391,7 +394,7 @@ extension VideoLauncher {
             buttonsView.trailingAnchor.constraint(equalTo: rootViewController.view.trailingAnchor),
             buttonsView.heightAnchor.constraint(equalTo: rootViewController.view.widthAnchor, multiplier: 9 / 16),
             buttonsView.topAnchor.constraint(equalTo: rootViewController.view.topAnchor),
-            changeOrientationButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -130),
+            changeOrientationButton.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
             changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
             changeOrientationButton.widthAnchor.constraint(equalToConstant: 30),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 30),
@@ -399,12 +402,11 @@ extension VideoLauncher {
             danmuView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
             danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10),
-
-            showDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -160),
+            showDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -70),
             showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
-            showDanMuButton.widthAnchor.constraint(equalToConstant: 30),
+            showDanMuButton.widthAnchor.constraint(equalToConstant: 100),
             showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
-            showDanMuTextFieldButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -200),
+            showDanMuTextFieldButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -225),
             showDanMuTextFieldButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
             showDanMuTextFieldButton.widthAnchor.constraint(equalToConstant: 30),
             showDanMuTextFieldButton.heightAnchor.constraint(equalToConstant: 30),
@@ -473,22 +475,56 @@ extension VideoLauncher {
     // MARK: - Change Orientation
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
-            UIView.animate(withDuration: 0.2, animations: {
+//            UIView.animate(withDuration: 0.2, animations: {
                 self.baseView.transform = CGAffineTransform(rotationAngle: .pi / 2 )
-            }, completion: { _ in
-                DispatchQueue.main.async {
+//            }, completion: { _ in
+//                DispatchQueue.main.async {
                     self.setLandscapeAutoLayOut()
-                }
-            })
+//                }
+//            })
         } else {
-            UIView.animate(withDuration: 0.2, animations: {
+//            UIView.animate(withDuration: 0.2, animations: {
                 self.baseView.transform = .identity
-            }, completion: { _ in
-                DispatchQueue.main.async {
+//            }, completion: { _ in
+//                DispatchQueue.main.async {
                     self.setPortraitAutoLayOut()
-                }
-            })
+//                }
+//            })
         }
         playerIsShrink.toggle()
+    }
+}
+// MARK: - TableView
+extension VideoLauncher {
+    func configureDataSource(tableView: UITableView) {
+        dataSource = UITableViewDiffableDataSource<OneSection, MKShow>(
+            tableView: tableView,
+            cellProvider: { tableView, indexPath, item in
+                if indexPath.row == 0 {
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: PlayerTableViewCell.identifier,
+                        for: indexPath) as? PlayerTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    cell.chatRoomButton.addTarget(self, action: #selector(self.showChatroom(sender:)), for: .touchUpInside)
+                    return cell
+                } else {
+                    return UITableViewCell()
+                }
+            }
+        )
+    }
+    // MARK: - Show Chatroom Button Action
+    @objc func showChatroom(sender: UIButton) {
+        print("cccccc")
+        let chatroomVC = ChatroomViewController()
+        if let sheet = chatroomVC.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.detents = [.custom { _ in
+                600.0
+            }, .large()]
+            sheet.largestUndimmedDetentIdentifier = .large
+            chatroomVC.videoId = self.videoId
+            rootViewController.present(chatroomVC, animated: true)
+        }
     }
 }
