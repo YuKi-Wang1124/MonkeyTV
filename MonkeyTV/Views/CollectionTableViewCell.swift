@@ -65,9 +65,9 @@ class CollectionTableViewCell: UITableViewCell {
                     for: indexPath) as? VideoCollectionViewCell
                 cell?.label.text = itemIdentifier.title
                 UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
-                    cell?.coverButton.setImage(image, for: .normal)
+                    cell?.coverImageView.image = image
                 })
-//                cell?.coverButton.addTarget(self, action: #selector(self.showVideoPlayer), for: .touchUpInside)
+
                 return cell
             })
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
@@ -84,7 +84,6 @@ class CollectionTableViewCell: UITableViewCell {
                         let show = MKShow(image: $0.snippet.thumbnails.medium.url,
                                           title: $0.snippet.title,
                                           playlistId: $0.id)
-                        print($0.id)
                         DispatchQueue.main.async {
                             self.snapshot.appendItems([show], toSection: .main)
                             self.dataSource.apply(self.snapshot)
@@ -111,7 +110,7 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 50.0
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

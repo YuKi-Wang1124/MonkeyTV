@@ -31,7 +31,10 @@ class PlayerTableViewCell: UITableViewCell {
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 17)
         label.textAlignment = .left
-        label.text = "以匿名的身份公開發表留言..."
+        label.text = " 以匿名的身份公開發表留言..."
+        label.backgroundColor = .systemGray5
+        label.layer.cornerRadius = 7
+        label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -65,7 +68,6 @@ class PlayerTableViewCell: UITableViewCell {
                 equalTo: contentView.safeAreaLayoutGuide.topAnchor,
                 constant: 8),
             chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 30),
-            
             personalImageView.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
                 constant: 18),
@@ -74,7 +76,11 @@ class PlayerTableViewCell: UITableViewCell {
             personalImageView.topAnchor.constraint(
                 equalTo: chatroomTitleLabel.bottomAnchor, constant: 3),
             personalImageView.heightAnchor.constraint(equalToConstant: 28),
-            
+            chatroomNameLabel.centerYAnchor.constraint(equalTo: personalImageView.centerYAnchor),
+            chatroomNameLabel.leadingAnchor.constraint(equalTo: personalImageView.trailingAnchor, constant: 9),
+            chatroomNameLabel.trailingAnchor.constraint(
+                equalTo: contentView.safeAreaLayoutGuide.trailingAnchor,
+                constant: -24),
             chatRoomButton.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
                 constant: 8),

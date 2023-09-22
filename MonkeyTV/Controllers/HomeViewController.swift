@@ -37,6 +37,23 @@ class HomeViewController: BaseViewController {
         setUI()
         self.getVideoCover(request: HomeRequest.show)
         view.backgroundColor = UIColor.white
+        
+        
+      
+        
+        getShowData()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
@@ -65,6 +82,27 @@ class HomeViewController: BaseViewController {
         snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
         snapshot.appendSections([.animation])
     }
+    // MARK: -
+    
+    // MARK: - getDanMuData
+    private func getShowData() {
+        FirestoreManageer.show.getDocuments { querySnapshot, error in
+                if let querySnapshot = querySnapshot {
+                    for document in querySnapshot.documents {
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                            let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
+                            print(decodedObject)
+                        } catch {
+                            print("\(error)")
+                        }
+                    }
+                }
+            }
+    }
+    
+    
+    
     // MARK: - call api to get images and titles
     func getVideoCover(request: Request) {
         let decoder = JSONDecoder()
@@ -81,6 +119,12 @@ class HomeViewController: BaseViewController {
                         //                        print($0.id)
                         self.snapshot.appendItems([show], toSection: .animation)
                         self.dataSource.apply(self.snapshot)
+
+
+
+
+
+
                     })
                 } catch {
                     print(Result<Any>.failure(error))

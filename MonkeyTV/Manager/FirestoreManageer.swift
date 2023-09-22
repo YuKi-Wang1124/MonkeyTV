@@ -10,8 +10,7 @@ import FirebaseFirestore
 
 class FirestoreManageer {
     static let shared = Firestore.firestore()
-    static let bulletChatCollection = FirestoreManageer.shared.collection("BulletChat")
-    static let chatroomCollection = FirestoreManageer.shared.collection("Chatroom")
+    static let bulletChat = FirestoreManageer.shared.collection("BulletChat")
+    static let chatroom = FirestoreManageer.shared.collection("Chatroom")
+    static let show = FirestoreManageer.shared.collection("Show")
 }
-
-    

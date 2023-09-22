@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CC0331242ABD5DFF00229900 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331232ABD5DFF00229900 /* PlayerTableViewCell.swift */; };
+		CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331252ABDA5F200229900 /* posDataToFirebase.swift */; };
+		CC0331282ABDA6F900229900 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331272ABDA6F900229900 /* Show.swift */; };
 		CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */; };
 		CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */; };
 		CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */; };
@@ -54,6 +56,8 @@
 		7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonkeyTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96BC0DE3366625A013AA3A3E /* Pods-MonkeyTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.debug.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.debug.xcconfig"; sourceTree = "<group>"; };
 		CC0331232ABD5DFF00229900 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		CC0331252ABDA5F200229900 /* posDataToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = posDataToFirebase.swift; sourceTree = "<group>"; };
+		CC0331272ABDA6F900229900 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 			children = (
 				CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */,
 				CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */,
+				CC0331252ABDA5F200229900 /* posDataToFirebase.swift */,
 				CC963C132AB92CA60047EEFA /* Base */,
 				CC0BF1F32AB2F3B00075203C /* Helpers */,
 				CC0BF1D42AB055450075203C /* Constants */,
@@ -228,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1DE2AB1B8130075203C /* Video.swift */,
+				CC0331272ABDA6F900229900 /* Show.swift */,
 				CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */,
 				CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */,
 				CC963C072AB6F9A20047EEFA /* ChatData.swift */,
@@ -422,6 +428,7 @@
 				CC963C122AB8A3190047EEFA /* UIColor+Extension.swift in Sources */,
 				CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */,
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
+				CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */,
 				CC0BF1EC2AB2CA0A0075203C /* ChannelInfo.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
 				CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */,
@@ -445,6 +452,7 @@
 				CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */,
 				CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */,
 				CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */,
+				CC0331282ABDA6F900229900 /* Show.swift in Sources */,
 				CC0331242ABD5DFF00229900 /* PlayerTableViewCell.swift in Sources */,
 				CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */,
 			);

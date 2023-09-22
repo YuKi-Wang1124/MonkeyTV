@@ -9,35 +9,38 @@ import UIKit
 
 class VideoCollectionViewCell: UICollectionViewCell {
     static let identifier = "\(VideoCollectionViewCell.self)"
-    var coverButton = {
-        let btn = UIButton()
-        btn.contentMode = .scaleAspectFill
-        btn.clipsToBounds = true
-        return btn
+    var coverImageView = {
+        let imageview = UIImageView()
+        imageview.contentMode = .scaleAspectFill
+        imageview.layer.cornerRadius = 11
+        imageview.clipsToBounds = true
+        return imageview
     }()
     var label: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(coverButton)
+        contentView.addSubview(coverImageView)
         contentView.addSubview(label)
-        coverButton.translatesAutoresizingMaskIntoConstraints = false
+        coverImageView.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            coverButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            coverButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            coverButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.48, constant: -10),
-            coverButton.widthAnchor.constraint(equalTo: coverButton.heightAnchor),
+            coverImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            coverImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5, constant: -10),
+            coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 16 / 9),
+            
+            
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: coverButton.bottomAnchor, constant: 8),
-            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.36)
+            label.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 8),
+            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2)
         ])
     }
     required init?(coder: NSCoder) {

@@ -54,7 +54,7 @@ class VideoLauncher: NSObject {
     private lazy var changeOrientationButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig),
-            color: .white, cornerRadius: 20)
+            color: .white, cornerRadius: 15)
     }()
     private lazy var showDanMuButton = {
         let button = UIButton.createPlayerButton(
@@ -90,9 +90,7 @@ class VideoLauncher: NSObject {
     }()
     private lazy var videoSlider: UISlider = {
         let slider = UISlider()
-        let thumbImage = UIImage.systemAsset(.thumbImage)
-        slider.minimumValue = 0
-        slider.setThumbImage(thumbImage, for: .normal)
+        slider.thumbTintColor = UIColor(hex: "#49EA98")
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
@@ -107,11 +105,7 @@ class VideoLauncher: NSObject {
     // MARK: - init
     override init() {
         super.init()
-        configureDataSource(tableView: tableView)
-        snapshot.appendSections([.main])
-        snapshot.appendItems([MKShow(image: "first", title: "first", playlistId: "first")])
-        tableView.dataSource = dataSource
-        dataSource.apply(snapshot)
+        setupTableView()
         baseView.backgroundColor = .yellow
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(notification:)),
                                                name: UIDevice.orientationDidChangeNotification,
@@ -119,6 +113,15 @@ class VideoLauncher: NSObject {
     }
     deinit {
         timer = nil
+    }
+    // MARK: - Setup TableView
+    private func setupTableView() {
+        configureDataSource(tableView: tableView)
+        snapshot.appendSections([.main])
+        snapshot.appendItems([MKShow(image: "first", title: "first", playlistId: "first")])
+        snapshot.appendItems([MKShow(image: "second", title: "second", playlistId: "second")])
+        tableView.dataSource = dataSource
+        dataSource.apply(snapshot)
     }
     // MARK: - Update Landscape & Portrait Layout
     @objc func deviceOrientationDidChange(notification: Notification) {
@@ -173,7 +176,7 @@ class VideoLauncher: NSObject {
     }
     // MARK: - getDanMuData
     private func getDanMuData() {
-        FirestoreManageer.bulletChatCollection.whereField(
+        FirestoreManageer.bulletChat.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
                     for document in querySnapshot.documents {
@@ -226,7 +229,7 @@ class VideoLauncher: NSObject {
     @objc func submitMyDanMuButton(sender: UIButton) {
         if let text = danMuTextField.text, text.isEmpty == false {
             danmuView.danmuQueue.append((text, false))
-            let id = FirestoreManageer.bulletChatCollection.document().documentID
+            let id = FirestoreManageer.bulletChat.document().documentID
             let data: [String: Any] = ["bulletChat":
                                         ["chatId": UUID().uuidString,
                                          "content": text,
@@ -236,7 +239,7 @@ class VideoLauncher: NSObject {
                                          "userId": "匿名"] as [String: Any],
                                        "videoId": videoId,
                                        "id": id]
-            FirestoreManageer.bulletChatCollection.document(id).setData(data) { error in
+            FirestoreManageer.bulletChat.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")
                 } else {
@@ -355,9 +358,9 @@ extension VideoLauncher {
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
             videoSlider.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
-            videoSlider.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor, constant: 80),
+            videoSlider.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor, constant: 100),
             videoSlider.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor, constant: -450),
-            videoSlider.heightAnchor.constraint(equalToConstant: 10),
+            videoSlider.heightAnchor.constraint(equalToConstant: 50),
             changeOrientationButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor, constant: 150),
             changeOrientationButton.widthAnchor.constraint(equalToConstant: 40),
@@ -402,7 +405,7 @@ extension VideoLauncher {
             danmuView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
             danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10),
-            showDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -70),
+            showDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -80),
             showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
             showDanMuButton.widthAnchor.constraint(equalToConstant: 100),
             showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
@@ -415,8 +418,8 @@ extension VideoLauncher {
             pauseButton.widthAnchor.constraint(equalToConstant: 50),
             pauseButton.heightAnchor.constraint(equalToConstant: 50),
             videoSlider.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            videoSlider.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -50),
-            videoSlider.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: 2),
+            videoSlider.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -60),
+            videoSlider.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, constant: -100),
             videoSlider.heightAnchor.constraint(equalToConstant: 10)
         ])
     }
@@ -500,7 +503,7 @@ extension VideoLauncher {
         dataSource = UITableViewDiffableDataSource<OneSection, MKShow>(
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
-                if indexPath.row == 0 {
+                if indexPath.row == 1 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: PlayerTableViewCell.identifier,
                         for: indexPath) as? PlayerTableViewCell
@@ -515,7 +518,6 @@ extension VideoLauncher {
     }
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
-        print("cccccc")
         let chatroomVC = ChatroomViewController()
         if let sheet = chatroomVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true
