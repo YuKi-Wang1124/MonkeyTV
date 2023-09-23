@@ -21,8 +21,18 @@ class ChatroomViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    private var chatroomTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.textAlignment = .left
+        label.text = "聊天室"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     private lazy var submitMessageButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send)!)
+        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send),
+                                           color: .white, cornerRadius: 20)
     }()
     private lazy var messageTextField = {
         return UITextField.createTextField(text: "輸入訊息")
@@ -44,18 +54,15 @@ class ChatroomViewController: UIViewController {
     // MARK: - Submit Message To DB
     @objc func submitMessage() {
         if let text = messageTextField.text, text.isEmpty == false {
-            let id = FirestoreManageer.chatroomCollection.document().documentID
+            let id = FirestoreManager.chatroom.document().documentID
             let data: [String: Any] =
             ["chatroomChat":
-                ["chatId": UUID().uuidString,
-                 "content": text,
-                 "contentType": 0,
+                ["chatId": UUID().uuidString, "content": text, "contentType": 0,
                  "createdTime": FirebaseFirestore.Timestamp(),
                  // TODO: userid
                  "userId": "匿名"] as [String: Any],
-             "videoId": videoId,
-             "id": id]
-            FirestoreManageer.chatroomCollection.document(id).setData(data) { error in
+             "videoId": videoId, "id": id]
+            FirestoreManager.chatroom.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")
                 } else {
@@ -88,18 +95,33 @@ extension ChatroomViewController {
         view.addSubview(tableView)
         view.addSubview(submitMessageButton)
         view.addSubview(messageTextField)
+        view.addSubview(chatroomTitleLabel)
+
         NSLayoutConstraint.activate([
+            chatroomTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
+            chatroomTitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+          
+            chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 60),
+            
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor),
-            messageTextField.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            
+            
+            messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: -8),
+            messageTextField.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 8),
             messageTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            submitMessageButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            submitMessageButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-            submitMessageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            submitMessageButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+//            submitMessageButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+//
+//            submitMessageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            submitMessageButton.centerYAnchor.constraint(equalTo: messageTextField.centerYAnchor),
+            submitMessageButton.heightAnchor.constraint(equalToConstant: 40),
+            
             messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
         ])
     }

@@ -8,96 +8,66 @@
 import UIKit
 import FirebaseFirestore
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     private lazy var tableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 300
+        tableView.rowHeight = 260
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(CollectionTableViewCell.self,
                            forCellReuseIdentifier:
                             CollectionTableViewCell.identifier)
-        tableView.register(VideoTableViewCell.self,
+        tableView.register(VideoAnimationTableViewCell.self,
                            forCellReuseIdentifier:
-                            VideoTableViewCell.identifier)
+                            VideoAnimationTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    private var snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
-    private var dataSource: UITableViewDiffableDataSource<Section, MKShow>!
-    private let dispatchSemaphore = DispatchSemaphore(value: 1)
-    private var model = [MKShow]()
+    private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
+    private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
+    private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
-        tableView.backgroundColor = UIColor.white
-//        DispatchQueue.main.async {
-//            self.dispatchSemaphore.wait()
-//            self.dispatchSemaphore.signal()
-//            self.dispatchSemaphore.wait()
-            self.updateTableViewDataSource()
-//            self.dispatchSemaphore.signal()
-//            tableView.dataSource = self
-//            tableView.delegate = self
-//            self.dispatchSemaphore.wait()
-//        }
-//        getVideoCover(request: HomeRequest.channel, decodeType: ChannelResponse.self)
+        view.backgroundColor = .white
+        updateTableViewDataSource()
         setUI()
-        self.getVideoCover(request: HomeRequest.show)
     }
+
+    // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
-        dataSource =
-        UITableViewDiffableDataSource<Section, MKShow>(tableView: tableView) { tableView, indexPath, itemIdentifier in
-            if indexPath.row == 0 {
-                let cell =
-                tableView.dequeueReusableCell(
-                    withIdentifier: CollectionTableViewCell.identifier,
-                    for: indexPath) as? CollectionTableViewCell
-                guard let cell = cell else { return UITableViewCell() }
-                return cell
-            }
-//            let cell =
-//            tableView.dequeueReusableCell(
-//                withIdentifier: VideoTableViewCell.identifier,
-//                for: indexPath) as? VideoTableViewCell
-//            guard let cell = cell else { return UITableViewCell() }
-//            cell.showNameLabel.text = itemIdentifier.title
-//            cell.selectionStyle = .none
-//            return cell
-            return UITableViewCell()
-        }
-        tableView.dataSource = dataSource
-        snapshot = NSDiffableDataSourceSnapshot<Section, MKShow>()
-        snapshot.appendSections([.animation])
-    }
-    // MARK: - call api to get images and titles
-    func getVideoCover(request: Request) {
-        let decoder = JSONDecoder()
-        HTTPClient.shared.request(request, completion: { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                do {
-                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
-                    info.items.forEach({
-                        let show = MKShow(image: $0.snippet.thumbnails.medium.url,
-                                          title: $0.snippet.title, playlistId: $0.id)
-                        self.model.append(show)
-//                        print($0.id)
-                        self.snapshot.appendItems([show], toSection: .animation)
-                        self.dataSource.apply(self.snapshot)
-                    })
-                } catch {
-                    print(Result<Any>.failure(error))
+        tableViewDataSource =
+        UITableViewDiffableDataSource<OneSection, String>(
+            tableView: tableView) { tableView, indexPath, _ in
+                if indexPath.row == 0 {
+                    let cell =
+                    tableView.dequeueReusableCell(
+                        withIdentifier: VideoAnimationTableViewCell.identifier,
+                        for: indexPath) as? CollectionTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    return cell
+                } else {
+                    let index = indexPath.row - 1
+                    let cell =
+                    tableView.dequeueReusableCell(
+                        withIdentifier: CollectionTableViewCell.identifier,
+                        for: indexPath) as? CollectionTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    cell.titleLabel.text = self.showCatalogArray[index]
+                    cell.catalogType = index
+                    return cell
                 }
-            case .failure(let error):
-                print(Result<Any>.failure(error))
             }
-        })
+        tableView.dataSource = tableViewDataSource
+        tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
+        tableViewSnapshot.appendSections([OneSection.main])
+        tableViewSnapshot.appendItems(showCatalogArray, toSection: .main)
+        tableViewDataSource.apply(tableViewSnapshot)
     }
-    // MARK: - UI configuration
-    func setUI() {
+}
+// MARK: - UI configuration
+extension HomeViewController {
+    private func setUI() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -106,32 +76,4 @@ class HomeViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-}
-
-enum Section {
-    case animation
-}
-
-struct MKShow: Hashable {
-    var image: String
-    var title: String
-    var playlistId: String
-}
-
-struct SuccessParser<T: Codable>: Codable {
-    let data: T
-    let paging: Int?
-    enum CodingKeys: String, CodingKey {
-        case data
-        case paging = "next_paging"
-    }
-}
-
-struct FailureParser: Codable {
-    let errorMessage: String
-}
-
-struct Model: Hashable {
-    var text: String
-    var image: String
 }

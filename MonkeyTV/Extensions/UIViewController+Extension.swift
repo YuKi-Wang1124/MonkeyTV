@@ -20,7 +20,6 @@ extension UINavigationController {
     static var profile: UINavigationController {
         return addNavigationController(viewController: ProfileViewController())
     }
-
     private static func addNavigationController(viewController: UIViewController) -> UINavigationController {
         return UINavigationController(rootViewController: viewController)
     }

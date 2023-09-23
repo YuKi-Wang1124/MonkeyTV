@@ -11,3 +11,6 @@ protocol OrientationChangeDelegate: AnyObject {
     func didChangeOrientation(to newOrientation: UIInterfaceOrientation)
 }
 
+protocol ShowVideoPlayerDelegate: AnyObject {
+    func showVideoPlayer()
+}

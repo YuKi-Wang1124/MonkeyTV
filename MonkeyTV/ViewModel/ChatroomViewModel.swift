@@ -11,10 +11,9 @@ import FirebaseFirestore
 
 class ChatroomViewModel {
     var isLoading: Observable<Bool> = Observable(false)
-    private var listener: ListenerRegistration?
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, ChatroomData>()
     var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
-
+    private var listener: ListenerRegistration?
     deinit {
         listener?.remove()
     }
@@ -38,7 +37,7 @@ class ChatroomViewModel {
             return
         }
         isLoading.value = true
-        listener = FirestoreManageer.chatroomCollection.addSnapshotListener { [weak self] querySnapshot, error in
+        listener = FirestoreManager.chatroom.addSnapshotListener { [weak self] querySnapshot, error in
             self?.isLoading.value = false
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(error?.localizedDescription ?? "Unknown error")")
@@ -49,17 +48,17 @@ class ChatroomViewModel {
                 let data = document.data()
                 let dict = data["chatroomChat"] as? [String: Any]
                 if let dict = dict,
-                   let createdTime = dict["createdTime"] as? Timestamp,
+                    let createdTime = dict["createdTime"] as? Timestamp,
+                   let chatId = dict["chatId"] as? String,
+                   let content = dict["content"] as? String,
+                   let contentType = dict["contentType"] as? Int,
+                   let userId = dict["userId"] as? String,
+                   let videoId = data["videoId"] as? String,
+                   let id = data["id"] as? String,
                    createdTime.dateValue() >= currentTime {
                     let object = ChatroomData(
-                        chatroomChat: ChatroomChat(
-                            chatId: dict["chatId"] as? String,
-                            content: dict["content"] as? String,
-                            contentType: dict["contentType"] as? Int,
-                            createdTime: createdTime.dateValue(),
-                            userId: dict["userId"] as? String),
-                        videoId: data["videoId"] as? String ?? "",
-                        id: data["id"] as? String ?? "")
+                        chatroomChat: ChatroomChat(chatId: chatId, content: content, contentType: contentType, createdTime: createdTime.dateValue(), userId: userId),
+                        videoId: videoId, id: id)
                     if !(self?.snapshot.itemIdentifiers.contains(object))! {
                         newItems.append(object)
                     }
