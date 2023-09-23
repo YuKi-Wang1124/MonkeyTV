@@ -9,8 +9,8 @@ import UIKit
 
 class HomePageCollectionViewCell: UICollectionViewCell {
     static let identifier = "\(HomePageCollectionViewCell.self)"
-    private let containerView: UIView = {
-        let containerView = UIView()
+    var containerView: UIView = {
+        var containerView = UIView()
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.35
         containerView.layer.shadowOffset = CGSize(width: 5, height: 5)
