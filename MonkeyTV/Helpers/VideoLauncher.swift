@@ -39,7 +39,7 @@ class VideoLauncher: NSObject {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.backgroundColor = .systemMint
+//        tableView.backgroundColor = .systemMint
         tableView.register(PlayerTableViewCell.self,
                            forCellReuseIdentifier:
                             PlayerTableViewCell.identifier)
@@ -106,7 +106,6 @@ class VideoLauncher: NSObject {
     override init() {
         super.init()
         setupTableView()
-        baseView.backgroundColor = .yellow
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(notification:)),
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
@@ -176,7 +175,7 @@ class VideoLauncher: NSObject {
     }
     // MARK: - getDanMuData
     private func getDanMuData() {
-        FirestoreManageer.bulletChat.whereField(
+        FirestoreManager.bulletChat.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
                     for document in querySnapshot.documents {
@@ -229,7 +228,7 @@ class VideoLauncher: NSObject {
     @objc func submitMyDanMuButton(sender: UIButton) {
         if let text = danMuTextField.text, text.isEmpty == false {
             danmuView.danmuQueue.append((text, false))
-            let id = FirestoreManageer.bulletChat.document().documentID
+            let id = FirestoreManager.bulletChat.document().documentID
             let data: [String: Any] = ["bulletChat":
                                         ["chatId": UUID().uuidString,
                                          "content": text,
@@ -239,7 +238,7 @@ class VideoLauncher: NSObject {
                                          "userId": "匿名"] as [String: Any],
                                        "videoId": videoId,
                                        "id": id]
-            FirestoreManageer.bulletChat.document(id).setData(data) { error in
+            FirestoreManager.bulletChat.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")
                 } else {
@@ -470,7 +469,6 @@ extension VideoLauncher {
             "autoplay": 1
         ]
         ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
-        baseView.backgroundColor = .white
     }
 }
 

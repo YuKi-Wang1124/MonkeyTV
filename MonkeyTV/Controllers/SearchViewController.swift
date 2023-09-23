@@ -13,7 +13,6 @@ class SearchViewController: UIViewController {
     let thumbnailUrl = "https://i.ytimg.com/vi/lj6ZOD_k6sY/mqdefault.jpg"
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         btn.frame = CGRect(x: 100, y: 300, width: 160, height: 90)
 //        imageView.frame = CGRect(x: 0, y: 0, width: 320, height: 180)
         displayThumbnailImage(from: thumbnailUrl)

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+
 
 enum ImageAsset: String {
     case house
@@ -51,7 +53,7 @@ extension UIImage {
                         }
                     }
                 } else {
-//                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
+                    //                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
                     DispatchQueue.main.async {
                         completion(nil)
                     }
@@ -62,6 +64,21 @@ extension UIImage {
             DispatchQueue.main.async {
                 completion(nil)
             }
+        }
+    }
+    func loadImage(with url: String, into imageView: UIImageView) {
+        if let imageUrl = URL(string: url) {
+            let processor = DownsamplingImageProcessor(size: imageView.bounds.size)
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(
+                with: imageUrl,
+                placeholder: nil,
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
         }
     }
 }

@@ -8,10 +8,10 @@
 import UIKit
 import FirebaseFirestore
 
-class HomeViewController: BaseViewController, UICollectionViewDelegate {
+class HomeViewController: BaseViewController {
     private lazy var tableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 300
+        tableView.rowHeight = 260
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(CollectionTableViewCell.self,
@@ -25,32 +25,32 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
     }()
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
-    private var collectionViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Show>()
-    private var collectionViewDataSource: UICollectionViewDiffableDataSource<OneSection, Show>!
+    private var snapshots = [NSDiffableDataSourceSnapshot<OneSection, Show>]()
+//    private var dataSources: [UICollectionViewDiffableDataSource<OneSection, Show>] = []
     private let dispatchSemaphore = DispatchSemaphore(value: 1)
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
+    private var cacheDataDictionary = [Int: NSDiffableDataSourceSnapshot<OneSection, Show>]()
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        getShowData()
+        view.backgroundColor = .white
         updateTableViewDataSource()
         setUI()
     }
+
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
         tableViewDataSource =
         UITableViewDiffableDataSource<OneSection, String>(
-            tableView: tableView) { tableView, indexPath, itemIdentifier in
+            tableView: tableView) { tableView, indexPath, _ in
                 let cell =
                 tableView.dequeueReusableCell(
                     withIdentifier: CollectionTableViewCell.identifier,
                     for: indexPath) as? CollectionTableViewCell
                 guard let cell = cell else { return UITableViewCell() }
-                cell.delegate = self
-                self.configureCollectionViewDataSource(collectionView: cell.collectionView)
-                cell.collectionView.dataSource = self.collectionViewDataSource
-                self.collectionViewDataSource.apply(self.collectionViewSnapshot)
+                cell.showVideoPlayerDelegate = self
                 cell.titleLabel.text = self.showCatalogArray[indexPath.row]
+                cell.catalogType = indexPath.row
                 return cell
             }
         tableView.dataSource = tableViewDataSource
@@ -59,32 +59,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate {
         tableViewSnapshot.appendItems(showCatalogArray, toSection: .main)
         tableViewDataSource.apply(tableViewSnapshot)
     }
-    // MARK: - getDanMuData
-    private func getShowData() {
-        collectionViewSnapshot.appendSections([OneSection.main])
-        FirestoreManageer.show.getDocuments { querySnapshot, error in
-            if let querySnapshot = querySnapshot {
-                for document in querySnapshot.documents {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                        let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
-                        print(decodedObject)
-                        let show = Show(type: decodedObject.type,
-                                        playlistId: decodedObject.playlistId,
-                                        image: decodedObject.image,
-                                        id: decodedObject.id,
-                                        showName: decodedObject.showName)
-                        DispatchQueue.main.async {
-                            self.collectionViewSnapshot.appendItems([show], toSection: OneSection.main)
-                        }
-                    } catch {
-                        print("\(error)")
-                    }
-                }
-                self.collectionViewDataSource.apply(self.collectionViewSnapshot)
-            }
-        }
-    }
 }
 extension HomeViewController: ShowVideoPlayerDelegate {
     func showVideoPlayer() {
@@ -92,12 +66,9 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         VideoLauncher.shared.showVideoPlayer()
     }
 }
-
 // MARK: - UI configuration
 extension HomeViewController {
     private func setUI() {
-        view.backgroundColor = UIColor.white
-        tableView.backgroundColor = UIColor.white
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -105,24 +76,5 @@ extension HomeViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-}
-
-// MARK: -
-extension HomeViewController {
-    func configureCollectionViewDataSource(collectionView: UICollectionView) {
-        self.collectionViewDataSource =
-        UICollectionViewDiffableDataSource<OneSection, Show>(
-            collectionView: collectionView,
-            cellProvider: { (colloctionvVew, indexPath, itemIdentifier) -> UICollectionViewCell? in
-                let cell = colloctionvVew.dequeueReusableCell(
-                    withReuseIdentifier: VideoCollectionViewCell.identifier,
-                    for: indexPath) as? VideoCollectionViewCell
-                cell?.label.text = itemIdentifier.showName
-                UIImage.displayThumbnailImage(from: itemIdentifier.image, completion: { image in
-                    cell?.coverImageView.image = image
-                })
-                return cell
-            })
     }
 }

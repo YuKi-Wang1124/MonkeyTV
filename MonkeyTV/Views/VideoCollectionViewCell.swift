@@ -32,8 +32,8 @@ class VideoCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             coverImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            coverImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.55, constant: -10),
+            coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            coverImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5, constant: -10),
             coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 16 / 9),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -41,10 +41,10 @@ class VideoCollectionViewCell: UICollectionViewCell {
             label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.4)
         ])
     }
-    override func prepareForReuse() {
-        label.text = ""
-        coverImageView.image = nil
-    }
+//    override func prepareForReuse() {
+//        label.text = ""
+//        coverImageView.image = nil
+//    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

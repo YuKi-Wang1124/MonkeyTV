@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIColor {
-    static let backgroundColor = UIColor(hex: "#181818")
     convenience init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespaces)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")

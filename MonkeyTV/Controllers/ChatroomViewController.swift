@@ -54,7 +54,7 @@ class ChatroomViewController: UIViewController {
     // MARK: - Submit Message To DB
     @objc func submitMessage() {
         if let text = messageTextField.text, text.isEmpty == false {
-            let id = FirestoreManageer.chatroom.document().documentID
+            let id = FirestoreManager.chatroom.document().documentID
             let data: [String: Any] =
             ["chatroomChat":
                 ["chatId": UUID().uuidString, "content": text, "contentType": 0,
@@ -62,7 +62,7 @@ class ChatroomViewController: UIViewController {
                  // TODO: userid
                  "userId": "匿名"] as [String: Any],
              "videoId": videoId, "id": id]
-            FirestoreManageer.chatroom.document(id).setData(data) { error in
+            FirestoreManager.chatroom.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")
                 } else {

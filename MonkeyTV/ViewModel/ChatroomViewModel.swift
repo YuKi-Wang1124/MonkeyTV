@@ -37,7 +37,7 @@ class ChatroomViewModel {
             return
         }
         isLoading.value = true
-        listener = FirestoreManageer.chatroom.addSnapshotListener { [weak self] querySnapshot, error in
+        listener = FirestoreManager.chatroom.addSnapshotListener { [weak self] querySnapshot, error in
             self?.isLoading.value = false
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(error?.localizedDescription ?? "Unknown error")")
