@@ -11,7 +11,7 @@ import FirebaseFirestore
 class HomeViewController: BaseViewController {
     private lazy var tableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 265
+        tableView.rowHeight = 260
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(CollectionTableViewCell.self,
