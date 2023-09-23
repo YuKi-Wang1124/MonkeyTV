@@ -8,7 +8,6 @@
 import UIKit
 import Kingfisher
 
-
 enum ImageAsset: String {
     case house
     case magnifyingglass
