@@ -43,6 +43,12 @@ class PlayerViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    private var danMutextFieldView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -95,9 +101,13 @@ class PlayerViewController: UIViewController {
         coordinator.animate(alongsideTransition: { [self] _ in
             if size.width > size.height {
                 tableView.removeFromSuperview()
+                self.changeOrientationButton.setImage(
+                    UIImage.systemAsset(.shrink, configuration: self.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
             } else {
+                self.changeOrientationButton.setImage(
+                    UIImage.systemAsset(.enlarge, configuration: self.symbolConfig), for: .normal)
                 view.addSubview(tableView)
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
@@ -179,21 +189,6 @@ class PlayerViewController: UIViewController {
         videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
                               for: .valueChanged)
     }
-    @objc func showDanMuRoom(sender: UISlider) {
-        if isSideViewVisible {
-            // 關閉視圖
-            UIView.animate(withDuration: 0.3) {
-                self.danmuView.frame.origin.x = -200
-            }
-        } else {
-            // 彈出視圖
-            UIView.animate(withDuration: 0.3) {
-                self.danmuView.frame.origin.x = 0
-            }
-        }
-        isSideViewVisible = !isSideViewVisible
-    }
-    
     // MARK: - Handle Slider Change
     @objc func handleSliderChange(sender: UISlider) {
         let desiredTime = sender.value
@@ -246,6 +241,7 @@ class PlayerViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(danmuView)
         view.addSubview(buttonsView)
+        tableView.addSubview(danMutextFieldView)
         
         buttonsView.addSubview(showDanMuButton)
         buttonsView.addSubview(pauseButton)
@@ -306,6 +302,11 @@ class PlayerViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            danMutextFieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            danMutextFieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            danMutextFieldView.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor),
+            danMutextFieldView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/6),
             
             buttonsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
