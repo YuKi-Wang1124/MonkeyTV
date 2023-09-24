@@ -82,16 +82,11 @@ extension HomeViewController {
 // MARK: -
 extension HomeViewController: ShowVideoPlayerDelegate {
     func showVideoPlayer() {
-        let rootViewController = UIViewController.getFirstViewController()
-
+        
         let playerVC = PlayerViewController()
         playerVC.modalPresentationStyle = .fullScreen
-        rootViewController.present(playerVC, animated: true)
+        self.present(playerVC, animated: true)
     }
 }
 
-class NavigationController: UINavigationController {
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-           return .all
-    }
-}
+

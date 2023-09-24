@@ -15,7 +15,14 @@ class PlayerViewController: UIViewController {
     // MARK: - support
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
-    
+    private var initialY: CGFloat = 0
+    private var finalY: CGFloat = 0
+    // MARK: - Bools
+    private var isPanning = false
+    private var isDanMuDisplayed = false
+    private var danMuTextFiedIsShow = false
+    private var videoIsPlaying = true
+    private var playerIsShrink = false
     // MARK: - Views
     private var ytVideoPlayerView = {
         let view = YTPlayerView()
@@ -55,11 +62,6 @@ class PlayerViewController: UIViewController {
     private lazy var showDanMuTextFieldButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.submitDanMu, configuration: smallSymbolConfig),
-            color: .white, cornerRadius: 15)
-    }()
-    private lazy var showChatroomButton = {
-        return UIButton.createPlayerButton(
-            image: UIImage.systemAsset(.chatroom, configuration: smallSymbolConfig),
             color: .white, cornerRadius: 15)
     }()
     private lazy var pauseButton = {
@@ -127,35 +129,102 @@ class PlayerViewController: UIViewController {
         let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
         singleFinger.numberOfTapsRequired = 1
         singleFinger.numberOfTouchesRequired = 1
-        self.buttonsView.addGestureRecognizer(singleFinger)
+        buttonsView.addGestureRecognizer(singleFinger)
+        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        buttonsView.addGestureRecognizer(dragGesture)
     }
     @objc func showButtonView() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.3)
-        changeOrientationButton.isHidden = false
         showDanMuButton.isHidden = false
         showDanMuTextFieldButton.isHidden = false
         pauseButton.isHidden = false
         videoSlider.isHidden = false
+        changeOrientationButton.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-            self?.changeOrientationButton.isHidden = true
             self?.showDanMuButton.isHidden = true
             self?.showDanMuTextFieldButton.isHidden = true
             self?.pauseButton.isHidden = true
             self?.videoSlider.isHidden = true
+            self?.changeOrientationButton.isHidden = true
             self?.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0)
         }
     }
+    @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+           let translation = gesture.translation(in: buttonsView)
+           
+           switch gesture.state {
+           case .began:
+               initialY = self.view.frame.origin.y
+               finalY = initialY + translation.y
+               isPanning = true
+           case .changed:
+               finalY = initialY + translation.y
+               // 判斷是否超過 1/3 並且啟始點 Y 座標小於最終 Y 座標
+               if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 {
+                   // 在此處執行縮小視圖控制器的操作
+                   // 例如，改變視圖控制器的 frame
+                   self.view.frame.origin.y = finalY
+               }
+           case .ended, .cancelled:
+               isPanning = false
+               // 判斷是否具有一定加速度並且手勢已經達到 1/3 以上
+               let velocity = gesture.velocity(in: self.view)
+               if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 && velocity.y > 100 {
+                   // 在此處執行往下縮小視圖控制器的操作
+                   // 例如，使用動畫將視圖控制器縮小到底部
+                   dismiss(animated: true)
+                   UIView.animate(withDuration: 0.3) {
+                       self.view.frame.origin.y = self.view.frame.height
+                   }
+               } else {
+                   // 恢復視圖控制器到原始位置
+                   UIView.animate(withDuration: 0.3) {
+                       self.view.frame.origin.y = 0
+                   }
+               }
+           default:
+               break
+           }
+       }
+    // MARK: - Buttons AddTaget
+    private func setBtnsAddtarget() {
+//        showDanMuButton.addTarget(self, action: #selector(showDanMuView(sender:)),
+//                                  for: .touchUpInside)
+//        showDanMuTextFieldButton.addTarget(self, action: #selector(showDanMuTextField(sender:)),
+//                                           for: .touchUpInside)
+//        pauseButton.addTarget(self, action: #selector(pauseVideo(sender:)), for: .touchUpInside)
+        changeOrientationButton.addTarget(self,
+                                          action: #selector(changeOrientation(sender:)),
+                                          for: .touchUpInside)
+//        submitDanMuButton.addTarget(self, action: #selector(submitMyDanMuButton(sender:)),
+//                                    for: .touchUpInside)
+//        videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
+//                              for: .valueChanged)
+    }
+    // MARK: - Change Orientation
+    @objc func changeOrientation(sender: UIButton) {
+        if playerIsShrink == false {
+            tableView.removeFromSuperview()
+            NSLayoutConstraint.deactivate(portraitConstraints)
+            NSLayoutConstraint.activate(landscapeConstraints)
+        } else {
+            view.addSubview(tableView)
+            NSLayoutConstraint.deactivate(landscapeConstraints)
+            NSLayoutConstraint.activate(portraitConstraints)
+        }
+        playerIsShrink.toggle()
+    }
     // MARK: -
-    
     func setup() {
+        setBtnsAddtarget()
         view.addSubview(ytVideoPlayerView)
         view.addSubview(tableView)
         view.addSubview(buttonsView)
         buttonsView.addSubview(showDanMuButton)
         //        buttonsView.addSubview(showDanMuTextFieldButton)
         buttonsView.addSubview(pauseButton)
-        buttonsView.addSubview(changeOrientationButton)
         buttonsView.addSubview(videoSlider)
+        buttonsView.addSubview(changeOrientationButton)
         
         addButtonViewGesture()
         
@@ -175,7 +244,16 @@ class PlayerViewController: UIViewController {
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
             pauseButton.heightAnchor.constraint(equalToConstant: 60),
             pauseButton.widthAnchor.constraint(equalToConstant: 60),
+            
+            changeOrientationButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor,constant: -50),
+            changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
+            changeOrientationButton.heightAnchor.constraint(equalToConstant: 60),
+            changeOrientationButton.widthAnchor.constraint(equalToConstant: 60),
 
+            showDanMuButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor, constant: 180),
+            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -120),
+            showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
+            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
             
             
             videoSlider.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor),
@@ -204,6 +282,17 @@ class PlayerViewController: UIViewController {
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
             pauseButton.heightAnchor.constraint(equalToConstant: 60),
             pauseButton.widthAnchor.constraint(equalToConstant: 60),
+            
+            showDanMuButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor, constant: 40),
+            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
+            showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
+            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            
+            changeOrientationButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor,constant: -50),
+            changeOrientationButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
+            changeOrientationButton.heightAnchor.constraint(equalToConstant: 60),
+            changeOrientationButton.widthAnchor.constraint(equalToConstant: 60),
 
             
             videoSlider.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor),
@@ -224,18 +313,7 @@ class PlayerViewController: UIViewController {
 //        tableView.removeFromSuperview()
 //        removeAllContraints()
 //        NSLayoutConstraint.activate([
-//            baseView.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
-//            baseView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
-//            baseView.widthAnchor.constraint(equalTo: rootViewController.view.widthAnchor),
-//            baseView.heightAnchor.constraint(equalTo: rootViewController.view.heightAnchor),
-//            ytVideoPlayerView.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
-//            ytVideoPlayerView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
-//            ytVideoPlayerView.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor),
-//            ytVideoPlayerView.heightAnchor.constraint(equalTo: rootViewController.view.widthAnchor),
-//            buttonsView.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
-//            buttonsView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
-//            buttonsView.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor),
-//            buttonsView.heightAnchor.constraint(equalTo: rootViewController.view.widthAnchor),
+//
 //            danmuView.centerXAnchor.constraint(equalTo: rootViewController.view.centerXAnchor),
 //            danmuView.centerYAnchor.constraint(equalTo: rootViewController.view.centerYAnchor),
 //            danmuView.widthAnchor.constraint(equalTo: rootViewController.view.heightAnchor),
@@ -289,10 +367,7 @@ class PlayerViewController: UIViewController {
 //            danmuView.trailingAnchor.constraint(equalTo: ytVideoPlayerView.trailingAnchor),
 //            danmuView.topAnchor.constraint(equalTo: ytVideoPlayerView.topAnchor),
 //            danmuView.heightAnchor.constraint(equalTo: ytVideoPlayerView.heightAnchor, multiplier: 5 / 10),
-//            showDanMuButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -80),
-//            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
-//            showDanMuButton.widthAnchor.constraint(equalToConstant: 100),
-//            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
+//
 //            showDanMuTextFieldButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -225),
 //            showDanMuTextFieldButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -16),
 //            showDanMuTextFieldButton.widthAnchor.constraint(equalToConstant: 30),
