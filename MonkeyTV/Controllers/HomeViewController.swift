@@ -29,7 +29,6 @@ class HomeViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         updateTableViewDataSource()
         setUI()
     }
@@ -65,6 +64,7 @@ class HomeViewController: BaseViewController {
         tableViewDataSource.apply(tableViewSnapshot)
     }
 }
+
 // MARK: - UI configuration
 extension HomeViewController {
     private func setUI() {

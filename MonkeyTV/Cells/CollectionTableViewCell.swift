@@ -40,6 +40,8 @@ class CollectionTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func prepareForReuse() {
+    }
     // MARK: - Configure CollectionView
     private func getSnapshotsData() async {
         snapshot.appendSections([OneSection.main])
@@ -66,13 +68,15 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180,
+
+        let screenWidth = UIScreen.main.bounds.size.width
+        return CGSize(width: (screenWidth - 36) / 2,
                       height: collectionView.frame.height)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 16.0
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -88,6 +92,7 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 // MARK: - setupCellUI
 extension CollectionTableViewCell {
     private func setupCellUI() {
+//        contentView.backgroundColor = .white
         contentView.addSubview(collectionView)
         contentView.addSubview(titleLabel)
         NSLayoutConstraint.activate([

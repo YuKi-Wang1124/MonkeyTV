@@ -13,8 +13,36 @@ class TabBarViewController: UITabBarController {
     private var trolleyTabBarItem: UITabBarItem?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(userInterfaceStyleDidChange),
+            name: .userInterfaceStyle, object: nil)
         viewControllers = tabs.map { $0.makeViewController() }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
+    }
+   
+    @objc func userInterfaceStyleDidChange(notification: Notification) {
+        if let userInfo = notification.userInfo?["userInterfaceStyle"] as? UIUserInterfaceStyle {
+            changeInterfaceStyleColor(userInfo)
+        }
+    }
+    
+    private func changeInterfaceStyleColor(_ userInfo: UIUserInterfaceStyle) {
+        if userInfo == .light {
+            view.backgroundColor = .white
+            view.layer.backgroundColor = UIColor.white.cgColor
+            UITabBar.appearance().barTintColor = UIColor.white
+            UITabBar.appearance().tintColor = UIColor.mainColor
+        } else {
+            view.backgroundColor = .black
+            view.layer.backgroundColor = UIColor.black.cgColor
+            UITabBar.appearance().barTintColor = UIColor.black
+            UITabBar.appearance().tintColor = UIColor.mainColor
+        }
     }
 }
 
@@ -70,7 +98,7 @@ extension TabBarViewController {
             case .home:
                 return .systemAsset(.selectedHouse)
             case .search:
-                return .systemAsset(.selectedMagnifyingglass)
+                return .systemAsset(.magnifyingglass)
             case .favorite:
                 return .systemAsset(.selectedHeart)
             case .profile:
