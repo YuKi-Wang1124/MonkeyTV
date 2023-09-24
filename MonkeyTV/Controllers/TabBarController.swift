@@ -24,7 +24,9 @@ class TabBarViewController: UITabBarController {
         super.traitCollectionDidChange(previousTraitCollection)
         changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
     }
-   
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//           return .portrait
+//    }
     @objc func userInterfaceStyleDidChange(notification: Notification) {
         if let userInfo = notification.userInfo?["userInterfaceStyle"] as? UIUserInterfaceStyle {
             changeInterfaceStyleColor(userInfo)

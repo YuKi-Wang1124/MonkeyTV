@@ -23,6 +23,7 @@ class HomeViewController: BaseViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
@@ -32,7 +33,6 @@ class HomeViewController: BaseViewController {
         updateTableViewDataSource()
         setUI()
     }
-
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
         tableViewDataSource =
@@ -54,6 +54,7 @@ class HomeViewController: BaseViewController {
                     guard let cell = cell else { return UITableViewCell() }
                     cell.titleLabel.text = self.showCatalogArray[index]
                     cell.catalogType = index
+                    cell.showVideoPlayerDelegate = self
                     return cell
                 }
             }
@@ -75,5 +76,22 @@ extension HomeViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+// MARK: -
+extension HomeViewController: ShowVideoPlayerDelegate {
+    func showVideoPlayer() {
+        let rootViewController = UIViewController.getFirstViewController()
+
+        let playerVC = PlayerViewController()
+        playerVC.modalPresentationStyle = .fullScreen
+        rootViewController.present(playerVC, animated: true)
+    }
+}
+
+class NavigationController: UINavigationController {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+           return .all
     }
 }

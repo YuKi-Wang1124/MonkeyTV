@@ -12,6 +12,7 @@ class VideoLauncher: NSObject {
     var videoId = ""
     static let shared = VideoLauncher()
     private let rootViewController = UIViewController.getFirstViewController()
+// MARK: - Views
     private var baseView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -22,16 +23,18 @@ class VideoLauncher: NSObject {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-  
     private var buttonsView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    // MARK: - Bools
     private var isDanMuDisplayed = false
     private var danMuTextFiedIsShow = false
     private var videoIsPlaying = true
     private var playerIsShrink = false
+    
+    // MARK: -
     private var videoDuration = 0
     private var bulletChats = [BulletChat]()
     private var tableView = {
@@ -40,17 +43,16 @@ class VideoLauncher: NSObject {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
 //        tableView.backgroundColor = .systemMint
-        tableView.register(PlayerTableViewCell.self,
+        tableView.register(ChatroomButtonTableViewCell.self,
                            forCellReuseIdentifier:
-                            PlayerTableViewCell.identifier)
-        //        tableView.register(VideoTableViewCell.self,
-        //                           forCellReuseIdentifier:
-        //                            VideoTableViewCell.identifier)
+                            ChatroomButtonTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    // MARK: -
     private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
     private var dataSource: UITableViewDiffableDataSource<OneSection, MKShow>!
+    // MARK: - Buttons
     private lazy var changeOrientationButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig),
@@ -78,6 +80,7 @@ class VideoLauncher: NSObject {
             image: UIImage.systemAsset(.pause, configuration: symbolConfig),
             color: .white, cornerRadius: 25)
     }()
+    // MARK: -
     private lazy var danMuTextField = {
         return UITextField.createTextField(text: "輸入彈幕")
     }()
@@ -102,6 +105,7 @@ class VideoLauncher: NSObject {
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var timer: Timer?
+    
     // MARK: - init
     override init() {
         super.init()
@@ -113,6 +117,7 @@ class VideoLauncher: NSObject {
     deinit {
         timer = nil
     }
+    
     // MARK: - Setup TableView
     private func setupTableView() {
         configureDataSource(tableView: tableView)
@@ -503,8 +508,8 @@ extension VideoLauncher {
             cellProvider: { tableView, indexPath, item in
                 if indexPath.row == 1 {
                     let cell = tableView.dequeueReusableCell(
-                        withIdentifier: PlayerTableViewCell.identifier,
-                        for: indexPath) as? PlayerTableViewCell
+                        withIdentifier: ChatroomButtonTableViewCell.identifier,
+                        for: indexPath) as? ChatroomButtonTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
                     cell.chatRoomButton.addTarget(self, action: #selector(self.showChatroom(sender:)), for: .touchUpInside)
                     return cell

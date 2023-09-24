@@ -60,7 +60,6 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCellUI() {
-        //        contentView.backgroundColor = .white
         containerView.addSubview(catImageView)
         containerView.addSubview(coverImageView)
         contentView.addSubview(containerView)

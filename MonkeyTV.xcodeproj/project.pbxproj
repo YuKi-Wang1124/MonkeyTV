@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC0331242ABD5DFF00229900 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331232ABD5DFF00229900 /* PlayerTableViewCell.swift */; };
+		CC0331242ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */; };
 		CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331252ABDA5F200229900 /* posDataToFirebase.swift */; };
 		CC0331282ABDA6F900229900 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331272ABDA6F900229900 /* Show.swift */; };
 		CC03312A2ABEE70700229900 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331292ABEE70700229900 /* UILabel+Extension.swift */; };
@@ -56,7 +56,7 @@
 /* Begin PBXFileReference section */
 		7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonkeyTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96BC0DE3366625A013AA3A3E /* Pods-MonkeyTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.debug.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.debug.xcconfig"; sourceTree = "<group>"; };
-		CC0331232ABD5DFF00229900 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomButtonTableViewCell.swift; sourceTree = "<group>"; };
 		CC0331252ABDA5F200229900 /* posDataToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = posDataToFirebase.swift; sourceTree = "<group>"; };
 		CC0331272ABDA6F900229900 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		CC0331292ABEE70700229900 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 				CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */,
 				CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */,
 				CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */,
-				CC0331232ABD5DFF00229900 /* PlayerTableViewCell.swift */,
+				CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -457,7 +457,7 @@
 				CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */,
 				CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */,
 				CC0331282ABDA6F900229900 /* Show.swift in Sources */,
-				CC0331242ABD5DFF00229900 /* PlayerTableViewCell.swift in Sources */,
+				CC0331242ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift in Sources */,
 				CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -603,7 +603,7 @@
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,7 +630,7 @@
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

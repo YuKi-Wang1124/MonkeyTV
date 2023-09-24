@@ -12,6 +12,7 @@ class CollectionTableViewCell: UITableViewCell {
     lazy var titleLabel: UILabel = {
         return UILabel.createTitleLabel(text: "多一點健康")
     }()
+    var showVideoPlayerDelegate: ShowVideoPlayerDelegate?
     private lazy var collectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -27,6 +28,8 @@ class CollectionTableViewCell: UITableViewCell {
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, Show>()
     var dataSource: UICollectionViewDiffableDataSource<OneSection, Show>!
     var catalogType = 0
+    
+    // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         collectionView.delegate = self
@@ -65,34 +68,40 @@ class CollectionTableViewCell: UITableViewCell {
 }
 // MARK: -
 extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         let screenWidth = UIScreen.main.bounds.size.width
         return CGSize(width: (screenWidth - 36) / 2,
                       height: collectionView.frame.height)
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16.0
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        VideoLauncher.shared.videoId = "FjJtmJteK58"
-        VideoLauncher.shared.showVideoPlayer()
+//        VideoLauncher.shared.videoId = "FjJtmJteK58"
+//        VideoLauncher.shared.showVideoPlayer()
+        showVideoPlayerDelegate?.showVideoPlayer()
     }
 }
+
 // MARK: - setupCellUI
 extension CollectionTableViewCell {
+    
     private func setupCellUI() {
-//        contentView.backgroundColor = .white
         contentView.addSubview(collectionView)
         contentView.addSubview(titleLabel)
         NSLayoutConstraint.activate([
