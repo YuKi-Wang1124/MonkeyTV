@@ -31,7 +31,7 @@ class SearchViewController: UIViewController {
         imageView.load(withVideoId: "FjJtmJteK58", playerVars: playerVars)
 
         displayThumbnailImage(from: thumbnailUrl)
-        btn.addTarget(self, action: #selector(showPlayerVC), for: .touchUpInside)
+//        btn.addTarget(self, action: #selector(showPlayerVC), for: .touchUpInside)
 //        view.addSubview(btn)
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -86,13 +86,6 @@ class SearchViewController: UIViewController {
             // 动画完成后执行的操作
         })
     }
-
-    
-    @objc func showPlayerVC() {
-        let videoLauncher = VideoLauncher()
-        videoLauncher.showVideoPlayer()
-    }
-    
     
     
     func displayThumbnailImage(from url: String) {
