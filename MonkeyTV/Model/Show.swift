@@ -50,5 +50,5 @@ enum ShowCatalog: String, CaseIterable {
     case sport = "體育賽事隨你看 🏋🏻‍♀️"
     case food = "用眼睛吃美食不會胖 🍔"
     case health = "少一點醫生，多一點健康 🍀"
-    case internationalShow = "國外節目看到飽 🌎"
+//    case internationalShow = "國外節目看到飽 🌎"
 }

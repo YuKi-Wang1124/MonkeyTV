@@ -32,8 +32,7 @@
 		CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */; };
 		CC0BF1E42AB1DB0F0075203C /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */; };
 		CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */; };
-		CC0BF1EC2AB2CA0A0075203C /* ChannelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */; };
-		CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */; };
+		CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */; };
 		CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */; };
 		CC0BF1F62AB418E40075203C /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F52AB418E40075203C /* VideoTableViewCell.swift */; };
 		CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */; };
@@ -84,8 +83,7 @@
 		CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInfo.swift; sourceTree = "<group>"; };
-		CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListResponse.swift; sourceTree = "<group>"; };
+		CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeData.swift; sourceTree = "<group>"; };
 		CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
 		CC0BF1F52AB418E40075203C /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -239,8 +237,7 @@
 			children = (
 				CC0BF1DE2AB1B8130075203C /* Video.swift */,
 				CC0331272ABDA6F900229900 /* Show.swift */,
-				CC0BF1EB2AB2CA0A0075203C /* ChannelInfo.swift */,
-				CC0BF1ED2AB2CA470075203C /* PlaylistListResponse.swift */,
+				CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */,
 				CC963C072AB6F9A20047EEFA /* ChatData.swift */,
 			);
 			path = Model;
@@ -436,7 +433,7 @@
 				CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */,
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
 				CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */,
-				CC0BF1EC2AB2CA0A0075203C /* ChannelInfo.swift in Sources */,
+				CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
 				CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */,
 				CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */,
@@ -458,7 +455,6 @@
 				CC03312A2ABEE70700229900 /* UILabel+Extension.swift in Sources */,
 				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
 				CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */,
-				CC0BF1EE2AB2CA470075203C /* PlaylistListResponse.swift in Sources */,
 				CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */,
 				CC0331282ABDA6F900229900 /* Show.swift in Sources */,
 				CC0331242ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift in Sources */,

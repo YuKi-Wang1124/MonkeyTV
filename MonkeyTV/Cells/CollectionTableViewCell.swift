@@ -26,9 +26,9 @@ class CollectionTableViewCell: UITableViewCell {
         return collectionView
     }()
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, Show>()
+    var nextPageTableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Playlist>()
     var dataSource: UICollectionViewDiffableDataSource<OneSection, Show>!
     var catalogType = 0
-    
     // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -94,18 +94,16 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        showVideoPlayerDelegate?.showVideoPlayer()
+        nextPageTableViewSnapshot.deleteAllItems()
+        nextPageTableViewSnapshot.deleteSections([OneSection.main])
         if let cell = collectionView.cellForItem(at: indexPath) as? HomePageCollectionViewCell {
-            print("\(cell.playlistId)")
-        } else {
-        }
-        
+            YouTubeParameter.shared.playlistId = cell.playlistId
+            showVideoPlayerDelegate?.showVideoPlayer(playlistId: cell.playlistId)
+        } else { }
     }
 }
-
 // MARK: - setupCellUI
 extension CollectionTableViewCell {
-    
     private func setupCellUI() {
         contentView.addSubview(collectionView)
         contentView.addSubview(titleLabel)

@@ -10,7 +10,7 @@ import Foundation
 enum YoutubeRequest: Request {
     case channel
     case show
-    case playlistItems
+    case playlistItems(playlistId: String)
 
     var headers: [String: String] {
         switch self {
@@ -38,15 +38,17 @@ enum YoutubeRequest: Request {
     var endPoint: String {
         switch self {
         case .channel:
-            return "/channels?part=snippet&id=\(channelID)&key=\(Constant.API_KEY)"
+            return "/channels?part=snippet&id=\(YouTubeParameter.shared.channelID)&key=\(Constant.API_KEY)"
         case .show:
-            return "/playlists?part=snippet&channelId=\(channelID)&maxResults=50&key=\(Constant.API_KEY)"
+            return "/playlists?part=snippet&channelId=\(YouTubeParameter.shared.channelID)&maxResults=50&key=\(Constant.API_KEY)"
         case .playlistItems:
-            return "/playlistItems?part=snippet&playlistId\(playlistId)=&key=\(Constant.API_KEY)"
+            return "/playlistItems?part=snippet&playlistId=\(YouTubeParameter.shared.playlistId)&key=\(Constant.API_KEY)"
         }
    }
 }
 
-let channelID = "UCAqzHNzLTC6Vm5UYE7xw_2A"
-let playlistId = "PLDfDiflGwSuUG1aKwbIOWHJRGPeZZ8nwC"
-
+class YouTubeParameter {
+    static let shared = YouTubeParameter()
+    var channelID: String = "UCAqzHNzLTC6Vm5UYE7xw_2A"
+    var playlistId: String = ""
+}

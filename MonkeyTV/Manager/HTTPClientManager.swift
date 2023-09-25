@@ -56,7 +56,6 @@ extension Request {
 class HTTPClientManager {
 
     static let shared = HTTPClientManager()
-
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private var cache = [String: Data]()

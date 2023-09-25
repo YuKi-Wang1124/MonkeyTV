@@ -9,10 +9,12 @@ import UIKit
 import youtube_ios_player_helper
 
 class PlayerViewController: UIViewController {
-    var videoId: String = "6vn8HP8_L6Q"
+    var videoId: String = ""
+    var playlistId: String = ""
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
+    private let dispatchSemaphore = DispatchSemaphore(value: 1)
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var initialY: CGFloat = 0
@@ -45,6 +47,7 @@ class PlayerViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -59,8 +62,10 @@ class PlayerViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    // MARK: - Snapshot & DataSource
     private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
     private var dataSource: UITableViewDiffableDataSource<OneSection, MKShow>!
+    var playlistTableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Playlist>()
     // MARK: - Buttons
     private lazy var changeOrientationButton = {
         return UIButton.createPlayerButton(
@@ -93,6 +98,20 @@ class PlayerViewController: UIViewController {
         setupTableView()
         getDanMuData()
         setupVideoLauncher()
+        DispatchQueue.main.async {
+            self.dispatchSemaphore.wait()
+            print("videoId: \(self.videoId)")
+            self.getYouTubeVideoData()
+            print("videoId: \(self.videoId)")
+            self.dispatchSemaphore.signal()
+            print("videoId: \(self.videoId)")
+            self.dispatchSemaphore.wait()
+            print("videoId: \(self.videoId)")
+            self.loadYoutubeVideo()
+            print("videoId: \(self.videoId)")
+            self.dispatchSemaphore.signal()
+            print("videoId: \(self.videoId)")
+        }
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -339,21 +358,6 @@ class PlayerViewController: UIViewController {
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
         addButtonViewGesture()
-        let playerVars: [AnyHashable: Any] = [
-            "margin": 0,
-            "width": 100,
-            //            "height": 100,
-            "frameborder": 0,
-            "loop": 0,
-            "playsigline": 1,
-            "controls": 0,
-            //                "autohide": 1,
-            "showinfo": 0,
-            "fs": 0,
-            //            "rel": 0,
-            "autoplay": 1
-        ]
-        ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
     }
     // MARK: - Dan Mu
     private func setDanMu() {
@@ -514,5 +518,73 @@ extension PlayerViewController {
                 }
             }
         }
+    }
+}
+
+// MARK: - Get YouTube Video Data
+
+extension PlayerViewController {
+    
+    func getYouTubeVideoData() {
+        HTTPClientManager.shared.request(
+            YoutubeRequest.playlistItems(
+                playlistId: YouTubeParameter.shared.playlistId),
+            completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                do {
+                    let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
+                    //                                print(info.items)
+                    playlistTableViewSnapshot.appendSections([OneSection.main])
+                    info.items.forEach {
+                        let playlist =
+                        Playlist(kind: $0.kind,
+                                 etag: $0.etag,
+                                 id: $0.id,
+                                 snippet: Snippet(
+                                    publishedAt: $0.snippet.publishedAt,
+                                    channelId: $0.snippet.channelId,
+                                    title: $0.snippet.title,
+                                    description: $0.snippet.description,
+                                    thumbnails: Thumbnails(default: Thumbnail(url: $0.snippet.thumbnails.default.url)),
+                                    channelTitle: $0.snippet.channelTitle,
+                                    playlistId: $0.snippet.playlistId,
+                                    position: $0.snippet.position,
+                                    resourceId: ResourceId(
+                                        kind: $0.snippet.resourceId.kind,
+                                        videoId: $0.snippet.resourceId.videoId),
+                                    videoOwnerChannelTitle: $0.snippet.videoOwnerChannelTitle,
+                                    videoOwnerChannelId: $0.snippet.videoOwnerChannelId))
+                        self.playlistTableViewSnapshot.appendItems([playlist],
+                                                                   toSection: OneSection.main)
+                    }
+                } catch {
+                    print(Result<Any>.failure(error))
+                }
+            case .failure(let error):
+                print(Result<Any>.failure(error))
+            }
+                print("============nextPageTableViewSnapshot.itemIdentifiers============\(String(describing: self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId))")
+                self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
+            })
+    }
+    
+    private func loadYoutubeVideo() {
+        let playerVars: [AnyHashable: Any] = [
+            "margin": 0,
+            "width": 100,
+            //            "height": 100,
+            "frameborder": 0,
+            "loop": 0,
+            "playsigline": 1,
+            "controls": 0,
+            //                "autohide": 1,
+            "showinfo": 0,
+            "fs": 0,
+            //            "rel": 0,
+            "autoplay": 1
+        ]
+        ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
     }
 }
