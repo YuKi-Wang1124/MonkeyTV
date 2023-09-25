@@ -22,7 +22,6 @@ class TabBarViewController: UITabBarController {
         barAppearance.configureWithDefaultBackground()
         UITabBar.appearance().scrollEdgeAppearance = barAppearance
     }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
@@ -30,6 +29,7 @@ class TabBarViewController: UITabBarController {
 //    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 //           return .portrait
 //    }
+    
     @objc func userInterfaceStyleDidChange(notification: Notification) {
         if let userInfo = notification.userInfo?["userInterfaceStyle"] as? UIUserInterfaceStyle {
             changeInterfaceStyleColor(userInfo)

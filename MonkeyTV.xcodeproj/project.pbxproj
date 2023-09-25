@@ -11,6 +11,7 @@
 		CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331252ABDA5F200229900 /* posDataToFirebase.swift */; };
 		CC0331282ABDA6F900229900 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331272ABDA6F900229900 /* Show.swift */; };
 		CC03312A2ABEE70700229900 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331292ABEE70700229900 /* UILabel+Extension.swift */; };
+		CC03312C2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */; };
 		CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */; };
 		CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */; };
 		CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */; };
@@ -60,6 +61,7 @@
 		CC0331252ABDA5F200229900 /* posDataToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = posDataToFirebase.swift; sourceTree = "<group>"; };
 		CC0331272ABDA6F900229900 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		CC0331292ABEE70700229900 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMuTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */,
 				CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */,
 				CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */,
+				CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */,
 				CC0BF1DD2AB1B6880075203C /* HomeRequest.swift in Sources */,
 				CC963C122AB8A3190047EEFA /* UIColor+Extension.swift in Sources */,
+				CC03312C2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift in Sources */,
 				CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */,
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
 				CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */,

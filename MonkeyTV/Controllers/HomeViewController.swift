@@ -23,7 +23,6 @@ class HomeViewController: BaseViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }

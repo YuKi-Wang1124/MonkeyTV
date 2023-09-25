@@ -43,12 +43,6 @@ class PlayerViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private var danMutextFieldView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -57,6 +51,9 @@ class PlayerViewController: UIViewController {
         tableView.register(ChatroomButtonTableViewCell.self,
                            forCellReuseIdentifier:
                             ChatroomButtonTableViewCell.identifier)
+        tableView.register(DanMuTextFieldTableViewCell.self,
+                           forCellReuseIdentifier:
+                            DanMuTextFieldTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -241,8 +238,6 @@ class PlayerViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(danmuView)
         view.addSubview(buttonsView)
-        tableView.addSubview(danMutextFieldView)
-        
         buttonsView.addSubview(showDanMuButton)
         buttonsView.addSubview(pauseButton)
         buttonsView.addSubview(videoSlider)
@@ -265,11 +260,6 @@ class PlayerViewController: UIViewController {
             danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             danmuView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            //
-            //            danMuRoomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            //            danMuRoomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //            danMuRoomView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/6),
-            //            danMuRoomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
@@ -302,11 +292,6 @@ class PlayerViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            danMutextFieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            danMutextFieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            danMutextFieldView.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor),
-            danMutextFieldView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/6),
             
             buttonsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -456,7 +441,8 @@ extension PlayerViewController {
         configureDataSource(tableView: tableView)
         snapshot.appendSections([.main])
         snapshot.appendItems([MKShow(image: "first", title: "first", playlistId: "first")])
-        snapshot.appendItems([MKShow(image: "second", title: "second", playlistId: "second")])
+        snapshot.appendItems([MKShow(image: "chatroom", title: "chatroom", playlistId: "chatroom")])
+        snapshot.appendItems([MKShow(image: "danmu", title: "danmu", playlistId: "danmu")])
         tableView.dataSource = dataSource
         dataSource.apply(snapshot)
     }
@@ -472,9 +458,14 @@ extension PlayerViewController {
                     guard let cell = cell else { return UITableViewCell() }
                     cell.chatRoomButton.addTarget(self, action: #selector(self.showChatroom(sender:)), for: .touchUpInside)
                     return cell
-                } else {
-                    return UITableViewCell()
+                } else if indexPath.row == 2 {
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: DanMuTextFieldTableViewCell.identifier,
+                        for: indexPath) as? DanMuTextFieldTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    return cell
                 }
+                return UITableViewCell()
             }
         )
     }
@@ -484,7 +475,7 @@ extension PlayerViewController {
         if let sheet = chatroomVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.detents = [.custom { _ in
-                600.0
+                500.0
             }, .large()]
             sheet.largestUndimmedDetentIdentifier = .large
             chatroomVC.videoId = self.videoId

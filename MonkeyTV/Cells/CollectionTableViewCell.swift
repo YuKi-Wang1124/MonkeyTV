@@ -92,8 +92,6 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-//        VideoLauncher.shared.videoId = "FjJtmJteK58"
-//        VideoLauncher.shared.showVideoPlayer()
         showVideoPlayerDelegate?.showVideoPlayer()
     }
 }
