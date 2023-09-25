@@ -18,6 +18,9 @@ class TabBarViewController: UITabBarController {
             self, selector: #selector(userInterfaceStyleDidChange),
             name: .userInterfaceStyle, object: nil)
         viewControllers = tabs.map { $0.makeViewController() }
+        let barAppearance =  UITabBarAppearance()
+        barAppearance.configureWithDefaultBackground()
+        UITabBar.appearance().scrollEdgeAppearance = barAppearance
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

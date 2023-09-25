@@ -52,7 +52,7 @@ class HomeViewController: BaseViewController {
                         withIdentifier: CollectionTableViewCell.identifier,
                         for: indexPath) as? CollectionTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
-                    cell.titleLabel.text = self.showCatalogArray[index]
+                    cell.titleLabel.text = self.showCatalogArray[indexPath.row]
                     cell.catalogType = index
                     cell.showVideoPlayerDelegate = self
                     return cell
@@ -82,11 +82,8 @@ extension HomeViewController {
 // MARK: -
 extension HomeViewController: ShowVideoPlayerDelegate {
     func showVideoPlayer() {
-        
         let playerVC = PlayerViewController()
         playerVC.modalPresentationStyle = .fullScreen
         self.present(playerVC, animated: true)
     }
 }
-
-
