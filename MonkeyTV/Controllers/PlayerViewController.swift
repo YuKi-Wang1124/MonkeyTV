@@ -100,17 +100,17 @@ class PlayerViewController: UIViewController {
         setupVideoLauncher()
         DispatchQueue.main.async {
             self.dispatchSemaphore.wait()
-            print("videoId: \(self.videoId)")
+//            print("videoId: \(self.videoId)")
             self.getYouTubeVideoData()
-            print("videoId: \(self.videoId)")
+//            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.signal()
-            print("videoId: \(self.videoId)")
+//            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.wait()
-            print("videoId: \(self.videoId)")
+//            print("videoId: \(self.videoId)")/
             self.loadYoutubeVideo()
-            print("videoId: \(self.videoId)")
+//            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.signal()
-            print("videoId: \(self.videoId)")
+//            print("videoId: \(self.videoId)")
         }
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -565,8 +565,9 @@ extension PlayerViewController {
             case .failure(let error):
                 print(Result<Any>.failure(error))
             }
-                print("============nextPageTableViewSnapshot.itemIdentifiers============\(String(describing: self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId))")
+//                print("============nextPageTableViewSnapshot.itemIdentifiers============\(String(describing: self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId))")
                 self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
+                print("In founction +=======+  videoId: \(self.videoId)")
             })
     }
     
