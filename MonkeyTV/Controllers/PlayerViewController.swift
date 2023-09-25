@@ -98,6 +98,7 @@ class PlayerViewController: UIViewController {
         setupTableView()
         getDanMuData()
         setupVideoLauncher()
+//        ytVideoPlayerView.load(withPlaylistId: playlistId)
         DispatchQueue.main.async {
             self.dispatchSemaphore.wait()
 //            print("videoId: \(self.videoId)")
@@ -581,5 +582,6 @@ extension PlayerViewController {
             "autoplay": 1
         ]
         ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
+//        ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
     }
 }
