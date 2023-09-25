@@ -50,6 +50,8 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var playlistId: String = ""
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCellUI()

@@ -60,7 +60,6 @@ class SearchViewController: UIViewController {
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-
         coordinator.animate(alongsideTransition: { [self] context in
             // 在动画过程中更新约束或视图属性
             if size.width > size.height {

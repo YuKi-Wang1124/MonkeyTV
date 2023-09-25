@@ -9,7 +9,7 @@ import UIKit
 import youtube_ios_player_helper
 
 class PlayerViewController: UIViewController {
-    var videoId: String = "FjJtmJteK58"
+    var videoId: String = "6vn8HP8_L6Q"
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
@@ -515,8 +515,4 @@ extension PlayerViewController {
             }
         }
     }
-}
-
-protocol EmptyTextFieldDelegate {
-    func emptyTextField()
 }

@@ -27,7 +27,7 @@
 		CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */; };
 		CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1D22AB0553D0075203C /* Constants.swift */; };
 		CC0BF1D92AB1B1300075203C /* HTTPClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1D82AB1B1300075203C /* HTTPClientManager.swift */; };
-		CC0BF1DD2AB1B6880075203C /* HomeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */; };
+		CC0BF1DD2AB1B6880075203C /* YoutubeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */; };
 		CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DE2AB1B8130075203C /* Video.swift */; };
 		CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */; };
 		CC0BF1E42AB1DB0F0075203C /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */; };
@@ -79,7 +79,7 @@
 		CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KingFisherWrapper.swift; path = "../../../Stylish-iOS/STYLiSH/Third Party Wrappers/KingFisherWrapper.swift"; sourceTree = "<group>"; };
 		CC0BF1D22AB0553D0075203C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CC0BF1D82AB1B1300075203C /* HTTPClientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientManager.swift; sourceTree = "<group>"; };
-		CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRequest.swift; sourceTree = "<group>"; };
+		CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeRequest.swift; sourceTree = "<group>"; };
 		CC0BF1DE2AB1B8130075203C /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		CC0BF1D12AB052B40075203C /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				CC0BF1DC2AB1B6880075203C /* HomeRequest.swift */,
+				CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */,
 				CC0BF1E32AB1DB0F0075203C /* UserRequest.swift */,
 				CC0BF1D82AB1B1300075203C /* HTTPClientManager.swift */,
 				CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */,
@@ -430,7 +430,7 @@
 				CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */,
 				CC963C0E2AB84A260047EEFA /* UITextField+Extension.swift in Sources */,
 				CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */,
-				CC0BF1DD2AB1B6880075203C /* HomeRequest.swift in Sources */,
+				CC0BF1DD2AB1B6880075203C /* YoutubeRequest.swift in Sources */,
 				CC963C122AB8A3190047EEFA /* UIColor+Extension.swift in Sources */,
 				CC03312C2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift in Sources */,
 				CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */,

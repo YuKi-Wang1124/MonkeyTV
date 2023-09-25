@@ -31,6 +31,25 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         updateTableViewDataSource()
         setUI()
+//            func getVideoCover(request: Request) {
+                let decoder = JSONDecoder()
+        HTTPClientManager.shared.request(YoutubeRequest.playlistItems, completion: { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let data):
+                        do {
+                            let info = try decoder.decode(PlayerlistResponse.self, from: data)
+//                            info.items.forEach({
+                                print(info)
+//                            })
+                        } catch {
+                            print(Result<Any>.failure(error))
+                        }
+                    case .failure(let error):
+                        print(Result<Any>.failure(error))
+                    }
+                })
+//            }
     }
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {

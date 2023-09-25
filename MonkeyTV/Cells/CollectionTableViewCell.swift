@@ -60,8 +60,10 @@ class CollectionTableViewCell: UITableViewCell {
                 let cell = colloctionvVew.dequeueReusableCell(
                     withReuseIdentifier: HomePageCollectionViewCell.identifier,
                     for: indexPath) as? HomePageCollectionViewCell
-                cell?.label.text = itemIdentifier.showName
-                cell?.coverImageView.loadImage(itemIdentifier.image)
+                guard let cell = cell else { return UICollectionViewCell() }
+                cell.label.text = itemIdentifier.showName
+                cell.coverImageView.loadImage(itemIdentifier.image)
+                cell.playlistId = itemIdentifier.playlistId
                 return cell
             })
     }
@@ -93,6 +95,11 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         showVideoPlayerDelegate?.showVideoPlayer()
+        if let cell = collectionView.cellForItem(at: indexPath) as? HomePageCollectionViewCell {
+            print("\(cell.playlistId)")
+        } else {
+        }
+        
     }
 }
 

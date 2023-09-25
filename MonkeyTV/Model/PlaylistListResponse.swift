@@ -31,3 +31,42 @@ struct PlaylistSnippet: Codable {
 //    let channelTitle: String
 //    let localized: Localized
 }
+
+
+// MARK: - For Player View Controller Data
+
+struct PlayerlistResponse: Codable {
+    let kind: String
+    let etag: String
+    let nextPageToken: String
+    let items: [PlaylistItem]
+    let pageInfo: PageInfo
+}
+
+struct PlaylistItem: Codable {
+    let kind: String
+    let etag: String
+    let id: String
+    let snippet: Snippet
+}
+
+struct Snippet: Codable {
+    let publishedAt: String
+    let channelId: String
+    let title: String
+    let description: String
+    let thumbnails: Thumbnails
+    let channelTitle: String
+    let playlistId: String
+    let position: Int
+    let resourceId: ResourceId
+    let videoOwnerChannelTitle: String
+    let videoOwnerChannelId: String
+}
+
+struct ResourceId: Codable {
+    let kind: String
+    let videoId: String
+}
+
+
