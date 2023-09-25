@@ -21,6 +21,7 @@ class PlayerViewController: UIViewController {
     private var timer: Timer?
     private var bulletChats = [BulletChat]()
     private var danMuText: String = ""
+    private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
     // MARK: - Bools
     private var isPanning = false
     private var isDanMuDisplayed = false
@@ -472,6 +473,7 @@ extension PlayerViewController {
                         print(userInput)
                     }
                     cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
+                    self.emptyTextFieldDelegate = cell
                     return cell
                 }
                 return UITableViewCell()
@@ -492,7 +494,6 @@ extension PlayerViewController {
         }
     }
     @objc func submitMyDanMu(sender: UIButton) {
-        print("新增彈幕")
         if danMuText != "" {
             danmuView.danmuQueue.append((danMuText, false))
             let id = FirestoreManager.bulletChat.document().documentID
@@ -509,9 +510,13 @@ extension PlayerViewController {
                 if error != nil {
                     print("Error adding document: (error)")
                 } else {
-                    print("新增彈幕成功")
+                    self.emptyTextFieldDelegate?.emptyTextField()
                 }
             }
         }
     }
+}
+
+protocol EmptyTextFieldDelegate {
+    func emptyTextField()
 }

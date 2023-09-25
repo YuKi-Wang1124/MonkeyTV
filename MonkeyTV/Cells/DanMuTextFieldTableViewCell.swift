@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
+class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTextFieldDelegate {
     static let identifier = "\(DanMuTextFieldTableViewCell.self)"
     // MARK: - UI
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
@@ -52,7 +52,9 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     // MARK: - UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        userInputHandler?(textField.text ?? "")
+        if let text = textField.text, text != "" {
+            userInputHandler?(text)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -100,5 +102,8 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
                 constant: -8),
             danmuBackgroundView.heightAnchor.constraint(equalToConstant: 80)
             ])
+    }
+    func emptyTextField() {
+        danMuTextField.text = ""
     }
 }
