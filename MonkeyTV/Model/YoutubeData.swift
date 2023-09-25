@@ -78,8 +78,9 @@ struct Playlist: Codable, Hashable {
     let snippet: Snippet
 
     static func == (lhs: Playlist, rhs: Playlist) -> Bool {
-        true
+         lhs.id == rhs.id        
     }
+    
     func hash(into hasher: inout Hasher) {
     }
 }

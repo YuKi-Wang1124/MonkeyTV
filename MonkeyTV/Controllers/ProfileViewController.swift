@@ -35,8 +35,8 @@ class ProfileViewController: UIViewController {
                 withIDToken: idToken.tokenString,
                 accessToken: accessToken.tokenString)
            // Use the credential to authenticate with Firebase
-           print("========================")
-           print(accessToken.tokenString)
+//           print("========================")
+//           print(accessToken.tokenString)
            Auth.auth().signIn(with: credential) { authResult, error in
 //               print(authResult)
            }

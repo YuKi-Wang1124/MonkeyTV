@@ -57,7 +57,9 @@ class ChatroomViewModel {
                    let id = data["id"] as? String,
                    createdTime.dateValue() >= currentTime {
                     let object = ChatroomData(
-                        chatroomChat: ChatroomChat(chatId: chatId, content: content, contentType: contentType, createdTime: createdTime.dateValue(), userId: userId),
+                        chatroomChat: ChatroomChat(
+                            chatId: chatId, content: content, contentType: contentType,
+                            createdTime: createdTime.dateValue(), userId: userId),
                         videoId: videoId, id: id)
                     if !(self?.snapshot.itemIdentifiers.contains(object))! {
                         newItems.append(object)

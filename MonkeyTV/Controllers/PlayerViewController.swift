@@ -105,8 +105,6 @@ class PlayerViewController: UIViewController {
 //            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.signal()
 //            print("videoId: \(self.videoId)")
-            self.dispatchSemaphore.wait()
-//            print("videoId: \(self.videoId)")/
             self.loadYoutubeVideo()
 //            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.signal()
@@ -347,8 +345,6 @@ class PlayerViewController: UIViewController {
     }
     private func setupVideoLauncher() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.0)
-        //        danMuTextField.isHidden = true
-        //        submitDanMuButton.isHidden = true
         changeOrientationButton.isHidden = true
         showDanMuButton.isHidden = true
         pauseButton.isHidden = true
@@ -474,7 +470,6 @@ extension PlayerViewController {
                     cell.danMuTextField.delegate = cell
                     cell.userInputHandler = { [weak self] userInput in
                         self?.danMuText = userInput
-                        print(userInput)
                     }
                     cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
                     self.emptyTextFieldDelegate = cell
@@ -535,7 +530,6 @@ extension PlayerViewController {
             case .success(let data):
                 do {
                     let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
-                    //                                print(info.items)
                     playlistTableViewSnapshot.appendSections([OneSection.main])
                     info.items.forEach {
                         let playlist =
@@ -567,7 +561,7 @@ extension PlayerViewController {
             }
 //                print("============nextPageTableViewSnapshot.itemIdentifiers============\(String(describing: self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId))")
                 self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
-                print("In founction +=======+  videoId: \(self.videoId)")
+//                print("In founction +=======+  videoId: \(self.videoId)")
             })
     }
     
