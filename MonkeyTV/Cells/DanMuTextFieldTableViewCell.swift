@@ -7,8 +7,9 @@
 
 import UIKit
 
-class DanMuTextFieldTableViewCell: UITableViewCell {
+class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     static let identifier = "\(DanMuTextFieldTableViewCell.self)"
+    // MARK: - UI
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
     private lazy var danmuBackgroundView = {
         let view = UIView()
@@ -26,20 +27,40 @@ class DanMuTextFieldTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private lazy var submitMessageButton = {
+    lazy var submitMessageButton = {
         return UIButton.createPlayerButton(image: UIImage.systemAsset(.send),
                                            color: .white, cornerRadius: 17)
     }()
-    private lazy var danMuTextField = {
+    lazy var danMuTextField = {
         return UITextField.createTextField(text: "輸入彈幕")
     }()
+    
+    // MARK: - Clsoure
+    var userInputHandler: ((String) -> Void)?
+    
+    // MARK: - init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCellUI()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        userInputHandler?(textField.text ?? "")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+           textField.resignFirstResponder()
+           return true
+    }
+    
+    // MARK: - Auto layout
     private func setupCellUI() {
         contentView.addSubview(danmuBackgroundView)
         contentView.addSubview(chatroomTitleLabel)
@@ -57,7 +78,6 @@ class DanMuTextFieldTableViewCell: UITableViewCell {
                 equalTo: contentView.safeAreaLayoutGuide.topAnchor,
                 constant: 8),
             chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 30),
-            
             danMuTextField.topAnchor.constraint(equalTo: chatroomTitleLabel.bottomAnchor, constant: 4),
             danMuTextField.heightAnchor.constraint(equalToConstant: 35),
             danMuTextField.leadingAnchor.constraint(equalTo: danmuBackgroundView.leadingAnchor, constant: 8),

@@ -20,6 +20,7 @@ class PlayerViewController: UIViewController {
     private var videoDuration = 0
     private var timer: Timer?
     private var bulletChats = [BulletChat]()
+    private var danMuText: String = ""
     // MARK: - Bools
     private var isPanning = false
     private var isDanMuDisplayed = false
@@ -456,13 +457,21 @@ extension PlayerViewController {
                         withIdentifier: ChatroomButtonTableViewCell.identifier,
                         for: indexPath) as? ChatroomButtonTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
-                    cell.chatRoomButton.addTarget(self, action: #selector(self.showChatroom(sender:)), for: .touchUpInside)
+                    cell.chatRoomButton.addTarget(
+                        self, action: #selector(self.showChatroom(sender:)),
+                        for: .touchUpInside)
                     return cell
                 } else if indexPath.row == 2 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: DanMuTextFieldTableViewCell.identifier,
                         for: indexPath) as? DanMuTextFieldTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
+                    cell.danMuTextField.delegate = cell
+                    cell.userInputHandler = { [weak self] userInput in
+                        self?.danMuText = userInput
+                        print(userInput)
+                    }
+                    cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
                     return cell
                 }
                 return UITableViewCell()
@@ -474,12 +483,35 @@ extension PlayerViewController {
         let chatroomVC = ChatroomViewController()
         if let sheet = chatroomVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true
-            sheet.detents = [.custom { _ in
-                500.0
-            }, .large()]
+            sheet.detents = [
+                .custom { _ in 500.0 },
+                .large()]
             sheet.largestUndimmedDetentIdentifier = .large
             chatroomVC.videoId = self.videoId
             self.present(chatroomVC, animated: true)
+        }
+    }
+    @objc func submitMyDanMu(sender: UIButton) {
+        print("新增彈幕")
+        if danMuText != "" {
+            danmuView.danmuQueue.append((danMuText, false))
+            let id = FirestoreManager.bulletChat.document().documentID
+            let data: [String: Any] = ["bulletChat":
+                                        ["chatId": UUID().uuidString,
+                                         "content": danMuText,
+                                         "contentType": 0,
+                                         "popTime": videoSlider.value + 2,
+                                         // TODO: userid
+                                         "userId": "匿名"] as [String: Any],
+                                       "videoId": videoId,
+                                       "id": id]
+            FirestoreManager.bulletChat.document(id).setData(data) { error in
+                if error != nil {
+                    print("Error adding document: (error)")
+                } else {
+                    print("新增彈幕成功")
+                }
+            }
         }
     }
 }
