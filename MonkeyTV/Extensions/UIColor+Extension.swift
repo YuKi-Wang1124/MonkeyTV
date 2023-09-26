@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    static let backgroundColor = UIColor(hex: "#181818")
+    static let mainColor = UIColor(hex: "#49EA98")
     convenience init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespaces)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
@@ -35,7 +35,6 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
     // MARK: - Computed Properties
-    
     var toHex: String? {
         return toHex()
     }

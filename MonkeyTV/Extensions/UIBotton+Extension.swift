@@ -8,11 +8,13 @@
 import UIKit
 
 extension UIButton {
-    static func createPlayerButton(image: UIImage) -> UIButton {
-        let btn = UIButton()
-        btn.setImage(image, for: .normal)
-        btn.tintColor = .systemGray5
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
+    static func createPlayerButton(image: UIImage, color: UIColor, cornerRadius: CGFloat) -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        button.setImage(image, for: .normal)
+        button.tintColor = color
+        button.layer.cornerRadius = cornerRadius
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }
 }

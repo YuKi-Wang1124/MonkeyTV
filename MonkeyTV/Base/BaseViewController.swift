@@ -8,26 +8,39 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
 
-    @objc func deviceOrientationDidChange() {
-       
+        if UIDevice.current.orientation.isPortrait {
+            NotificationCenter.default.post(name: UIDevice.orientationDidChangeNotification,
+                                            object: nil, userInfo: ["orientation": UIDevice.current.orientation])
+        } else if UIDevice.current.orientation.isLandscape {
+            NotificationCenter.default.post(name: UIDevice.orientationDidChangeNotification,
+                                            object: nil, userInfo: ["orientation": UIDevice.current.orientation])
+        }
     }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
 
-    override var shouldAutorotate: Bool {
-        return true
-    }
+                NotificationCenter.default.post(name: .userInterfaceStyle,
+                                                object: nil, userInfo: ["userInterfaceStyle": traitCollection.userInterfaceStyle])
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all 
-    }
+        }
+}
+
+import Foundation
+
+extension Notification.Name {
+    static let userInterfaceStyle = Notification.Name("userInterfaceStyle")
 }
