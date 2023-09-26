@@ -43,7 +43,6 @@ class SearchViewController: UIViewController {
         setupSearchBar()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = false
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -82,8 +81,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty != true {
             StorageManager.shared.createSearchHistoryObject(showName: searchText)
-            if let data = historyDataSource {
-            }
         } else {
             return
         }
