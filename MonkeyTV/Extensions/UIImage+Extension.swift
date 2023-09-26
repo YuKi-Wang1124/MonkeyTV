@@ -28,7 +28,10 @@ enum ImageAsset: String {
     case personalPicture = "person.crop.circle"
     case send = "paperplane"
     case thumbImage = "circle.fill"
+    case history = "clock.arrow.circlepath"
+    case searchArrow = "arrow.up.backward"
 }
+
 extension UIImage {
     static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage {
         if let image = UIImage(systemName: asset.rawValue, withConfiguration: configuration) {
@@ -52,7 +55,7 @@ extension UIImage {
                         }
                     }
                 } else {
-                    //                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
+                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
                     DispatchQueue.main.async {
                         completion(nil)
                     }
