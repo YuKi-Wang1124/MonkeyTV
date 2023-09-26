@@ -6,38 +6,84 @@
 //
 
 import UIKit
+import youtube_ios_player_helper
 
 class SearchViewController: UIViewController {
-    lazy var imageView = UIImageView()
-    lazy var btn = UIButton()
-    let thumbnailUrl = "https://i.ytimg.com/vi/lj6ZOD_k6sY/mqdefault.jpg"
+    
+    private let searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.searchBar.placeholder = "請輸入片名"
+        return searchController
+    }()
+    
+    private var filterDataList: [Show] = [Show]()
+    private var searchedDataSource: [Show] = [Show]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        btn.frame = CGRect(x: 100, y: 300, width: 160, height: 90)
-//        imageView.frame = CGRect(x: 0, y: 0, width: 320, height: 180)
-        displayThumbnailImage(from: thumbnailUrl)
-        btn.addTarget(self, action: #selector(showPlayerVC), for: .touchUpInside)
-        view.addSubview(btn)
+        
+        setupSearchBar()
+        FirestoreManager.getAllShowsData(completion: { [weak self] showArrayData in
+            guard let self = self else { return }
+            self.searchedDataSource = showArrayData
+//            print("showArray ======= \(self.searchedDataSource)")
+        })
+
     }
-    @objc func showPlayerVC() {
-        let videoLauncher = VideoLauncher()
-        videoLauncher.showVideoPlayer()
+    
+    private func setupSearchBar() {
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
     }
-    func displayThumbnailImage(from url: String) {
-        if let imageUrl = URL(string: url) {
-            let session = URLSession.shared
-            let task = session.dataTask(with: imageUrl) { (data, _, error) in
-                if error == nil, let imageData = data {
-                    DispatchQueue.main.async {
-                        if let image = UIImage(data: imageData) {
-                            self.btn.setImage(image, for: .normal)
-                        }
-                    }
-                } else {
-                    print("下載圖片時錯誤：\(error?.localizedDescription ?? "")")
-                }
-            }
-            task.resume()
+}
+
+// MARK: -
+extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = self.searchController.searchBar.text?.trimmingCharacters(
+            in: CharacterSet.whitespacesAndNewlines),
+           searchText.isEmpty != true {
+            filterDataSource(for: searchText)
+        } else {
+            return
         }
+    }
+    
+    // 點擊searchBar上的取消按鈕
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // 依個人需求決定如何實作
+        // ...
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchController.searchBar.resignFirstResponder()
+    }
+    
+    // 過濾被搜陣列裡的資料
+    func filterDataSource(for searchText: String) {
+        self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
+            let showName = show.showName
+            if showName.localizedCaseInsensitiveContains(searchText) {
+                filterDataList.append(show)
+                return true
+            } else {
+                return false
+            }
+        })
+                    print("filterDataList ======= \(self.filterDataList)")
+
+        //            if self.filterDataList.count > 0 {
+        //                self.isShowSearchResult = true
+        //                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.init(rawValue: 1)! // 顯示TableView的格線
+        //            } else {
+        //                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none // 移除TableView的格線
+        //                // 可加入一個查找不到的資料的label來告知使用者查不到資料...
+        //                // ...
+        //            }
+        //
+        //            self.tableView.reloadData()
+        //        }
     }
 }

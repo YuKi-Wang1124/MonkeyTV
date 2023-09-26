@@ -9,9 +9,9 @@ import UIKit
 
 class HomePageCollectionViewCell: UICollectionViewCell {
     static let identifier = "\(HomePageCollectionViewCell.self)"
-    private let containerView: UIView = {
-        let containerView = UIView()
-        containerView.layer.shadowColor = UIColor.black.cgColor
+    var containerView: UIView = {
+        var containerView = UIView()
+        containerView.layer.shadowColor = UIColor.darkGray.cgColor
         containerView.layer.shadowOpacity = 0.35
         containerView.layer.shadowOffset = CGSize(width: 5, height: 5)
         containerView.layer.shadowRadius = 5
@@ -19,6 +19,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         return containerView
     }()
+    
     var catImageView = {
         let imageview = UIImageView()
         imageview.image = UIImage(imageLiteralResourceName: "cat")
@@ -29,6 +30,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
+    
     var coverImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFill
@@ -37,17 +39,29 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
+    
     var label: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black
+        label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    var playlistId: String = ""
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupCellUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupCellUI() {
         containerView.addSubview(catImageView)
         containerView.addSubview(coverImageView)
         contentView.addSubview(containerView)
@@ -64,14 +78,11 @@ class HomePageCollectionViewCell: UICollectionViewCell {
             coverImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            containerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.55, constant: -16),
+            containerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.58, constant: -16),
             containerView.widthAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 16 / 9),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            label.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 14)
+            label.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 10)
         ])
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

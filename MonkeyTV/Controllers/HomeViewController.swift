@@ -29,11 +29,9 @@ class HomeViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         updateTableViewDataSource()
         setUI()
     }
-
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
         tableViewDataSource =
@@ -53,8 +51,9 @@ class HomeViewController: BaseViewController {
                         withIdentifier: CollectionTableViewCell.identifier,
                         for: indexPath) as? CollectionTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
-                    cell.titleLabel.text = self.showCatalogArray[index]
+                    cell.titleLabel.text = self.showCatalogArray[indexPath.row]
                     cell.catalogType = index
+                    cell.showVideoPlayerDelegate = self
                     return cell
                 }
             }
@@ -65,6 +64,7 @@ class HomeViewController: BaseViewController {
         tableViewDataSource.apply(tableViewSnapshot)
     }
 }
+
 // MARK: - UI configuration
 extension HomeViewController {
     private func setUI() {
@@ -75,5 +75,17 @@ extension HomeViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+// MARK: -
+extension HomeViewController: ShowVideoPlayerDelegate {
+    
+    func showVideoPlayer(playlistId: String) {
+        
+        let playerViewController = PlayerViewController()
+        playerViewController.modalPresentationStyle = .fullScreen
+        playerViewController.playlistId = playlistId
+        self.present(playerViewController, animated: true)
     }
 }

@@ -7,8 +7,8 @@
 
 import UIKit
 
-class PlayerTableViewCell: UITableViewCell {
-    static let identifier = "\(PlayerTableViewCell.self)"
+class ChatroomButtonTableViewCell: UITableViewCell {
+    static let identifier = "\(ChatroomButtonTableViewCell.self)"
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
     lazy var chatRoomButton = {
         let button = UIButton()

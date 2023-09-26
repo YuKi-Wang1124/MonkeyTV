@@ -8,15 +8,17 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        VideoLauncher.shared
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
@@ -28,4 +30,17 @@ class BaseViewController: UIViewController {
                                             object: nil, userInfo: ["orientation": UIDevice.current.orientation])
         }
     }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+                NotificationCenter.default.post(name: .userInterfaceStyle,
+                                                object: nil, userInfo: ["userInterfaceStyle": traitCollection.userInterfaceStyle])
+
+        }
+}
+
+import Foundation
+
+extension Notification.Name {
+    static let userInterfaceStyle = Notification.Name("userInterfaceStyle")
 }

@@ -108,20 +108,13 @@ extension ChatroomViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
             
-            
             messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: -8),
             messageTextField.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 8),
             messageTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
             submitMessageButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-//            submitMessageButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-//
-//            submitMessageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
             submitMessageButton.centerYAnchor.constraint(equalTo: messageTextField.centerYAnchor),
             submitMessageButton.heightAnchor.constraint(equalToConstant: 40),
-            
             messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
         ])
     }

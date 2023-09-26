@@ -43,10 +43,12 @@ enum OneSection {
 }
 
 enum ShowCatalog: String, CaseIterable {
+    case titleAnimation = "標題"
     case animation = "二次元輕鬆看 🐹"
     case drama = "有點甜，有點鹹，一起追劇 🎬"
     case entertainment = "娛樂一下，放鬆身心 👨‍👩‍👧"
     case sport = "體育賽事隨你看 🏋🏻‍♀️"
     case food = "用眼睛吃美食不會胖 🍔"
     case health = "少一點醫生，多一點健康 🍀"
+//    case internationalShow = "國外節目看到飽 🌎"
 }

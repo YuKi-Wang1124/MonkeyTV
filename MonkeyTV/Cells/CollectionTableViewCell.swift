@@ -12,6 +12,7 @@ class CollectionTableViewCell: UITableViewCell {
     lazy var titleLabel: UILabel = {
         return UILabel.createTitleLabel(text: "多一點健康")
     }()
+    var showVideoPlayerDelegate: ShowVideoPlayerDelegate?
     private lazy var collectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -25,8 +26,10 @@ class CollectionTableViewCell: UITableViewCell {
         return collectionView
     }()
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, Show>()
+    var nextPageTableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Playlist>()
     var dataSource: UICollectionViewDiffableDataSource<OneSection, Show>!
     var catalogType = 0
+    // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         collectionView.delegate = self
@@ -39,6 +42,8 @@ class CollectionTableViewCell: UITableViewCell {
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func prepareForReuse() {
     }
     // MARK: - Configure CollectionView
     private func getSnapshotsData() async {
@@ -55,34 +60,46 @@ class CollectionTableViewCell: UITableViewCell {
                 let cell = colloctionvVew.dequeueReusableCell(
                     withReuseIdentifier: HomePageCollectionViewCell.identifier,
                     for: indexPath) as? HomePageCollectionViewCell
-                cell?.label.text = itemIdentifier.showName
-                cell?.coverImageView.loadImage(itemIdentifier.image)
+                guard let cell = cell else { return UICollectionViewCell() }
+                cell.label.text = itemIdentifier.showName
+                cell.coverImageView.loadImage(itemIdentifier.image)
+                cell.playlistId = itemIdentifier.playlistId
                 return cell
             })
     }
 }
 // MARK: -
 extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180,
+        
+        let screenWidth = UIScreen.main.bounds.size.width
+        return CGSize(width: (screenWidth - 36) / 2,
                       height: collectionView.frame.height)
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 16.0
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        VideoLauncher.shared.videoId = "FjJtmJteK58"
-        VideoLauncher.shared.showVideoPlayer()
+        nextPageTableViewSnapshot.deleteAllItems()
+        nextPageTableViewSnapshot.deleteSections([OneSection.main])
+        if let cell = collectionView.cellForItem(at: indexPath) as? HomePageCollectionViewCell {
+            YouTubeParameter.shared.playlistId = cell.playlistId
+            showVideoPlayerDelegate?.showVideoPlayer(playlistId: cell.playlistId)
+        } else { }
     }
 }
 // MARK: - setupCellUI
@@ -93,7 +110,7 @@ extension CollectionTableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
