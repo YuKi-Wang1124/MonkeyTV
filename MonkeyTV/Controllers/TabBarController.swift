@@ -81,9 +81,9 @@ extension TabBarViewController {
             case .search:
                 return "搜尋"
             case .favorite:
-                return "我的收藏"
+                return "我的片單"
             case .profile:
-                return "個人"
+                return "個人化"
             }
         }
         private var image: UIImage? {

@@ -98,18 +98,12 @@ class PlayerViewController: UIViewController {
         setupTableView()
         getDanMuData()
         setupVideoLauncher()
-//        ytVideoPlayerView.load(withPlaylistId: playlistId)
         DispatchQueue.main.async {
             self.dispatchSemaphore.wait()
-//            print("videoId: \(self.videoId)")
             self.getYouTubeVideoData()
-//            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.signal()
-//            print("videoId: \(self.videoId)")
             self.loadYoutubeVideo()
-//            print("videoId: \(self.videoId)")
             self.dispatchSemaphore.signal()
-//            print("videoId: \(self.videoId)")
         }
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -296,9 +290,9 @@ class PlayerViewController: UIViewController {
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 30),
             changeOrientationButton.widthAnchor.constraint(equalToConstant: 30),
             
-            videoSlider.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor),
-            videoSlider.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor),
-            videoSlider.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -80),
+            videoSlider.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor, constant: 30),
+            videoSlider.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -30),
+            videoSlider.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -70),
             videoSlider.heightAnchor.constraint(equalToConstant: 10)
         ]
         
@@ -560,28 +554,18 @@ extension PlayerViewController {
             case .failure(let error):
                 print(Result<Any>.failure(error))
             }
-//                print("============nextPageTableViewSnapshot.itemIdentifiers============\(String(describing: self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId))")
                 self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
-//                print("In founction +=======+  videoId: \(self.videoId)")
             })
     }
-    
     private func loadYoutubeVideo() {
         let playerVars: [AnyHashable: Any] = [
-            "margin": 0,
-            "width": 100,
-            //            "height": 100,
             "frameborder": 0,
             "loop": 0,
             "playsigline": 1,
             "controls": 0,
-            //                "autohide": 1,
             "showinfo": 0,
-            "fs": 0,
-            //            "rel": 0,
             "autoplay": 1
         ]
-        ytVideoPlayerView.load(withVideoId: videoId, playerVars: playerVars)
-//        ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
+        ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
     }
 }

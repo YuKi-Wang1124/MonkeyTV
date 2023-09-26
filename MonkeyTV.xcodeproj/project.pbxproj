@@ -12,6 +12,7 @@
 		CC0331282ABDA6F900229900 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331272ABDA6F900229900 /* Show.swift */; };
 		CC03312A2ABEE70700229900 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331292ABEE70700229900 /* UILabel+Extension.swift */; };
 		CC03312C2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */; };
+		CC03312F2AC2B05B00229900 /* MyData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC03312D2AC2B05B00229900 /* MyData.xcdatamodeld */; };
 		CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */; };
 		CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */; };
 		CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */; };
@@ -21,7 +22,7 @@
 		CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */; };
 		CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C42AB014C10075203C /* HomeViewController.swift */; };
 		CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */; };
-		CC0BF1C92AB02BBA0075203C /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */; };
+		CC0BF1C92AB02BBA0075203C /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1C82AB02BBA0075203C /* UINavigationController+Extension.swift */; };
 		CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */; };
 		CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CC2AB036BD0075203C /* PlayerViewController.swift */; };
 		CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */; };
@@ -61,6 +62,7 @@
 		CC0331272ABDA6F900229900 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		CC0331292ABEE70700229900 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMuTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		CC03312E2AC2B05B00229900 /* MyData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyData.xcdatamodel; sourceTree = "<group>"; };
 		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +74,7 @@
 		CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CC0BF1C42AB014C10075203C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
-		CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		CC0BF1C82AB02BBA0075203C /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CC0BF1CC2AB036BD0075203C /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KingFisherWrapper.swift; path = "../../../Stylish-iOS/STYLiSH/Third Party Wrappers/KingFisherWrapper.swift"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */,
 				CC0BF1B82AB00BF70075203C /* Info.plist */,
 				CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */,
+				CC03312D2AC2B05B00229900 /* MyData.xcdatamodeld */,
 			);
 			path = MonkeyTV;
 			sourceTree = "<group>";
@@ -179,7 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */,
-				CC0BF1C82AB02BBA0075203C /* UIViewController+Extension.swift */,
+				CC0BF1C82AB02BBA0075203C /* UINavigationController+Extension.swift */,
 				CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */,
 				CC963C0D2AB84A260047EEFA /* UITextField+Extension.swift */,
 				CC963C112AB8A3190047EEFA /* UIColor+Extension.swift */,
@@ -421,7 +424,7 @@
 			files = (
 				CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */,
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
-				CC0BF1C92AB02BBA0075203C /* UIViewController+Extension.swift in Sources */,
+				CC0BF1C92AB02BBA0075203C /* UINavigationController+Extension.swift in Sources */,
 				CC0BF1D92AB1B1300075203C /* HTTPClientManager.swift in Sources */,
 				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
 				CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */,
@@ -436,6 +439,7 @@
 				CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
 				CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */,
+				CC03312F2AC2B05B00229900 /* MyData.xcdatamodeld in Sources */,
 				CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
 				CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */,
@@ -666,6 +670,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CC03312D2AC2B05B00229900 /* MyData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CC03312E2AC2B05B00229900 /* MyData.xcdatamodel */,
+			);
+			currentVersion = CC03312E2AC2B05B00229900 /* MyData.xcdatamodel */;
+			path = MyData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CC0BF19F2AB00BF60075203C /* Project object */;
 }
