@@ -14,7 +14,7 @@ class PlayerViewController: UIViewController {
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
-    private let dispatchSemaphore = DispatchSemaphore(value: 1)
+    private let dispatchSemaphore = DispatchSemaphore(value: 0)
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var initialY: CGFloat = 0
@@ -96,15 +96,9 @@ class PlayerViewController: UIViewController {
         view.backgroundColor = .white
         setupUILayout()
         setupTableView()
-        getDanMuData()
         setupVideoLauncher()
-        DispatchQueue.main.async {
-            self.dispatchSemaphore.wait()
-            self.getYouTubeVideoData()
-            self.dispatchSemaphore.signal()
-            self.loadYoutubeVideo()
-            self.dispatchSemaphore.signal()
-        }
+        getYouTubeVideoData()
+        loadYoutubeVideo()
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -413,7 +407,8 @@ extension PlayerViewController: YTPlayerViewDelegate {
         }
     }
     // MARK: - getDanMuData
-    private func getDanMuData() {
+    private func getDanMuData(videoId: String) {
+        print("video=== \(videoId)")
         FirestoreManager.bulletChat.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
@@ -422,6 +417,7 @@ extension PlayerViewController: YTPlayerViewDelegate {
                             let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                             let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
                             self.bulletChats.append(decodedObject.bulletChat)
+                            print("bulletChats======\(decodedObject)")
                         } catch {
                             print("\(error)")
                         }
@@ -555,6 +551,9 @@ extension PlayerViewController {
                 print(Result<Any>.failure(error))
             }
                 self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
+                print("self.videoId++++++++++++++++\(self.videoId)")
+                getDanMuData(videoId: self.videoId)
+
             })
     }
     private func loadYoutubeVideo() {

@@ -15,20 +15,41 @@ class SearchViewController: UIViewController {
         searchController.searchBar.placeholder = "請輸入片名"
         return searchController
     }()
-    
+    // MARK: - Table View
+    private var tableView: UITableView = {
+        var tableView = UITableView()
+        tableView.rowHeight = 60
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.register(SearchHistoryTableViewCell.self,
+                           forCellReuseIdentifier:
+                            SearchHistoryTableViewCell.identifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    private var hiddenView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    // MARK: -
     private var filterDataList: [Show] = [Show]()
     private var searchedDataSource: [Show] = [Show]()
+    private var historyDataSource = StorageManager.shared.fetchSearchHistorys()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI() 
         setupSearchBar()
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+
+        tableView.delegate = self
+        tableView.dataSource = self
         FirestoreManager.getAllShowsData(completion: { [weak self] showArrayData in
             guard let self = self else { return }
             self.searchedDataSource = showArrayData
-//            print("showArray ======= \(self.searchedDataSource)")
         })
-
     }
     
     private func setupSearchBar() {
@@ -36,13 +57,14 @@ class SearchViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
     }
+
 }
 
 // MARK: -
 extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = self.searchController.searchBar.text?.trimmingCharacters(
+        if let searchText = searchController.searchBar.text?.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines),
            searchText.isEmpty != true {
             filterDataSource(for: searchText)
@@ -51,18 +73,20 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
         }
     }
     
-    // 點擊searchBar上的取消按鈕
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // 依個人需求決定如何實作
-        // ...
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchController.searchBar.text,
+           searchText.isEmpty != true {
+            StorageManager.shared.createSearchHistoryObject(showName: searchText)
+        } else {
+            return
+        }
         self.searchController.searchBar.resignFirstResponder()
     }
-    
-    // 過濾被搜陣列裡的資料
-    func filterDataSource(for searchText: String) {
+    private func filterDataSource(for searchText: String) {
         self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
             let showName = show.showName
             if showName.localizedCaseInsensitiveContains(searchText) {
@@ -72,18 +96,46 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
                 return false
             }
         })
-                    print("filterDataList ======= \(self.filterDataList)")
+    }
+}
 
-        //            if self.filterDataList.count > 0 {
-        //                self.isShowSearchResult = true
-        //                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.init(rawValue: 1)! // 顯示TableView的格線
-        //            } else {
-        //                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none // 移除TableView的格線
-        //                // 可加入一個查找不到的資料的label來告知使用者查不到資料...
-        //                // ...
-        //            }
-        //
-        //            self.tableView.reloadData()
-        //        }
+// MARK: - UI configuration
+extension SearchViewController {
+    private func setupUI() {
+        view.addSubview(hiddenView)
+        view.addSubview(tableView)
+        hiddenView.isHidden = true
+        NSLayoutConstraint.activate([
+            hiddenView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            hiddenView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            hiddenView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            hiddenView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+}
+
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let historyDataSource = StorageManager.shared.fetchSearchHistorys()
+        if let data = historyDataSource {
+            return data.count
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifier,
+                                                 for: indexPath) as? SearchHistoryTableViewCell
+        guard let cell = cell else { return UITableViewCell() }
+        if let data = historyDataSource {
+            cell.historyNameLabel.text = data[indexPath.row].showName
+        }
+        return cell
     }
 }
