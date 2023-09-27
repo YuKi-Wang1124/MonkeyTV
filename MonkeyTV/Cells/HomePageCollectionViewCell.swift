@@ -78,7 +78,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
             coverImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            containerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.58, constant: -16),
+            containerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.56, constant: -16),
             containerView.widthAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 16 / 9),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),

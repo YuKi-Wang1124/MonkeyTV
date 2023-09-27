@@ -76,14 +76,14 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let screenWidth = UIScreen.main.bounds.size.width
-        return CGSize(width: (screenWidth - 36) / 2,
+        return CGSize(width: (screenWidth - 40) / 2,
                       height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16.0
+        return 24.0
     }
     
     func collectionView(_ collectionView: UICollectionView,

@@ -97,6 +97,8 @@ class PlayerViewController: UIViewController {
         setupUILayout()
         setupTableView()
         setupVideoLauncher()
+        setDanMu()
+
         getYouTubeVideoData()
         loadYoutubeVideo()
     }
@@ -339,7 +341,6 @@ class PlayerViewController: UIViewController {
         pauseButton.isHidden = true
         videoSlider.isHidden = true
         setBtnsAddtarget()
-        setDanMu()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
         addButtonViewGesture()
@@ -408,7 +409,6 @@ extension PlayerViewController: YTPlayerViewDelegate {
     }
     // MARK: - Get Dan Mu Data
     private func getDanMuData(videoId: String) {
-        print("video=== \(videoId)")
         FirestoreManager.bulletChat.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
@@ -417,7 +417,6 @@ extension PlayerViewController: YTPlayerViewDelegate {
                             let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                             let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
                             self.bulletChats.append(decodedObject.bulletChat)
-                            print("bulletChats======\(decodedObject)")
                         } catch {
                             print("\(error)")
                         }
@@ -491,7 +490,7 @@ extension PlayerViewController {
                                         ["chatId": UUID().uuidString,
                                          "content": danMuText,
                                          "contentType": 0,
-                                         "popTime": videoSlider.value + 2,
+                                         "popTime": videoSlider.value,
                                          // TODO: userid
                                          "userId": "匿名"] as [String: Any],
                                        "videoId": videoId,
