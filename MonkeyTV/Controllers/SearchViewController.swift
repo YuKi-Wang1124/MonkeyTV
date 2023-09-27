@@ -72,11 +72,9 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
             return
         }
     }
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
     }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty != true {
