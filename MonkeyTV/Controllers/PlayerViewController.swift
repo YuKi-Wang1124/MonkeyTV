@@ -406,7 +406,7 @@ extension PlayerViewController: YTPlayerViewDelegate {
             }
         }
     }
-    // MARK: - getDanMuData
+    // MARK: - Get Dan Mu Data
     private func getDanMuData(videoId: String) {
         print("video=== \(videoId)")
         FirestoreManager.bulletChat.whereField(
@@ -551,9 +551,7 @@ extension PlayerViewController {
                 print(Result<Any>.failure(error))
             }
                 self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
-                print("self.videoId++++++++++++++++\(self.videoId)")
                 getDanMuData(videoId: self.videoId)
-
             })
     }
     private func loadYoutubeVideo() {

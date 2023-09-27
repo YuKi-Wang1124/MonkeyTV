@@ -13,7 +13,7 @@ class SearchHistoryTableViewCell: UITableViewCell {
     
     private lazy var clockImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .lightGray
+        imageView.tintColor = .systemGray2
         imageView.image = UIImage.systemAsset(.history)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -21,7 +21,7 @@ class SearchHistoryTableViewCell: UITableViewCell {
     
     private lazy var arrowImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .lightGray
+        imageView.tintColor = .systemGray2
         imageView.image = UIImage.systemAsset(.searchArrow)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -60,13 +60,13 @@ class SearchHistoryTableViewCell: UITableViewCell {
             historyNameLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -32),
             historyNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            clockImageView.heightAnchor.constraint(equalToConstant: 20),
-            clockImageView.widthAnchor.constraint(equalToConstant: 20),
+            clockImageView.heightAnchor.constraint(equalToConstant: 28),
+            clockImageView.widthAnchor.constraint(equalToConstant: 28),
             clockImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             clockImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            arrowImageView.heightAnchor.constraint(equalToConstant: 25),
-            arrowImageView.widthAnchor.constraint(equalToConstant: 20),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 28),
+            arrowImageView.widthAnchor.constraint(equalToConstant: 23),
             arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
