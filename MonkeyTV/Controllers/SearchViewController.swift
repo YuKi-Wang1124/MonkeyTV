@@ -15,6 +15,11 @@ class SearchViewController: UIViewController {
         searchController.searchBar.placeholder = "請輸入片名"
         return searchController
     }()
+    
+    //    let array: [String] = [String]()
+    let array: [String] = ["無知","風雲變幻施耐庵唉西門吹雪呵呵噠","快看看","窿窿啦啦","一桿禽獸狙","合歡花","暴走大事件","非誠勿擾","呵呵呵"]
+    var width: CGFloat = 0
+    var height: CGFloat = 0
     // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
@@ -24,13 +29,15 @@ class SearchViewController: UIViewController {
         tableView.register(SearchHistoryTableViewCell.self,
                            forCellReuseIdentifier:
                             SearchHistoryTableViewCell.identifier)
-        tableView.register(ButtonsTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ButtonsTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     private var hiddenView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    private lazy var buttonsView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -42,11 +49,11 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI() 
+        setupUI()
+        setupButttons()
         setupSearchBar()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-
         tableView.delegate = self
         tableView.dataSource = self
         FirestoreManager.getAllShowsData(completion: { [weak self] showArrayData in
@@ -61,6 +68,49 @@ class SearchViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
 
+    private func setupButttons() {
+
+        view.addSubview(buttonsView)
+        
+        NSLayoutConstraint.activate([
+            buttonsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            buttonsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            buttonsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            buttonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        for index in 0 ..< array.count {
+            let button = UIButton(type: .system)
+            button.tag = 100 + index
+            button.backgroundColor = UIColor.white
+            button.addTarget(self, action: #selector(handleClick(_:)), for: .touchUpInside)
+            button.setTitleColor(UIColor.darkGray, for: .normal)
+            button.layer.borderWidth = 0.5
+            button.layer.borderColor = UIColor.lightGray.cgColor
+            button.layer.cornerRadius = 5
+            
+            let length = array[index].getLabWidth(font: UIFont.systemFont(ofSize: 16), height: 13).width
+            button.setTitle(array[index], for: .normal)
+            button.frame = CGRect(x: 10 + width,
+                                  y: height,
+                                  width: length + 15,
+                                  height: 30)
+            
+            if 10 + width + length + 15 > UIScreen.main.bounds.width {
+                width = 0
+                height = height + button.frame.size.height + 10
+                button.frame = CGRect(x: 10 + width,
+                                      y: height,
+                                      width: length + 15,
+                                      height: 30)
+            }
+            width = button.frame.size.width + button.frame.origin.x
+            buttonsView.addSubview(button)
+        }
+    }
+    @objc func handleClick(_ button: UIButton) {
+        print("\(button.tag)")
+    }
 }
 
 // MARK: -
@@ -107,6 +157,7 @@ extension SearchViewController {
         view.addSubview(hiddenView)
         view.addSubview(tableView)
         hiddenView.isHidden = true
+        tableView.isHidden = true
         NSLayoutConstraint.activate([
             hiddenView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hiddenView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -135,16 +186,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifier,
-//                                                 for: indexPath) as? SearchHistoryTableViewCell
-//        guard let cell = cell else { return UITableViewCell() }
-//        if let data = historyDataSource {
-//            cell.historyNameLabel.text = data[indexPath.row].showName
-//        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsTableViewCell.identifier,
-                                                 for: indexPath) as? ButtonsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifier,
+                                                 for: indexPath) as? SearchHistoryTableViewCell
         guard let cell = cell else { return UITableViewCell() }
+        if let data = historyDataSource {
+            cell.historyNameLabel.text = data[indexPath.row].showName
+        }
         
         return cell
     }
