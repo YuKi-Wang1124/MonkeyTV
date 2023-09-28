@@ -22,6 +22,7 @@ enum ImageAsset: String {
     case submitDanMu = "ellipsis.message.fill"
     case pause = "pause.fill"
     case play = "play.fill"
+    case playCircle = "play.circle"
     case shrink = "arrow.down.right.and.arrow.up.left"
     case enlarge = "arrow.up.left.and.arrow.down.right"
     case chatroom = "text.bubble.fill"

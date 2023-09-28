@@ -94,6 +94,7 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
+        
         nextPageTableViewSnapshot.deleteAllItems()
         nextPageTableViewSnapshot.deleteSections([OneSection.main])
         if let cell = collectionView.cellForItem(at: indexPath) as? HomePageCollectionViewCell {

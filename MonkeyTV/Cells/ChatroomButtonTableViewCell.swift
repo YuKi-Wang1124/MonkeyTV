@@ -38,6 +38,7 @@ class ChatroomButtonTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     var personalImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFill
@@ -45,6 +46,7 @@ class ChatroomButtonTableViewCell: UITableViewCell {
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCellUI()

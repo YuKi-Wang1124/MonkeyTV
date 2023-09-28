@@ -8,31 +8,33 @@
 import UIKit
 
 class SearchResultTableViewCell: UITableViewCell {
-    static let identifier = "\(SearchHistoryTableViewCell.self)"
+    static let identifier = "\(SearchResultTableViewCell.self)"
+    
     // MARK: - UI
-    
-    private lazy var shmageView = {
+    lazy var showImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .systemGray2
-        imageView.image = UIImage.systemAsset(.history)
+        imageView.layer.cornerRadius = 4
+        imageView.clipsToBounds = true
+        imageView.contentMode = .redraw
+        imageView.image = UIImage(imageLiteralResourceName: "cat")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private lazy var arrowImageView = {
+    private lazy var playImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .systemGray2
-        imageView.image = UIImage.systemAsset(.searchArrow)
+        imageView.tintColor = .darkGray
+        imageView.image = UIImage.systemAsset(.playCircle)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    var historyNameLabel: UILabel = {
+    lazy var showNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray
-        label.font = UIFont.systemFont(ofSize: 22)
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
         label.textAlignment = .left
-        label.text = "!1234567!"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,7 +43,14 @@ class SearchResultTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .systemGray6
         setupCellUI()
+        showNameLabel.sizeToFit()
+    }
+    
+    override func prepareForReuse() {
+        showImageView.image = nil
+        showNameLabel.text = nil
     }
     
     required init?(coder: NSCoder) {
@@ -50,25 +59,26 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: - Auto layout
     private func setupCellUI() {
-        contentView.addSubview(clockImageView)
-        contentView.addSubview(arrowImageView)
-        contentView.addSubview(historyNameLabel)
+        contentView.backgroundColor = .systemGray6
+        contentView.addSubview(showImageView)
+        contentView.addSubview(playImageView)
+        contentView.addSubview(showNameLabel)
         
         NSLayoutConstraint.activate([
-            historyNameLabel.heightAnchor.constraint(equalToConstant: 30),
-            historyNameLabel.leadingAnchor.constraint(equalTo: clockImageView.trailingAnchor, constant: 32),
-            historyNameLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -32),
-            historyNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            showNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            showNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            showNameLabel.leadingAnchor.constraint(equalTo: showImageView.trailingAnchor, constant: 16),
+            showNameLabel.trailingAnchor.constraint(equalTo: playImageView.leadingAnchor, constant: -16),
             
-            clockImageView.heightAnchor.constraint(equalToConstant: 28),
-            clockImageView.widthAnchor.constraint(equalToConstant: 28),
-            clockImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            clockImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            showImageView.heightAnchor.constraint(equalToConstant: 81),
+            showImageView.widthAnchor.constraint(equalToConstant: 144),
+            showImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            showImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            arrowImageView.heightAnchor.constraint(equalToConstant: 28),
-            arrowImageView.widthAnchor.constraint(equalToConstant: 23),
-            arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            playImageView.heightAnchor.constraint(equalToConstant: 40),
+            playImageView.widthAnchor.constraint(equalToConstant: 40),
+            playImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            playImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
   

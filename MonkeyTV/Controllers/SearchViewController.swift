@@ -44,7 +44,7 @@ class SearchViewController: UIViewController, NotificationSearchViewControllerIs
     // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 85
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(SearchResultTableViewCell.self,
@@ -172,8 +172,9 @@ class SearchViewController: UIViewController, NotificationSearchViewControllerIs
     @objc func handleClick(_ button: UIButton) {
         if let buttonLabel = button.titleLabel,
            let buttonText = buttonLabel.text {
-            print(buttonText)
             filterDataSource(for: buttonText)
+            tableView.isHidden = false
+            tableView.reloadData()
         }
     }
 }
@@ -190,18 +191,12 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text?.trimmingCharacters(
-            in: CharacterSet.whitespacesAndNewlines),
-           searchText.isEmpty != true {
-            filterDataSource(for: searchText)
-            
-        } else {
-            return
-        }
+
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
+        resetButtons()
+        tableView.isHidden = true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -209,32 +204,20 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty != true {
             StorageManager.shared.createSearchHistoryObject(showName: searchText)
+            filterDataSource(for: searchText)
+            tableView.reloadData()
         } else {
             return
         }
         tableView.isHidden = false
-        self.searchController.searchBar.text = ""
         self.searchController.searchBar.resignFirstResponder()
-    }
-    
-    // MARK: - filterDataSource
-    private func filterDataSource(for searchText: String) {
-        self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
-            let showName = show.showName
-            if showName.localizedCaseInsensitiveContains(searchText) {
-                filterDataList.append(show)
-                return true
-            } else {
-                return false
-            }
-        })
-        print(self.filterDataList)
     }
 }
 
 // MARK: - UI configuration
 extension SearchViewController {
     private func setupUI() {
+        tableView.backgroundColor = .systemGray6
         view.backgroundColor = .systemGray6
         view.addSubview(hiddenView)
         view.addSubview(buttonsView)
@@ -308,20 +291,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        let historyDataSource = StorageManager.shared.fetchSearchHistorys()
-        //        if let data = historyDataSource {
-        //            return data.count
-        //        } else {
-        //            return 0
-        //        }
-        return 1
+        return filterDataList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifier,
-                                                 for: indexPath) as? SearchHistoryTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier,
+                                                 for: indexPath) as? SearchResultTableViewCell
         guard let cell = cell else { return UITableViewCell() }
+        
+        cell.showNameLabel.text = filterDataList[indexPath.row].showName
+        cell.showImageView.loadImage(filterDataList[indexPath.row].image)
         
         return cell
     }
@@ -345,7 +325,6 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
                 cacheName: nil)
             fetchedResultController.delegate = self
         }
-        
         do {
             try fetchedResultController.performFetch()
         } catch {
@@ -360,6 +339,20 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
         } else {
             StorageManager.shared.deleteAllSearchHistory()
         }
+    }
+    
+    // MARK: - filterDataSource
+    private func filterDataSource(for searchText: String) {
+        self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
+            let showName = show.showName
+            if showName.localizedCaseInsensitiveContains(searchText) {
+                filterDataList.append(show)
+                return true
+            } else {
+                return false
+            }
+        })
+        print(self.filterDataList)
     }
 }
 
