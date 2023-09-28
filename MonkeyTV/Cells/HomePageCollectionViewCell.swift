@@ -24,7 +24,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         let imageview = UIImageView()
         imageview.image = UIImage(imageLiteralResourceName: "cat")
         imageview.contentMode = .scaleAspectFill
-        imageview.layer.cornerRadius = 11
+        imageview.layer.cornerRadius = 6
         imageview.clipsToBounds = true
         imageview.alpha = 0.5
         imageview.translatesAutoresizingMaskIntoConstraints = false
@@ -33,8 +33,8 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     
     var coverImageView = {
         let imageview = UIImageView()
-        imageview.contentMode = .scaleAspectFill
-        imageview.layer.cornerRadius = 11
+        imageview.contentMode = .redraw
+        imageview.layer.cornerRadius = 6
         imageview.clipsToBounds = true
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
@@ -62,6 +62,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCellUI() {
+        contentView.backgroundColor = .systemGray6
         containerView.addSubview(catImageView)
         containerView.addSubview(coverImageView)
         contentView.addSubview(containerView)
@@ -78,10 +79,10 @@ class HomePageCollectionViewCell: UICollectionViewCell {
             coverImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            containerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.56, constant: -16),
+            containerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.55, constant: -16),
             containerView.widthAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 16 / 9),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             label.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 10)
         ])
     }

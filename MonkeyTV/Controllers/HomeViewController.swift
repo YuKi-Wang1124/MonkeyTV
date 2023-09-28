@@ -69,6 +69,9 @@ class HomeViewController: BaseViewController {
 extension HomeViewController {
     private func setUI() {
         view.addSubview(tableView)
+        view.backgroundColor = .systemGray6
+        tableView.backgroundColor = .systemGray6
+
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),

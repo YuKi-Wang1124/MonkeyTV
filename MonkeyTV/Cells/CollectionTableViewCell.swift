@@ -105,6 +105,8 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 // MARK: - setupCellUI
 extension CollectionTableViewCell {
     private func setupCellUI() {
+        collectionView.backgroundColor = .systemGray6
+        contentView.backgroundColor = .systemGray6
         contentView.addSubview(collectionView)
         contentView.addSubview(titleLabel)
         NSLayoutConstraint.activate([

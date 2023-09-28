@@ -15,7 +15,6 @@ class PlayerViewController: UIViewController {
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
     private let dispatchSemaphore = DispatchSemaphore(value: 0)
-    private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var initialY: CGFloat = 0
     private var finalY: CGFloat = 0
@@ -81,7 +80,7 @@ class PlayerViewController: UIViewController {
     }()
     private lazy var pauseButton = {
         return UIButton.createPlayerButton(
-            image: UIImage.systemAsset(.pause, configuration: symbolConfig),
+            image: UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
             color: .white, cornerRadius: 30)
     }()
     private lazy var videoSlider: UISlider = {
@@ -109,12 +108,12 @@ class PlayerViewController: UIViewController {
             if size.width > size.height {
                 tableView.removeFromSuperview()
                 self.changeOrientationButton.setImage(
-                    UIImage.systemAsset(.shrink, configuration: self.symbolConfig), for: .normal)
+                    UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
             } else {
                 self.changeOrientationButton.setImage(
-                    UIImage.systemAsset(.enlarge, configuration: self.symbolConfig), for: .normal)
+                    UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
                 view.addSubview(tableView)
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
@@ -205,11 +204,11 @@ class PlayerViewController: UIViewController {
     @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
-            sender.setImage(UIImage.systemAsset(.play, configuration: self.symbolConfig),
+            sender.setImage(UIImage.systemAsset(.play, configuration: UIImage.symbolConfig),
                             for: .normal)
             ytVideoPlayerView.pauseVideo()
         } else {
-            sender.setImage(UIImage.systemAsset(.pause, configuration: self.symbolConfig),
+            sender.setImage(UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
                             for: .normal)
             ytVideoPlayerView.playVideo()
         }
@@ -219,12 +218,12 @@ class PlayerViewController: UIViewController {
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
             tableView.removeFromSuperview()
-            sender.setImage(UIImage.systemAsset(.shrink, configuration: self.symbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
             NSLayoutConstraint.deactivate(portraitConstraints)
             NSLayoutConstraint.activate(landscapeConstraints)
         } else {
             view.addSubview(tableView)
-            sender.setImage(UIImage.systemAsset(.enlarge, configuration: self.symbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
             NSLayoutConstraint.deactivate(landscapeConstraints)
             NSLayoutConstraint.activate(portraitConstraints)
         }

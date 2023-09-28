@@ -14,7 +14,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     private lazy var danmuBackgroundView = {
         let view = UIView()
         view.backgroundColor = .systemGray6
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -96,7 +96,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
                 constant: -8),
             danmuBackgroundView.topAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.topAnchor,
-                constant: 8),
+                constant: 4),
             danmuBackgroundView.bottomAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.bottomAnchor,
                 constant: -8),

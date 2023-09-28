@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SearchHistoryTableViewCell: UITableViewCell {
+class SearchResultTableViewCell: UITableViewCell {
     static let identifier = "\(SearchHistoryTableViewCell.self)"
     // MARK: - UI
     
-    private lazy var clockImageView = {
+    private lazy var shmageView = {
         let imageView = UIImageView()
         imageView.tintColor = .systemGray2
         imageView.image = UIImage.systemAsset(.history)

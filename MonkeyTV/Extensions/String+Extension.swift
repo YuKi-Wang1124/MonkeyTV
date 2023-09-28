@@ -10,12 +10,13 @@ import UIKit
 extension String {
     
     func getLabWidth(font: UIFont, height: CGFloat) -> CGSize {
+        
         let size = CGSize(width: 900, height: height)
-        let dic = NSDictionary(object: font, forKey: NSAttributedString.Key.font as NSCopying)
-        let strSize = self.boundingRect(with: size,
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        let stringSize = self.boundingRect(with: size,
                                         options: .usesLineFragmentOrigin,
-                                        attributes: dic as? [NSAttributedString.Key : Any],
+                                        attributes: attributes,
                                         context: nil).size
-        return strSize
+        return stringSize
     }
 }

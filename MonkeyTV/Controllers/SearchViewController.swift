@@ -7,32 +7,58 @@
 
 import UIKit
 import youtube_ios_player_helper
+import CoreData
 
-class SearchViewController: UIViewController {
-    
+class SearchViewController: UIViewController, NotificationSearchViewControllerIsSelectDelegate {
     private let searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "請輸入片名"
         return searchController
     }()
-    
-    //    let array: [String] = [String]()
-    let array: [String] = ["無知","風雲變幻施耐庵唉西門吹雪呵呵噠","快看看","窿窿啦啦","一桿禽獸狙","合歡花","暴走大事件","非誠勿擾","呵呵呵"]
-    var width: CGFloat = 0
-    var height: CGFloat = 0
+    private lazy var cleanHistoryButton = {
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.trash, configuration: UIImage.symbolConfig),
+            color: .lightGray, cornerRadius: 30,
+            backgroundColor: UIColor.clear)
+    }()
+    private lazy var clockImageView = {
+        let imageview = UIImageView()
+        imageview.contentMode = .scaleAspectFill
+        imageview.image = UIImage.systemAsset(.clock)
+        imageview.tintColor = .lightGray
+        imageview.translatesAutoresizingMaskIntoConstraints = false
+        return imageview
+    }()
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.lightGray
+        label.text = "最近搜尋"
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    private var appendHistoryArray: [String] = [String]()
+    private var historyArray: [String] = [String]()
+    private var width: CGFloat = 0
+    private var height: CGFloat = 0
     // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.register(SearchHistoryTableViewCell.self,
+        tableView.register(SearchResultTableViewCell.self,
                            forCellReuseIdentifier:
-                            SearchHistoryTableViewCell.identifier)
+                            SearchResultTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     private var hiddenView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    private lazy var titleView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -42,101 +68,156 @@ class SearchViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    // MARK: -
+    
+    // MARK: - supports
     private var filterDataList: [Show] = [Show]()
     private var searchedDataSource: [Show] = [Show]()
-    private var historyDataSource = StorageManager.shared.fetchSearchHistorys()
+    private var buttonArray = [UIButton]()
+    private var fetchedResultController: NSFetchedResultsController<SearchHistory>!
+    private let viewContext = StorageManager.shared.persistentContainer.viewContext
+    
+    // MARK: - Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetButtons()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupButttons()
         setupSearchBar()
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        FirestoreManager.getAllShowsData(completion: { [weak self] showArrayData in
-            guard let self = self else { return }
-            self.searchedDataSource = showArrayData
-        })
+        setupTableViewData()
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(userInterfaceStyleDidChange),
+            name: .userInterfaceStyle, object: nil)
     }
     
-    private func setupSearchBar() {
-        navigationItem.searchController = searchController
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
+    @objc func userInterfaceStyleDidChange(notification: Notification) {
+        if let userInfo = notification.userInfo?["userInterfaceStyle"] as? UIUserInterfaceStyle {
+            if userInfo == .light {
+                buttonArray.forEach {
+                    $0.backgroundColor = .lightGray
+                }
+            }
+        }
     }
-
+    
+    // MARK: - Button Views
+    
+    private func resetButtons() {
+        width = 0
+        height = 0
+        buttonArray.forEach {
+            $0.removeFromSuperview()
+        }
+        loadSaveData()
+        fetchButtonsData()
+        setupButttons()
+        appendHistoryArray.removeAll()
+        historyArray.removeAll()
+    }
+    
+    private func fetchButtonsData() {
+        if let data = StorageManager.shared.fetchSearchHistorys() {
+            data.forEach {
+                if let name = $0.showName {
+                    appendHistoryArray.append(name)
+                }
+            }
+        }
+        historyArray = appendHistoryArray.reversed()
+    }
+    
     private func setupButttons() {
-
-        view.addSubview(buttonsView)
-        
-        NSLayoutConstraint.activate([
-            buttonsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            buttonsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            buttonsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            buttonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        
-        for index in 0 ..< array.count {
-            let button = UIButton(type: .system)
-            button.tag = 100 + index
-            button.backgroundColor = UIColor.white
-            button.addTarget(self, action: #selector(handleClick(_:)), for: .touchUpInside)
-            button.setTitleColor(UIColor.darkGray, for: .normal)
-            button.layer.borderWidth = 0.5
-            button.layer.borderColor = UIColor.lightGray.cgColor
-            button.layer.cornerRadius = 5
-            
-            let length = array[index].getLabWidth(font: UIFont.systemFont(ofSize: 16), height: 13).width
-            button.setTitle(array[index], for: .normal)
-            button.frame = CGRect(x: 10 + width,
-                                  y: height,
-                                  width: length + 15,
-                                  height: 30)
-            
-            if 10 + width + length + 15 > UIScreen.main.bounds.width {
-                width = 0
-                height = height + button.frame.size.height + 10
+        if  historyArray.count == 0 {
+            return
+        } else {
+            for index in 0 ..< historyArray.count {
+                let button = UIButton(type: .system)
+                button.tag = 100 + index
+                button.addTarget(self, action: #selector(handleClick(_:)), for: .touchUpInside)
+                button.layer.cornerRadius = 4
+                
+                if traitCollection.userInterfaceStyle == .light {
+                    button.backgroundColor = .systemGray5
+                    button.setTitleColor(UIColor.systemGreen, for: .normal)
+                } else {
+                    button.backgroundColor = .darkGray
+                    button.setTitleColor(UIColor.mainColor, for: .normal)
+                }
+                
+                let length = historyArray[index].getLabWidth(font: UIFont.systemFont(ofSize: 16), height: 13).width
+                button.setTitle(historyArray[index], for: .normal)
                 button.frame = CGRect(x: 10 + width,
                                       y: height,
                                       width: length + 15,
                                       height: 30)
+                
+                if 10 + width + length + 15 > UIScreen.main.bounds.width - 16 {
+                    width = 0
+                    height = height + button.frame.size.height + 10
+                    button.frame = CGRect(x: 10 + width,
+                                          y: height,
+                                          width: length + 15,
+                                          height: 30)
+                }
+                width = button.frame.size.width + button.frame.origin.x
+                buttonArray.append(button)
+                buttonsView.addSubview(button)
             }
-            width = button.frame.size.width + button.frame.origin.x
-            buttonsView.addSubview(button)
         }
     }
     @objc func handleClick(_ button: UIButton) {
-        print("\(button.tag)")
+        if let buttonLabel = button.titleLabel,
+           let buttonText = buttonLabel.text {
+            print(buttonText)
+            filterDataSource(for: buttonText)
+        }
     }
 }
 
 // MARK: -
 extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
+    private func setupSearchBar() {
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text?.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines),
            searchText.isEmpty != true {
             filterDataSource(for: searchText)
+            
         } else {
             return
         }
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty != true {
             StorageManager.shared.createSearchHistoryObject(showName: searchText)
         } else {
             return
         }
+        tableView.isHidden = false
+        self.searchController.searchBar.text = ""
         self.searchController.searchBar.resignFirstResponder()
     }
+    
+    // MARK: - filterDataSource
     private func filterDataSource(for searchText: String) {
         self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
             let showName = show.showName
@@ -154,10 +235,45 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
 // MARK: - UI configuration
 extension SearchViewController {
     private func setupUI() {
+        view.backgroundColor = .systemGray6
         view.addSubview(hiddenView)
+        view.addSubview(buttonsView)
+        view.addSubview(titleView)
+        titleView.addSubview(clockImageView)
+        titleView.addSubview(titleLabel)
+        titleView.addSubview(cleanHistoryButton)
         view.addSubview(tableView)
+        cleanHistoryButton.addTarget(self, action: #selector(cleanSearchHistory), for: .touchUpInside)
         hiddenView.isHidden = true
         tableView.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            clockImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            clockImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            clockImageView.heightAnchor.constraint(equalToConstant: 25),
+            clockImageView.widthAnchor.constraint(equalToConstant: 25),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: clockImageView.trailingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: cleanHistoryButton.leadingAnchor, constant: -32),
+            titleLabel.centerYAnchor.constraint(equalTo: clockImageView.centerYAnchor),
+            
+            titleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            titleView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleView.bottomAnchor.constraint(equalTo: buttonsView.topAnchor),
+            
+            cleanHistoryButton.heightAnchor.constraint(equalToConstant: 25),
+            cleanHistoryButton.trailingAnchor.constraint(
+                equalTo: titleView.trailingAnchor, constant: -16),
+            cleanHistoryButton.widthAnchor.constraint(equalToConstant: 25),
+            cleanHistoryButton.topAnchor.constraint(equalTo: titleView.topAnchor, constant: 8),
+            
+            buttonsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            buttonsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            buttonsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
+            buttonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
         NSLayoutConstraint.activate([
             hiddenView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hiddenView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -169,19 +285,35 @@ extension SearchViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    @objc func cleanSearchHistory() {
+        removeAllSearchHistory()
+        buttonArray.forEach {
+            $0.removeFromSuperview()
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
+    private func setupTableViewData() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        FirestoreManager.getAllShowsData(completion: { [weak self] showArrayData in
+            guard let self = self else { return }
+            self.searchedDataSource = showArrayData
+        })
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let historyDataSource = StorageManager.shared.fetchSearchHistorys()
-//        if let data = historyDataSource {
-//            return data.count
-//        } else {
-//            return 0
-//        }
+        //        let historyDataSource = StorageManager.shared.fetchSearchHistorys()
+        //        if let data = historyDataSource {
+        //            return data.count
+        //        } else {
+        //            return 0
+        //        }
         return 1
     }
     
@@ -190,10 +322,50 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifier,
                                                  for: indexPath) as? SearchHistoryTableViewCell
         guard let cell = cell else { return UITableViewCell() }
-        if let data = historyDataSource {
-            cell.historyNameLabel.text = data[indexPath.row].showName
-        }
         
         return cell
     }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension SearchViewController: NSFetchedResultsControllerDelegate {
+    
+    func loadSaveData() {
+        if fetchedResultController == nil {
+            let request = NSFetchRequest<SearchHistory>(entityName: "SearchHistory")
+            let sort = NSSortDescriptor(key: "showName", ascending: false)
+            request.sortDescriptors = [sort]
+            request.fetchBatchSize = 30
+            
+            fetchedResultController = NSFetchedResultsController(
+                fetchRequest: request,
+                managedObjectContext: viewContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil)
+            fetchedResultController.delegate = self
+        }
+        
+        do {
+            try fetchedResultController.performFetch()
+        } catch {
+            print("Fetch failed")
+        }
+    }
+    
+    func removeAllSearchHistory() {
+        if let data = StorageManager.shared.fetchSearchHistorys(),
+           data.count == 0 {
+            print("目前沒有搜尋紀錄")
+        } else {
+            StorageManager.shared.deleteAllSearchHistory()
+        }
+    }
+}
+
+extension SearchViewController {
+    
+    func reloadSearchHistoryCoreData() {
+    }
+    
 }
