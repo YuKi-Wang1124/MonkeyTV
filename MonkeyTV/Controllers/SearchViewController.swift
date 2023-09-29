@@ -10,37 +10,45 @@ import youtube_ios_player_helper
 import CoreData
 
 class SearchViewController: UIViewController, NotificationSearchViewControllerIsSelectDelegate {
+    
+    private var tapGesture: UITapGestureRecognizer?
+    
     private let searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "請輸入片名"
         return searchController
     }()
+    
     private lazy var cleanHistoryButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.trash, configuration: UIImage.symbolConfig),
-            color: .lightGray, cornerRadius: 30,
+            color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
+            cornerRadius: 30,
             backgroundColor: UIColor.clear)
     }()
+    
     private lazy var clockImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFill
         imageview.image = UIImage.systemAsset(.clock)
-        imageview.tintColor = .lightGray
+        imageview.tintColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
     private var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.text = "最近搜尋"
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    // MARK: - support
     private var appendHistoryArray: [String] = [String]()
     private var historyArray: [String] = [String]()
     private var width: CGFloat = 0
     private var height: CGFloat = 0
+    private var isSearchBarActive = false
     // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
@@ -50,6 +58,8 @@ class SearchViewController: UIViewController, NotificationSearchViewControllerIs
         tableView.register(SearchResultTableViewCell.self,
                            forCellReuseIdentifier:
                             SearchResultTableViewCell.identifier)
+        tableView.allowsSelection = true
+        tableView.isUserInteractionEnabled = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -85,23 +95,11 @@ class SearchViewController: UIViewController, NotificationSearchViewControllerIs
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         setupSearchBar()
         setupTableViewData()
         
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(userInterfaceStyleDidChange),
-            name: .userInterfaceStyle, object: nil)
-    }
-    
-    @objc func userInterfaceStyleDidChange(notification: Notification) {
-        if let userInfo = notification.userInfo?["userInterfaceStyle"] as? UIUserInterfaceStyle {
-            if userInfo == .light {
-                buttonArray.forEach {
-                    $0.backgroundColor = .lightGray
-                }
-            }
-        }
     }
     
     // MARK: - Button Views
@@ -134,48 +132,44 @@ class SearchViewController: UIViewController, NotificationSearchViewControllerIs
         if  historyArray.count == 0 {
             return
         } else {
+            
             for index in 0 ..< historyArray.count {
+                
                 let button = UIButton(type: .system)
                 button.tag = 100 + index
                 button.addTarget(self, action: #selector(handleClick(_:)), for: .touchUpInside)
                 button.layer.cornerRadius = 4
+                button.backgroundColor = UIColor.setColor(lightColor: .systemGray5, darkColor: .darkGray)
+                button.setTitleColor( UIColor.setColor(lightColor: .darkGray, darkColor: .white), for: .normal)
                 
-                if traitCollection.userInterfaceStyle == .light {
-                    button.backgroundColor = .systemGray5
-                    button.setTitleColor(UIColor.systemGreen, for: .normal)
-                } else {
-                    button.backgroundColor = .darkGray
-                    button.setTitleColor(UIColor.mainColor, for: .normal)
-                }
-                
-                let length = historyArray[index].getLabWidth(font: UIFont.systemFont(ofSize: 16), height: 13).width
+                let length = historyArray[index].getLabWidth(font: UIFont.systemFont(ofSize: 20), height: 13).width
                 button.setTitle(historyArray[index], for: .normal)
-                button.frame = CGRect(x: 10 + width,
-                                      y: height,
-                                      width: length + 15,
-                                      height: 30)
+                button.frame = CGRect(x: 10 + width, y: height, width: length + 10, height: 30)
                 
                 if 10 + width + length + 15 > UIScreen.main.bounds.width - 16 {
                     width = 0
                     height = height + button.frame.size.height + 10
-                    button.frame = CGRect(x: 10 + width,
-                                          y: height,
-                                          width: length + 15,
-                                          height: 30)
+                    button.frame = CGRect(x: 10 + width, y: height, width: length + 10, height: 30)
                 }
+                
                 width = button.frame.size.width + button.frame.origin.x
                 buttonArray.append(button)
                 buttonsView.addSubview(button)
+                
             }
         }
     }
+    
     @objc func handleClick(_ button: UIButton) {
+        
         if let buttonLabel = button.titleLabel,
            let buttonText = buttonLabel.text {
             filterDataSource(for: buttonText)
+            searchController.searchBar.text = buttonText
             tableView.isHidden = false
             tableView.reloadData()
         }
+        
     }
 }
 
@@ -190,35 +184,57 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
         searchController.obscuresBackgroundDuringPresentation = false
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        isSearchBarActive = true
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
-
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        resetButtons()
-        tableView.isHidden = true
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty != true {
-            StorageManager.shared.createSearchHistoryObject(showName: searchText)
             filterDataSource(for: searchText)
             tableView.reloadData()
         } else {
             return
         }
         tableView.isHidden = false
-        self.searchController.searchBar.resignFirstResponder()
+//        self.searchController.searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchController.searchBar.text,
+           searchText.isEmpty != true {
+            StorageManager.shared.createSearchHistoryObject(showName: searchText)
+        }
+        resetButtons()
+        tableView.isHidden = true
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+//        if let searchText = searchController.searchBar.text,
+//           searchText.isEmpty != true {
+//            StorageManager.shared.createSearchHistoryObject(showName: searchText)
+//            filterDataSource(for: searchText)
+//            tableView.reloadData()
+//        } else {
+//            return
+//        }
+//        tableView.isHidden = false
+//        tableView.searchController.searchBar.resignFirstResponder()
+        
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        isSearchBarActive = false
     }
 }
 
 // MARK: - UI configuration
 extension SearchViewController {
     private func setupUI() {
-        tableView.backgroundColor = .systemGray6
-        view.backgroundColor = .systemGray6
+        
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         view.addSubview(hiddenView)
         view.addSubview(buttonsView)
         view.addSubview(titleView)
@@ -229,8 +245,11 @@ extension SearchViewController {
         cleanHistoryButton.addTarget(self, action: #selector(cleanSearchHistory), for: .touchUpInside)
         hiddenView.isHidden = true
         tableView.isHidden = true
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        view.addGestureRecognizer(tapGesture!)
         
         NSLayoutConstraint.activate([
+            
             clockImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             clockImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             clockImageView.heightAnchor.constraint(equalToConstant: 25),
@@ -258,14 +277,17 @@ extension SearchViewController {
         ])
         
         NSLayoutConstraint.activate([
+            
             hiddenView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hiddenView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             hiddenView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             hiddenView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            
         ])
     }
     
@@ -275,6 +297,12 @@ extension SearchViewController {
             $0.removeFromSuperview()
         }
     }
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        if searchController.searchBar.isFirstResponder {
+            searchController.searchBar.resignFirstResponder()
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -282,28 +310,53 @@ extension SearchViewController {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func setupTableViewData() {
+        tapGesture?.isEnabled = true
         tableView.delegate = self
         tableView.dataSource = self
         FirestoreManager.getAllShowsData(completion: { [weak self] showArrayData in
             guard let self = self else { return }
             self.searchedDataSource = showArrayData
         })
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return filterDataList.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier,
                                                  for: indexPath) as? SearchResultTableViewCell
+        
         guard let cell = cell else { return UITableViewCell() }
+        
+        tapGesture?.cancelsTouchesInView = false
         
         cell.showNameLabel.text = filterDataList[indexPath.row].showName
         cell.showImageView.loadImage(filterDataList[indexPath.row].image)
+        cell.playlistId = filterDataList[indexPath.row].playlistId
+        cell.id = filterDataList[indexPath.row].id
+        cell.selectionStyle = .default
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("\(indexPath.row)")
+        
+        YouTubeParameter.shared.playlistId = filterDataList[indexPath.row].playlistId
+        
+        let playerViewController = PlayerViewController()
+        playerViewController.modalPresentationStyle = .fullScreen
+        playerViewController.playlistId = filterDataList[indexPath.row].playlistId
+        playerViewController.id = filterDataList[indexPath.row].id
+        
+        self.present(playerViewController, animated: true)
+
     }
 }
 
@@ -312,7 +365,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchViewController: NSFetchedResultsControllerDelegate {
     
     func loadSaveData() {
+        
         if fetchedResultController == nil {
+            
             let request = NSFetchRequest<SearchHistory>(entityName: "SearchHistory")
             let sort = NSSortDescriptor(key: "showName", ascending: false)
             request.sortDescriptors = [sort]
@@ -325,24 +380,29 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
                 cacheName: nil)
             fetchedResultController.delegate = self
         }
+        
         do {
             try fetchedResultController.performFetch()
         } catch {
             print("Fetch failed")
         }
+        
     }
     
     func removeAllSearchHistory() {
+        
         if let data = StorageManager.shared.fetchSearchHistorys(),
            data.count == 0 {
             print("目前沒有搜尋紀錄")
         } else {
             StorageManager.shared.deleteAllSearchHistory()
         }
+        
     }
     
     // MARK: - filterDataSource
     private func filterDataSource(for searchText: String) {
+        
         self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
             let showName = show.showName
             if showName.localizedCaseInsensitiveContains(searchText) {
@@ -353,12 +413,14 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
             }
         })
         print(self.filterDataList)
+        
     }
 }
 
 extension SearchViewController {
     
     func reloadSearchHistoryCoreData() {
+        
     }
     
 }

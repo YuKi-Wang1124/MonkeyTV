@@ -69,8 +69,8 @@ class HomeViewController: BaseViewController {
 extension HomeViewController {
     private func setUI() {
         view.addSubview(tableView)
-        view.backgroundColor = .systemGray6
-        tableView.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
 
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -84,11 +84,12 @@ extension HomeViewController {
 // MARK: -
 extension HomeViewController: ShowVideoPlayerDelegate {
     
-    func showVideoPlayer(playlistId: String) {
+    func showVideoPlayer(playlistId: String, id: String) {
         
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = playlistId
+        playerViewController.id = id
         self.present(playerViewController, animated: true)
     }
 }

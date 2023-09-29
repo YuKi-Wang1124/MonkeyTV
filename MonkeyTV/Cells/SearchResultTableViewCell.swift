@@ -9,7 +9,8 @@ import UIKit
 
 class SearchResultTableViewCell: UITableViewCell {
     static let identifier = "\(SearchResultTableViewCell.self)"
-    
+    var id: String = ""
+    var playlistId: String = ""
     // MARK: - UI
     lazy var showImageView = {
         let imageView = UIImageView()
@@ -20,10 +21,19 @@ class SearchResultTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+    private var catImageView = {
+        let imageview = UIImageView()
+        imageview.image = UIImage(imageLiteralResourceName: "cat")
+        imageview.contentMode = .scaleAspectFill
+        imageview.layer.cornerRadius = 4
+        imageview.clipsToBounds = true
+        imageview.alpha = 0.5
+        imageview.translatesAutoresizingMaskIntoConstraints = false
+        return imageview
+    }()
     private lazy var playImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .darkGray
+        imageView.tintColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         imageView.image = UIImage.systemAsset(.playCircle)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -31,7 +41,7 @@ class SearchResultTableViewCell: UITableViewCell {
     
     lazy var showNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
         label.textAlignment = .left
@@ -43,7 +53,6 @@ class SearchResultTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .systemGray6
         setupCellUI()
         showNameLabel.sizeToFit()
     }
@@ -59,7 +68,9 @@ class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: - Auto layout
     private func setupCellUI() {
-        contentView.backgroundColor = .systemGray6
+        
+        contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        contentView.addSubview(catImageView)
         contentView.addSubview(showImageView)
         contentView.addSubview(playImageView)
         contentView.addSubview(showNameLabel)
@@ -69,6 +80,11 @@ class SearchResultTableViewCell: UITableViewCell {
             showNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             showNameLabel.leadingAnchor.constraint(equalTo: showImageView.trailingAnchor, constant: 16),
             showNameLabel.trailingAnchor.constraint(equalTo: playImageView.leadingAnchor, constant: -16),
+            
+            catImageView.heightAnchor.constraint(equalToConstant: 81),
+            catImageView.widthAnchor.constraint(equalToConstant: 144),
+            catImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            catImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             showImageView.heightAnchor.constraint(equalToConstant: 81),
             showImageView.widthAnchor.constraint(equalToConstant: 144),

@@ -11,6 +11,7 @@ import youtube_ios_player_helper
 class PlayerViewController: UIViewController {
     var videoId: String = ""
     var playlistId: String = ""
+    var id: String = ""
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
@@ -333,6 +334,7 @@ class PlayerViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(portraitConstraints)
     }
+    
     private func setupVideoLauncher() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.0)
         changeOrientationButton.isHidden = true
@@ -344,6 +346,7 @@ class PlayerViewController: UIViewController {
         ytVideoPlayerView.backgroundColor = .black
         addButtonViewGesture()
     }
+    
     // MARK: - Dan Mu
     private func setDanMu() {
         danmuView.isHidden = true

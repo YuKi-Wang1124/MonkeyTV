@@ -31,11 +31,13 @@ class VideoAnimationTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupUI()
     }
+    
     override func prepareForReuse() {
         coverImageView.image = nil
         showNameLabel.text = ""
         showDescriptionLabel.text = ""
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

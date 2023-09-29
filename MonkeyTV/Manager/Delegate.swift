@@ -12,9 +12,9 @@ protocol OrientationChangeDelegate: AnyObject {
 }
 
 protocol ShowVideoPlayerDelegate: AnyObject {
-    func showVideoPlayer(playlistId: String)
+    func showVideoPlayer(playlistId: String, id: String)
 }
 
-protocol EmptyTextFieldDelegate {
+protocol EmptyTextFieldDelegate: AnyObject {
     func emptyTextField()
 }

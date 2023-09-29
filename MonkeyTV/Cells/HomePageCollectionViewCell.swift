@@ -8,7 +8,9 @@
 import UIKit
 
 class HomePageCollectionViewCell: UICollectionViewCell {
+    
     static let identifier = "\(HomePageCollectionViewCell.self)"
+    
     var containerView: UIView = {
         var containerView = UIView()
         containerView.layer.shadowColor = UIColor.darkGray.cgColor
@@ -42,7 +44,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     
     var label: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -50,6 +52,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var id: String = ""
     var playlistId: String = ""
     
     override init(frame: CGRect) {
@@ -62,7 +65,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCellUI() {
-        contentView.backgroundColor = .systemGray6
+        contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         containerView.addSubview(catImageView)
         containerView.addSubview(coverImageView)
         contentView.addSubview(containerView)

@@ -9,7 +9,9 @@ import FirebaseCore
 import FirebaseFirestore
 
 class ChatroomTableViewCell: UITableViewCell {
+    
     static let identifier = "\(ChatroomTableViewCell.self)"
+    // MARK: - UI
     var personalImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFill
