@@ -8,11 +8,15 @@
 import UIKit
 
 class TabBarViewController: UITabBarController {
-
+    
+    var notifacatSeachVCdelegate: NotificationSearchViewControllerIsSelectDelegate?
+    
     private let tabs: [Tab] = [.home, .search, .favorite, .profile]
     private var trolleyTabBarItem: UITabBarItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
         changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
         NotificationCenter.default.addObserver(
             self, selector: #selector(userInterfaceStyleDidChange),
@@ -22,13 +26,11 @@ class TabBarViewController: UITabBarController {
         barAppearance.configureWithDefaultBackground()
         UITabBar.appearance().scrollEdgeAppearance = barAppearance
     }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
     }
-//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//           return .portrait
-//    }
     
     @objc func userInterfaceStyleDidChange(notification: Notification) {
         if let userInfo = notification.userInfo?["userInterfaceStyle"] as? UIUserInterfaceStyle {
@@ -111,4 +113,25 @@ extension TabBarViewController {
             }
         }
     }
+}
+
+extension TabBarViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
+       
+            if let index = tabBarController.viewControllers?.firstIndex(of: viewController) {
+                if index == 1 {
+                
+                }
+            }
+        
+        return true
+    }
+}
+
+protocol NotificationSearchViewControllerIsSelectDelegate: AnyObject {
+    
+    func reloadSearchHistoryCoreData()
+    
 }

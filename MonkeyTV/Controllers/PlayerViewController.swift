@@ -11,11 +11,11 @@ import youtube_ios_player_helper
 class PlayerViewController: UIViewController {
     var videoId: String = ""
     var playlistId: String = ""
+    var id: String = ""
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
     private let dispatchSemaphore = DispatchSemaphore(value: 0)
-    private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var initialY: CGFloat = 0
     private var finalY: CGFloat = 0
@@ -81,7 +81,7 @@ class PlayerViewController: UIViewController {
     }()
     private lazy var pauseButton = {
         return UIButton.createPlayerButton(
-            image: UIImage.systemAsset(.pause, configuration: symbolConfig),
+            image: UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
             color: .white, cornerRadius: 30)
     }()
     private lazy var videoSlider: UISlider = {
@@ -97,6 +97,8 @@ class PlayerViewController: UIViewController {
         setupUILayout()
         setupTableView()
         setupVideoLauncher()
+        setDanMu()
+
         getYouTubeVideoData()
         loadYoutubeVideo()
     }
@@ -107,12 +109,12 @@ class PlayerViewController: UIViewController {
             if size.width > size.height {
                 tableView.removeFromSuperview()
                 self.changeOrientationButton.setImage(
-                    UIImage.systemAsset(.shrink, configuration: self.symbolConfig), for: .normal)
+                    UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
             } else {
                 self.changeOrientationButton.setImage(
-                    UIImage.systemAsset(.enlarge, configuration: self.symbolConfig), for: .normal)
+                    UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
                 view.addSubview(tableView)
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
@@ -203,11 +205,11 @@ class PlayerViewController: UIViewController {
     @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
-            sender.setImage(UIImage.systemAsset(.play, configuration: self.symbolConfig),
+            sender.setImage(UIImage.systemAsset(.play, configuration: UIImage.symbolConfig),
                             for: .normal)
             ytVideoPlayerView.pauseVideo()
         } else {
-            sender.setImage(UIImage.systemAsset(.pause, configuration: self.symbolConfig),
+            sender.setImage(UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
                             for: .normal)
             ytVideoPlayerView.playVideo()
         }
@@ -217,12 +219,12 @@ class PlayerViewController: UIViewController {
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
             tableView.removeFromSuperview()
-            sender.setImage(UIImage.systemAsset(.shrink, configuration: self.symbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
             NSLayoutConstraint.deactivate(portraitConstraints)
             NSLayoutConstraint.activate(landscapeConstraints)
         } else {
             view.addSubview(tableView)
-            sender.setImage(UIImage.systemAsset(.enlarge, configuration: self.symbolConfig), for: .normal)
+            sender.setImage(UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
             NSLayoutConstraint.deactivate(landscapeConstraints)
             NSLayoutConstraint.activate(portraitConstraints)
         }
@@ -332,6 +334,7 @@ class PlayerViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(portraitConstraints)
     }
+    
     private func setupVideoLauncher() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.0)
         changeOrientationButton.isHidden = true
@@ -339,11 +342,11 @@ class PlayerViewController: UIViewController {
         pauseButton.isHidden = true
         videoSlider.isHidden = true
         setBtnsAddtarget()
-        setDanMu()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
         addButtonViewGesture()
     }
+    
     // MARK: - Dan Mu
     private func setDanMu() {
         danmuView.isHidden = true
@@ -406,9 +409,8 @@ extension PlayerViewController: YTPlayerViewDelegate {
             }
         }
     }
-    // MARK: - getDanMuData
+    // MARK: - Get Dan Mu Data
     private func getDanMuData(videoId: String) {
-        print("video=== \(videoId)")
         FirestoreManager.bulletChat.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
@@ -417,7 +419,6 @@ extension PlayerViewController: YTPlayerViewDelegate {
                             let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                             let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
                             self.bulletChats.append(decodedObject.bulletChat)
-                            print("bulletChats======\(decodedObject)")
                         } catch {
                             print("\(error)")
                         }
@@ -491,7 +492,7 @@ extension PlayerViewController {
                                         ["chatId": UUID().uuidString,
                                          "content": danMuText,
                                          "contentType": 0,
-                                         "popTime": videoSlider.value + 2,
+                                         "popTime": videoSlider.value,
                                          // TODO: userid
                                          "userId": "匿名"] as [String: Any],
                                        "videoId": videoId,
@@ -551,9 +552,7 @@ extension PlayerViewController {
                 print(Result<Any>.failure(error))
             }
                 self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
-                print("self.videoId++++++++++++++++\(self.videoId)")
                 getDanMuData(videoId: self.videoId)
-
             })
     }
     private func loadYoutubeVideo() {

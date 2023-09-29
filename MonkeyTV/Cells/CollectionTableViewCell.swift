@@ -60,10 +60,14 @@ class CollectionTableViewCell: UITableViewCell {
                 let cell = colloctionvVew.dequeueReusableCell(
                     withReuseIdentifier: HomePageCollectionViewCell.identifier,
                     for: indexPath) as? HomePageCollectionViewCell
+                
                 guard let cell = cell else { return UICollectionViewCell() }
+                
                 cell.label.text = itemIdentifier.showName
                 cell.coverImageView.loadImage(itemIdentifier.image)
                 cell.playlistId = itemIdentifier.playlistId
+                cell.id = itemIdentifier.id
+                
                 return cell
             })
     }
@@ -76,35 +80,43 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let screenWidth = UIScreen.main.bounds.size.width
-        return CGSize(width: (screenWidth - 36) / 2,
+        return CGSize(width: (screenWidth - 40) / 2,
                       height: collectionView.frame.height)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16.0
+        return 24.0
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
+        
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
+        
         nextPageTableViewSnapshot.deleteAllItems()
         nextPageTableViewSnapshot.deleteSections([OneSection.main])
+        
         if let cell = collectionView.cellForItem(at: indexPath) as? HomePageCollectionViewCell {
             YouTubeParameter.shared.playlistId = cell.playlistId
-            showVideoPlayerDelegate?.showVideoPlayer(playlistId: cell.playlistId)
+            showVideoPlayerDelegate?.showVideoPlayer(playlistId: cell.playlistId, id: cell.id)
         } else { }
+        
     }
 }
 // MARK: - setupCellUI
 extension CollectionTableViewCell {
     private func setupCellUI() {
+        collectionView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        contentView.backgroundColor =  UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         contentView.addSubview(collectionView)
         contentView.addSubview(titleLabel)
         NSLayoutConstraint.activate([

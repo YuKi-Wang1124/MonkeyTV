@@ -35,7 +35,7 @@ extension UINavigationController {
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationItem.largeTitleDisplayMode = .automatic
         navigationController.navigationBar.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.darkGray
+            .foregroundColor: UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         ]
 
         rootViewController.navigationItem.title = title
