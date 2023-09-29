@@ -9,7 +9,7 @@ import UIKit
 import youtube_ios_player_helper
 import CoreData
 
-class SearchViewController: UIViewController, NotificationSearchViewControllerIsSelectDelegate {
+class SearchViewController: UIViewController {
     
     private var tapGesture: UITapGestureRecognizer?
     
@@ -415,12 +415,4 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
         print(self.filterDataList)
         
     }
-}
-
-extension SearchViewController {
-    
-    func reloadSearchHistoryCoreData() {
-        
-    }
-    
 }
