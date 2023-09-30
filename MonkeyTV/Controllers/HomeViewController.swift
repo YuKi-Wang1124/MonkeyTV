@@ -17,9 +17,9 @@ class HomeViewController: BaseViewController {
         tableView.register(CollectionTableViewCell.self,
                            forCellReuseIdentifier:
                             CollectionTableViewCell.identifier)
-        tableView.register(VideoAnimationTableViewCell.self,
+        tableView.register(HomeAnimationTableViewCell.self,
                            forCellReuseIdentifier:
-                            VideoAnimationTableViewCell.identifier)
+                            HomeAnimationTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -40,7 +40,7 @@ class HomeViewController: BaseViewController {
                 if indexPath.row == 0 {
                     let cell =
                     tableView.dequeueReusableCell(
-                        withIdentifier: VideoAnimationTableViewCell.identifier,
+                        withIdentifier: HomeAnimationTableViewCell.identifier,
                         for: indexPath) as? CollectionTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
                     return cell
@@ -83,13 +83,15 @@ extension HomeViewController {
 
 // MARK: -
 extension HomeViewController: ShowVideoPlayerDelegate {
-    
-    func showVideoPlayer(playlistId: String, id: String) {
+   
+    func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: UIImage) {
         
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = playlistId
         playerViewController.id = id
+        playerViewController.showName = showName
+        playerViewController.showImage = showImage
         self.present(playerViewController, animated: true)
     }
 }

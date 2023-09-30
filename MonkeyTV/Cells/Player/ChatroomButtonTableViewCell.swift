@@ -10,16 +10,17 @@ import UIKit
 class ChatroomButtonTableViewCell: UITableViewCell {
     static let identifier = "\(ChatroomButtonTableViewCell.self)"
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
+    
     lazy var chatRoomButton = {
         let button = UIButton()
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = UIColor.setColor(lightColor: .systemGray5, darkColor: .systemGray5)
         button.layer.cornerRadius = 4
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     private var chatroomTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .lightGray)
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .left
         label.text = "聊天室"
@@ -28,12 +29,12 @@ class ChatroomButtonTableViewCell: UITableViewCell {
     }()
     private var chatroomNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.systemGray2
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .lightGray)
+        label.backgroundColor = UIColor.setColor(lightColor: .systemGray4, darkColor: .darkGray)
         label.font = UIFont.systemFont(ofSize: 17)
         label.textAlignment = .left
-        label.text = " 以匿名的身份公開發表留言..."
-        label.backgroundColor = .systemGray5
-        label.layer.cornerRadius = 4
+        label.text = "  以匿名的身份公開發表留言..."
+        label.layer.cornerRadius = 8
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -55,6 +56,7 @@ class ChatroomButtonTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     private func setupCellUI() {
+        contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         contentView.addSubview(chatRoomButton)
         chatRoomButton.addSubview(chatroomTitleLabel)
         chatRoomButton.addSubview(personalImageView)
@@ -68,21 +70,22 @@ class ChatroomButtonTableViewCell: UITableViewCell {
                 constant: -8),
             chatroomTitleLabel.topAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.topAnchor,
-                constant: 4),
-            chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 30),
+                constant: 6),
+            chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 60),
+            
             personalImageView.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
                 constant: 18),
             personalImageView.widthAnchor.constraint(
                 equalToConstant: 28),
             personalImageView.topAnchor.constraint(
-                equalTo: chatroomTitleLabel.bottomAnchor, constant: 5),
+                equalTo: chatroomTitleLabel.bottomAnchor, constant: 4),
             personalImageView.heightAnchor.constraint(equalToConstant: 28),
             personalImageView.bottomAnchor.constraint(
                 equalTo: chatRoomButton.bottomAnchor, constant: -8),
+            
             chatroomNameLabel.centerYAnchor.constraint(equalTo: personalImageView.centerYAnchor, constant: 2),
-            chatroomNameLabel.heightAnchor.constraint(equalToConstant: 24),
-
+            chatroomNameLabel.heightAnchor.constraint(equalToConstant: 26),
             chatroomNameLabel.leadingAnchor.constraint(equalTo: personalImageView.trailingAnchor, constant: 9),
             chatroomNameLabel.trailingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.trailingAnchor,
@@ -99,7 +102,7 @@ class ChatroomButtonTableViewCell: UITableViewCell {
             chatRoomButton.bottomAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.bottomAnchor,
                 constant: 0),
-            chatRoomButton.heightAnchor.constraint(equalToConstant: 65)
+            chatRoomButton.heightAnchor.constraint(equalToConstant: 75)
         ])
     }
 }

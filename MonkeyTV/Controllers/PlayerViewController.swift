@@ -12,6 +12,8 @@ class PlayerViewController: UIViewController {
     var videoId: String = ""
     var playlistId: String = ""
     var id: String = ""
+    var showName: String = ""
+    var showImage: UIImage = UIImage(imageLiteralResourceName: "cat")
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     // MARK: - support
@@ -53,17 +55,21 @@ class PlayerViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.register(PlayerTitleTableViewCell.self,
+                           forCellReuseIdentifier:
+                            PlayerTitleTableViewCell.identifier)
         tableView.register(ChatroomButtonTableViewCell.self,
                            forCellReuseIdentifier:
                             ChatroomButtonTableViewCell.identifier)
         tableView.register(DanMuTextFieldTableViewCell.self,
                            forCellReuseIdentifier:
                             DanMuTextFieldTableViewCell.identifier)
+      
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     // MARK: - Snapshot & DataSource
-    private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
+    var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
     private var dataSource: UITableViewDiffableDataSource<OneSection, MKShow>!
     var playlistTableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Playlist>()
     // MARK: - Buttons
@@ -241,8 +247,11 @@ class PlayerViewController: UIViewController {
         }
         isDanMuDisplayed.toggle()
     }
-    // MARK: -
+    // MARK: - Setup UILayout
     private func setupUILayout() {
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+
         setBtnsAddtarget()
         view.addSubview(ytVideoPlayerView)
         view.addSubview(tableView)
@@ -434,7 +443,7 @@ extension PlayerViewController {
     private func setupTableView() {
         configureDataSource(tableView: tableView)
         snapshot.appendSections([.main])
-        snapshot.appendItems([MKShow(image: "first", title: "first", playlistId: "first")])
+        snapshot.appendItems([MKShow(image: "title", title: "first", playlistId: "first")])
         snapshot.appendItems([MKShow(image: "chatroom", title: "chatroom", playlistId: "chatroom")])
         snapshot.appendItems([MKShow(image: "danmu", title: "danmu", playlistId: "danmu")])
         tableView.dataSource = dataSource
@@ -445,7 +454,19 @@ extension PlayerViewController {
         dataSource = UITableViewDiffableDataSource<OneSection, MKShow>(
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
-                if indexPath.row == 1 {
+                
+                if indexPath.row == 0 {
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: PlayerTitleTableViewCell.identifier,
+                        for: indexPath) as? PlayerTitleTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    
+                    cell.showNameLabel.text = self.showName
+                    cell.addButton.addTarget(self, action:  #selector(self.addToMyShow(sender:)), for: .touchUpInside)
+                    
+                    return cell
+                                        
+                } else if indexPath.row == 1 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ChatroomButtonTableViewCell.identifier,
                         for: indexPath) as? ChatroomButtonTableViewCell
@@ -471,6 +492,19 @@ extension PlayerViewController {
             }
         )
     }
+    
+    @objc func addToMyShow(sender: UIButton) {
+    
+            sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
+                            for: .normal)
+        
+        StorageManager.shared.createMyShowObject(showName: showName,
+                                                 id: id,
+                                                 playlistId: playlistId,
+                                                 showImage: showImage)
+
+    }
+    
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
         let chatroomVC = ChatroomViewController()

@@ -151,7 +151,7 @@ class SearchViewController: UIViewController {
                     height = height + button.frame.size.height + 10
                     button.frame = CGRect(x: 10 + width, y: height, width: length + 10, height: 30)
                 }
-                
+    
                 width = button.frame.size.width + button.frame.origin.x
                 buttonArray.append(button)
                 buttonsView.addSubview(button)

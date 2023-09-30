@@ -7,8 +7,8 @@
 
 import UIKit
 
-class VideoAnimationTableViewCell: UITableViewCell {
-    static let identifier = "\(VideoAnimationTableViewCell.self)"
+class HomeAnimationTableViewCell: UITableViewCell {
+    static let identifier = "\(HomeAnimationTableViewCell.self)"
     var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

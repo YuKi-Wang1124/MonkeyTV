@@ -10,7 +10,7 @@ import UIKit
 class CollectionTableViewCell: UITableViewCell {
     static let identifier = "\(CollectionTableViewCell.self)"
     lazy var titleLabel: UILabel = {
-        return UILabel.createTitleLabel(text: "多一點健康")
+        return UILabel.createTitleLabel(text: "")
     }()
     var showVideoPlayerDelegate: ShowVideoPlayerDelegate?
     private lazy var collectionView = {
@@ -52,6 +52,7 @@ class CollectionTableViewCell: UITableViewCell {
         snapshot.appendItems(showArray, toSection: OneSection.main)
         await dataSource.apply(snapshot)
     }
+    
     func configureCollectionViewDataSource() {
         dataSource =
         UICollectionViewDiffableDataSource<OneSection, Show>(
@@ -106,8 +107,14 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
         nextPageTableViewSnapshot.deleteSections([OneSection.main])
         
         if let cell = collectionView.cellForItem(at: indexPath) as? HomePageCollectionViewCell {
+            
             YouTubeParameter.shared.playlistId = cell.playlistId
-            showVideoPlayerDelegate?.showVideoPlayer(playlistId: cell.playlistId, id: cell.id)
+            showVideoPlayerDelegate?.showVideoPlayer(
+                showName: cell.label.text!,
+                playlistId: cell.playlistId,
+                id: cell.id,
+                showImage: cell.coverImageView.image ?? UIImage(imageLiteralResourceName: "cat"))
+            
         } else { }
         
     }

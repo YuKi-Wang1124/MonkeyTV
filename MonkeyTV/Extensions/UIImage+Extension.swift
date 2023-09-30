@@ -33,6 +33,8 @@ enum ImageAsset: String {
     case searchArrow = "arrow.up.backward"
     case trash = "trash.fill"
     case clock = "clock.fill"
+    case plus
+    case checkmark
 }
 
 extension UIImage {

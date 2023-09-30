@@ -13,14 +13,14 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
     private lazy var danmuBackgroundView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray5, darkColor: .systemGray5)
         view.layer.cornerRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private var chatroomTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .lightGray)
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .left
         label.text = "彈幕"
@@ -68,7 +68,8 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
         contentView.addSubview(chatroomTitleLabel)
         contentView.addSubview(danMuTextField)
         contentView.addSubview(submitMessageButton)
-        
+        contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+
         NSLayoutConstraint.activate([
             chatroomTitleLabel.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
