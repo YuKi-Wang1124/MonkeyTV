@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum PlayerSection {
+    case title
+    case chatroom
+    case danmu
+    case playlist
+}
+
 struct Show: Codable, Hashable {
     let type: Int
     let playlistId: String

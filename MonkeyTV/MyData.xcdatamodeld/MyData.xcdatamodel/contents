@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MyShow" representedClassName="MyShow" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="playlistId" optional="YES" attributeType="String"/>
+        <attribute name="showImage" optional="YES" attributeType="String"/>
+        <attribute name="showName" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="SearchHistory" representedClassName="SearchHistory" syncable="YES" codeGenerationType="class">
         <attribute name="showName" optional="YES" attributeType="String"/>
     </entity>

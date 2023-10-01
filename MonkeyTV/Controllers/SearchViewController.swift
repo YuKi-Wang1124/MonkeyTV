@@ -35,6 +35,7 @@ class SearchViewController: UIViewController {
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
@@ -43,36 +44,42 @@ class SearchViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     // MARK: - support
     private var appendHistoryArray: [String] = [String]()
     private var historyArray: [String] = [String]()
     private var width: CGFloat = 0
     private var height: CGFloat = 0
     private var isSearchBarActive = false
+    
     // MARK: - Table View
+    
     private var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 85
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.register(SearchResultTableViewCell.self,
+        tableView.register(ShowTableViewCell.self,
                            forCellReuseIdentifier:
-                            SearchResultTableViewCell.identifier)
+                            ShowTableViewCell.identifier)
         tableView.allowsSelection = true
         tableView.isUserInteractionEnabled = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     private var hiddenView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private lazy var titleView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private lazy var buttonsView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -80,6 +87,7 @@ class SearchViewController: UIViewController {
     }()
     
     // MARK: - supports
+    
     private var filterDataList: [Show] = [Show]()
     private var searchedDataSource: [Show] = [Show]()
     private var buttonArray = [UIButton]()
@@ -151,7 +159,7 @@ class SearchViewController: UIViewController {
                     height = height + button.frame.size.height + 10
                     button.frame = CGRect(x: 10 + width, y: height, width: length + 10, height: 30)
                 }
-                
+    
                 width = button.frame.size.width + button.frame.origin.x
                 buttonArray.append(button)
                 buttonsView.addSubview(button)
@@ -210,17 +218,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-//        if let searchText = searchController.searchBar.text,
-//           searchText.isEmpty != true {
-//            StorageManager.shared.createSearchHistoryObject(showName: searchText)
-//            filterDataSource(for: searchText)
-//            tableView.reloadData()
-//        } else {
-//            return
-//        }
-//        tableView.isHidden = false
-//        tableView.searchController.searchBar.resignFirstResponder()
         
     }
     
@@ -328,8 +325,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier,
-                                                 for: indexPath) as? SearchResultTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ShowTableViewCell.identifier,
+                                                 for: indexPath) as? ShowTableViewCell
         
         guard let cell = cell else { return UITableViewCell() }
         
@@ -354,6 +351,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = filterDataList[indexPath.row].playlistId
         playerViewController.id = filterDataList[indexPath.row].id
+        playerViewController.showImage = filterDataList[indexPath.row].image
         
         self.present(playerViewController, animated: true)
 

@@ -9,11 +9,16 @@ import UIKit
 import youtube_ios_player_helper
 
 class PlayerViewController: UIViewController {
+    
     var videoId: String = ""
     var playlistId: String = ""
     var id: String = ""
+    var showName: String = ""
+    var showImage: String = ""
+    var isMyShow: Bool = false
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
+    
     // MARK: - support
     private let dispatchSemaphore = DispatchSemaphore(value: 0)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
@@ -24,48 +29,62 @@ class PlayerViewController: UIViewController {
     private var bulletChats = [BulletChat]()
     private var danMuText: String = ""
     private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
+    private var setupCellButtonDelegate: ChangeCellButtonDelegate?
+
     // MARK: - Bools
+    
     private var isPanning = false
     private var isDanMuDisplayed = false
     private var danMuTextFiedIsShow = false
     private var videoIsPlaying = true
     private var playerIsShrink = false
     private var isSideViewVisible = false
+    
     // MARK: - Views
+    
     private var ytVideoPlayerView: YTPlayerView = {
         let view = YTPlayerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private var danmuView: DanMuView = {
         let view = DanMuView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private var buttonsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+        tableView.register(PlayerTitleTableViewCell.self,
+                           forCellReuseIdentifier:
+                            PlayerTitleTableViewCell.identifier)
         tableView.register(ChatroomButtonTableViewCell.self,
                            forCellReuseIdentifier:
                             ChatroomButtonTableViewCell.identifier)
         tableView.register(DanMuTextFieldTableViewCell.self,
                            forCellReuseIdentifier:
                             DanMuTextFieldTableViewCell.identifier)
+        tableView.register(ShowTableViewCell.self,
+                           forCellReuseIdentifier:
+                            ShowTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     // MARK: - Snapshot & DataSource
-    private var snapshot = NSDiffableDataSourceSnapshot<OneSection, MKShow>()
-    private var dataSource: UITableViewDiffableDataSource<OneSection, MKShow>!
-    var playlistTableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Playlist>()
+    private var snapshot = NSDiffableDataSourceSnapshot<PlayerSection, MKShow>()
+    private var dataSource: UITableViewDiffableDataSource<PlayerSection, MKShow>!
+    
     // MARK: - Buttons
     private lazy var changeOrientationButton = {
         return UIButton.createPlayerButton(
@@ -98,10 +117,11 @@ class PlayerViewController: UIViewController {
         setupTableView()
         setupVideoLauncher()
         setDanMu()
-
+        tableView.delegate = self
         getYouTubeVideoData()
         loadYoutubeVideo()
     }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -124,7 +144,21 @@ class PlayerViewController: UIViewController {
     }
     deinit {
         timer = nil
+        ytVideoPlayerView.removeWebView()
     }
+    
+    func setupMyShow() {
+        print("StorageManager.shared.isContainMyShow(id: id) === \(StorageManager.shared.isContainMyShow(id: id))")
+
+        isMyShow = StorageManager.shared.isContainMyShow(id: id)
+        
+        if isMyShow == true {
+            setupCellButtonDelegate?.changeButtonImage()
+        } else {
+            
+        }
+    }
+    
     // MARK: - Button View Gesture
     private func addButtonViewGesture() {
         let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
@@ -216,6 +250,7 @@ class PlayerViewController: UIViewController {
         videoIsPlaying.toggle()
     }
     // MARK: - Change Orientation
+    
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
             tableView.removeFromSuperview()
@@ -230,6 +265,7 @@ class PlayerViewController: UIViewController {
         }
         playerIsShrink.toggle()
     }
+    
     // MARK: - showDanMuView
     @objc func showDanMuView(sender: UIButton) {
         if !isDanMuDisplayed {
@@ -241,8 +277,13 @@ class PlayerViewController: UIViewController {
         }
         isDanMuDisplayed.toggle()
     }
-    // MARK: -
+    // MARK: - Setup UILayout
     private func setupUILayout() {
+        
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        ytVideoPlayerView.backgroundColor = .black
+
         setBtnsAddtarget()
         view.addSubview(ytVideoPlayerView)
         view.addSubview(tableView)
@@ -433,19 +474,36 @@ extension PlayerViewController {
     
     private func setupTableView() {
         configureDataSource(tableView: tableView)
-        snapshot.appendSections([.main])
-        snapshot.appendItems([MKShow(image: "first", title: "first", playlistId: "first")])
-        snapshot.appendItems([MKShow(image: "chatroom", title: "chatroom", playlistId: "chatroom")])
-        snapshot.appendItems([MKShow(image: "danmu", title: "danmu", playlistId: "danmu")])
-        tableView.dataSource = dataSource
-        dataSource.apply(snapshot)
+        snapshot.appendSections([.title, .chatroom, .danmu, .playlist])
+       
+        let chatroom = MKShow(id: "chatroom",
+                              videoId: videoId, image: showImage, title: showName, playlistId: playlistId)
+        let danmu = MKShow(id: "danmu",
+                           videoId: videoId, image: showImage, title: showName, playlistId: playlistId)
+
+        snapshot.appendItems([chatroom], toSection: .chatroom)
+        snapshot.appendItems([danmu], toSection: .danmu)
     }
     
     private func configureDataSource(tableView: UITableView) {
-        dataSource = UITableViewDiffableDataSource<OneSection, MKShow>(
+        dataSource = UITableViewDiffableDataSource<PlayerSection, MKShow>(
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
-                if indexPath.row == 1 {
+                
+                if indexPath.section == 0 {
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: PlayerTitleTableViewCell.identifier,
+                        for: indexPath) as? PlayerTitleTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    
+                    cell.showNameLabel.text = item.title
+                    cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
+                    
+                    self.setupCellButtonDelegate = cell
+                    self.setupMyShow()
+                    return cell
+                                        
+                } else if indexPath.section == 1 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ChatroomButtonTableViewCell.identifier,
                         for: indexPath) as? ChatroomButtonTableViewCell
@@ -454,7 +512,8 @@ extension PlayerViewController {
                         self, action: #selector(self.showChatroom(sender:)),
                         for: .touchUpInside)
                     return cell
-                } else if indexPath.row == 2 {
+                    
+                } else if indexPath.section == 2 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: DanMuTextFieldTableViewCell.identifier,
                         for: indexPath) as? DanMuTextFieldTableViewCell
@@ -466,18 +525,47 @@ extension PlayerViewController {
                     cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
                     self.emptyTextFieldDelegate = cell
                     return cell
+                } else if indexPath.section == 3 {
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: ShowTableViewCell.identifier,
+                        for: indexPath) as? ShowTableViewCell
+                    guard let cell = cell else { return UITableViewCell() }
+                    
+                    cell.showImageView.loadImage(item.image)
+                    cell.showNameLabel.text = item.title
+                    cell.playlistId = item.playlistId
+                    cell.id = item.id
+                    
+                    return cell
                 }
                 return UITableViewCell()
             }
         )
+        tableView.dataSource = dataSource
+        self.dataSource.apply(snapshot)
     }
+    
+    @objc func addToMyShow(sender: UIButton) {
+        
+        if isMyShow == true {
+            sender.setImage(UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig),
+                            for: .normal)
+            StorageManager.shared.deleteMyShow(id: id)
+        } else {
+            sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
+                            for: .normal)
+            StorageManager.shared.createMyShowObject(showName: showName, id: id,
+                                                     playlistId: playlistId, showImage: showImage)
+        }
+    }
+    
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
         let chatroomVC = ChatroomViewController()
         if let sheet = chatroomVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.detents = [
-                .custom { _ in 500.0 },
+                .custom { _ in 460.0 },
                 .large()]
             sheet.largestUndimmedDetentIdentifier = .large
             chatroomVC.videoId = self.videoId
@@ -522,7 +610,6 @@ extension PlayerViewController {
             case .success(let data):
                 do {
                     let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
-                    playlistTableViewSnapshot.appendSections([OneSection.main])
                     info.items.forEach {
                         let playlist =
                         Playlist(kind: $0.kind,
@@ -542,17 +629,34 @@ extension PlayerViewController {
                                         videoId: $0.snippet.resourceId.videoId),
                                     videoOwnerChannelTitle: $0.snippet.videoOwnerChannelTitle,
                                     videoOwnerChannelId: $0.snippet.videoOwnerChannelId))
-                        self.playlistTableViewSnapshot.appendItems([playlist],
-                                                                   toSection: OneSection.main)
+                        
+                        let show = MKShow(id: self.id,
+                                          videoId: $0.snippet.resourceId.videoId,
+                                          image: $0.snippet.thumbnails.default.url,
+                                          title: $0.snippet.title,
+                                          playlistId: $0.snippet.playlistId)
+                        
+                        self.snapshot.appendItems([show], toSection: .playlist)
                     }
+                    self.dataSource.apply(snapshot)
+
                 } catch {
                     print(Result<Any>.failure(error))
                 }
             case .failure(let error):
                 print(Result<Any>.failure(error))
             }
-                self.videoId = self.playlistTableViewSnapshot.itemIdentifiers.first?.snippet.resourceId.videoId ?? ""
-                getDanMuData(videoId: self.videoId)
+                if let first = self.snapshot.itemIdentifiers(inSection: .playlist).first {
+                    
+                    self.videoId = first.videoId
+                    self.showName = first.title
+                    let show = MKShow(id: id, videoId: first.videoId, image: "first.image", title: first.title, playlistId: first.playlistId)
+                    snapshot.appendItems([show], toSection: .title)
+
+                    print(" first.title ==== \(first.title)")
+                    getDanMuData(videoId: self.videoId)
+                    self.dataSource.apply(snapshot)
+                }
             })
     }
     private func loadYoutubeVideo() {
@@ -565,5 +669,24 @@ extension PlayerViewController {
             "autoplay": 1
         ]
         ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
+    }
+}
+
+extension PlayerViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let itemIdentifier = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let playerVars: [AnyHashable: Any] = [
+            "frameborder": 0, "loop": 0,
+            "playsigline": 1,
+            "controls": 0,
+            "showinfo": 0,
+            "autoplay": 1
+        ]
+        ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
+        
+        setupCellButtonDelegate?.changeVideoTitle(text: itemIdentifier.title)
     }
 }
