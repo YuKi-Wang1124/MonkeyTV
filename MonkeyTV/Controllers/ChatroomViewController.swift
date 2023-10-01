@@ -42,7 +42,6 @@ class ChatroomViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         tableView.dataSource = viewModel.dataSource
         viewModel.configureDataSource(tableView: self.tableView)
         bindingViewModel()
@@ -91,6 +90,9 @@ class ChatroomViewController: UIViewController {
 extension ChatroomViewController {
     // MARK: - Setup UI
     private func setupUI() {
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+
         view.addSubview(submitMessageButton)
         view.addSubview(tableView)
         view.addSubview(submitMessageButton)

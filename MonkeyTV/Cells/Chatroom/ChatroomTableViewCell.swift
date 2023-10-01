@@ -44,6 +44,8 @@ class ChatroomTableViewCell: UITableViewCell {
         contentView.addSubview(personalImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(messageLabel)
+        contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+
         NSLayoutConstraint.activate([
             personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             personalImageView.trailingAnchor.constraint(equalTo: nameLabel.leadingAnchor,

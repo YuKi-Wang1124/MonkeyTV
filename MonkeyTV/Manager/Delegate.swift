@@ -18,3 +18,11 @@ protocol ShowVideoPlayerDelegate: AnyObject {
 protocol EmptyTextFieldDelegate: AnyObject {
     func emptyTextField()
 }
+
+protocol ChangeCellButtonDelegate: AnyObject {
+    
+    func changeButtonImage()
+    
+    func changeVideoTitle(text: String)
+    
+}

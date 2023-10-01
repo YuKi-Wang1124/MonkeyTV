@@ -12,11 +12,11 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
   
     private var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 85
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        tableView.register(MyShowTableViewCell.self,
+        tableView.register(ShowTableViewCell.self,
                            forCellReuseIdentifier:
-                            MyShowTableViewCell.identifier)
+                            ShowTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -44,8 +44,8 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
                 
                 let cell =
                 tableView.dequeueReusableCell(
-                    withIdentifier: MyShowTableViewCell.identifier,
-                    for: indexPath) as? MyShowTableViewCell
+                    withIdentifier: ShowTableViewCell.identifier,
+                    for: indexPath) as? ShowTableViewCell
                 guard let cell = cell else { return UITableViewCell() }
                 
                 cell.showImageView.loadImage(itemIdentifier.showImage)
@@ -79,8 +79,6 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        print("indexPath.row ========= \(indexPath.row)")
-
         guard let itemIdentifier = tableViewDataSource.itemIdentifier(for: indexPath) else { return }
         
         YouTubeParameter.shared.playlistId = itemIdentifier.playlistId!
@@ -89,7 +87,6 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = itemIdentifier.playlistId!
         playerViewController.id = itemIdentifier.id!
-        playerViewController.showName = itemIdentifier.showName!
         playerViewController.showImage = itemIdentifier.showImage!
         
         self.present(playerViewController, animated: true)

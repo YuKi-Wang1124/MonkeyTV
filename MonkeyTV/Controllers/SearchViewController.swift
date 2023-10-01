@@ -56,12 +56,12 @@ class SearchViewController: UIViewController {
     
     private var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 85
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.register(SearchResultTableViewCell.self,
+        tableView.register(ShowTableViewCell.self,
                            forCellReuseIdentifier:
-                            SearchResultTableViewCell.identifier)
+                            ShowTableViewCell.identifier)
         tableView.allowsSelection = true
         tableView.isUserInteractionEnabled = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -219,17 +219,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-//        if let searchText = searchController.searchBar.text,
-//           searchText.isEmpty != true {
-//            StorageManager.shared.createSearchHistoryObject(showName: searchText)
-//            filterDataSource(for: searchText)
-//            tableView.reloadData()
-//        } else {
-//            return
-//        }
-//        tableView.isHidden = false
-//        tableView.searchController.searchBar.resignFirstResponder()
-        
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -336,8 +325,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier,
-                                                 for: indexPath) as? SearchResultTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ShowTableViewCell.identifier,
+                                                 for: indexPath) as? ShowTableViewCell
         
         guard let cell = cell else { return UITableViewCell() }
         
@@ -362,6 +351,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = filterDataList[indexPath.row].playlistId
         playerViewController.id = filterDataList[indexPath.row].id
+        playerViewController.showImage = filterDataList[indexPath.row].image
         
         self.present(playerViewController, animated: true)
 

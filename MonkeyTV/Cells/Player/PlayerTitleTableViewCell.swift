@@ -89,4 +89,8 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
         
     }
     
+    func changeVideoTitle(text: String) {
+        showNameLabel.text = text
+    }
+    
 }

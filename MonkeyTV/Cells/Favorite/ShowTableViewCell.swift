@@ -7,8 +7,8 @@
 
 import UIKit
 
-class MyShowTableViewCell: UITableViewCell {
-    static let identifier = "\(MyShowTableViewCell.self)"
+class ShowTableViewCell: UITableViewCell {
+    static let identifier = "\(ShowTableViewCell.self)"
     var id: String = ""
     var playlistId: String = ""
     // MARK: - UI
@@ -16,7 +16,7 @@ class MyShowTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4
         imageView.clipsToBounds = true
-        imageView.contentMode = .redraw
+        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(imageLiteralResourceName: "cat")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -81,13 +81,17 @@ class MyShowTableViewCell: UITableViewCell {
             showNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             showNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             showNameLabel.leadingAnchor.constraint(equalTo: showImageView.trailingAnchor, constant: 16),
-            showNameLabel.trailingAnchor.constraint(equalTo: playImageView.leadingAnchor, constant: -16),
+            showNameLabel.trailingAnchor.constraint(equalTo: playImageView.leadingAnchor, constant: -8),
             
+            catImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            catImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
             catImageView.heightAnchor.constraint(equalToConstant: 81),
             catImageView.widthAnchor.constraint(equalToConstant: 144),
             catImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             catImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
+            showImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            showImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
             showImageView.heightAnchor.constraint(equalToConstant: 81),
             showImageView.widthAnchor.constraint(equalToConstant: 144),
             showImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),

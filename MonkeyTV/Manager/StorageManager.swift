@@ -34,10 +34,8 @@ class StorageManager {
         do {
             let matchingRecords = try context.fetch(fetchRequest)
             if matchingRecords.isEmpty {
-                print("沒有符合的資料")
                 return false
             } else {
-                print("有符合的資料")
                 return true
             }
         } catch {

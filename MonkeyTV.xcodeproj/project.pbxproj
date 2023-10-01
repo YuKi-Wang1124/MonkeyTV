@@ -43,7 +43,7 @@
 		CC1CCA672AC2C41C0010C63C /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA662AC2C41C0010C63C /* SearchResultTableViewCell.swift */; };
 		CC1CCA892AC428C90010C63C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA882AC428C90010C63C /* String+Extension.swift */; };
 		CC1CCA8D2AC8415D0010C63C /* PlayerTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */; };
-		CC1CCA982AC9486A0010C63C /* MyShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA972AC9486A0010C63C /* MyShowTableViewCell.swift */; };
+		CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
@@ -100,7 +100,7 @@
 		CC1CCA662AC2C41C0010C63C /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA882AC428C90010C63C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTitleTableViewCell.swift; sourceTree = "<group>"; };
-		CC1CCA972AC9486A0010C63C /* MyShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShowTableViewCell.swift; sourceTree = "<group>"; };
+		CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 		CC1CCA962AC9484F0010C63C /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				CC1CCA972AC9486A0010C63C /* MyShowTableViewCell.swift */,
+				CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -506,7 +506,7 @@
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
-				CC1CCA982AC9486A0010C63C /* MyShowTableViewCell.swift in Sources */,
+				CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */,
 				CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */,
 				CC0BF1E42AB1DB0F0075203C /* UserRequest.swift in Sources */,
 				CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */,

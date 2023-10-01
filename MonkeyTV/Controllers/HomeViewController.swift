@@ -92,7 +92,6 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = playlistId
         playerViewController.id = id
-        playerViewController.showName = showName
         playerViewController.showImage = showImage
         self.present(playerViewController, animated: true)
     }
