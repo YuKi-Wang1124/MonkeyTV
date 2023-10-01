@@ -271,7 +271,7 @@
 		CC0BF1F42AB418CA0075203C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				CC1CCA962AC9484F0010C63C /* Favorite */,
+				CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */,
 				CC1CCA8E2AC84E320010C63C /* Home */,
 				CC1CCA902AC84E730010C63C /* Player */,
 				CC1CCA912AC84E8B0010C63C /* Search */,
@@ -314,14 +314,6 @@
 				CC1CCA662AC2C41C0010C63C /* SearchResultTableViewCell.swift */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		CC1CCA962AC9484F0010C63C /* Favorite */ = {
-			isa = PBXGroup;
-			children = (
-				CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */,
-			);
-			path = Favorite;
 			sourceTree = "<group>";
 		};
 		CC963C132AB92CA60047EEFA /* Base */ = {

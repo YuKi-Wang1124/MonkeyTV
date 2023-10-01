@@ -501,7 +501,6 @@ extension PlayerViewController {
                     
                     self.setupCellButtonDelegate = cell
                     self.setupMyShow()
-                    
                     return cell
                                         
                 } else if indexPath.section == 1 {

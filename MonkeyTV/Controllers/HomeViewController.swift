@@ -6,6 +6,7 @@
 //
 
 import UIKit
+//import iCarousel
 import FirebaseFirestore
 
 class HomeViewController: BaseViewController {
@@ -43,8 +44,9 @@ class HomeViewController: BaseViewController {
                     let cell =
                     tableView.dequeueReusableCell(
                         withIdentifier: HomeAnimationTableViewCell.identifier,
-                        for: indexPath) as? CollectionTableViewCell
+                        for: indexPath) as? HomeAnimationTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
+//                    cell.carousel.dataSource = self
                     return cell
                 } else {
                     let index = indexPath.row - 1
@@ -83,11 +85,11 @@ extension HomeViewController {
     }
 }
 
-// MARK: -
+//// MARK: -
 extension HomeViewController: ShowVideoPlayerDelegate {
-   
+
     func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: String) {
-        
+
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = playlistId
@@ -96,3 +98,19 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         self.present(playerViewController, animated: true)
     }
 }
+
+//extension HomeViewController: iCarouselDelegate, iCarouselDataSource {
+//
+//    func numberOfItems(in carousel: iCarousel) -> Int {
+//        10
+//    }
+//
+//    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 180))
+//        view.backgroundColor = .systemRed
+//        return view
+//    }
+//
+//
+//
+//}
