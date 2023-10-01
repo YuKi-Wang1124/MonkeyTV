@@ -3,7 +3,7 @@
     <entity name="MyShow" representedClassName="MyShow" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="playlistId" optional="YES" attributeType="String"/>
-        <attribute name="showImage" optional="YES" attributeType="Binary"/>
+        <attribute name="showImage" optional="YES" attributeType="String"/>
         <attribute name="showName" optional="YES" attributeType="String"/>
     </entity>
     <entity name="SearchHistory" representedClassName="SearchHistory" syncable="YES" codeGenerationType="class">

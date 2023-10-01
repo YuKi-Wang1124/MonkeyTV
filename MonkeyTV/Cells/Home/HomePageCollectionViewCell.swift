@@ -54,6 +54,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     
     var id: String = ""
     var playlistId: String = ""
+    var image: String = ""
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,12 +66,14 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCellUI() {
+        
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         containerView.addSubview(catImageView)
         containerView.addSubview(coverImageView)
         contentView.addSubview(containerView)
         contentView.addSubview(label)
         label.sizeToFit()
+        
         NSLayoutConstraint.activate([
             catImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             catImageView.topAnchor.constraint(equalTo: containerView.topAnchor),

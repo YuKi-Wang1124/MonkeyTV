@@ -27,11 +27,30 @@ class StorageManager {
     
     @discardableResult
     
+    func isContainMyShow(id: String) -> Bool {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<MyShow> = MyShow.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let matchingRecords = try context.fetch(fetchRequest)
+            if matchingRecords.isEmpty {
+                print("沒有符合的資料")
+                return false
+            } else {
+                print("有符合的資料")
+                return true
+            }
+        } catch {
+            print("search my show error: \(error)")
+            return false
+        }
+    }
+    
     func createMyShowObject(
         showName: String,
         id: String,
         playlistId: String,
-        showImage: Data) -> MyShow? {
+        showImage: String) -> MyShow? {
             
             let context = persistentContainer.viewContext
             let myShow = NSEntityDescription.insertNewObject(forEntityName: "MyShow",
@@ -50,8 +69,6 @@ class StorageManager {
             
             return nil
         }
-    
-    
     
     func createSearchHistoryObject(
         showName: String) -> SearchHistory? {
@@ -125,11 +142,19 @@ class StorageManager {
     
     // MARK: - Delete  Object
     
-    func deleteMyShow(show: MyShow) {
+    func deleteMyShow(id: String) {
         let context = persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<MyShow>(entityName: "MyShow")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+    
         do {
-            context.delete(show)
+            let objectsToDelete = try context.fetch(fetchRequest)
+            for object in objectsToDelete {
+                context.delete(object)
+            }
             try context.save()
+        
         } catch let saveError {
             print("Failed to delete: \(saveError)")
         }

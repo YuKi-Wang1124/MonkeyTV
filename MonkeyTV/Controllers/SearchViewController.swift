@@ -35,6 +35,7 @@ class SearchViewController: UIViewController {
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
@@ -43,13 +44,16 @@ class SearchViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     // MARK: - support
     private var appendHistoryArray: [String] = [String]()
     private var historyArray: [String] = [String]()
     private var width: CGFloat = 0
     private var height: CGFloat = 0
     private var isSearchBarActive = false
+    
     // MARK: - Table View
+    
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = 85
@@ -63,16 +67,19 @@ class SearchViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     private var hiddenView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private lazy var titleView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private lazy var buttonsView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -80,6 +87,7 @@ class SearchViewController: UIViewController {
     }()
     
     // MARK: - supports
+    
     private var filterDataList: [Show] = [Show]()
     private var searchedDataSource: [Show] = [Show]()
     private var buttonArray = [UIButton]()

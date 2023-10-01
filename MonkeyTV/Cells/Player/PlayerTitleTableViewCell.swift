@@ -7,11 +7,14 @@
 
 import UIKit
 
-class PlayerTitleTableViewCell: UITableViewCell {
+class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
+   
     static let identifier = "\(PlayerTitleTableViewCell.self)"
     var id: String = ""
     var playlistId: String = ""
+    
     // MARK: - UI
+    
     lazy var showNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
@@ -79,5 +82,11 @@ class PlayerTitleTableViewCell: UITableViewCell {
                         
         ])
     }
-  
+    
+    func changeButtonImage() {
+        
+        addButton.setImage(UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
+        
+    }
+    
 }

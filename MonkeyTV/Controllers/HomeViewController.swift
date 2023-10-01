@@ -23,9 +23,11 @@ class HomeViewController: BaseViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +86,7 @@ extension HomeViewController {
 // MARK: -
 extension HomeViewController: ShowVideoPlayerDelegate {
    
-    func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: UIImage) {
+    func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: String) {
         
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen

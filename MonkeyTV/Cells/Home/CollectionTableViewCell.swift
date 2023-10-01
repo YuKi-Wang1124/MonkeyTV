@@ -68,7 +68,8 @@ class CollectionTableViewCell: UITableViewCell {
                 cell.coverImageView.loadImage(itemIdentifier.image)
                 cell.playlistId = itemIdentifier.playlistId
                 cell.id = itemIdentifier.id
-                
+                cell.image = itemIdentifier.image
+            
                 return cell
             })
     }
@@ -113,7 +114,7 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
                 showName: cell.label.text!,
                 playlistId: cell.playlistId,
                 id: cell.id,
-                showImage: cell.coverImageView.image ?? UIImage(imageLiteralResourceName: "cat"))
+                showImage: cell.image)
             
         } else { }
         

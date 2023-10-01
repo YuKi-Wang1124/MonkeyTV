@@ -71,7 +71,6 @@ class ChatroomButtonTableViewCell: UITableViewCell {
             chatroomTitleLabel.topAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.topAnchor,
                 constant: 6),
-            chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 60),
             
             personalImageView.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
