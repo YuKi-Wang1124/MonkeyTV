@@ -5,7 +5,6 @@
 //  Created by 王昱淇 on 2023/9/12.
 //
 
-
 import UIKit
 import youtube_ios_player_helper
 
@@ -32,7 +31,6 @@ class PlayerViewController: UIViewController {
     private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
     private var setupCellButtonDelegate: ChangeCellButtonDelegate?
 
-    
     // MARK: - Bools
     
     private var isPanning = false
@@ -281,6 +279,7 @@ class PlayerViewController: UIViewController {
     }
     // MARK: - Setup UILayout
     private func setupUILayout() {
+        
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         ytVideoPlayerView.backgroundColor = .black
@@ -484,7 +483,6 @@ extension PlayerViewController {
 
         snapshot.appendItems([chatroom], toSection: .chatroom)
         snapshot.appendItems([danmu], toSection: .danmu)
-        tableView.dataSource = dataSource
     }
     
     private func configureDataSource(tableView: UITableView) {
@@ -544,6 +542,8 @@ extension PlayerViewController {
                 return UITableViewCell()
             }
         )
+        tableView.dataSource = dataSource
+        self.dataSource.apply(snapshot)
     }
     
     @objc func addToMyShow(sender: UIButton) {
