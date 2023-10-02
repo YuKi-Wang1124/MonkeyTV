@@ -14,17 +14,6 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
     var playlistId: String = ""
     
     // MARK: - UI
-    
-    lazy var showNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     lazy var addButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig),
@@ -46,11 +35,9 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCellUI()
-        showNameLabel.sizeToFit()
     }
     
     override func prepareForReuse() {
-        showNameLabel.text = nil
     }
     
     required init?(coder: NSCoder) {
@@ -61,17 +48,11 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
     private func setupCellUI() {
         
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        contentView.addSubview(showNameLabel)
         contentView.addSubview(addButton)
         contentView.addSubview(addLabel)
         
         NSLayoutConstraint.activate([
-            
-            showNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            showNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            showNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-    
-            addButton.topAnchor.constraint(equalTo: showNameLabel.bottomAnchor, constant: 16),
+            addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             addButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
             addButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             addButton.heightAnchor.constraint(equalToConstant: 40),
@@ -86,11 +67,6 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
     func changeButtonImage() {
         
         addButton.setImage(UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
-        
-    }
-    
-    func changeVideoTitle(text: String) {
-        showNameLabel.text = text
     }
     
 }

@@ -101,7 +101,8 @@ extension ChatroomViewController {
 
         NSLayoutConstraint.activate([
             chatroomTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
-            chatroomTitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            chatroomTitleLabel.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
           
             chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 60),
             

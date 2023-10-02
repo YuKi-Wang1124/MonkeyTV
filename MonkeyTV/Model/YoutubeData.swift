@@ -53,11 +53,6 @@ struct Localized: Codable {
     let description: String
 }
 
-
-
-
-
-
 struct PlaylistListResponse: Codable, Hashable {
     let kind: String
     let etag: String
@@ -121,5 +116,59 @@ struct ResourceId: Codable {
     let videoId: String
 }
 
+// MARK: - VideoListResponse
 
+struct VideoListResponse: Codable {
+//    let kind: String
+//    let etag: String
+    let items: [VideoItem]
+//    let nextPageToken: String
+//    let pageInfo: PageInfo
+}
 
+struct VideoItem: Codable {
+//    let kind: String
+//    let etag: String
+//    let id: String
+    let snippet: VideoSnippet
+//    let contentDetails: VideoContentDetails?
+//    let statistics: VideoStatistics
+}
+
+struct VideoSnippet: Codable {
+//    let publishedAt: String
+    let channelId: String
+//    let title: String
+//    let description: String
+//    let thumbnails: Thumbnails
+//    let channelTitle: String
+//    let categoryId: String
+//    let liveBroadcastContent: String
+//    let localized: Localized
+//    let defaultAudioLanguage: String?
+}
+
+struct VideoContentDetails: Codable {
+    let duration: String
+    let dimension: String
+    let definition: String
+//    let caption: Bool
+//    let licensedContent: Bool
+    let regionRestriction: RegionRestriction
+    let contentRating: ContentRating
+    let projection: String
+}
+
+struct RegionRestriction: Codable {
+    let allowed: [String]
+}
+
+struct ContentRating: Codable {
+}
+
+struct VideoStatistics: Codable {
+    let viewCount: String
+    let likeCount: String
+    let favoriteCount: String
+    let commentCount: String
+}

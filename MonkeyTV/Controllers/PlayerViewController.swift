@@ -18,7 +18,6 @@ class PlayerViewController: UIViewController {
     var isMyShow: Bool = false
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
-    
     // MARK: - support
     private let dispatchSemaphore = DispatchSemaphore(value: 0)
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
@@ -30,7 +29,7 @@ class PlayerViewController: UIViewController {
     private var danMuText: String = ""
     private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
     private var setupCellButtonDelegate: ChangeCellButtonDelegate?
-
+    
     // MARK: - Bools
     
     private var isPanning = false
@@ -42,22 +41,33 @@ class PlayerViewController: UIViewController {
     
     // MARK: - Views
     
-    private var ytVideoPlayerView: YTPlayerView = {
+    private lazy var ytVideoPlayerView: YTPlayerView = {
         let view = YTPlayerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private var danmuView: DanMuView = {
+    private lazy var danmuView: DanMuView = {
         let view = DanMuView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private var buttonsView: UIView = {
+    private lazy var buttonsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    
+    private lazy var showNameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     // MARK: - Table View
@@ -120,6 +130,8 @@ class PlayerViewController: UIViewController {
         tableView.delegate = self
         getYouTubeVideoData()
         loadYoutubeVideo()
+        
+        showNameLabel.sizeToFit()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -128,6 +140,7 @@ class PlayerViewController: UIViewController {
         coordinator.animate(alongsideTransition: { [self] _ in
             if size.width > size.height {
                 tableView.removeFromSuperview()
+                showNameLabel.removeFromSuperview()
                 self.changeOrientationButton.setImage(
                     UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
@@ -136,6 +149,8 @@ class PlayerViewController: UIViewController {
                 self.changeOrientationButton.setImage(
                     UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
                 view.addSubview(tableView)
+                view.addSubview(showNameLabel)
+                showNameLabel.sizeToFit()
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
             }
@@ -149,7 +164,7 @@ class PlayerViewController: UIViewController {
     
     func setupMyShow() {
         print("StorageManager.shared.isContainMyShow(id: id) === \(StorageManager.shared.isContainMyShow(id: id))")
-
+        
         isMyShow = StorageManager.shared.isContainMyShow(id: id)
         
         if isMyShow == true {
@@ -277,7 +292,12 @@ class PlayerViewController: UIViewController {
         }
         isDanMuDisplayed.toggle()
     }
+    
+}
     // MARK: - Setup UILayout
+    
+    extension PlayerViewController {
+
     private func setupUILayout() {
         
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
@@ -289,6 +309,8 @@ class PlayerViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(danmuView)
         view.addSubview(buttonsView)
+        view.addSubview(showNameLabel)
+
         buttonsView.addSubview(showDanMuButton)
         buttonsView.addSubview(pauseButton)
         buttonsView.addSubview(videoSlider)
@@ -339,9 +361,13 @@ class PlayerViewController: UIViewController {
             ytVideoPlayerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             ytVideoPlayerView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
             
+            showNameLabel.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor, constant: 10),
+            showNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            showNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            showNameLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -16),
+            
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             buttonsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -494,29 +520,28 @@ extension PlayerViewController {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: PlayerTitleTableViewCell.identifier,
                         for: indexPath) as? PlayerTitleTableViewCell
+                    
                     guard let cell = cell else { return UITableViewCell() }
-                    
-                    cell.showNameLabel.text = item.title
+//                    cell.showNameLabel.text = item.title
                     cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
-                    
                     self.setupCellButtonDelegate = cell
                     self.setupMyShow()
                     return cell
-                                        
                 } else if indexPath.section == 1 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ChatroomButtonTableViewCell.identifier,
                         for: indexPath) as? ChatroomButtonTableViewCell
+                    
                     guard let cell = cell else { return UITableViewCell() }
                     cell.chatRoomButton.addTarget(
                         self, action: #selector(self.showChatroom(sender:)),
                         for: .touchUpInside)
                     return cell
-                    
                 } else if indexPath.section == 2 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: DanMuTextFieldTableViewCell.identifier,
                         for: indexPath) as? DanMuTextFieldTableViewCell
+                    
                     guard let cell = cell else { return UITableViewCell() }
                     cell.danMuTextField.delegate = cell
                     cell.userInputHandler = { [weak self] userInput in
@@ -529,13 +554,12 @@ extension PlayerViewController {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ShowTableViewCell.identifier,
                         for: indexPath) as? ShowTableViewCell
-                    guard let cell = cell else { return UITableViewCell() }
                     
+                    guard let cell = cell else { return UITableViewCell() }
                     cell.showImageView.loadImage(item.image)
                     cell.showNameLabel.text = item.title
                     cell.playlistId = item.playlistId
                     cell.id = item.id
-                    
                     return cell
                 }
                 return UITableViewCell()
@@ -561,11 +585,23 @@ extension PlayerViewController {
     
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
+        var statusBarHeigh: CGFloat = 0.0
+        if #available(iOS 13.0, *) {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                statusBarHeigh = windowScene.statusBarManager?.statusBarFrame.height ?? 0
+            }
+        } else {
+            statusBarHeigh = UIApplication.shared.statusBarFrame.height
+        }
+        let ytviewHeight = ytVideoPlayerView.frame.height
+        let chatroomHeight = UIScreen.main.bounds.height - (statusBarHeigh + ytviewHeight + 30)
+        
         let chatroomVC = ChatroomViewController()
         if let sheet = chatroomVC.sheetPresentationController {
+            sheet.preferredCornerRadius = 0.0
             sheet.prefersGrabberVisible = true
             sheet.detents = [
-                .custom { _ in 460.0 },
+                .custom { _ in chatroomHeight },
                 .large()]
             sheet.largestUndimmedDetentIdentifier = .large
             chatroomVC.videoId = self.videoId
@@ -650,10 +686,15 @@ extension PlayerViewController {
                     
                     self.videoId = first.videoId
                     self.showName = first.title
-                    let show = MKShow(id: id, videoId: first.videoId, image: "first.image", title: first.title, playlistId: first.playlistId)
+                    let show = MKShow(id: id, videoId: first.videoId,
+                                      image: "first.image", title: first.title,
+                                      playlistId: first.playlistId)
                     snapshot.appendItems([show], toSection: .title)
 
                     print(" first.title ==== \(first.title)")
+                    DispatchQueue.main.async {
+                        self.showNameLabel.text = first.title
+                    }
                     getDanMuData(videoId: self.videoId)
                     self.dataSource.apply(snapshot)
                 }
@@ -668,7 +709,11 @@ extension PlayerViewController {
             "showinfo": 0,
             "autoplay": 1
         ]
-        ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
+        if playlistId == "" {
+            ytVideoPlayerView.load(withVideoId: videoId)
+        } else {
+            ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
+        }
     }
 }
 
@@ -685,8 +730,11 @@ extension PlayerViewController: UITableViewDelegate {
             "showinfo": 0,
             "autoplay": 1
         ]
-        ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
         
-        setupCellButtonDelegate?.changeVideoTitle(text: itemIdentifier.title)
+        print("itemIdentifier.title === \(itemIdentifier.title)")
+        
+        showNameLabel.text = itemIdentifier.title
+                
+        ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
     }
 }
