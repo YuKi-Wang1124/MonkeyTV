@@ -11,23 +11,28 @@ import FirebaseFirestore
 class ChatroomTableViewCell: UITableViewCell {
     
     static let identifier = "\(ChatroomTableViewCell.self)"
+    
     // MARK: - UI
-    var personalImageView = {
-        let imageview = UIImageView()
-        imageview.contentMode = .scaleAspectFill
-        imageview.translatesAutoresizingMaskIntoConstraints = false
-        return imageview
+    lazy var personalImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = self.frame.width / 2
+        imageView.backgroundColor = .yellow
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
+    
     var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.setColor(lightColor: .lightGray, darkColor: .lightGray)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     var messageLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

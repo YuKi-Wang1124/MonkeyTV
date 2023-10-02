@@ -11,14 +11,38 @@ import FirebaseAuth
 import GoogleSignIn
 
 class ProfileViewController: UIViewController {
+
+    private lazy var tableView: UITableView = {
+        var tableView = UITableView()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+        tableView.register(PlayerTitleTableViewCell.self,
+                           forCellReuseIdentifier:
+                            PlayerTitleTableViewCell.identifier)
+        tableView.register(ChatroomButtonTableViewCell.self,
+                           forCellReuseIdentifier:
+                            ChatroomButtonTableViewCell.identifier)
+        tableView.register(DanMuTextFieldTableViewCell.self,
+                           forCellReuseIdentifier:
+                            DanMuTextFieldTableViewCell.identifier)
+        tableView.register(ShowTableViewCell.self,
+                           forCellReuseIdentifier:
+                            ShowTableViewCell.identifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
    lazy var signInBtn = GIDSignInButton()
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         signInBtn.frame = CGRect(x: 100, y: 300, width: 200, height: 50)
         signInBtn.addTarget(self, action: #selector(handleSignInButton), for: .touchUpInside)
         view.addSubview(signInBtn)
+        setupTableViewUI()
+        
     }
    @objc func handleSignInButton() {
        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -44,5 +68,18 @@ class ProfileViewController: UIViewController {
    }
     @IBAction func signOut(sender: Any) {
         GIDSignIn.sharedInstance.signOut()
+    }
+    
+    private func setupTableViewUI() {
+        view.addSubview(tableView)
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
 }

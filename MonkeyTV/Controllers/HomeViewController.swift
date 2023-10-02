@@ -33,7 +33,7 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateTableViewDataSource()
-        setUI()
+        setupTableViewUI()
     }
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
@@ -71,7 +71,7 @@ class HomeViewController: BaseViewController {
 
 // MARK: - UI configuration
 extension HomeViewController {
-    private func setUI() {
+    private func setupTableViewUI() {
         view.addSubview(tableView)
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
@@ -98,19 +98,3 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         self.present(playerViewController, animated: true)
     }
 }
-
-//extension HomeViewController: iCarouselDelegate, iCarouselDataSource {
-//
-//    func numberOfItems(in carousel: iCarousel) -> Int {
-//        10
-//    }
-//
-//    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 180))
-//        view.backgroundColor = .systemRed
-//        return view
-//    }
-//
-//
-//
-//}
