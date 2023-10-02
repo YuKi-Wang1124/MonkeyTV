@@ -90,7 +90,7 @@ extension CollectionTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 24.0
+        return 16.0
     }
     
     func collectionView(_ collectionView: UICollectionView,

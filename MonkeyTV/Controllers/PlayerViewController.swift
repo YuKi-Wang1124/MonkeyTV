@@ -686,7 +686,9 @@ extension PlayerViewController {
                     
                     self.videoId = first.videoId
                     self.showName = first.title
-                    let show = MKShow(id: id, videoId: first.videoId, image: "first.image", title: first.title, playlistId: first.playlistId)
+                    let show = MKShow(id: id, videoId: first.videoId,
+                                      image: "first.image", title: first.title,
+                                      playlistId: first.playlistId)
                     snapshot.appendItems([show], toSection: .title)
 
                     print(" first.title ==== \(first.title)")
@@ -707,7 +709,11 @@ extension PlayerViewController {
             "showinfo": 0,
             "autoplay": 1
         ]
-        ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
+        if playlistId == "" {
+            ytVideoPlayerView.load(withVideoId: videoId)
+        } else {
+            ytVideoPlayerView.load(withPlaylistId: playlistId, playerVars: playerVars)
+        }
     }
 }
 
@@ -724,7 +730,6 @@ extension PlayerViewController: UITableViewDelegate {
             "showinfo": 0,
             "autoplay": 1
         ]
-        
         
         print("itemIdentifier.title === \(itemIdentifier.title)")
         

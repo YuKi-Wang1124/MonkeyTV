@@ -52,7 +52,6 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
         contentView.addSubview(addLabel)
         
         NSLayoutConstraint.activate([
-            
             addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             addButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
             addButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
@@ -68,10 +67,6 @@ class PlayerTitleTableViewCell: UITableViewCell, ChangeCellButtonDelegate {
     func changeButtonImage() {
         
         addButton.setImage(UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
-    }
-    
-    func changeVideoTitle(text: String) {
-//        showNameLabel.text = text
     }
     
 }

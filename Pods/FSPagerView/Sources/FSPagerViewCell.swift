@@ -18,11 +18,10 @@ open class FSPagerViewCell: UICollectionViewCell {
         }
         let view = UIView(frame: .zero)
         view.isUserInteractionEnabled = false
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         
         let textLabel = UILabel(frame: .zero)
         textLabel.textColor = .white
-        textLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        textLabel.font = UIFont.systemFont(ofSize: 22)
         self.contentView.addSubview(view)
         view.addSubview(textLabel)
         

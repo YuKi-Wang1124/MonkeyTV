@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import iCarousel
+import FSPagerView
 import FirebaseFirestore
 
 class HomeViewController: BaseViewController {
@@ -46,7 +46,8 @@ class HomeViewController: BaseViewController {
                         withIdentifier: HomeAnimationTableViewCell.identifier,
                         for: indexPath) as? HomeAnimationTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
-//                    cell.carousel.dataSource = self
+                    
+                    cell.showVideoPlayerDelegate = self
                     return cell
                 } else {
                     let index = indexPath.row - 1
@@ -75,7 +76,7 @@ extension HomeViewController {
         view.addSubview(tableView)
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -85,11 +86,11 @@ extension HomeViewController {
     }
 }
 
-//// MARK: -
+// MARK: - ShowVideoPlayerDelegate
 extension HomeViewController: ShowVideoPlayerDelegate {
-
+    
     func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: String) {
-
+        
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = playlistId
@@ -98,3 +99,4 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         self.present(playerViewController, animated: true)
     }
 }
+

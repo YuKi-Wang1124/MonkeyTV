@@ -9,7 +9,7 @@ import UIKit
 
 extension UINavigationController {
     static var home: UINavigationController {
-        return addNavigationController(for: HomeViewController(), title: "")
+        return addNavigationController(for: HomeViewController(), title: "MonkeyTV")
     }
     static var search: UINavigationController {
         return addNavigationController(for: SearchViewController(), title: "搜尋")
