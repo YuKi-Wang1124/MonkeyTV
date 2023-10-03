@@ -26,6 +26,9 @@ target 'MonkeyTV' do
   pod "youtube-ios-player-helper"
   pod 'IQKeyboardManagerSwift'
   pod 'FSPagerView'
+  pod 'KeychainAccess'
+  pod 'LineSDKSwift'
+
   
   post_install do |installer|
     installer.generated_projects.each do |project|

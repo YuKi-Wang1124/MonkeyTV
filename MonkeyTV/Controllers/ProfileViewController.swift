@@ -40,7 +40,8 @@ class ProfileViewController: UIViewController {
         setupTableView()
         
     }
-    @IBAction func signOut(sender: Any) {
+    
+    @objc func signOut(sender: Any) {
         GIDSignIn.sharedInstance.signOut()
     }
     
@@ -97,6 +98,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             print(accessToken.tokenString)
             Auth.auth().signIn(with: credential) { authResult, error in
                 print(authResult?.user.displayName)
+                print(authResult?.user.email)
+                print(authResult?.user.photoURL)
+
             }
         }
     }

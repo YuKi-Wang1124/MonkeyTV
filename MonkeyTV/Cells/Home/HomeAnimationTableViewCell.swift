@@ -62,15 +62,15 @@ class HomeAnimationTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             pagerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             pagerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            pagerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            pagerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
+            pagerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            pagerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
         
         pagerView.itemSize = CGSize(width: 320, height: 200)
     }
     
     private func startAutoScrollTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 8, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.moveToNextPage()
         }
