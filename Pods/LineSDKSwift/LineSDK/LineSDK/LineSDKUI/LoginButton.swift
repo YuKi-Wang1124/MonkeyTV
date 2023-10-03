@@ -172,7 +172,7 @@ open class LoginButton: UIButton {
         // set accessibility label for sample UI test
         accessibilityLabel = "login.button"
         
-        titleLabel?.font = .boldSystemFont(ofSize: 11)
+        titleLabel?.font = .boldSystemFont(ofSize: 16)
         titleLabel?.textAlignment = .center
         setTitleColor(.white, for: .normal)
         
