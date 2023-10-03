@@ -648,23 +648,18 @@ extension PlayerViewController {
                     let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
                     info.items.forEach {
                         let playlist =
-                        Playlist(kind: $0.kind,
-                                 etag: $0.etag,
-                                 id: $0.id,
-                                 snippet: Snippet(
-                                    publishedAt: $0.snippet.publishedAt,
-                                    channelId: $0.snippet.channelId,
-                                    title: $0.snippet.title,
-                                    description: $0.snippet.description,
-                                    thumbnails: Thumbnails(default: Thumbnail(url: $0.snippet.thumbnails.default.url)),
-                                    channelTitle: $0.snippet.channelTitle,
-                                    playlistId: $0.snippet.playlistId,
-                                    position: $0.snippet.position,
-                                    resourceId: ResourceId(
-                                        kind: $0.snippet.resourceId.kind,
-                                        videoId: $0.snippet.resourceId.videoId),
-                                    videoOwnerChannelTitle: $0.snippet.videoOwnerChannelTitle,
-                                    videoOwnerChannelId: $0.snippet.videoOwnerChannelId))
+                        Playlist(kind: $0.kind, etag: $0.etag, id: $0.id,
+                                 snippet: Snippet( publishedAt: $0.snippet.publishedAt,
+                                                   channelId: $0.snippet.channelId,
+                                                   title: $0.snippet.title,
+                                                   description: $0.snippet.description,
+                                                   thumbnails: Thumbnails(default: Thumbnail(url: $0.snippet.thumbnails.default.url)),
+                                                   channelTitle: $0.snippet.channelTitle,
+                                                   playlistId: $0.snippet.playlistId,
+                                                   position: $0.snippet.position,
+                                                   resourceId: ResourceId( kind: $0.snippet.resourceId.kind, videoId: $0.snippet.resourceId.videoId),
+                                                   videoOwnerChannelTitle: $0.snippet.videoOwnerChannelTitle,
+                                                   videoOwnerChannelId: $0.snippet.videoOwnerChannelId))
                         
                         let show = MKShow(id: self.id,
                                           videoId: $0.snippet.resourceId.videoId,

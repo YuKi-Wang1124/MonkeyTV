@@ -61,6 +61,7 @@ class ChatroomButtonTableViewCell: UITableViewCell {
         chatRoomButton.addSubview(chatroomTitleLabel)
         chatRoomButton.addSubview(personalImageView)
         chatRoomButton.addSubview(chatroomNameLabel)
+        
         NSLayoutConstraint.activate([
             chatroomTitleLabel.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,

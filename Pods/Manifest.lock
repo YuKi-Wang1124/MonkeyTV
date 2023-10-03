@@ -800,8 +800,12 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.1)
   - IQKeyboardManagerSwift (6.5.13)
+  - KeychainAccess (4.2.2)
   - Kingfisher (7.9.1)
   - leveldb-library (1.22.2)
+  - LineSDKSwift (5.10.1):
+    - LineSDKSwift/Core (= 5.10.1)
+  - LineSDKSwift/Core (5.10.1)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -819,7 +823,9 @@ DEPENDENCIES:
   - FSPagerView
   - GoogleSignIn
   - IQKeyboardManagerSwift
+  - KeychainAccess
   - Kingfisher (~> 7.0)
+  - LineSDKSwift
   - SwiftLint
   - youtube-ios-player-helper
 
@@ -844,8 +850,10 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - KeychainAccess
     - Kingfisher
     - leveldb-library
+    - LineSDKSwift
     - nanopb
     - PromisesObjC
     - RecaptchaInterop
@@ -872,14 +880,16 @@ SPEC CHECKSUMS:
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   IQKeyboardManagerSwift: 69b5fb9960edff37263d45c44fd97427e1f8c22b
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 1d14e9f59cbe19389f591c929000332bf70efd32
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
+  LineSDKSwift: def4e6f05ebc25a5838d672670fa9e3c77eb7509
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 7c0abc9e204fd7542e365dd3751cdfae15e5f588
+PODFILE CHECKSUM: 4598ecfc7ae0189f2bd6f8966c1e1008a84920dd
 
 COCOAPODS: 1.12.1

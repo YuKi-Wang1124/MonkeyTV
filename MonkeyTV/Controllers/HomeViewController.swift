@@ -12,7 +12,7 @@ import FirebaseFirestore
 class HomeViewController: BaseViewController {
     private lazy var tableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 260
+        tableView.rowHeight = 250
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(CollectionTableViewCell.self,
@@ -99,4 +99,3 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         self.present(playerViewController, animated: true)
     }
 }
-
