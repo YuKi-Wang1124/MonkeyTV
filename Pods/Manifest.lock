@@ -690,6 +690,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FSPagerView (0.8.3)
   - GoogleAppMeasurement (10.15.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.15.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -798,9 +799,13 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.1)
-  - IQKeyboardManagerSwift (6.5.12)
+  - IQKeyboardManagerSwift (6.5.13)
+  - KeychainAccess (4.2.2)
   - Kingfisher (7.9.1)
   - leveldb-library (1.22.2)
+  - LineSDKSwift (5.10.1):
+    - LineSDKSwift/Core (= 5.10.1)
+  - LineSDKSwift/Core (5.10.1)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -808,16 +813,19 @@ PODS:
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.3.1)
   - RecaptchaInterop (100.0.0)
-  - SwiftLint (0.52.4)
+  - SwiftLint (0.53.0)
   - youtube-ios-player-helper (1.0.4)
 
 DEPENDENCIES:
   - FirebaseAnalytics
   - FirebaseAuth
   - FirebaseFirestore
+  - FSPagerView
   - GoogleSignIn
   - IQKeyboardManagerSwift
+  - KeychainAccess
   - Kingfisher (~> 7.0)
+  - LineSDKSwift
   - SwiftLint
   - youtube-ios-player-helper
 
@@ -833,6 +841,7 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseFirestore
     - FirebaseInstallations
+    - FSPagerView
     - GoogleAppMeasurement
     - GoogleSignIn
     - GoogleUtilities
@@ -841,8 +850,10 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - KeychainAccess
     - Kingfisher
     - leveldb-library
+    - LineSDKSwift
     - nanopb
     - PromisesObjC
     - RecaptchaInterop
@@ -860,6 +871,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: 2f4bee5ed00301b5e56da0849268797a2dd31fb4
   FirebaseFirestore: b4c0eaaf24efda5732ec21d9e6c788d083118ca6
   FirebaseInstallations: cae95cab0f965ce05b805189de1d4c70b11c76fb
+  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   GoogleAppMeasurement: 722db6550d1e6d552b08398b69a975ac61039338
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
@@ -867,15 +879,17 @@ SPEC CHECKSUMS:
   gRPC-Core: 17108291d84332196d3c8466b48f016fc17d816d
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
-  IQKeyboardManagerSwift: 371b08cb39664fb56030f5345c815a4ffc74bbc0
+  IQKeyboardManagerSwift: 69b5fb9960edff37263d45c44fd97427e1f8c22b
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 1d14e9f59cbe19389f591c929000332bf70efd32
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
+  LineSDKSwift: def4e6f05ebc25a5838d672670fa9e3c77eb7509
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  SwiftLint: 1cc5cd61ba9bacb2194e340aeb47a2a37fda00b3
+  SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: f169c9d01c649f9b0af9949579352d390ce76331
+PODFILE CHECKSUM: 4598ecfc7ae0189f2bd6f8966c1e1008a84920dd
 
 COCOAPODS: 1.12.1

@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    static let mainColor = UIColor(hex: "#49EA98")
+    static let mainColor = UIColor(hex: "#3DC27E")
     convenience init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespaces)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
@@ -58,6 +58,16 @@ extension UIColor {
                           lroundf(alpha * 255))
         } else {
             return String(format: "%02lX%02lX%02lX", lroundf(red * 255), lroundf(green * 255), lroundf(blue * 255))
+        }
+    }
+    
+    static func setColor(lightColor: UIColor, darkColor: UIColor) -> UIColor {
+        if #available(iOS 13, *) {
+            return UIColor{ (traitCollection) -> UIColor in
+                return traitCollection.userInterfaceStyle == .light ? lightColor : darkColor
+            }
+        } else {
+            return lightColor
         }
     }
 }

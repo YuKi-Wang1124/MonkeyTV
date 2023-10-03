@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 
 class StorageManager {
@@ -22,9 +23,51 @@ class StorageManager {
         return container
     }()
     
-    // MARK: - Create Search History Object
+    // MARK: - Create Object
     
     @discardableResult
+    
+    func isContainMyShow(id: String) -> Bool {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<MyShow> = MyShow.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let matchingRecords = try context.fetch(fetchRequest)
+            if matchingRecords.isEmpty {
+                return false
+            } else {
+                return true
+            }
+        } catch {
+            print("search my show error: \(error)")
+            return false
+        }
+    }
+    
+    func createMyShowObject(
+        showName: String,
+        id: String,
+        playlistId: String,
+        showImage: String) -> MyShow? {
+            
+            let context = persistentContainer.viewContext
+            let myShow = NSEntityDescription.insertNewObject(forEntityName: "MyShow",
+                                                                    into: context) as? MyShow
+            guard let myShow = myShow else { return nil }
+            myShow.showName = showName
+            myShow.id = id
+            myShow.playlistId = playlistId
+            myShow.showImage = showImage
+            do {
+                try context.save()
+                return myShow
+            } catch let createError {
+                print("Failed to create search history: \(createError)")
+            }
+            
+            return nil
+        }
+    
     func createSearchHistoryObject(
         showName: String) -> SearchHistory? {
             
@@ -43,7 +86,21 @@ class StorageManager {
             return nil
         }
     
-    // MARK: - Fetch Search Historys
+    // MARK: - Fetch Object
+    
+    func fetchSearchMyShows() -> [MyShow]? {
+        
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<MyShow>(entityName: "MyShow")
+        
+        do {
+            let myShow = try context.fetch(fetchRequest)
+            return myShow
+        } catch let fetechError {
+            print("Failed to fetch: \(fetechError)")
+        }
+        return nil
+    }
     
     func fetchSearchHistorys() -> [SearchHistory]? {
         
@@ -59,7 +116,17 @@ class StorageManager {
         return nil
     }
     
-    // MARK: - Update Search History
+    // MARK: - Update
+    
+    func updateMyShow(show: MyShow) {
+        
+        let context = persistentContainer.viewContext
+        do {
+            try context.save()
+        } catch let createError {
+            print("Failed to update: \(createError)")
+        }
+    }
     
     func updateSearchHistory(searchHistoryObject: SearchHistory) {
         
@@ -71,7 +138,25 @@ class StorageManager {
         }
     }
     
-    // MARK: - Delete Search History Object
+    // MARK: - Delete  Object
+    
+    func deleteMyShow(id: String) {
+        let context = persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<MyShow>(entityName: "MyShow")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+    
+        do {
+            let objectsToDelete = try context.fetch(fetchRequest)
+            for object in objectsToDelete {
+                context.delete(object)
+            }
+            try context.save()
+        
+        } catch let saveError {
+            print("Failed to delete: \(saveError)")
+        }
+    }
     
     func deleteSearchHistoryObject(searchHistoryObject: SearchHistory) {
         
@@ -84,7 +169,23 @@ class StorageManager {
         }
     }
     
-    // MARK: - Delete All Search History
+    // MARK: - Delete All Object
+    
+    func deleteAllMyShow() {
+        
+        let context = persistentContainer.viewContext
+        if let searchShows = fetchSearchMyShows() {
+            for show in searchShows {
+                context.delete(show)
+            }
+            do {
+                try context.save()
+            } catch let saveError {
+                print("Failed to delete all products: \(saveError)")
+            }
+        }
+    }
+    
     func deleteAllSearchHistory() {
         
         let context = persistentContainer.viewContext

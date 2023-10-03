@@ -8,33 +8,36 @@
 import Foundation
 
 enum YoutubeRequest: Request {
+    
     case channel
     case show
     case playlistItems(playlistId: String)
-
+    case hot
+    
     var headers: [String: String] {
         switch self {
-        case .channel, .show, .playlistItems: return [
+        case .channel, .show, .playlistItems, .hot: return [
             HTTPHeaderField.auth.rawValue: "\(Constant.YOUR_ACCESS_TOKEN)",
             HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.json.rawValue
         ]
         }
     }
-
+    
     var body: Data? {
         switch self {
         case .channel: return nil
         case .show: return nil
         case .playlistItems: return nil
+        case .hot: return nil
         }
     }
-
+    
     var method: String {
         switch self {
-        case .channel, .show, .playlistItems: return HTTPMethod.GET.rawValue
+        case .channel, .show, .playlistItems, .hot: return HTTPMethod.GET.rawValue
         }
     }
-
+    
     var endPoint: String {
         switch self {
         case .channel:
@@ -42,9 +45,13 @@ enum YoutubeRequest: Request {
         case .show:
             return "/playlists?part=snippet&channelId=\(YouTubeParameter.shared.channelID)&maxResults=50&key=\(Constant.API_KEY)"
         case .playlistItems:
-            return "/playlistItems?part=snippet&playlistId=\(YouTubeParameter.shared.playlistId)&key=\(Constant.API_KEY)"
+            return "/playlistItems?part=snippet&playlistId=\(YouTubeParameter.shared.playlistId)&maxResults=20&key=\(Constant.API_KEY)"
+        case .hot:
+            return
+            "/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=15&regionCode=TW&key=\(Constant.API_KEY)"
         }
-   }
+    }
+    
 }
 
 class YouTubeParameter {

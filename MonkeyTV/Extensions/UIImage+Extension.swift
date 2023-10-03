@@ -22,6 +22,7 @@ enum ImageAsset: String {
     case submitDanMu = "ellipsis.message.fill"
     case pause = "pause.fill"
     case play = "play.fill"
+    case playCircle = "play.circle"
     case shrink = "arrow.down.right.and.arrow.up.left"
     case enlarge = "arrow.up.left.and.arrow.down.right"
     case chatroom = "text.bubble.fill"
@@ -30,9 +31,15 @@ enum ImageAsset: String {
     case thumbImage = "circle.fill"
     case history = "clock.arrow.circlepath"
     case searchArrow = "arrow.up.backward"
+    case trash = "trash.fill"
+    case clock = "clock.fill"
+    case plus
+    case checkmark
 }
 
 extension UIImage {
+    static let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
+
     static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage {
         if let image = UIImage(systemName: asset.rawValue, withConfiguration: configuration) {
             return image

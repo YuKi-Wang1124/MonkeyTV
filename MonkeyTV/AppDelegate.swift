@@ -7,6 +7,7 @@
 import UIKit
 import FirebaseCore
 import GoogleSignIn
+import LineSDK
 import IQKeyboardManagerSwift
 
 @main
@@ -31,8 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        
+        LoginManager.shared.setup(channelID: "2000990858", universalLinkURL: nil)
+
         IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = -34
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
           if error != nil || user == nil {
             // Show the app's signed-out state.

@@ -16,6 +16,8 @@ struct Video: Codable {
 }
 
 struct MKShow: Hashable {
+    var id: String
+    var videoId: String 
     var image: String
     var title: String
     var playlistId: String

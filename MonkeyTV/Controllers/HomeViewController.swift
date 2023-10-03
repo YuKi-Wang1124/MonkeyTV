@@ -6,31 +6,34 @@
 //
 
 import UIKit
+import FSPagerView
 import FirebaseFirestore
 
 class HomeViewController: BaseViewController {
     private lazy var tableView = {
         var tableView = UITableView()
-        tableView.rowHeight = 260
+        tableView.rowHeight = 250
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.register(CollectionTableViewCell.self,
                            forCellReuseIdentifier:
                             CollectionTableViewCell.identifier)
-        tableView.register(VideoAnimationTableViewCell.self,
+        tableView.register(HomeAnimationTableViewCell.self,
                            forCellReuseIdentifier:
-                            VideoAnimationTableViewCell.identifier)
+                            HomeAnimationTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateTableViewDataSource()
-        setUI()
+        setupTableViewUI()
     }
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
@@ -40,9 +43,11 @@ class HomeViewController: BaseViewController {
                 if indexPath.row == 0 {
                     let cell =
                     tableView.dequeueReusableCell(
-                        withIdentifier: VideoAnimationTableViewCell.identifier,
-                        for: indexPath) as? CollectionTableViewCell
+                        withIdentifier: HomeAnimationTableViewCell.identifier,
+                        for: indexPath) as? HomeAnimationTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
+                    
+                    cell.showVideoPlayerDelegate = self
                     return cell
                 } else {
                     let index = indexPath.row - 1
@@ -67,8 +72,11 @@ class HomeViewController: BaseViewController {
 
 // MARK: - UI configuration
 extension HomeViewController {
-    private func setUI() {
+    private func setupTableViewUI() {
         view.addSubview(tableView)
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -78,14 +86,16 @@ extension HomeViewController {
     }
 }
 
-// MARK: -
+// MARK: - ShowVideoPlayerDelegate
 extension HomeViewController: ShowVideoPlayerDelegate {
     
-    func showVideoPlayer(playlistId: String) {
+    func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: String) {
         
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen
         playerViewController.playlistId = playlistId
+        playerViewController.id = id
+        playerViewController.showImage = showImage
         self.present(playerViewController, animated: true)
     }
 }
