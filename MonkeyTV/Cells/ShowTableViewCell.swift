@@ -44,7 +44,7 @@ class ShowTableViewCell: UITableViewCell {
     lazy var showNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.numberOfLines = 0
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -80,26 +80,26 @@ class ShowTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             showNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             showNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
-            showNameLabel.leadingAnchor.constraint(equalTo: showImageView.trailingAnchor, constant: 16),
-            showNameLabel.trailingAnchor.constraint(equalTo: playImageView.leadingAnchor, constant: -8),
+            showNameLabel.leadingAnchor.constraint(equalTo: showImageView.trailingAnchor, constant: 8),
+            showNameLabel.trailingAnchor.constraint(equalTo: playImageView.leadingAnchor, constant: -6),
             
             catImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
             catImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-            catImageView.heightAnchor.constraint(equalToConstant: 81),
-            catImageView.widthAnchor.constraint(equalToConstant: 144),
+            catImageView.heightAnchor.constraint(equalToConstant: 90),
+            catImageView.widthAnchor.constraint(equalToConstant: 160),
             catImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             catImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             showImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
             showImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-            showImageView.heightAnchor.constraint(equalToConstant: 81),
-            showImageView.widthAnchor.constraint(equalToConstant: 144),
+            showImageView.heightAnchor.constraint(equalToConstant: 90),
+            showImageView.widthAnchor.constraint(equalToConstant: 160),
             showImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             showImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             playImageView.heightAnchor.constraint(equalToConstant: 40),
             playImageView.widthAnchor.constraint(equalToConstant: 40),
-            playImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            playImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             playImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }

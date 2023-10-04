@@ -54,6 +54,8 @@ class HomeAnimationTableViewCell: UITableViewCell {
         startAutoScrollTimer()
         
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        pagerView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+
         contentView.addSubview(pagerView)
         
         pagerView.translatesAutoresizingMaskIntoConstraints = false

@@ -59,7 +59,6 @@ class PlayerViewController: UIViewController {
         return view
     }()
     
-    
     private lazy var showNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
@@ -145,6 +144,7 @@ class PlayerViewController: UIViewController {
                     UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
+                print("橫式: \(buttonsView.frame.size.height)")
             } else {
                 self.changeOrientationButton.setImage(
                     UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
@@ -153,6 +153,7 @@ class PlayerViewController: UIViewController {
                 showNameLabel.sizeToFit()
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
+                print("直式: \(buttonsView.frame.size.height)")
             }
         }, completion: { _ in
         })
@@ -268,11 +269,13 @@ class PlayerViewController: UIViewController {
     
     @objc func changeOrientation(sender: UIButton) {
         if playerIsShrink == false {
+            showNameLabel.removeFromSuperview()
             tableView.removeFromSuperview()
             sender.setImage(UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
             NSLayoutConstraint.deactivate(portraitConstraints)
             NSLayoutConstraint.activate(landscapeConstraints)
         } else {
+            view.addSubview(showNameLabel)
             view.addSubview(tableView)
             sender.setImage(UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
             NSLayoutConstraint.deactivate(landscapeConstraints)
@@ -332,7 +335,7 @@ class PlayerViewController: UIViewController {
             danmuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            danmuView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            danmuView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
@@ -375,8 +378,9 @@ class PlayerViewController: UIViewController {
             buttonsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             buttonsView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
             
-            danmuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            danmuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            danmuView.widthAnchor.constraint(equalTo: view.widthAnchor),
             danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             danmuView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
             
@@ -498,6 +502,13 @@ extension PlayerViewController: YTPlayerViewDelegate {
 // MARK: -
 extension PlayerViewController {
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 3 {
+            return indexPath
+        }
+        return nil
+    }
+    
     private func setupTableView() {
         configureDataSource(tableView: tableView)
         snapshot.appendSections([.title, .chatroom, .danmu, .playlist])
@@ -526,6 +537,7 @@ extension PlayerViewController {
                     cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
                     self.setupCellButtonDelegate = cell
                     self.setupMyShow()
+                    cell.selectionStyle = .none
                     return cell
                 } else if indexPath.section == 1 {
                     let cell = tableView.dequeueReusableCell(
@@ -536,6 +548,7 @@ extension PlayerViewController {
                     cell.chatRoomButton.addTarget(
                         self, action: #selector(self.showChatroom(sender:)),
                         for: .touchUpInside)
+                    cell.selectionStyle = .none
                     return cell
                 } else if indexPath.section == 2 {
                     let cell = tableView.dequeueReusableCell(
@@ -549,6 +562,7 @@ extension PlayerViewController {
                     }
                     cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
                     self.emptyTextFieldDelegate = cell
+                    cell.selectionStyle = .none
                     return cell
                 } else if indexPath.section == 3 {
                     let cell = tableView.dequeueReusableCell(
@@ -560,6 +574,7 @@ extension PlayerViewController {
                     cell.showNameLabel.text = item.title
                     cell.playlistId = item.playlistId
                     cell.id = item.id
+                    cell.selectionStyle = .none
                     return cell
                 }
                 return UITableViewCell()
@@ -578,8 +593,9 @@ extension PlayerViewController {
         } else {
             sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
                             for: .normal)
-            StorageManager.shared.createMyShowObject(showName: showName, id: id,
-                                                     playlistId: playlistId, showImage: showImage)
+            StorageManager.shared.createMyShowObject(
+                showName: showName, id: id,
+                playlistId: playlistId, showImage: showImage)
         }
     }
     
@@ -653,11 +669,13 @@ extension PlayerViewController {
                                                    channelId: $0.snippet.channelId,
                                                    title: $0.snippet.title,
                                                    description: $0.snippet.description,
-                                                   thumbnails: Thumbnails(default: Thumbnail(url: $0.snippet.thumbnails.default.url)),
+                                                   thumbnails: Thumbnails(default: Thumbnail(
+                                                    url: $0.snippet.thumbnails.default.url)),
                                                    channelTitle: $0.snippet.channelTitle,
                                                    playlistId: $0.snippet.playlistId,
                                                    position: $0.snippet.position,
-                                                   resourceId: ResourceId( kind: $0.snippet.resourceId.kind, videoId: $0.snippet.resourceId.videoId),
+                                                   resourceId: ResourceId(
+                                                    kind: $0.snippet.resourceId.kind, videoId: $0.snippet.resourceId.videoId),
                                                    videoOwnerChannelTitle: $0.snippet.videoOwnerChannelTitle,
                                                    videoOwnerChannelId: $0.snippet.videoOwnerChannelId))
                         

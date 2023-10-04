@@ -22,18 +22,23 @@ class DanMu: Hashable {
         label.textColor = .white
     }
 }
+
 class DanMuView: UIView {
     var displayLink: CADisplayLink?
     var lineHeight: CGFloat = 26
     var gap: CGFloat = 20
     var minSpeed: CGFloat = 0.1
-    var maxSpeed: CGFloat = 2
+    var maxSpeed: CGFloat = 1.2
     var isPause: Bool = false
     var danmus: [DanMu] = []
     var danmuQueue: [(String, Bool)] = []
     var removeDanmus = [DanMu]()
     var timer: Timer?
     var removeTime: Timer?
+    
+    lazy var myFrameHeight = self.frame.size.height
+    lazy var myFrameWidth = self.frame.size.width
+    
     func start() {
         displayLink = CADisplayLink(target: self, selector: #selector(update))
         displayLink?.add(to: RunLoop.current, forMode: .common)
@@ -61,14 +66,14 @@ class DanMuView: UIView {
     @objc func addDanMu(text: String, isMycomment: Bool) {
 //        return
         let danmu = DanMu()
-        danmu.label.frame.origin.x = self.frame.size.width
+        danmu.label.frame.origin.x = myFrameWidth
         danmu.label.text = text
         danmu.label.sizeToFit()
         if isMycomment {
             danmu.label.textColor = .systemYellow
         }
         var linelasts: [DanMu?] = []
-        let rows: Int = Int(self.frame.size.height / lineHeight)
+        let rows: Int = Int(myFrameHeight / lineHeight)
         for _ in 0..<rows {
             linelasts.append(nil)
         }
@@ -90,9 +95,9 @@ class DanMuView: UIView {
         for index in 0..<linelasts.count {
             if let dumu = linelasts[index] {
                 let endx = dumu.label.frame.origin.x + dumu.label.frame.size.width + gap
-                if endx < self.frame.size.width {
+                if endx < myFrameWidth {
                     danmu.row = index
-                    var mySpeed = self.frame.size.width / endx * dumu.speed
+                    var mySpeed = myFrameWidth / endx * dumu.speed
                     mySpeed = CGFloat.minimum(mySpeed, maxSpeed)
                     danmu.speed = CGFloat.random(in: minSpeed ... mySpeed)
                     isMatch = true
