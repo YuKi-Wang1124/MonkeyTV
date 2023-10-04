@@ -9,11 +9,7 @@ import Foundation
 import UIKit
 
 class DanMu: Hashable {
-    static func == (lhs: DanMu, rhs: DanMu) -> Bool {
-        return true
-    }
-    func hash(into hasher: inout Hasher) {
-    }
+    
     var row: Int = 0
     var label: UILabel = UILabel()
     var speed: CGFloat = 0
@@ -21,14 +17,21 @@ class DanMu: Hashable {
     init() {
         label.textColor = .white
     }
+    
+    static func == (lhs: DanMu, rhs: DanMu) -> Bool {
+        return true
+    }
+    
+    func hash(into hasher: inout Hasher) {
+    }
 }
 
 class DanMuView: UIView {
     var displayLink: CADisplayLink?
     var lineHeight: CGFloat = 26
     var gap: CGFloat = 20
-    var minSpeed: CGFloat = 0.1
-    var maxSpeed: CGFloat = 1.2
+    var minSpeed: CGFloat = 0.05
+    var maxSpeed: CGFloat = 0.5
     var isPause: Bool = false
     var danmus: [DanMu] = []
     var danmuQueue: [(String, Bool)] = []
@@ -46,16 +49,19 @@ class DanMuView: UIView {
                                      target: self,
                                      selector: #selector(handleDanMuQueue),
                                      userInfo: nil, repeats: true)
+        
         removeTime = Timer.scheduledTimer(timeInterval: 3,
                                      target: self,
                                      selector: #selector(removeDanMuQueue),
                                      userInfo: nil, repeats: true)
     }
+    
     deinit {
         displayLink?.remove(from: RunLoop.current, forMode: .common)
         timer = nil
         removeTime = nil
     }
+    
     @objc func handleDanMuQueue() {
         if danmuQueue.isEmpty {
             return
@@ -63,12 +69,14 @@ class DanMuView: UIView {
         let danmu = danmuQueue.removeFirst()
         addDanMu(text: danmu.0, isMycomment: danmu.1)
     }
+    
     @objc func addDanMu(text: String, isMycomment: Bool) {
-//        return
+        
         let danmu = DanMu()
         danmu.label.frame.origin.x = myFrameWidth
         danmu.label.text = text
         danmu.label.sizeToFit()
+        
         if isMycomment {
             danmu.label.textColor = .systemYellow
         }
@@ -77,6 +85,7 @@ class DanMuView: UIView {
         for _ in 0..<rows {
             linelasts.append(nil)
         }
+        
         for dumu in danmus {
             if dumu.row >= linelasts.count {
                 return
@@ -91,7 +100,9 @@ class DanMuView: UIView {
                 linelasts[dumu.row] = dumu
             }
         }
+        
         var isMatch = false
+        
         for index in 0..<linelasts.count {
             if let dumu = linelasts[index] {
                 let endx = dumu.label.frame.origin.x + dumu.label.frame.size.width + gap
@@ -108,18 +119,23 @@ class DanMuView: UIView {
                 isMatch = true
             }
         }
+        
         if isMatch == false {
             danmuQueue.append((text, isMycomment))
             return
         }
+        
         danmu.label.frame.origin.y = lineHeight * CGFloat(danmu.row)
         self.addSubview(danmu.label)
         self.danmus.append(danmu)
     }
+    
     @objc func update(_ displayLink: CADisplayLink) {
+        
         if isPause == true {
             return
         }
+        
         for danmu in danmus {
             if danmu.label.frame.origin.x >= -danmu.label.frame.size.width {
                 danmu.label.frame.origin.x -= danmu.speed

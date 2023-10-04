@@ -8,7 +8,9 @@
 import UIKit
 
 extension UILabel {
+    
     static func createTitleLabel(text: String) -> UILabel {
+        
         let label = UILabel()
         label.textColor = UIColor.lightGray
         label.text = text
@@ -18,4 +20,5 @@ extension UILabel {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
+    
 }
