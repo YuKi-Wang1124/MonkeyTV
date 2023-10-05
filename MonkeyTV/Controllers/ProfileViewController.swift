@@ -13,7 +13,9 @@ import LineSDK
 import AuthenticationServices
 
 class ProfileViewController: UIViewController {
-
+    
+    var username: String = ""
+    
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -26,7 +28,7 @@ class ProfileViewController: UIViewController {
     }()
     
     // MARK: - UI
-   private lazy var personalImageView = {
+    private lazy var personalImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 60
@@ -67,27 +69,31 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        print("KeychainItem.currentUserIdentifier: \(KeychainItem.currentEmail)")
+        
+        let email = KeychainItem.currentEmail
+        
+        Task {
+            if email.isEmpty == false {
+                tableView.isHidden = false
+            }
+        }
+        
+    }
+    
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        setupTableView()
         setupButtonLayout()
+        setupTableView()
         buttonAddTarget()
         
         lineSignInButton.delegate = self
         lineSignInButton.permissions = [.profile]
         lineSignInButton.presentingViewController = self
-        
-        if let userName = UserDefaults.standard.string(forKey: "userName"),
-           let image = UserDefaults.standard.string(forKey: "userImage"),
-           let id = UserDefaults.standard.string(forKey: "userId") {
-            print("userName =====\(userName)")
-            print("iamge =====\(image)")
-            print("id =====\(id)")
-            print(checkIfLoginIsRequired())
-        }
         
     }
     
@@ -102,7 +108,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -117,7 +123,7 @@ class ProfileViewController: UIViewController {
         lineSignInButton.addTarget(self, action: #selector(lineSignIn), for: .touchUpInside)
     }
     
-    @objc func lineSignIn() {        
+    @objc func lineSignIn() {
         LoginManager.shared.login(permissions: [.profile], in: self) { result in
             switch result {
             case .success(let loginResult):
@@ -144,40 +150,43 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func googleSignIn() {
-        print("zzzz")
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { signResult, error in
-            if let error = error { return }
+            if error != nil { return }
             guard let user = signResult?.user,
                   let idToken = user.idToken else { return }
             let accessToken = user.accessToken
-            let credential = GoogleAuthProvider.credential( withIDToken: idToken.tokenString,
-                                                            accessToken: accessToken.tokenString)
-            // Use the credential to authenticate with Firebase
-            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString,
+                                                           accessToken: accessToken.tokenString)
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error { print("Auth error: \(error)") }
                 if let authResult = authResult,
                    let name = authResult.user.displayName,
                    let image = authResult.user.photoURL?.absoluteString,
                    let email = authResult.user.email {
-                    
-                    let id = FirestoreManager.user.document().documentID
-                    let data: [String: Any] = ["id": id, "email": email, "userName": name,
-                                               "userImage": image, "userStatus": 0,
-                                               "token": ["tokenType": 0,
-                                                         "token": accessToken.tokenString] as [String: Any]]
-                    
-                    UserDefaults.standard.set(name, forKey: "userName")
-                    UserDefaults.standard.set(image, forKey: "userImage")
-                    UserDefaults.standard.set(id, forKey: "userId")
-                    let lastLoginDate = Date()
-                    UserDefaults.standard.set(lastLoginDate, forKey: "lastLoginDate")
-
-                    FirestoreManager.user.document(id).setData(data) { error in
-                        if error != nil { print("Error adding document: \(String(describing: error))") } else { }
+                    Task {
+                        if await FirestoreManager.userIsExist(email: email) == false {
+                            self.saveUserInKeychain(email)
+                            let id = FirestoreManager.user.document().documentID
+                            let data: [String: Any] = ["id": id, "email": email, "userName": name,
+                                                       "userImage": image, "userStatus": 0,
+                                                       "appleId": "", "googleToken": accessToken.tokenString]
+                            self.saveUserInKeychain(email)
+                            DispatchQueue.main.async {
+                                FirestoreManager.user.document(email).setData(data) { error in
+                                    if error != nil {
+                                        print("Error adding document: \(String(describing: error))") } else { }
+                                }
+                            }
+                        } else {
+                            let data: [String: Any] = ["userImage": image, "googleToken": accessToken.tokenString]
+                            FirestoreManager.user.document(email).updateData(data) { error in
+                                if error != nil {
+                                    print("Error adding document: \(String(describing: error))") } else { }
+                            }
+                        }
                     }
                 }
             }}
@@ -190,7 +199,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(googleSignInButton)
         view.addSubview(appleSignInButton)
         view.addSubview(lineSignInButton)
-
+        
         NSLayoutConstraint.activate([
             personalImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             personalImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/3),
@@ -202,12 +211,12 @@ class ProfileViewController: UIViewController {
             nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameLabel.heightAnchor.constraint(equalToConstant: 50),
-
+            
             googleSignInButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 32),
             googleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             googleSignInButton.widthAnchor.constraint(equalToConstant: 250),
             googleSignInButton.heightAnchor.constraint(equalToConstant: 70),
-
+            
             appleSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 24),
             appleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             appleSignInButton.widthAnchor.constraint(equalToConstant: 240),
@@ -232,55 +241,79 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ProfileTitleTableViewCell.identifier,
             for: indexPath) as? ProfileTitleTableViewCell
         guard let cell = cell else { return UITableViewCell() }
-
+        
+        cell.nameLabel.text = username
+        
         return cell
     }
 }
 
 extension ProfileViewController: ASAuthorizationControllerDelegate {
     
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization) {
             
-            // Create an account in your system.
-            let userIdentifier = appleIDCredential.user
-            if let name = appleIDCredential.fullName,
-               let email = appleIDCredential.email {
-
-                let userName = "\(name.givenName ?? "") \(name.familyName ?? "")"
+            switch authorization.credential {
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
                 
-                print(userName)
-
-                let id = FirestoreManager.user.document().documentID
-                let data: [String: Any] = ["id": id, "email": email, "userName": userName,
-                                           "userImage": "", "userStatus": 0,
-                                           "token": ["tokenType": 1,
-                                                     "token": userIdentifier] as [String: Any]]
+                // Create an account in your system.
+                let userIdentifier = appleIDCredential.user
                 
-                UserDefaults.standard.set(userName, forKey: "userName")
-
-                UserDefaults.standard.set("", forKey: "userImage")
-                UserDefaults.standard.set(id, forKey: "userId")
-                let lastLoginDate = Date()
-                UserDefaults.standard.set(lastLoginDate, forKey: "lastLoginDate")
+                print(userIdentifier)
                 
-                FirestoreManager.user.document(id).setData(data) { error in
-                    if error != nil { print("Error adding document: \(String(describing: error))") } else { }
+                if let name = appleIDCredential.fullName,
+                   let email = appleIDCredential.email {
+                    let id = FirestoreManager.user.document().documentID
+                    let userName = "\(name.givenName ?? "") \(name.familyName ?? "")"
+                    self.saveUserInKeychain(email)
+                    Task {
+                        if await FirestoreManager.userIsExist(email: email) == false {
+                            let data: [String: Any] = ["id": id, "email": email, "userName": userName,
+                                                       "userImage": "", "userStatus": 0,
+                                                       "appleId": userIdentifier, "googleToken": ""]
+                            DispatchQueue.main.async {
+                                FirestoreManager.user.document(email).setData(data) { error in
+                                    if error != nil {
+                                        print("Error adding document: \(String(describing: error))")
+                                    } else { }
+                                }
+                            }
+                        } else {
+                            let data: [String: Any] = ["appleId": userIdentifier]
+                            FirestoreManager.user.document(email).updateData(data) { error in
+                                if error != nil {
+                                    print("Error adding document: \(String(describing: error))") } else { }
+                            }
+                        }
+                    }
+                } else {
+                    Task {
+                        let querySnapshot = try await FirestoreManager.user.whereField(
+                            "appleId", isEqualTo: userIdentifier).getDocuments()
+                        do {
+                            for document in querySnapshot.documents {
+                                let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                                let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
+                                print(decodedObject)
+                            }
+                        } catch { print("\(error)") }
+                    }
                 }
+            case _ as ASPasswordCredential:
+                tableView.isHidden = false
+            default:
+                break
             }
-        case let passwordCredential as ASPasswordCredential:
-        
-            // Sign in using an existing iCloud Keychain credential.
-            let username = passwordCredential.user
-            let password = passwordCredential.password
-            
-        default:
-            break
+        }
+    private func saveUserInKeychain(_ userIdentifier: String) {
+        do {
+            try KeychainItem(service: "email", account: "userIdentifier").saveItem(userIdentifier)
+        } catch {
+            print("Unable to save userIdentifier to keychain.")
         }
     }
-
+    
     func checkIfLoginIsRequired() -> Bool {
         if let lastLoginDate = UserDefaults.standard.object(forKey: "lastLoginDate") as? Date {
             let currentDate = Date()
@@ -291,7 +324,7 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
         }
         return false
     }
-
+    
 }
 
 extension ProfileViewController: ASAuthorizationControllerPresentationContextProviding {
@@ -303,17 +336,25 @@ extension ProfileViewController: ASAuthorizationControllerPresentationContextPro
 extension ProfileViewController: LoginButtonDelegate {
     
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
-//        hideIndicator()
         print("Login Succeeded.")
     }
-
+    
     func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
-//        hideIndicator()
         print("Error: \(error)")
     }
-
+    
     func loginButtonDidStartLogin(_ button: LoginButton) {
-//        showIndicator()
         print("Login Started.")
     }
+}
+
+
+struct UserInfo: Codable {
+    let id: String
+    let email: String
+    let userName: String
+    let userImage: String
+    let userStatus: Int
+    let googleToken: String
+    let appleId: String
 }

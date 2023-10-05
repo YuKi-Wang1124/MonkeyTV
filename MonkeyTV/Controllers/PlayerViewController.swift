@@ -129,7 +129,8 @@ class PlayerViewController: UIViewController {
         tableView.delegate = self
         getYouTubeVideoData()
         loadYoutubeVideo()
-        
+        changeOrientationButton.isHidden = true
+
         showNameLabel.sizeToFit()
     }
     
@@ -189,7 +190,7 @@ class PlayerViewController: UIViewController {
         showDanMuButton.isHidden = false
         pauseButton.isHidden = false
         videoSlider.isHidden = false
-        changeOrientationButton.isHidden = false
+//        changeOrientationButton.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
             self?.showDanMuButton.isHidden = true
             self?.pauseButton.isHidden = true
