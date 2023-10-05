@@ -20,5 +20,85 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "25C743C6-45CC-4278-B7C9-E0C2939BF7F6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/PlayerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
+            landmarkName = "playerView(_:didPlayTime:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "036047F8-0067-4762-80E1-B297D31E8D73"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Helpers/DanMu.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "addDanMu(text:isMycomment:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "287EB75C-D227-4BAF-A666-0F8E257F451E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/PlayerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "playerView(_:didPlayTime:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "287EB75C-D227-4BAF-A666-0F8E257F451E - fdbab2db27dd582a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.PlayerViewController.playerView(_: __C.YTPlayerView, didPlayTime: Swift.Float) -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/PlayerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "287EB75C-D227-4BAF-A666-0F8E257F451E - 2b480271a9717626"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (MonkeyTV.BulletChat) -&gt; () in MonkeyTV.PlayerViewController.playerView(_: __C.YTPlayerView, didPlayTime: Swift.Float) -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/PlayerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "478"
+                  endingLineNumber = "478"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

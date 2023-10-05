@@ -82,12 +82,16 @@ class DanMuView: UIView {
         }
         var linelasts: [DanMu?] = []
         let rows: Int = Int(self.bounds.size.height / lineHeight)
+        
+        print("height: ", self.bounds.size.height)
+        print("width: ", self.bounds.size.width)
+        
         for _ in 0..<rows {
             linelasts.append(nil)
         }
         
         for dumu in danmus {
-            if dumu.row >= linelasts.count {
+            if dumu.row >= rows {
                 return
             }
             if linelasts[dumu.row] != nil {
@@ -145,10 +149,19 @@ class DanMuView: UIView {
             }
         }
     }
+    
     @objc func removeDanMuQueue() {
         if let danmu = removeDanmus.first {
             danmu.label.removeFromSuperview()
             removeDanmus.removeFirst()
         }
+    }
+    
+    public func removeAllDanMuQueue() {
+        for danmu in danmus {
+            danmu.label.isHidden = true
+            removeDanmus.append(danmu)
+        }
+        danmus.removeAll()
     }
 }

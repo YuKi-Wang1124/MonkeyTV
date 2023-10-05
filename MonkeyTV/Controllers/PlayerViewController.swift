@@ -26,6 +26,7 @@ class PlayerViewController: UIViewController {
     private var videoDuration = 0
     private var timer: Timer?
     private var bulletChats = [BulletChat]()
+    private var playerBulletChats = [BulletChat]()
     private var danMuText: String = ""
     private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
     private var setupCellButtonDelegate: ChangeCellButtonDelegate?
@@ -145,7 +146,7 @@ class PlayerViewController: UIViewController {
                     UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
-                print("橫式: \(buttonsView.frame.size.height)")
+//                print("橫式: \(buttonsView.frame.size.height)")
             } else {
                 self.changeOrientationButton.setImage(
                     UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
@@ -154,8 +155,12 @@ class PlayerViewController: UIViewController {
                 showNameLabel.sizeToFit()
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
-                print("直式: \(buttonsView.frame.size.height)")
+//                print("直式: \(buttonsView.frame.size.height)")
             }
+            
+            danmuView.removeAllDanMuQueue()
+            self.restartPlayerBulletChats()
+            
         }, completion: { _ in
         })
     }
@@ -247,11 +252,17 @@ class PlayerViewController: UIViewController {
         videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
                               for: .valueChanged)
     }
+    
     // MARK: - Handle Slider Change
+    
     @objc func handleSliderChange(sender: UISlider) {
+        
         let desiredTime = sender.value
         ytVideoPlayerView.seek(toSeconds: desiredTime, allowSeekAhead: true)
+        danmuView.removeAllDanMuQueue()
+        self.restartPlayerBulletChats()
     }
+    
     // MARK: - pauseVideo
     @objc func pauseVideo(sender: UIButton) {
         danmuView.isPause = !danmuView.isPause
@@ -296,7 +307,6 @@ class PlayerViewController: UIViewController {
         }
         isDanMuDisplayed.toggle()
     }
-    
 }
     // MARK: - Setup UILayout
     
@@ -459,14 +469,24 @@ extension PlayerViewController: YTPlayerViewDelegate {
     }
     //    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
     //    }
+    
+    func restartPlayerBulletChats() {
+        self.playerBulletChats.removeAll()
+        self.playerBulletChats.append(contentsOf: self.bulletChats.filter {
+            $0.popTime >= videoSlider.value - 2
+        })
+        self.playerBulletChats.sort()
+    }
+    
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
-        self.bulletChats.sort()
-        bulletChats.forEach({
+        
+        playerBulletChats.forEach({
             if playTime >= $0.popTime {
                 danmuView.danmuQueue.append(($0.content, false))
-                self.bulletChats.remove(at: 0)
+                self.playerBulletChats.remove(at: 0)
             }
         })
+        
         if self.videoDuration != 0 {
             self.videoSlider.maximumValue = Float(self.videoDuration)
             videoSlider.value = playTime
@@ -491,10 +511,13 @@ extension PlayerViewController: YTPlayerViewDelegate {
                             let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                             let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
                             self.bulletChats.append(decodedObject.bulletChat)
+                            
                         } catch {
                             print("\(error)")
                         }
                     }
+                    
+                    self.restartPlayerBulletChats()
                 }
             }
     }
