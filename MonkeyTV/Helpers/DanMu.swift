@@ -15,6 +15,7 @@ class DanMu: Hashable {
     var speed: CGFloat = 0
     var isMe: Bool = false
     init() {
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .white
     }
     
@@ -82,10 +83,7 @@ class DanMuView: UIView {
         }
         var linelasts: [DanMu?] = []
         let rows: Int = Int(self.bounds.size.height / lineHeight)
-        
-        print("height: ", self.bounds.size.height)
-        print("width: ", self.bounds.size.width)
-        
+                
         for _ in 0..<rows {
             linelasts.append(nil)
         }

@@ -348,7 +348,6 @@ extension ProfileViewController: LoginButtonDelegate {
     }
 }
 
-
 struct UserInfo: Codable {
     let id: String
     let email: String
