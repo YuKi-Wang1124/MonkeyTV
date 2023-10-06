@@ -49,3 +49,13 @@ struct ChatroomChat: Codable, Hashable {
     let createdTime: Date?
     let userId: String?
 }
+
+struct UserInfo: Codable {
+    let id: String
+    let email: String
+    let userName: String
+    let userImage: String
+    let userStatus: Int
+    let googleToken: String
+    let appleId: String
+}

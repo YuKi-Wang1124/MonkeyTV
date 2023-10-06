@@ -30,14 +30,7 @@ class PlayerViewController: UIViewController {
     private var danMuText: String = ""
     private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
     private var setupCellButtonDelegate: ChangeCellButtonDelegate?
-    private let playerVars: [AnyHashable: Any] = [
-        "frameborder": 0,
-        "loop": 0,
-        "playsigline": 1,
-        "controls": 0,
-        "showinfo": 0,
-        "autoplay": 1
-    ]
+    
     // MARK: - Bools
     
     private var isPanning = false
@@ -108,6 +101,7 @@ class PlayerViewController: UIViewController {
             image: UIImage.systemAsset(.enlarge, configuration: smallSymbolConfig),
             color: .white, cornerRadius: 10)
     }()
+    
     private lazy var showDanMuButton = {
         let button = UIButton.createPlayerButton(
             image: UIImage.systemAsset(.square, configuration: smallSymbolConfig),
@@ -115,11 +109,13 @@ class PlayerViewController: UIViewController {
         button.setTitle("彈幕", for: .normal)
         return button
     }()
+    
     private lazy var pauseButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
             color: .white, cornerRadius: 30)
     }()
+    
     private lazy var videoSlider: UISlider = {
         let slider = UISlider()
         slider.thumbTintColor = UIColor.mainColor
@@ -143,8 +139,6 @@ class PlayerViewController: UIViewController {
         showNameLabel.sizeToFit()
     }
     
-    // MARK: - View Will Transition
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -156,6 +150,7 @@ class PlayerViewController: UIViewController {
                     UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
+//                print("橫式: \(buttonsView.frame.size.height)")
             } else {
                 self.changeOrientationButton.setImage(
                     UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
@@ -164,6 +159,7 @@ class PlayerViewController: UIViewController {
                 showNameLabel.sizeToFit()
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
+//                print("直式: \(buttonsView.frame.size.height)")
             }
             
             danmuView.removeAllDanMuQueue()
@@ -177,9 +173,9 @@ class PlayerViewController: UIViewController {
         ytVideoPlayerView.removeWebView()
     }
     
-    // MARK: - 加入片單按鈕
-    
     func setupMyShow() {
+        print("StorageManager.shared.isContainMyShow(id: id) === \(StorageManager.shared.isContainMyShow(id: id))")
+        
         isMyShow = StorageManager.shared.isContainMyShow(id: id)
         
         if isMyShow == true {
@@ -190,7 +186,6 @@ class PlayerViewController: UIViewController {
     }
     
     // MARK: - Button View Gesture
-    
     private func addButtonViewGesture() {
         let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
         singleFinger.numberOfTapsRequired = 1
@@ -250,9 +245,7 @@ class PlayerViewController: UIViewController {
             break
         }
     }
-    
     // MARK: - Buttons AddTaget
-    
     private func setBtnsAddtarget() {
         showDanMuButton.addTarget(self, action: #selector(showDanMuView(sender:)),
                                   for: .touchUpInside)
@@ -272,13 +265,10 @@ class PlayerViewController: UIViewController {
         ytVideoPlayerView.seek(toSeconds: desiredTime, allowSeekAhead: true)
         danmuView.removeAllDanMuQueue()
         self.restartPlayerBulletChats()
-        
     }
     
     // MARK: - pauseVideo
-    
     @objc func pauseVideo(sender: UIButton) {
-        
         danmuView.isPause = !danmuView.isPause
         if videoIsPlaying {
             sender.setImage(UIImage.systemAsset(.play, configuration: UIImage.symbolConfig),
@@ -290,12 +280,10 @@ class PlayerViewController: UIViewController {
             ytVideoPlayerView.playVideo()
         }
         videoIsPlaying.toggle()
-        
     }
     // MARK: - Change Orientation
     
     @objc func changeOrientation(sender: UIButton) {
-        
         if playerIsShrink == false {
             showNameLabel.removeFromSuperview()
             tableView.removeFromSuperview()
@@ -362,7 +350,7 @@ class PlayerViewController: UIViewController {
             danmuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            danmuView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70),
+            danmuView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
@@ -407,7 +395,7 @@ class PlayerViewController: UIViewController {
             
             danmuView.widthAnchor.constraint(equalTo: view.widthAnchor),
             danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            danmuView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
+            danmuView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16, constant: -30),
             
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
@@ -443,7 +431,7 @@ class PlayerViewController: UIViewController {
         addButtonViewGesture()
     }
     
-    // MARK: - set DanMu
+    // MARK: - Dan Mu
     private func setDanMu() {
         danmuView.isHidden = true
         danmuView.minSpeed = 1
@@ -567,6 +555,7 @@ extension PlayerViewController {
                         for: indexPath) as? PlayerTitleTableViewCell
                     
                     guard let cell = cell else { return UITableViewCell() }
+//                    cell.showNameLabel.text = item.title
                     cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
                     self.setupCellButtonDelegate = cell
                     self.setupMyShow()
@@ -684,6 +673,7 @@ extension PlayerViewController {
 // MARK: - Get YouTube Video Data
 
 extension PlayerViewController {
+    
     func getYouTubeVideoData() {
         HTTPClientManager.shared.request(
             YoutubeRequest.playlistItems(
@@ -746,6 +736,14 @@ extension PlayerViewController {
             })
     }
     private func loadYoutubeVideo() {
+        let playerVars: [AnyHashable: Any] = [
+            "frameborder": 0,
+            "loop": 0,
+            "playsigline": 1,
+            "controls": 0,
+            "showinfo": 0,
+            "autoplay": 1
+        ]
         if playlistId == "" {
             ytVideoPlayerView.load(withVideoId: videoId)
         } else {
@@ -754,10 +752,20 @@ extension PlayerViewController {
     }
 }
 
-// MARK: - update new video
 extension PlayerViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         guard let itemIdentifier = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let playerVars: [AnyHashable: Any] = [
+            "frameborder": 0, "loop": 0,
+            "playsigline": 1,
+            "controls": 0,
+            "showinfo": 0,
+            "autoplay": 1
+        ]
+                
         showNameLabel.text = itemIdentifier.title
         ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
     }

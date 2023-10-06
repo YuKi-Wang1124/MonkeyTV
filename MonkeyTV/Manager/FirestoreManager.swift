@@ -16,24 +16,35 @@ class FirestoreManager {
     static let show = FirestoreManager.shared.collection("Show")
     static let hotShow = FirestoreManager.shared.collection("HotShow")
     
-    static func getUserInfo(
+    static func signInUserInfo(email: String, data: [String: Any]) {
+        FirestoreManager.user.document(email).setData(data) { error in
+            if error != nil {
+                print("Error adding document: \(String(describing: error))")
+            } else { }
+        }
+    }
+    
+    static func fetchUserInfo(
         email: String
     ) async -> UserInfo? {
         do {
-            let querySnapshot = try await self.user.whereField(
-                "email", isEqualTo: email).getDocuments()
+            let document = try await self.user.document(email).getDocument()
             
-            for document in querySnapshot.documents {
-                
-                let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
-                
-                print(decodedObject)
-            }
+            let jsonData = try JSONSerialization.data(withJSONObject: document.data()!)
+            let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
+            return decodedObject
         } catch {
             print("\(error)")
         }
         return nil
+    }
+    
+    static func updateUserInfo(email: String, data: [String: Any]) {
+        
+        FirestoreManager.user.document(email).updateData(data) { error in
+            if error != nil {
+                print("Error adding document: \(String(describing: error))") } else { }
+        }
     }
     
     static func userIsExist(email: String) async -> Bool {

@@ -21,6 +21,7 @@ class ChatroomViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     private var chatroomTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGray
@@ -30,6 +31,7 @@ class ChatroomViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private lazy var submitMessageButton = {
         return UIButton.createPlayerButton(image: UIImage.systemAsset(.send),
                                            color: .white, cornerRadius: 20)

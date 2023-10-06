@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
         tableView.register(ProfileTitleTableViewCell.self,
                            forCellReuseIdentifier:
                             ProfileTitleTableViewCell.identifier)
@@ -69,15 +69,21 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
+    private var myUserInfo: UserInfo?
+    
     override func viewDidAppear(_ animated: Bool) {
         
-        print("KeychainItem.currentUserIdentifier: \(KeychainItem.currentEmail)")
+        print("KeychainItem: \(KeychainItem.currentEmail)")
         
         let email = KeychainItem.currentEmail
-        
+    
         Task {
-            if email.isEmpty == false {
+            if await UserInfoManager.userIsLogIn() == true {
                 tableView.isHidden = false
+                
+                if let userInfo = await UserInfoManager.userInfo() {
+                    myUserInfo = userInfo
+                }
             }
         }
         
@@ -173,18 +179,13 @@ class ProfileViewController: UIViewController {
                             let data: [String: Any] = ["id": id, "email": email, "userName": name,
                                                        "userImage": image, "userStatus": 0,
                                                        "appleId": "", "googleToken": accessToken.tokenString]
-                            self.saveUserInKeychain(email)
                             DispatchQueue.main.async {
-                                FirestoreManager.user.document(email).setData(data) { error in
-                                    if error != nil {
-                                        print("Error adding document: \(String(describing: error))") } else { }
-                                }
+                                FirestoreManager.signInUserInfo(email: email, data: data)
                             }
                         } else {
                             let data: [String: Any] = ["userImage": image, "googleToken": accessToken.tokenString]
-                            FirestoreManager.user.document(email).updateData(data) { error in
-                                if error != nil {
-                                    print("Error adding document: \(String(describing: error))") } else { }
+                            DispatchQueue.main.async {
+                                FirestoreManager.updateUserInfo(email: email, data: data)
                             }
                         }
                     }
@@ -242,26 +243,24 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath) as? ProfileTitleTableViewCell
         guard let cell = cell else { return UITableViewCell() }
         
-        cell.nameLabel.text = username
-        
+        guard let myUserInfo = myUserInfo else { return UITableViewCell() }
+
+        cell.nameLabel.text = myUserInfo.userName
+        cell.personalImageView.loadImage(myUserInfo.userImage)
         return cell
     }
 }
+
+// MARK: - Sign in with apple
 
 extension ProfileViewController: ASAuthorizationControllerDelegate {
     
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization) {
-            
             switch authorization.credential {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                
-                // Create an account in your system.
                 let userIdentifier = appleIDCredential.user
-                
-                print(userIdentifier)
-                
                 if let name = appleIDCredential.fullName,
                    let email = appleIDCredential.email {
                     let id = FirestoreManager.user.document().documentID
@@ -273,18 +272,11 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                                                        "userImage": "", "userStatus": 0,
                                                        "appleId": userIdentifier, "googleToken": ""]
                             DispatchQueue.main.async {
-                                FirestoreManager.user.document(email).setData(data) { error in
-                                    if error != nil {
-                                        print("Error adding document: \(String(describing: error))")
-                                    } else { }
-                                }
+                                FirestoreManager.signInUserInfo(email: email, data: data)
                             }
                         } else {
                             let data: [String: Any] = ["appleId": userIdentifier]
-                            FirestoreManager.user.document(email).updateData(data) { error in
-                                if error != nil {
-                                    print("Error adding document: \(String(describing: error))") } else { }
-                            }
+                            FirestoreManager.updateUserInfo(email: email, data: data)
                         }
                     }
                 } else {
@@ -295,7 +287,7 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                             for document in querySnapshot.documents {
                                 let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                                 let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
-                                print(decodedObject)
+//                                print(decodedObject)
                             }
                         } catch { print("\(error)") }
                     }
@@ -306,6 +298,7 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                 break
             }
         }
+    
     private func saveUserInKeychain(_ userIdentifier: String) {
         do {
             try KeychainItem(service: "email", account: "userIdentifier").saveItem(userIdentifier)
@@ -346,14 +339,4 @@ extension ProfileViewController: LoginButtonDelegate {
     func loginButtonDidStartLogin(_ button: LoginButton) {
         print("Login Started.")
     }
-}
-
-struct UserInfo: Codable {
-    let id: String
-    let email: String
-    let userName: String
-    let userImage: String
-    let userStatus: Int
-    let googleToken: String
-    let appleId: String
 }

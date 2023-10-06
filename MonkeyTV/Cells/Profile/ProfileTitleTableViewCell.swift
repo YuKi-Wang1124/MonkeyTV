@@ -26,6 +26,7 @@ class ProfileTitleTableViewCell: UITableViewCell {
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.font = UIFont.systemFont(ofSize: 22)
         label.textAlignment = .center
+        label.text = "kiki wang"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,23 +46,24 @@ class ProfileTitleTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func setupUILayout() {
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         contentView.addSubview(personalImageView)
         contentView.addSubview(nameLabel)
         
         NSLayoutConstraint.activate([
-            personalImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 32),
+            personalImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 16),
             personalImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/3),
             personalImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/3),
             personalImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: personalImageView.bottomAnchor, constant: 32),
+            nameLabel.topAnchor.constraint(equalTo: personalImageView.bottomAnchor, constant: 16),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             nameLabel.heightAnchor.constraint(equalToConstant: 50),
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+
         ])
     }
 }
