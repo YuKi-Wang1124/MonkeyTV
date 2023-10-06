@@ -14,7 +14,7 @@ class ProfileTitleTableViewCell: UITableViewCell {
     lazy var personalImageView = {
          let imageView = UIImageView()
          imageView.contentMode = .scaleAspectFill
-         imageView.layer.cornerRadius = 60
+         imageView.layer.cornerRadius = 65
          imageView.clipsToBounds = true
          imageView.image = UIImage.systemAsset(.personalPicture)
          imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,9 +24,8 @@ class ProfileTitleTableViewCell: UITableViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 22)
+        label.font = UIFont.systemFont(ofSize: 24)
         label.textAlignment = .center
-        label.text = "kiki wang"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,17 +51,16 @@ class ProfileTitleTableViewCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         
         NSLayoutConstraint.activate([
-            personalImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 16),
+            personalImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 32),
             personalImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/3),
             personalImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/3),
             personalImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: personalImageView.bottomAnchor, constant: 16),
+            nameLabel.topAnchor.constraint(equalTo: personalImageView.bottomAnchor, constant: 32),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            nameLabel.heightAnchor.constraint(equalToConstant: 50),
-            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
 
         ])
     }

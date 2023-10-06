@@ -18,11 +18,13 @@ class ProfileViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .singleLine
         tableView.register(ProfileTitleTableViewCell.self,
                            forCellReuseIdentifier:
                             ProfileTitleTableViewCell.identifier)
+        tableView.register(SignInWithTableViewCell.self,
+                           forCellReuseIdentifier:
+                            SignInWithTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -43,7 +45,7 @@ class ProfileViewController: UIViewController {
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
-        label.text = "歡迎登入 MonkeyTV"
+        label.text = "歡迎 註冊 / 登入 MonkeyTV"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -71,19 +73,19 @@ class ProfileViewController: UIViewController {
     
     private var myUserInfo: UserInfo?
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        print("KeychainItem: \(KeychainItem.currentEmail)")
-        
-        let email = KeychainItem.currentEmail
+    var rightButton = UIBarButtonItem()
     
+    private lazy var bindAccountBoolArray: [Bool] = [false, false]
+        
+    override func viewWillAppear(_ animated: Bool) {
+        print("KeychainItem: \(KeychainItem.currentEmail)")
+
         Task {
             if await UserInfoManager.userIsLogIn() == true {
-                tableView.isHidden = false
-                
-                if let userInfo = await UserInfoManager.userInfo() {
-                    myUserInfo = userInfo
-                }
+                await self.showLogInTableVie()
+            } else {
+                tableView.isHidden = true
+                rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)], for: .normal)
             }
         }
         
@@ -101,6 +103,15 @@ class ProfileViewController: UIViewController {
         lineSignInButton.permissions = [.profile]
         lineSignInButton.presentingViewController = self
         
+        rightButton = UIBarButtonItem(title: "登出", style: .plain, target: self, action: #selector(rightButtonTapped))
+        self.navigationItem.rightBarButtonItem = rightButton
+    }
+    
+    @objc func rightButtonTapped(sender: Any) {
+        print("登出")
+        self.saveUserInKeychain("")
+        tableView.isHidden = true
+        rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
     }
     
     @objc func signOut(sender: Any) {
@@ -183,14 +194,32 @@ class ProfileViewController: UIViewController {
                                 FirestoreManager.signInUserInfo(email: email, data: data)
                             }
                         } else {
+                            self.saveUserInKeychain(email)
                             let data: [String: Any] = ["userImage": image, "googleToken": accessToken.tokenString]
                             DispatchQueue.main.async {
                                 FirestoreManager.updateUserInfo(email: email, data: data)
                             }
                         }
                     }
+                    Task {
+                        await self.showLogInTableVie()
+                    }
                 }
             }}
+    }
+    
+    func showLogInTableVie() async {
+           if let userInfo = await UserInfoManager.userInfo() {
+                myUserInfo = userInfo
+                if let myUserInfo = myUserInfo {
+                    
+                    bindAccountBoolArray = [!myUserInfo.googleToken.isEmpty,
+                                            !myUserInfo.appleId.isEmpty]
+                    tableView.reloadData()
+                }
+            }
+        self.tableView.isHidden = false
+        self.rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mainColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)], for: .normal)
     }
     
     private func setupButtonLayout() {
@@ -231,23 +260,65 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row != 0 {
+            return 82.0
+        }
+        return UITableView.automaticDimension
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =
-        tableView.dequeueReusableCell(
-            withIdentifier: ProfileTitleTableViewCell.identifier,
-            for: indexPath) as? ProfileTitleTableViewCell
-        guard let cell = cell else { return UITableViewCell() }
         
-        guard let myUserInfo = myUserInfo else { return UITableViewCell() }
+        if indexPath.row == 0 {
+            let cell =
+            tableView.dequeueReusableCell(
+                withIdentifier: ProfileTitleTableViewCell.identifier,
+                for: indexPath) as? ProfileTitleTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            
+            guard let myUserInfo = myUserInfo else { return UITableViewCell() }
+            cell.nameLabel.text = myUserInfo.userName
+            cell.personalImageView.loadImage(myUserInfo.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
+            
+            return cell
+        } else {
+            let cell =
+            tableView.dequeueReusableCell(
+                withIdentifier: SignInWithTableViewCell.identifier,
+                for: indexPath) as? SignInWithTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            let index = indexPath.row - 1
+            let logInMethodStrings = LogInMethod.allCases.map { $0.rawValue }
+            let lowercaseLogInMethodStrings = logInMethodStrings.map { $0.lowercased() }
+            cell.nameLabel.text = logInMethodStrings[index]
+            cell.iconImageView.image = UIImage(named: lowercaseLogInMethodStrings[index])
+                
+                if self.bindAccountBoolArray[index] == true {
+                    cell.signInButton.setTitle("完成綁定", for: .normal)
+                } else {
+                    cell.signInButton.setTitle("尚未綁定", for: .normal)
+                }
+            
+            cell.signInButton.tag = index
+            cell.signInButton.addTarget(self, action: #selector(bindAccount(sender:)), for: .touchUpInside)
+            return cell
+        }
+    }
+    
+    @objc func bindAccount(sender: UIButton) {
+//        bindAccountBoolArray[sender.tag] = !bindAccountBoolArray[sender.tag]
+//        tableView.reloadData()
+        if sender.titleLabel?.text == "取消綁定" {
+            print("cancel")
+                        
+        } else if sender.titleLabel?.text == "綁定" {
+            print("bind")
 
-        cell.nameLabel.text = myUserInfo.userName
-        cell.personalImageView.loadImage(myUserInfo.userImage)
-        return cell
+        }
     }
 }
 
@@ -266,6 +337,7 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                     let id = FirestoreManager.user.document().documentID
                     let userName = "\(name.givenName ?? "") \(name.familyName ?? "")"
                     self.saveUserInKeychain(email)
+    
                     Task {
                         if await FirestoreManager.userIsExist(email: email) == false {
                             let data: [String: Any] = ["id": id, "email": email, "userName": userName,
@@ -278,16 +350,18 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                             let data: [String: Any] = ["appleId": userIdentifier]
                             FirestoreManager.updateUserInfo(email: email, data: data)
                         }
+                        await self.showLogInTableVie()
                     }
                 } else {
                     Task {
-                        let querySnapshot = try await FirestoreManager.user.whereField(
-                            "appleId", isEqualTo: userIdentifier).getDocuments()
+                        let querySnapshot = try await FirestoreManager.user.whereField("appleId", isEqualTo: userIdentifier).getDocuments()
                         do {
                             for document in querySnapshot.documents {
                                 let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                                 let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
-//                                print(decodedObject)
+                                print(decodedObject.email)
+                                self.saveUserInKeychain(decodedObject.email)
+                                await self.showLogInTableVie()
                             }
                         } catch { print("\(error)") }
                     }
@@ -339,4 +413,9 @@ extension ProfileViewController: LoginButtonDelegate {
     func loginButtonDidStartLogin(_ button: LoginButton) {
         print("Login Started.")
     }
+}
+
+enum LogInMethod: String, CaseIterable {
+    case google = "Google"
+    case apple = "Apple"
 }
