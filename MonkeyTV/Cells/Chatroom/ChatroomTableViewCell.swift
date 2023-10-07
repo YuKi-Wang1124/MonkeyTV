@@ -16,8 +16,8 @@ class ChatroomTableViewCell: UITableViewCell {
     lazy var personalImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = self.frame.width / 2
-        imageView.backgroundColor = .yellow
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -52,12 +52,12 @@ class ChatroomTableViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
 
         NSLayoutConstraint.activate([
-            personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            personalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             personalImageView.trailingAnchor.constraint(equalTo: nameLabel.leadingAnchor,
                                                         constant: -4),
             personalImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            personalImageView.heightAnchor.constraint(equalToConstant: 30),
-            personalImageView.widthAnchor.constraint(equalToConstant: 30),
+            personalImageView.heightAnchor.constraint(equalToConstant: 42),
+            personalImageView.widthAnchor.constraint(equalToConstant: 42),
             nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
             messageLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),

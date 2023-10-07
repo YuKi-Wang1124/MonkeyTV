@@ -35,6 +35,7 @@ enum ImageAsset: String {
     case clock = "clock.fill"
     case plus
     case checkmark
+    case pencil
 }
 
 extension UIImage {

@@ -29,6 +29,12 @@ class ProfileTitleTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private lazy var pencilButton = {
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.pencil, configuration: UIImage.symbolConfig),
+            color: .white, cornerRadius: 30)
+    }()
    
     // MARK: - init
     

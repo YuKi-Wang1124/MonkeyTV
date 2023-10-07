@@ -15,8 +15,10 @@ class SignInWithTableViewCell: UITableViewCell {
     
     var iconImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = 25
+        image.layer.cornerRadius = 21
         image.clipsToBounds = true
+        image.layer.borderColor = UIColor.systemGray4.cgColor
+        image.layer.borderWidth = 1
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -24,7 +26,7 @@ class SignInWithTableViewCell: UITableViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = UIFont.systemFont(ofSize: 22)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -33,9 +35,10 @@ class SignInWithTableViewCell: UITableViewCell {
     lazy var signInButton = {
         let button = UIButton()
         button.setTitle("綁定", for: .normal)
-        button.setTitleColor(UIColor.setColor(lightColor: .darkGray, darkColor: .white), for: .normal)
+        button.setTitleColor(UIColor.mainColor, for: .normal)
         button.titleLabel?.numberOfLines = 1
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+       
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -62,18 +65,17 @@ class SignInWithTableViewCell: UITableViewCell {
         contentView.addSubview(signInButton)
         
         NSLayoutConstraint.activate([
-            iconImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 16),
-//            iconImageView.heightAnchor.constraint(equalToConstant: 50),
+            iconImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
             iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor),
-            iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             iconImageView.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 
-            nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 32),
+            nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
             nameLabel.trailingAnchor.constraint(equalTo: signInButton.leadingAnchor, constant: -32),
             nameLabel.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),
             
-            signInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
+            signInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             signInButton.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),
             signInButton.heightAnchor.constraint(equalToConstant: 40)
 

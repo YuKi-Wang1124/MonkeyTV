@@ -15,6 +15,8 @@ class PlayerViewController: UIViewController {
     var id: String = ""
     var showName: String = ""
     var showImage: String = ""
+    private var userName: String = "匿名"
+    private var userImage: String = ""
     var isMyShow: Bool = false
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
@@ -39,7 +41,8 @@ class PlayerViewController: UIViewController {
     private var videoIsPlaying = true
     private var playerIsShrink = false
     private var isSideViewVisible = false
-    
+    static var chatroonIsShow = false
+
     // MARK: - Views
     
     private lazy var ytVideoPlayerView: YTPlayerView = {
@@ -75,9 +78,6 @@ class PlayerViewController: UIViewController {
         var tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        tableView.register(PlayerTitleTableViewCell.self,
-                           forCellReuseIdentifier:
-                            PlayerTitleTableViewCell.identifier)
         tableView.register(ChatroomButtonTableViewCell.self,
                            forCellReuseIdentifier:
                             ChatroomButtonTableViewCell.identifier)
@@ -123,10 +123,14 @@ class PlayerViewController: UIViewController {
         return slider
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        Task { await showUserName() }
+    }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         setupUILayout()
         setupTableView()
         setupVideoLauncher()
@@ -209,8 +213,10 @@ class PlayerViewController: UIViewController {
         }
     }
     @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        if PlayerViewController.chatroonIsShow == true {
+            return
+        }
         let translation = gesture.translation(in: buttonsView)
-        
         switch gesture.state {
         case .began:
             initialY = self.view.frame.origin.y
@@ -231,10 +237,12 @@ class PlayerViewController: UIViewController {
             if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 && velocity.y > 100 {
                 // 在此處執行往下縮小視圖控制器的操作
                 // 例如，使用動畫將視圖控制器縮小到底部
-                dismiss(animated: true)
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = self.view.frame.height
+                    
+                    self.dismiss(animated: true)
                 }
+                
             } else {
                 // 恢復視圖控制器到原始位置
                 UIView.animate(withDuration: 0.3) {
@@ -382,7 +390,7 @@ class PlayerViewController: UIViewController {
             showNameLabel.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor, constant: 10),
             showNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             showNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            showNameLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -16),
+            showNameLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -8),
             
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -533,7 +541,7 @@ extension PlayerViewController {
     
     private func setupTableView() {
         configureDataSource(tableView: tableView)
-        snapshot.appendSections([.title, .chatroom, .danmu, .playlist])
+        snapshot.appendSections([.chatroom, .danmu, .playlist])
        
         let chatroom = MKShow(id: "chatroom",
                               videoId: videoId, image: showImage, title: showName, playlistId: playlistId)
@@ -549,19 +557,7 @@ extension PlayerViewController {
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
                 
-                if indexPath.section == 0 {
-                    let cell = tableView.dequeueReusableCell(
-                        withIdentifier: PlayerTitleTableViewCell.identifier,
-                        for: indexPath) as? PlayerTitleTableViewCell
-                    
-                    guard let cell = cell else { return UITableViewCell() }
-//                    cell.showNameLabel.text = item.title
-                    cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
-                    self.setupCellButtonDelegate = cell
-                    self.setupMyShow()
-                    cell.selectionStyle = .none
-                    return cell
-                } else if indexPath.section == 1 {
+                if indexPath.section == 1 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ChatroomButtonTableViewCell.identifier,
                         for: indexPath) as? ChatroomButtonTableViewCell
@@ -570,9 +566,13 @@ extension PlayerViewController {
                     cell.chatRoomButton.addTarget(
                         self, action: #selector(self.showChatroom(sender:)),
                         for: .touchUpInside)
+                    cell.personalImageView.loadImage(self.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
+                    
+                   cell.chatroomNameLabel.text = "  以\(self.userName)的身份與大家聊天..."
+                    
                     cell.selectionStyle = .none
                     return cell
-                } else if indexPath.section == 2 {
+                } else if indexPath.section == 0 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: DanMuTextFieldTableViewCell.identifier,
                         for: indexPath) as? DanMuTextFieldTableViewCell
@@ -584,9 +584,12 @@ extension PlayerViewController {
                     }
                     cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
                     self.emptyTextFieldDelegate = cell
+                    cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
+                    self.setupCellButtonDelegate = cell
+                    self.setupMyShow()
                     cell.selectionStyle = .none
                     return cell
-                } else if indexPath.section == 3 {
+                } else if indexPath.section == 2 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ShowTableViewCell.identifier,
                         for: indexPath) as? ShowTableViewCell
@@ -606,6 +609,17 @@ extension PlayerViewController {
         self.dataSource.apply(snapshot)
     }
     
+    private func showUserName() async {
+        if KeychainItem.currentEmail.isEmpty {
+            return
+        }
+        if let userInfo = await UserInfoManager.userInfo() {
+            userName = userInfo.userName
+            userImage = userInfo.userImage
+        }
+        tableView.reloadData()
+    }
+    
     @objc func addToMyShow(sender: UIButton) {
         
         if isMyShow == true {
@@ -623,6 +637,8 @@ extension PlayerViewController {
     
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
+        PlayerViewController.chatroonIsShow = true
+
         var statusBarHeigh: CGFloat = 0.0
         if #available(iOS 13.0, *) {
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -721,10 +737,11 @@ extension PlayerViewController {
                     
                     self.videoId = first.videoId
                     self.showName = first.title
+                    
                     let show = MKShow(id: id, videoId: first.videoId,
                                       image: "first.image", title: first.title,
                                       playlistId: first.playlistId)
-                    snapshot.appendItems([show], toSection: .title)
+//                    snapshot.appendItems([show], toSection: .title)
 
                     print(" first.title ==== \(first.title)")
                     DispatchQueue.main.async {
@@ -770,3 +787,4 @@ extension PlayerViewController: UITableViewDelegate {
         ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
     }
 }
+

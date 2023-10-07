@@ -41,7 +41,6 @@
 		CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */; };
 		CC1CCA652AC2B4B80010C63C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA642AC2B4B80010C63C /* StorageManager.swift */; };
 		CC1CCA892AC428C90010C63C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA882AC428C90010C63C /* String+Extension.swift */; };
-		CC1CCA8D2AC8415D0010C63C /* PlayerTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */; };
 		CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */; };
 		CC1CCA9B2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA9A2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift */; };
 		CC1CCA9F2ACE8C3D0010C63C /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */; };
@@ -101,7 +100,6 @@
 		CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMu.swift; sourceTree = "<group>"; };
 		CC1CCA642AC2B4B80010C63C /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		CC1CCA882AC428C90010C63C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTitleTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA9A2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA9D2ACBB8F30010C63C /* MonkeyTV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonkeyTV.entitlements; sourceTree = "<group>"; };
@@ -311,7 +309,6 @@
 		CC1CCA902AC84E730010C63C /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */,
 				CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */,
 				CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */,
 			);
@@ -507,7 +504,6 @@
 				CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
 				CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */,
-				CC1CCA8D2AC8415D0010C63C /* PlayerTitleTableViewCell.swift in Sources */,
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,

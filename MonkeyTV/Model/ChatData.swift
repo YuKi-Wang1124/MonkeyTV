@@ -48,6 +48,8 @@ struct ChatroomChat: Codable, Hashable {
     let contentType: Int?
     let createdTime: Date?
     let userId: String?
+    let userName: String?
+    let userImage: String
 }
 
 struct UserInfo: Codable {
@@ -58,4 +60,6 @@ struct UserInfo: Codable {
     let userStatus: Int
     let googleToken: String
     let appleId: String
+    let googleIsBind: Bool
+    let appleIsBind: Bool
 }

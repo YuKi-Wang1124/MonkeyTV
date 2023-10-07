@@ -10,12 +10,12 @@ import FirebaseCore
 import FirebaseFirestore
 
 class ChatroomViewController: UIViewController {
+    
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.register(ChatroomTableViewCell.self,
                            forCellReuseIdentifier: ChatroomTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,30 +27,58 @@ class ChatroomViewController: UIViewController {
         label.textColor = UIColor.lightGray
         label.font = UIFont.boldSystemFont(ofSize: 32)
         label.textAlignment = .left
-        label.text = "聊天室"
+        label.text = "即時聊天室"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var submitMessageButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send),
-                                           color: .white, cornerRadius: 20)
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.send),
+            color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
+            cornerRadius: 0, backgroundColor: .systemGray4)
     }()
     private lazy var messageTextField = {
-        return UITextField.createTextField(text: "輸入訊息")
+        return UITextField.createTextField(
+            text: "    輸入即時聊天訊息",
+            backgroundColor: UIColor.setColor(lightColor: .white, darkColor: .systemGray5))
     }()
     private var viewModel: ChatroomViewModel = ChatroomViewModel()
+    private var userId: String = ""
+    private var userName: String = ""
+    private var userImage: String = ""
     var videoId: String = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        Task { await showUserName() }
+    }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
         tableView.dataSource = viewModel.dataSource
         viewModel.configureDataSource(tableView: self.tableView)
         bindingViewModel()
         setupUI()
         submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
     }
-    deinit {
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        PlayerViewController.chatroonIsShow = false
+    }
+
+    func showUserName() async {
+        if KeychainItem.currentEmail.isEmpty {
+            userId = "匿名"
+            userName = "匿名"
+            return
+        }
+        if let userInfo = await UserInfoManager.userInfo() {
+            userId = userInfo.email
+            userName = userInfo.userName
+            userImage = userInfo.userImage
+        }
     }
     // MARK: - Submit Message To DB
     @objc func submitMessage() {
@@ -60,8 +88,10 @@ class ChatroomViewController: UIViewController {
             ["chatroomChat":
                 ["chatId": UUID().uuidString, "content": text, "contentType": 0,
                  "createdTime": FirebaseFirestore.Timestamp(),
-                 // TODO: userid
-                 "userId": "匿名"] as [String: Any],
+                 "userId": userId,
+                 "userName": userName,
+                 "userImage": userImage
+                ] as [String: Any],
              "videoId": videoId, "id": id]
             FirestoreManager.chatroom.document(id).setData(data) { error in
                 if error != nil {
@@ -111,16 +141,33 @@ extension ChatroomViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
             
-            messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: -8),
+            messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: 0),
             messageTextField.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 8),
-            messageTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            submitMessageButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            messageTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            submitMessageButton.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             submitMessageButton.centerYAnchor.constraint(equalTo: messageTextField.centerYAnchor),
-            submitMessageButton.heightAnchor.constraint(equalToConstant: 40),
+            submitMessageButton.heightAnchor.constraint(equalTo: messageTextField.heightAnchor),
             messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
         ])
     }
+}
+
+
+extension ChatroomViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        
+        if let chatroomData = viewModel.dataSource.itemIdentifier(for: indexPath) {
+              let selectedUserName = chatroomData.chatroomChat.userId
+            print("所选行的用户名：\(String(describing: selectedUserName))")
+              
+          }
+    }
+    
 }

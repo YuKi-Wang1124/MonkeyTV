@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       // Handle other custom URL types.
 
       // If not handled by this app, return false.
-      return false
+        return LoginManager.shared.application(app, open: url)
     }
 
     func application(_ application: UIApplication,

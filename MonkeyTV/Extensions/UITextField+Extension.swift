@@ -8,15 +8,15 @@
 import UIKit
 
 extension UITextField {
-    static func createTextField(text: String) -> UITextField {
+    static func createTextField(text: String, backgroundColor: UIColor) -> UITextField {
         let textfield = UITextField()
         textfield.attributedPlaceholder = NSAttributedString(
             string: text,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.font = UIFont.systemFont(ofSize: 18)
-        textfield.borderStyle = .roundedRect
-        textfield.layer.borderColor = UIColor.lightGray.cgColor
+        textfield.backgroundColor = backgroundColor
+//        textfield.layer.borderColor = UIColor.lightGray.cgColor
         return textfield
     }
 }

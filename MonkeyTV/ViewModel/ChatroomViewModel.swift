@@ -25,8 +25,9 @@ class ChatroomViewModel {
                     withIdentifier: ChatroomTableViewCell.identifier,
                     for: indexPath) as? ChatroomTableViewCell
                 guard let cell = cell else { return UITableViewCell() }
-                cell.personalImageView.image = UIImage.systemAsset(.personalPicture)
-                cell.nameLabel.text = item.chatroomChat.userId
+                cell.personalImageView.loadImage(item.chatroomChat.userImage,
+                                                 placeHolder: UIImage.systemAsset(.personalPicture))
+                cell.nameLabel.text = item.chatroomChat.userName
                 cell.messageLabel.text = item.chatroomChat.content
                 return cell
             }
@@ -53,13 +54,15 @@ class ChatroomViewModel {
                    let content = dict["content"] as? String,
                    let contentType = dict["contentType"] as? Int,
                    let userId = dict["userId"] as? String,
+                   let userName = dict["userName"] as? String,
+                   let userImage = dict["userImage"] as? String,
                    let videoId = data["videoId"] as? String,
                    let id = data["id"] as? String,
                    createdTime.dateValue() >= currentTime {
                     let object = ChatroomData(
                         chatroomChat: ChatroomChat(
                             chatId: chatId, content: content, contentType: contentType,
-                            createdTime: createdTime.dateValue(), userId: userId),
+                            createdTime: createdTime.dateValue(), userId: userId, userName: userName, userImage: userImage),
                         videoId: videoId, id: id)
                     if !(self?.snapshot.itemIdentifiers.contains(object))! {
                         newItems.append(object)
