@@ -50,7 +50,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     
     lazy var submitMessageButton = {
         let button = UIButton.createPlayerButton(
-            image: UIImage.systemAsset(.send,configuration: UIImage.symbolConfig),
+            image: UIImage.systemAsset(.paperplane, configuration: UIImage.symbolConfig),
             color: UIColor.lightGray, cornerRadius: 4)
         button.backgroundColor = UIColor.systemGray5
         return button

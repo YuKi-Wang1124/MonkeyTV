@@ -9,37 +9,42 @@ import UIKit
 import Kingfisher
 
 enum ImageAsset: String {
-    case house
-    case magnifyingglass
-    case heart
-    case person
-    case selectedHouse = "house.fill"
-    case selectedMagnifyingglass
-    case selectedHeart = "heart.fill"
-    case selectedPerson = "person.fill"
-    case square
+    case chatroom = "text.bubble.fill"
+    case checkmark
     case checkmarkSquare = "checkmark.square"
-    case submitDanMu = "ellipsis.message.fill"
+    case clock = "clock.fill"
+    case heart
+    case history = "clock.arrow.circlepath"
+    case house
+    case enlarge = "arrow.up.left.and.arrow.down.right"
+    case magnifyingglass
     case pause = "pause.fill"
+    case pencil
+    case person
+    case personalPicture = "person.crop.circle"
     case play = "play.fill"
     case playCircle = "play.circle"
-    case shrink = "arrow.down.right.and.arrow.up.left"
-    case enlarge = "arrow.up.left.and.arrow.down.right"
-    case chatroom = "text.bubble.fill"
-    case personalPicture = "person.crop.circle"
-    case send = "paperplane"
-    case thumbImage = "circle.fill"
-    case history = "clock.arrow.circlepath"
-    case searchArrow = "arrow.up.backward"
-    case trash = "trash.fill"
-    case clock = "clock.fill"
     case plus
-    case checkmark
-    case pencil
+    case searchArrow = "arrow.up.backward"
+    case selectedHeart = "heart.fill"
+    case selectedHouse = "house.fill"
+    case selectedMagnifyingglass
+    case selectedPerson = "person.fill"
+    case paperplane
+    case shrink = "arrow.down.right.and.arrow.up.left"
+    case square
+    case submitDanMu = "ellipsis.message.fill"
+    case thumbImage = "circle.fill"
+    case trash = "trash.fill"
+    case xmark
+    case flag
+    case nosign
 }
 
 extension UIImage {
     static let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
+    static let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
+
 
     static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage {
         if let image = UIImage(systemName: asset.rawValue, withConfiguration: configuration) {

@@ -224,27 +224,18 @@ class PlayerViewController: UIViewController {
             isPanning = true
         case .changed:
             finalY = initialY + translation.y
-            // 判斷是否超過 1/3 並且啟始點 Y 座標小於最終 Y 座標
             if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 {
-                // 在此處執行縮小視圖控制器的操作
-                // 例如，改變視圖控制器的 frame
                 self.view.frame.origin.y = finalY
             }
         case .ended, .cancelled:
             isPanning = false
-            // 判斷是否具有一定加速度並且手勢已經達到 1/3 以上
             let velocity = gesture.velocity(in: self.view)
             if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 && velocity.y > 100 {
-                // 在此處執行往下縮小視圖控制器的操作
-                // 例如，使用動畫將視圖控制器縮小到底部
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = self.view.frame.height
-                    
                     self.dismiss(animated: true)
                 }
-                
             } else {
-                // 恢復視圖控制器到原始位置
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = 0
                 }
@@ -507,6 +498,7 @@ extension PlayerViewController: YTPlayerViewDelegate {
             }
         }
     }
+    
     // MARK: - Get Dan Mu Data
     private func getDanMuData(videoId: String) {
         FirestoreManager.bulletChat.whereField(
@@ -533,7 +525,7 @@ extension PlayerViewController: YTPlayerViewDelegate {
 extension PlayerViewController {
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == 3 {
+        if indexPath.section == 2 {
             return indexPath
         }
         return nil
@@ -651,14 +643,16 @@ extension PlayerViewController {
         let chatroomHeight = UIScreen.main.bounds.height - (statusBarHeigh + ytviewHeight + 30)
         
         let chatroomVC = ChatroomViewController()
+        chatroomVC.videoId = self.videoId
+        chatroomVC.showNameLabel.text = showNameLabel.text 
         if let sheet = chatroomVC.sheetPresentationController {
             sheet.preferredCornerRadius = 0.0
             sheet.prefersGrabberVisible = true
             sheet.detents = [
-                .custom { _ in chatroomHeight },
-                .large()]
+                .custom { _ in chatroomHeight }, .large()]
             sheet.largestUndimmedDetentIdentifier = .large
-            chatroomVC.videoId = self.videoId
+           
+            self.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
             self.present(chatroomVC, animated: true)
         }
     }
