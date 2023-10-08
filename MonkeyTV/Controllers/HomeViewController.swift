@@ -38,6 +38,7 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         updateTableViewDataSource()
         setupTableViewUI()
+
 //        FirestoreManager.userBlock(userId: KeychainItem.currentEmail, blockUserId: "somebody")
 //        self.saveUserInKeychain("")
     }

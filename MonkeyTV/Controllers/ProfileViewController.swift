@@ -25,6 +25,9 @@ class ProfileViewController: UIViewController {
         tableView.register(SignInWithTableViewCell.self,
                            forCellReuseIdentifier:
                             SignInWithTableViewCell.identifier)
+        tableView.register(DeleteTableViewCell.self,
+                           forCellReuseIdentifier:
+                            DeleteTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = false
         return tableView
@@ -108,6 +111,8 @@ class ProfileViewController: UIViewController {
     
     @objc func rightButtonTapped() {
         self.saveUserInKeychain("")
+        self.myUserInfo = nil
+        tableView.reloadData()
         tableView.isHidden = true
         rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
     }
@@ -207,11 +212,14 @@ class ProfileViewController: UIViewController {
     }
     
     func showLogInTableView() async {
+//        tableView.dataSource = self
         if KeychainItem.currentEmail.isEmpty {
             return
         }
            if let userInfo = await UserInfoManager.userInfo() {
                 myUserInfo = userInfo
+               print("email=====\(KeychainItem.currentEmail)")
+               print("myUserInfo=====\(myUserInfo)")
                 if let myUserInfo = myUserInfo {
                     
                     bindAccountBoolArray = [myUserInfo.googleIsBind,
@@ -220,8 +228,9 @@ class ProfileViewController: UIViewController {
                 }
             }
         self.tableView.isHidden = false
-        self.rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mainColor,
-                                                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)], for: .normal)
+        self.rightButton.setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: UIColor.mainColor,
+             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)], for: .normal)
     }
     
     private func setupButtonLayout() {
@@ -270,7 +279,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -285,7 +294,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             guard let myUserInfo = myUserInfo else { return UITableViewCell() }
             cell.nameLabel.text = myUserInfo.userName
             cell.personalImageView.loadImage(myUserInfo.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
-            
+            cell.emailLabel.text = myUserInfo.email
+            return cell
+        } else if indexPath.row == 3 {
+            let cell =
+            tableView.dequeueReusableCell(
+                withIdentifier: DeleteTableViewCell.identifier,
+                for: indexPath) as? DeleteTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            cell.deleteAccountButton.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
             return cell
         } else {
             let cell =
@@ -296,7 +313,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             let index = indexPath.row - 1
             let logInMethodStrings = LogInMethod.allCases.map { $0.rawValue }
             let lowercaseLogInMethodStrings = logInMethodStrings.map { $0.lowercased() }
-            cell.nameLabel.text = logInMethodStrings[index]
+            cell.iconNameLabel.text = logInMethodStrings[index]
             cell.iconImageView.image = UIImage(named: lowercaseLogInMethodStrings[index])
                 
                 if self.bindAccountBoolArray[index] == true {
@@ -311,12 +328,32 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    @objc func deleteAccount() {
+        let alertController = UIAlertController(
+            title: "刪除帳號",
+            message: "若刪除帳號，您在 MonkeyTV 留存的資料將遺失，是否繼續刪除帳號？",
+            preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "刪除", style: .default) { _ in
+            let data: [String: Any] = ["googleIsBind": false, "appleIsBind": false]
+            FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
+            self.myUserInfo = nil
+            self.tableView.isHidden = true
+            self.saveUserInKeychain("")
+            self.rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     @objc func bindAccount(sender: UIButton) {
-       
         if sender.titleLabel?.text == "取消綁定" {
             if sender.tag == 0 {
-                let alertController = UIAlertController(title: "刪除 Google 綁定", message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，是否取消綁定？", preferredStyle: .actionSheet)
-
+                let alertController = UIAlertController(
+                    title: "刪除 Google 綁定",
+                    message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，是否取消綁定？",
+                    preferredStyle: .actionSheet)
                 let okAction = UIAlertAction(title: "確定刪除 Google 綁定", style: .default) { (action) in
                     let data: [String: Any] = ["googleIsBind": false]
                     DispatchQueue.main.async {
@@ -332,16 +369,20 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 GIDSignIn.sharedInstance.signOut()
             } else {
                 print("cancel Apple")
-                let alertController = UIAlertController(title: "刪除 Apple 綁定", message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，請確認是否取消綁定？", preferredStyle: .actionSheet)
+                let alertController = UIAlertController(
+                    title: "刪除 Apple 綁定",
+                    message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，請確認是否取消綁定？",
+                    preferredStyle: .actionSheet)
 
-                let okAction = UIAlertAction(title: "確定刪除 Apple 綁定", style: .default) { (action) in
+                let okAction = UIAlertAction(
+                    title: "確定刪除 Apple 綁定", style: .default) { (action) in
                     let data: [String: Any] = ["appleIsBind": false]
                     DispatchQueue.main.async {
                         FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
                     }
-                    self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
-                    self.tableView.reloadData()
-                }
+                        self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
+                        self.tableView.reloadData()
+                    }
                 let cancelAction = UIAlertAction(title: "取消", style: .cancel)
                 alertController.addAction(okAction)
                 alertController.addAction(cancelAction)

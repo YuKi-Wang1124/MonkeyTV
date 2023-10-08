@@ -12,7 +12,7 @@ class UserInfoManager {
     static let email = KeychainItem.currentEmail
     
     static func userInfo() async -> UserInfo? {
-        await FirestoreManager.fetchUserInfo(email: email)
+        await FirestoreManager.fetchUserInfo(email: KeychainItem.currentEmail)
     }
     
     static func userIsLogIn() async -> Bool {

@@ -215,14 +215,17 @@ extension ChatroomViewController {
     }
     
     @objc func blockUser() {
-        let alertController = UIAlertController(title: "是否要封鎖這位使用者？", message: "封鎖這位使用者後，您和對方將再也無法看到彼此的留言。", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "封鎖", style: .default) { (action) in
+        let alertController = UIAlertController(
+            title: "是否要封鎖這位使用者？",
+            message: "封鎖這位使用者後，您和對方將再也無法看到彼此的留言。",
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "封鎖", style: .default) { _ in
             DispatchQueue.main.async {
                 FirestoreManager.userBlock(userId: KeychainItem.currentEmail, blockUserId: self.blockUserId)
             }
             self.blocklistBackgroundView.isHidden = true
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel){ _ in
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { _ in
             self.blocklistBackgroundView.isHidden = true
         }
         alertController.addAction(okAction)
@@ -231,11 +234,13 @@ extension ChatroomViewController {
     }
     
     @objc func report() {
-        let alertController = UIAlertController(title: "是否要檢舉此留言？", message: "我們將盡快審核您的檢舉，留言違反法規者，將通報當地執法機關，若有緊急情況，請您立即通知執法部門。", preferredStyle: .alert)
-
+        let alertController = UIAlertController(
+            title: "是否要檢舉此留言？",
+            message: "我們將盡快審核您的檢舉，留言違反法規者，將通報當地執法機關，若有緊急情況，請您立即通知執法部門。",
+            preferredStyle: .alert)
+        
         let okAction = UIAlertAction(title: "檢舉", style: .default) { _ in
             if let textField = alertController.textFields?.first, let reason = textField.text {
-                print("用户输入的檢舉原因是：\(reason)")
                 FirestoreManager.report(userId: KeychainItem.currentEmail,
                                         reportId: self.blockUserId, reason: reason, message: self.reportUserContent)
                 self.blocklistBackgroundView.isHidden = true
@@ -348,9 +353,9 @@ extension ChatroomViewController: UITableViewDelegate {
            let userid = chatroomData.chatroomChat.userId,
            let name = chatroomData.chatroomChat.userName,
            let content = chatroomData.chatroomChat.content {
-//            if userid == KeychainItem.currentEmail {
-//                return
-//            }
+            if userid == KeychainItem.currentEmail {
+                return
+            }
             blockUserNameLabel.text = "\(name)\n留言：\(content)"
             blockUserId = userid
             reportUserContent = content

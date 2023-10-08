@@ -46,6 +46,7 @@
 		CC1CCA9F2ACE8C3D0010C63C /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */; };
 		CC755A8B2ACFD3D300B6CF1E /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */; };
 		CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */; };
+		CC755A8F2AD3038700B6CF1E /* DeleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
@@ -106,6 +107,7 @@
 		CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithTableViewCell.swift; sourceTree = "<group>"; };
+		CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTableViewCell.swift; sourceTree = "<group>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			children = (
 				CC1CCA9A2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift */,
 				CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */,
+				CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */,
 				CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */,
 				CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */,
+				CC755A8F2AD3038700B6CF1E /* DeleteTableViewCell.swift in Sources */,
 				CC963C102AB898F90047EEFA /* ChatroomTableViewCell.swift in Sources */,
 				CC963C242ABAD6250047EEFA /* UIWindow+Extension.swift in Sources */,
 				CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */,

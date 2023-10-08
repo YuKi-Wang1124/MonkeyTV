@@ -623,6 +623,8 @@ extension PlayerViewController {
                 showName: showName, id: id,
                 playlistId: playlistId, showImage: showImage)
         }
+        
+        
     }
     
     // MARK: - Show Chatroom Button Action

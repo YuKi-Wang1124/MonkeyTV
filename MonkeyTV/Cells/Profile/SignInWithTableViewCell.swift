@@ -23,7 +23,7 @@ class SignInWithTableViewCell: UITableViewCell {
         return image
     }()
     
-    lazy var nameLabel: UILabel = {
+    lazy var iconNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
         label.font = UIFont.systemFont(ofSize: 22)
@@ -61,7 +61,7 @@ class SignInWithTableViewCell: UITableViewCell {
     private func setupUILayout() {
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         contentView.addSubview(iconImageView)
-        contentView.addSubview(nameLabel)
+        contentView.addSubview(iconNameLabel)
         contentView.addSubview(signInButton)
         
         NSLayoutConstraint.activate([
@@ -71,9 +71,9 @@ class SignInWithTableViewCell: UITableViewCell {
             iconImageView.leadingAnchor.constraint(
                 equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 
-            nameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: signInButton.leadingAnchor, constant: -32),
-            nameLabel.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),
+            iconNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
+            iconNameLabel.trailingAnchor.constraint(equalTo: signInButton.leadingAnchor, constant: -32),
+            iconNameLabel.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),
             
             signInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             signInButton.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),

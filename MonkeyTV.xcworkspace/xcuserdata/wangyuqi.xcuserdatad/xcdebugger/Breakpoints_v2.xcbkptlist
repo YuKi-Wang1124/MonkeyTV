@@ -3,4 +3,259 @@
    uuid = "954907AB-F727-497E-A529-C0E1C095BAE2"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F6D8B304-7DE6-40BF-A917-0B8E8FC33C8C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "googleSignIn()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F6D8B304-7DE6-40BF-A917-0B8E8FC33C8C - d108d8dbd0fcd676"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) suspend resume partial function for closure #3 @Sendable () async -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;__C.GIDSignInResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.ProfileViewController.googleSignIn() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "F6D8B304-7DE6-40BF-A917-0B8E8FC33C8C - 5cae596ada04604a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 @Sendable () async -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;__C.GIDSignInResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.ProfileViewController.googleSignIn() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "F6D8B304-7DE6-40BF-A917-0B8E8FC33C8C - 6f7a375e90551b0f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) await resume partial function for closure #3 @Sendable () async -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;__C.GIDSignInResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.ProfileViewController.googleSignIn() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "F6D8B304-7DE6-40BF-A917-0B8E8FC33C8C - d108d8dbd0fcd676"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) suspend resume partial function for closure #3 @Sendable () async -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;__C.GIDSignInResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.ProfileViewController.googleSignIn() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B8F202C9-50E8-4D5E-8F2B-12968D1A6B94"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "googleSignIn()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B8F202C9-50E8-4D5E-8F2B-12968D1A6B94 - ce7a724fc1185d9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;__C.GIDSignInResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.ProfileViewController.googleSignIn() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "B8F202C9-50E8-4D5E-8F2B-12968D1A6B94 - ce7a724fc1185d9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;__C.GIDSignInResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.ProfileViewController.googleSignIn() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3A00D6AC-5595-4531-837C-DA64F07E0D1F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "rightButtonTapped()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80E60161-9194-4C06-9477-9AA613D57560"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Manager/UserInfoManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "UserInfoManager"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "80E60161-9194-4C06-9477-9AA613D57560 - 941d3719607a2b32"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "one-time initialization function for email"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Manager/UserInfoManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "80E60161-9194-4C06-9477-9AA613D57560 - 9b05592c8cf9a22f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonkeyTV.UserInfoManager.email.unsafeMutableAddressor : Swift.String"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Manager/UserInfoManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EB38AE70-BFA0-4AF8-BA18-05A324FF225E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Manager/UserInfoManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "userInfo()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EB38AE70-BFA0-4AF8-BA18-05A324FF225E - 7c88ce4e0cddebc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static MonkeyTV.UserInfoManager.userInfo() async -&gt; Swift.Optional&lt;MonkeyTV.UserInfo&gt;"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Manager/UserInfoManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "EB38AE70-BFA0-4AF8-BA18-05A324FF225E - b58866f5dbb13c93"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for static MonkeyTV.UserInfoManager.userInfo() async -&gt; Swift.Optional&lt;MonkeyTV.UserInfo&gt;"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Manager/UserInfoManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "EB38AE70-BFA0-4AF8-BA18-05A324FF225E - 8006baeaa284afc4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static MonkeyTV.UserInfoManager.userInfo() async -&gt; Swift.Optional&lt;MonkeyTV.UserInfo&gt;"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Manager/UserInfoManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
