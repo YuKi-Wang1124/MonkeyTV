@@ -154,7 +154,6 @@ class PlayerViewController: UIViewController {
                     UIImage.systemAsset(.shrink, configuration: UIImage.symbolConfig), for: .normal)
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
-//                print("橫式: \(buttonsView.frame.size.height)")
             } else {
                 self.changeOrientationButton.setImage(
                     UIImage.systemAsset(.enlarge, configuration: UIImage.symbolConfig), for: .normal)
@@ -163,7 +162,6 @@ class PlayerViewController: UIViewController {
                 showNameLabel.sizeToFit()
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
-//                print("直式: \(buttonsView.frame.size.height)")
             }
             
             danmuView.removeAllDanMuQueue()
@@ -665,8 +663,7 @@ extension PlayerViewController {
                                          "content": danMuText,
                                          "contentType": 0,
                                          "popTime": videoSlider.value,
-                                         // TODO: userid
-                                         "userId": "匿名"] as [String: Any],
+                                         "userId": KeychainItem.currentEmail] as [String: Any],
                                        "videoId": videoId,
                                        "id": id]
             FirestoreManager.bulletChat.document(id).setData(data) { error in
@@ -735,9 +732,6 @@ extension PlayerViewController {
                     let show = MKShow(id: id, videoId: first.videoId,
                                       image: "first.image", title: first.title,
                                       playlistId: first.playlistId)
-//                    snapshot.appendItems([show], toSection: .title)
-
-                    print(" first.title ==== \(first.title)")
                     DispatchQueue.main.async {
                         self.showNameLabel.text = first.title
                     }

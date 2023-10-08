@@ -39,7 +39,18 @@ class HomeViewController: BaseViewController {
         updateTableViewDataSource()
         setupTableViewUI()
 //        FirestoreManager.userBlock(userId: KeychainItem.currentEmail, blockUserId: "somebody")
+//        self.saveUserInKeychain("")
     }
+    
+    
+    private func saveUserInKeychain(_ userIdentifier: String) {
+        do {
+            try KeychainItem(service: "email", account: "userIdentifier").saveItem(userIdentifier)
+        } catch {
+            print("Unable to save userIdentifier to keychain.")
+        }
+    }
+    
     
     func showUserName() async {
         if KeychainItem.currentEmail.isEmpty {

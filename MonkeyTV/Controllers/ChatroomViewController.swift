@@ -120,7 +120,7 @@ class ChatroomViewController: UIViewController {
     private var userImage: String = ""
     private var blockUserId: String = ""
 //    private var blockUserName: String = ""
-//    private var blockUserContent: String = ""
+    private var reportUserContent: String = ""
     var videoId: String = ""
     
     override func viewWillAppear(_ animated: Bool) {
@@ -208,50 +208,54 @@ extension ChatroomViewController {
     // MARK: - buttonAddTarget
     private func buttonAddTarget() {
         submitMessageButton.addTarget(self, action: #selector(submitMessage), for: .touchUpInside)
-        closeButton.addTarget(self, action:  #selector(closeChatroomViewController), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeChatroomViewController), for: .touchUpInside)
         closeBlocklistViewＢutton.addTarget(self, action: #selector(closeBlocklistView), for: .touchUpInside)
         blockButton.addTarget(self, action: #selector(blockUser), for: .touchUpInside)
         reportButton.addTarget(self, action: #selector(report), for: .touchUpInside)
     }
     
     @objc func blockUser() {
-        let alertController = UIAlertController(title: "是否要封鎖這位使用者？", message: "封鎖這位使用者後，您和對方將無法看到彼此的留言。", preferredStyle: .alert)
-
+        let alertController = UIAlertController(title: "是否要封鎖這位使用者？", message: "封鎖這位使用者後，您和對方將再也無法看到彼此的留言。", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "封鎖", style: .default) { (action) in
             DispatchQueue.main.async {
                 FirestoreManager.userBlock(userId: KeychainItem.currentEmail, blockUserId: self.blockUserId)
             }
-//            self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
-//            self.tableView.reloadData()
+            self.blocklistBackgroundView.isHidden = true
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel){ _ in
+            self.blocklistBackgroundView.isHidden = true
+        }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
     
     @objc func report() {
-        let alertController = UIAlertController(title: "是否要檢舉此留言？", message: "我們將盡快審核您的檢舉，留言有違反法規者，將會通知當地執法機關，若有緊急之情況，請您立即通知執法部門。", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "檢舉", style: .default) { (action) in
-            //            let data: [String: Any] = ["appleIsBind": false]
-            //            DispatchQueue.main.async {
-            //                FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
-            //            }
-            //            self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
-            //            self.tableView.reloadData()
+        let alertController = UIAlertController(title: "是否要檢舉此留言？", message: "我們將盡快審核您的檢舉，留言違反法規者，將通報當地執法機關，若有緊急情況，請您立即通知執法部門。", preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "檢舉", style: .default) { _ in
+            if let textField = alertController.textFields?.first, let reason = textField.text {
+                print("用户输入的檢舉原因是：\(reason)")
+                FirestoreManager.report(userId: KeychainItem.currentEmail,
+                                        reportId: self.blockUserId, reason: reason, message: self.reportUserContent)
+                self.blocklistBackgroundView.isHidden = true
+            }
         }
-        
+
         alertController.addTextField { (textField) in
             textField.placeholder = "輸入檢舉原因"
             textField.text = ""
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { _ in
+            self.blocklistBackgroundView.isHidden = true
+        }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
+        
         present(alertController, animated: true, completion: nil)
     }
-    
+
     // MARK: - Setup UI
     private func setupUI() {
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
@@ -297,7 +301,7 @@ extension ChatroomViewController {
             messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
             messageTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: 0),
             messageTextField.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 8),
-            messageTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            messageTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
             submitMessageButton.trailingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             submitMessageButton.centerYAnchor.constraint(equalTo: messageTextField.centerYAnchor),
@@ -332,7 +336,7 @@ extension ChatroomViewController {
             blockButton.bottomAnchor.constraint(equalTo: reportButton.topAnchor, constant: -32),
                         
             reportButton.leadingAnchor.constraint(equalTo: blocklistView.leadingAnchor, constant: 16),
-            reportButton.bottomAnchor.constraint(equalTo: blocklistView.bottomAnchor, constant: -32),
+            reportButton.bottomAnchor.constraint(equalTo: blocklistView.bottomAnchor, constant: -32)
         ])
     }
 }
@@ -340,20 +344,17 @@ extension ChatroomViewController {
 extension ChatroomViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if let chatroomData = viewModel.dataSource.itemIdentifier(for: indexPath) ,
+        if let chatroomData = viewModel.dataSource.itemIdentifier(for: indexPath),
            let userid = chatroomData.chatroomChat.userId,
            let name = chatroomData.chatroomChat.userName,
            let content = chatroomData.chatroomChat.content {
-                        
+//            if userid == KeychainItem.currentEmail {
+//                return
+//            }
             blockUserNameLabel.text = "\(name)\n留言：\(content)"
-            print("所选行的用户名：\(String(describing: userid))")
             blockUserId = userid
-            print("name：\(String(describing: name))")
-            print("content：\(String(describing: content))")
+            reportUserContent = content
             blocklistBackgroundView.isHidden = false
-
         }
     }
-    
 }

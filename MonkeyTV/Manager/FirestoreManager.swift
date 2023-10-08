@@ -18,6 +18,16 @@ class FirestoreManager {
     static let userBlockList = FirestoreManager.shared.collection("UserBlockList")
     static let userReportList = FirestoreManager.shared.collection("UserReportList")
 
+    static func report(userId: String, reportId: String, reason: String, message: String) {
+        let id = FirestoreManager.userReportList.document().documentID
+        let data: [String: Any] = [ "id": id, "userId": userId, "reportId": reportId,
+                                    "reason": reason, "message": message]
+        FirestoreManager.userReportList.document(id).setData(data) { error in
+            if error != nil {
+                print("Error adding document: \(String(describing: error))")
+            } else { }
+        }
+    }
     
     static func userBlock(userId: String, blockUserId: String) {
         

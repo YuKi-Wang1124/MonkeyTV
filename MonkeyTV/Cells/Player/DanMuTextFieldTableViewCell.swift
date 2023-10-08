@@ -115,7 +115,6 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
 
             addLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             addLabel.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
-            addLabel.topAnchor.constraint(equalTo: addButton.bottomAnchor, constant: 12),
 
             danMuTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             danMuTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: 4),
@@ -126,8 +125,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
             submitMessageButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 
             submitMessageButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            submitMessageButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            
+            submitMessageButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
             ])
     }
     func emptyTextField() {

@@ -14,8 +14,12 @@ class ChatroomViewModel {
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, ChatroomData>()
     var dataSource: UITableViewDiffableDataSource<OneSection, ChatroomData>!
     private var listener: ListenerRegistration?
+    private var blocklistListener: ListenerRegistration?
+    private var blocklistArray = [String]()
+
     deinit {
         listener?.remove()
+        blocklistListener?.remove()
     }
     func configureDataSource(tableView: UITableView) {
         dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
@@ -34,10 +38,38 @@ class ChatroomViewModel {
         )
     }
     func fetchConversation(currentTime: Date) {
+        
         if isLoading.value ?? true {
             return
         }
         isLoading.value = true
+        
+        blocklistListener = FirestoreManager.userBlockList.document(KeychainItem.currentEmail).addSnapshotListener { [weak self] documentSnapshot, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error fetching document: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let document = documentSnapshot else {
+                print("Document snapshot is nil")
+                return
+            }
+            
+            if document.exists {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: document.data()!)
+                    let decodedObject = try JSONDecoder().decode(BlocklistData.self, from: jsonData)
+                    blocklistArray = decodedObject.blocklist
+                } catch {
+                    print("Error decoding data: \(error.localizedDescription)")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+
         listener = FirestoreManager.chatroom.addSnapshotListener { [weak self] querySnapshot, error in
             self?.isLoading.value = false
             guard let documents = querySnapshot?.documents else {
@@ -59,13 +91,19 @@ class ChatroomViewModel {
                    let videoId = data["videoId"] as? String,
                    let id = data["id"] as? String,
                    createdTime.dateValue() >= currentTime {
-                    let object = ChatroomData(
-                        chatroomChat: ChatroomChat(
-                            chatId: chatId, content: content, contentType: contentType,
-                            createdTime: createdTime.dateValue(), userId: userId, userName: userName, userImage: userImage),
-                        videoId: videoId, id: id)
-                    if !(self?.snapshot.itemIdentifiers.contains(object))! {
-                        newItems.append(object)
+                    
+                    let isBlocked = self?.blocklistArray.contains(userId) ?? false
+
+                    if !isBlocked {
+                        
+                        let object = ChatroomData(
+                            chatroomChat: ChatroomChat(
+                                chatId: chatId, content: content, contentType: contentType,
+                                createdTime: createdTime.dateValue(), userId: userId, userName: userName, userImage: userImage),
+                            videoId: videoId, id: id)
+                        if !(self?.snapshot.itemIdentifiers.contains(object))! {
+                            newItems.append(object)
+                        }
                     }
                 }
             }
@@ -77,4 +115,8 @@ class ChatroomViewModel {
             self.dataSource.apply(self.snapshot)
         }
     }
+}
+
+struct BlocklistData: Codable {
+    let blocklist: [String]
 }
