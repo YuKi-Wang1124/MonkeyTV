@@ -14,41 +14,37 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(
-      _ app: UIApplication,
-      open url: URL,
-      options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        /*
-         <scheme>://<host>
-         starbusks//home
-         starbusks//scan
-         */
-            
         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
               let host = components.host else {
             print("Invalid URL")
             return false
         }
-        
+
         print("components:\(components)")
-        
+
         guard let deepLink = DeepLink(rawValue: host) else {
             print("Deeplink not found: \(host)")
             return false
         }
-        
-        TabBarViewController().handleDeepLink(deepLink)
-        
-      var handled: Bool
 
-      handled = GIDSignIn.sharedInstance.handle(url)
-      if handled {
-        return true
-      }
+        if let tabBarController = SceneDelegate.window?.rootViewController as? TabBarViewController {
+            tabBarController.handleDeepLink(deepLink)
+        }
 
-      // Handle other custom URL types.
+        var handled: Bool
 
-      // If not handled by this app, return false.
+        handled = GIDSignIn.sharedInstance.handle(url)
+        if handled {
+            return true
+        }
+
+        // Handle other custom URL types.
+
+        // If not handled by this app, return false.
         return LoginManager.shared.application(app, open: url)
     }
 
@@ -99,7 +95,7 @@ extension TabBarViewController {
         case .home:
             present(TabBarViewController(), animated: true)
         case .scan:
-            present(TabBarViewController(), animated: true)
+            selectedIndex = 3
         }
     }
 }

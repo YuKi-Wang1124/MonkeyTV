@@ -70,6 +70,11 @@ class FirestoreManager {
     static func fetchMyFavoriteShow(
         email: String
     ) async -> [ShowData]? {
+        
+        if email == "" {
+            return nil
+        }
+        
         do {
             let document = try await self.myFavoriteShow.document(email).getDocument()
             let jsonData = try JSONSerialization.data(withJSONObject: document.data()!)
@@ -160,6 +165,10 @@ class FirestoreManager {
         playlistIdToCheck: String,
         completion: @escaping (Bool?, Error?) -> Void
     ) async {
+        if email == "" {
+            completion(false, nil)
+        }
+        
         if let showarray = await FirestoreManager.fetchMyFavoriteShow(email: email) {
             
             let containsPlaylistId = showarray.contains { showData in

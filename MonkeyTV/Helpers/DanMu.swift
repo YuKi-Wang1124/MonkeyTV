@@ -15,8 +15,10 @@ class DanMu: Hashable {
     var speed: CGFloat = 0
     var isMe: Bool = false
     init() {
-        label.font = UIFont.boldSystemFont(ofSize: 22)
-        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = UIColor(white: 1, alpha: 0.9)
+        label.shadowColor = UIColor.black
+        label.shadowOffset = CGSize(width: 1, height: 1)
     }
     
     static func == (lhs: DanMu, rhs: DanMu) -> Bool {

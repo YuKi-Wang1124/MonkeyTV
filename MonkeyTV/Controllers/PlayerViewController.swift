@@ -400,7 +400,6 @@ class PlayerViewController: UIViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 60),
             pauseButton.widthAnchor.constraint(equalToConstant: 60),
             
-            
             changeOrientationButton.leadingAnchor.constraint(equalTo: showDanMuButton.trailingAnchor, constant: 12),
             changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 30),
@@ -614,8 +613,11 @@ extension PlayerViewController {
                         for: .touchUpInside)
                     cell.personalImageView.loadImage(self.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
                     
-                   cell.chatroomNameLabel.text = "  以\(self.userName)的身份與大家聊天..."
-                    
+                    if KeychainItem.currentEmail == "" {
+                        cell.chatroomNameLabel.text = "  登入會員後即可與大家聊天..."
+                    } else {
+                        cell.chatroomNameLabel.text = "  以\(self.userName)的身份與大家聊天..."
+                    }
                     cell.selectionStyle = .none
                     return cell
                 } else if indexPath.section == 0 {
@@ -674,59 +676,82 @@ extension PlayerViewController {
         tableView.reloadData()
     }
     
+    private func showLogInAlert(message: String) {
+        let alertController = UIAlertController(
+            title: "請先加入會員",
+            message: message,
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "前往登入", style: .default) { _ in
+            self.dismiss(animated: true)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                if let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
+                    tabBarController.selectedIndex = 3
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: "先看看", style: .cancel) { _ in
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     @objc func addToMyShow(sender: UIButton) {
         
-        if isMyShow == true {
-            
-            sender.setImage(UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig),
-                            for: .normal)
-            
-            Task { await  FirestoreManager.deleteToMyFavorite(
-                email: KeychainItem.currentEmail,
-                playlistId: playlistId) }
-            isMyShow = false
-
+        if KeychainItem.currentEmail == "" {
+            showLogInAlert(message: "若要加入片單請先登入或註冊會員帳號")
         } else {
-            
-            sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
-                            for: .normal)
-            
-            FirestoreManager.addToMyFavorite(
-                email: KeychainItem.currentEmail,
-                playlistId: playlistId,
-                showImage: showImage,
-                showName: showName)
-            isMyShow = true
+            if isMyShow == true {
+                sender.setImage(UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig),
+                                for: .normal)
+                
+                Task { await  FirestoreManager.deleteToMyFavorite(
+                    email: KeychainItem.currentEmail,
+                    playlistId: playlistId) }
+                isMyShow = false
+            } else {
+                sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
+                                for: .normal)
+                FirestoreManager.addToMyFavorite(
+                    email: KeychainItem.currentEmail,
+                    playlistId: playlistId,
+                    showImage: showImage,
+                    showName: showName)
+                isMyShow = true
+            }
         }
     }
     
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
-        PlayerViewController.chatroonIsShow = true
-
-        var statusBarHeigh: CGFloat = 0.0
-        if #available(iOS 13.0, *) {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                statusBarHeigh = windowScene.statusBarManager?.statusBarFrame.height ?? 0
-            }
+        if KeychainItem.currentEmail == "" {
+            showLogInAlert(message: "若要加入即時聊天室請先登入或註冊會員帳號")
         } else {
-            statusBarHeigh = UIApplication.shared.statusBarFrame.height
-        }
-        let ytviewHeight = ytVideoPlayerView.frame.height
-        let chatroomHeight = UIScreen.main.bounds.height - (statusBarHeigh + ytviewHeight + 30)
-        
-        let chatroomVC = ChatroomViewController()
-        chatroomVC.videoId = self.videoId
-        chatroomVC.showNameLabel.text = showNameLabel.text 
-        if let sheet = chatroomVC.sheetPresentationController {
-            sheet.preferredCornerRadius = 0.0
-            sheet.prefersGrabberVisible = true
-            sheet.detents = [
-                .custom { _ in chatroomHeight }, .large()]
-            sheet.largestUndimmedDetentIdentifier = .large
-           
-            self.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
-            self.present(chatroomVC, animated: true)
+            PlayerViewController.chatroonIsShow = true
+            var statusBarHeigh: CGFloat = 0.0
+            if #available(iOS 13.0, *) {
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    statusBarHeigh = windowScene.statusBarManager?.statusBarFrame.height ?? 0
+                }
+            } else {
+                statusBarHeigh = UIApplication.shared.statusBarFrame.height
+            }
+            let ytviewHeight = ytVideoPlayerView.frame.height
+            let chatroomHeight = UIScreen.main.bounds.height - (statusBarHeigh + ytviewHeight + 30)
+            
+            let chatroomVC = ChatroomViewController()
+            chatroomVC.videoId = self.videoId
+            chatroomVC.showNameLabel.text = showNameLabel.text
+            if let sheet = chatroomVC.sheetPresentationController {
+                sheet.preferredCornerRadius = 0.0
+                sheet.prefersGrabberVisible = true
+                sheet.detents = [
+                    .custom { _ in chatroomHeight }, .large()]
+                sheet.largestUndimmedDetentIdentifier = .large
+                
+                self.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
+                self.present(chatroomVC, animated: true)
+            }
         }
     }
     @objc func submitMyDanMu(sender: UIButton) {
