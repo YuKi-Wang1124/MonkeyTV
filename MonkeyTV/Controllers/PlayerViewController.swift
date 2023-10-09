@@ -123,11 +123,14 @@ class PlayerViewController: UIViewController {
         return slider
     }()
     
+    // MARK: - Life Cycle
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         Task { await showUserName() }
+        setupMyShow()
     }
     
-    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
@@ -175,15 +178,18 @@ class PlayerViewController: UIViewController {
         ytVideoPlayerView.removeWebView()
     }
     
-    func setupMyShow() {
-        print("StorageManager.shared.isContainMyShow(id: id) === \(StorageManager.shared.isContainMyShow(id: id))")
-        
-        isMyShow = StorageManager.shared.isContainMyShow(id: id)
-        
-        if isMyShow == true {
-            setupCellButtonDelegate?.changeButtonImage()
-        } else {
-            
+   private func setupMyShow() {
+        Task {
+            await FirestoreManager.checkPlaylistIdInMyFavorite(
+                email: KeychainItem.currentEmail, playlistIdToCheck: playlistId) { (containsPlaylistId, error) in
+                if let error = error {
+                    print("Error: \(error)")
+                    return
+                }
+                if let containsPlaylistId = containsPlaylistId {
+                    self.isMyShow = containsPlaylistId
+                }
+            }
         }
     }
     
@@ -196,12 +202,12 @@ class PlayerViewController: UIViewController {
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         buttonsView.addGestureRecognizer(dragGesture)
     }
+    
     @objc func showButtonView() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         showDanMuButton.isHidden = false
         pauseButton.isHidden = false
         videoSlider.isHidden = false
-//        changeOrientationButton.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
             self?.showDanMuButton.isHidden = true
             self?.pauseButton.isHidden = true
@@ -298,6 +304,7 @@ class PlayerViewController: UIViewController {
     }
     
     // MARK: - showDanMuView
+    
     @objc func showDanMuView(sender: UIButton) {
         if !isDanMuDisplayed {
             sender.setImage(UIImage.systemAsset(.checkmarkSquare, configuration: smallSymbolConfig), for: .normal)
@@ -576,9 +583,17 @@ extension PlayerViewController {
                     self.emptyTextFieldDelegate = cell
                     cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
                     self.setupCellButtonDelegate = cell
-                    self.setupMyShow()
+                    
+                    if self.isMyShow {
+                        cell.addButton.setImage(
+                            UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
+                    } else {
+                        cell.addButton.setImage(
+                            UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig), for: .normal)
+                    }
                     cell.selectionStyle = .none
                     return cell
+                    
                 } else if indexPath.section == 2 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ShowTableViewCell.identifier,
@@ -613,18 +628,27 @@ extension PlayerViewController {
     @objc func addToMyShow(sender: UIButton) {
         
         if isMyShow == true {
+            
             sender.setImage(UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig),
                             for: .normal)
-            StorageManager.shared.deleteMyShow(id: id)
+            
+            Task { await  FirestoreManager.deleteToMyFavorite(
+                email: KeychainItem.currentEmail,
+                playlistId: playlistId) }
+            isMyShow = false
+
         } else {
+            
             sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
                             for: .normal)
-            StorageManager.shared.createMyShowObject(
-                showName: showName, id: id,
-                playlistId: playlistId, showImage: showImage)
+            
+            FirestoreManager.addToMyFavorite(
+                email: KeychainItem.currentEmail,
+                playlistId: playlistId,
+                showImage: showImage,
+                showName: showName)
+            isMyShow = true
         }
-        
-        
     }
     
     // MARK: - Show Chatroom Button Action

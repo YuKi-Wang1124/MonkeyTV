@@ -58,3 +58,14 @@ enum ShowCatalog: String, CaseIterable {
     case health = "少一點醫生，多一點健康 🍀"
 //    case internationalShow = "國外節目看到飽 🌎"
 }
+
+struct MyFavoriteShowData: Codable, Hashable {
+    let myFavoriteShow: [ShowData]
+}
+
+struct ShowData: Codable, Hashable {
+    let playlistId: String
+    let showImage: String
+    let id: String
+    let showName: String
+}

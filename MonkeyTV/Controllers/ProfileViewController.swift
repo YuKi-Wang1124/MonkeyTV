@@ -82,7 +82,7 @@ class ProfileViewController: UIViewController {
     var rightButton = UIBarButtonItem()
     
     private lazy var bindAccountBoolArray: [Bool] = [false, false]
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         Task {
             if KeychainItem.currentEmail.isEmpty != true {
@@ -212,21 +212,18 @@ class ProfileViewController: UIViewController {
     }
     
     func showLogInTableView() async {
-//        tableView.dataSource = self
         if KeychainItem.currentEmail.isEmpty {
             return
         }
-           if let userInfo = await UserInfoManager.userInfo() {
-                myUserInfo = userInfo
-               print("email=====\(KeychainItem.currentEmail)")
-               print("myUserInfo=====\(myUserInfo)")
-                if let myUserInfo = myUserInfo {
-                    
-                    bindAccountBoolArray = [myUserInfo.googleIsBind,
-                                            myUserInfo.appleIsBind]
-                    tableView.reloadData()
-                }
+        if let userInfo = await UserInfoManager.userInfo() {
+            myUserInfo = userInfo
+            if let myUserInfo = myUserInfo {
+                
+                bindAccountBoolArray = [myUserInfo.googleIsBind,
+                                        myUserInfo.appleIsBind]
+                tableView.reloadData()
             }
+        }
         self.tableView.isHidden = false
         self.rightButton.setTitleTextAttributes(
             [NSAttributedString.Key.foregroundColor: UIColor.mainColor,
@@ -239,7 +236,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(googleSignInButton)
         view.addSubview(appleSignInButton)
-//        view.addSubview(lineSignInButton)
+        //        view.addSubview(lineSignInButton)
         
         NSLayoutConstraint.activate([
             personalImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
@@ -261,11 +258,11 @@ class ProfileViewController: UIViewController {
             appleSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 24),
             appleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             appleSignInButton.widthAnchor.constraint(equalToConstant: 245),
-            appleSignInButton.heightAnchor.constraint(equalToConstant: 45),
+            appleSignInButton.heightAnchor.constraint(equalToConstant: 45)
             
-//            lineSignInButton.topAnchor.constraint(equalTo: appleSignInButton.bottomAnchor, constant: 24),
-//            lineSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            lineSignInButton.widthAnchor.constraint(equalToConstant: 240)
+            //            lineSignInButton.topAnchor.constraint(equalTo: appleSignInButton.bottomAnchor, constant: 24),
+            //            lineSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            //            lineSignInButton.widthAnchor.constraint(equalToConstant: 240)
         ])
     }
 }
@@ -277,7 +274,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UITableView.automaticDimension
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         4
     }
@@ -315,12 +312,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             let lowercaseLogInMethodStrings = logInMethodStrings.map { $0.lowercased() }
             cell.iconNameLabel.text = logInMethodStrings[index]
             cell.iconImageView.image = UIImage(named: lowercaseLogInMethodStrings[index])
-                
-                if self.bindAccountBoolArray[index] == true {
-                    cell.signInButton.setTitle("取消綁定", for: .normal)
-                } else {
-                    cell.signInButton.setTitle("綁定", for: .normal)
-                }
+            
+            if self.bindAccountBoolArray[index] == true {
+                cell.signInButton.setTitle("取消綁定", for: .normal)
+            } else {
+                cell.signInButton.setTitle("綁定", for: .normal)
+            }
             
             cell.signInButton.tag = index
             cell.signInButton.addTarget(self, action: #selector(bindAccount(sender:)), for: .touchUpInside)
@@ -329,17 +326,20 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func deleteAccount() {
+        let deleteEmail = KeychainItem.currentEmail
         let alertController = UIAlertController(
             title: "刪除帳號",
             message: "若刪除帳號，您在 MonkeyTV 留存的資料將遺失，是否繼續刪除帳號？",
             preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "刪除", style: .default) { _ in
             let data: [String: Any] = ["googleIsBind": false, "appleIsBind": false]
-            FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
+            FirestoreManager.updateUserInfo(email: deleteEmail, data: data)
+            Task { await FirestoreManager.deleteAllMyFavorite(email: deleteEmail) }
             self.myUserInfo = nil
             self.tableView.isHidden = true
             self.saveUserInKeychain("")
-            self.rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+            self.rightButton.setTitleTextAttributes(
+                [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         alertController.addAction(okAction)
@@ -354,7 +354,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     title: "刪除 Google 綁定",
                     message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，是否取消綁定？",
                     preferredStyle: .actionSheet)
-                let okAction = UIAlertAction(title: "確定刪除 Google 綁定", style: .default) { (action) in
+                let okAction = UIAlertAction(title: "確定刪除 Google 綁定", style: .default) { _ in
                     let data: [String: Any] = ["googleIsBind": false]
                     DispatchQueue.main.async {
                         FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
@@ -373,13 +373,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     title: "刪除 Apple 綁定",
                     message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，請確認是否取消綁定？",
                     preferredStyle: .actionSheet)
-
+                
                 let okAction = UIAlertAction(
-                    title: "確定刪除 Apple 綁定", style: .default) { (action) in
-                    let data: [String: Any] = ["appleIsBind": false]
-                    DispatchQueue.main.async {
-                        FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
-                    }
+                    title: "確定刪除 Apple 綁定", style: .default) { _ in
+                        let data: [String: Any] = ["appleIsBind": false]
+                        DispatchQueue.main.async {
+                            FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
+                        }
                         self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
                         self.tableView.reloadData()
                     }
@@ -436,7 +436,8 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
                         Task { await self.showLogInTableView() }
                     } else {
                         Task {
-                            let querySnapshot = try await FirestoreManager.user.whereField("appleId", isEqualTo: userIdentifier).getDocuments()
+                            let querySnapshot = try await FirestoreManager.user.whereField(
+                                "appleId", isEqualTo: userIdentifier).getDocuments()
                             do {
                                 for document in querySnapshot.documents {
                                     let jsonData = try JSONSerialization.data(withJSONObject: document.data())
