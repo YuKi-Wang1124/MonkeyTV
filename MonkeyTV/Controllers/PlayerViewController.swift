@@ -25,7 +25,7 @@ class PlayerViewController: UIViewController {
     private let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
     private var initialY: CGFloat = 0
     private var finalY: CGFloat = 0
-    private var videoDuration = 0
+    private var videoDuration = 0.00
     private var timer: Timer?
     private var bulletChats = [BulletChat]()
     private var playerBulletChats = [BulletChat]()
@@ -73,6 +73,24 @@ class PlayerViewController: UIViewController {
         return label
     }()
     
+    private lazy var secondLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var videoDurationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.lightGray
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     // MARK: - Table View
     private var tableView: UITableView = {
         var tableView = UITableView()
@@ -105,8 +123,8 @@ class PlayerViewController: UIViewController {
     private lazy var showDanMuButton = {
         let button = UIButton.createPlayerButton(
             image: UIImage.systemAsset(.square, configuration: smallSymbolConfig),
-            color: .white, cornerRadius: 10)
-        button.setTitle("彈幕", for: .normal)
+            color: .white, cornerRadius: 10, backgroundColor: UIColor.clear)
+        button.setTitle(" 彈幕", for: .normal)
         return button
     }()
     
@@ -208,12 +226,17 @@ class PlayerViewController: UIViewController {
         showDanMuButton.isHidden = false
         pauseButton.isHidden = false
         videoSlider.isHidden = false
+        secondLabel.isHidden = false
+        videoDurationLabel.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-            self?.showDanMuButton.isHidden = true
-            self?.pauseButton.isHidden = true
-            self?.videoSlider.isHidden = true
-            self?.changeOrientationButton.isHidden = true
-            self?.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0)
+            guard let self = self else { return }
+            self.showDanMuButton.isHidden = true
+            self.pauseButton.isHidden = true
+            self.videoSlider.isHidden = true
+            self.secondLabel.isHidden = true
+            self.videoDurationLabel.isHidden = true
+            self.changeOrientationButton.isHidden = true
+            self.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0)
         }
     }
     @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -265,6 +288,9 @@ class PlayerViewController: UIViewController {
     @objc func handleSliderChange(sender: UISlider) {
         
         let desiredTime = sender.value
+        
+        secondLabel.text = formatSecondsToHHMMSS(seconds: sender.value)
+        
         ytVideoPlayerView.seek(toSeconds: desiredTime, allowSeekAhead: true)
         danmuView.removeAllDanMuQueue()
         self.restartPlayerBulletChats()
@@ -337,6 +363,8 @@ class PlayerViewController: UIViewController {
         buttonsView.addSubview(pauseButton)
         buttonsView.addSubview(videoSlider)
         buttonsView.addSubview(changeOrientationButton)
+        buttonsView.addSubview(secondLabel)
+        buttonsView.addSubview(videoDurationLabel)
         
         addButtonViewGesture()
         
@@ -351,6 +379,17 @@ class PlayerViewController: UIViewController {
             buttonsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             buttonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
+            secondLabel.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor, constant: 80),
+            secondLabel.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
+        
+            videoDurationLabel.leadingAnchor.constraint(equalTo: secondLabel.trailingAnchor, constant: 4),
+            videoDurationLabel.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
+            
+            showDanMuButton.leadingAnchor.constraint(equalTo: videoDurationLabel.trailingAnchor, constant: 16),
+            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -28),
+            showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
+            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
+            
             danmuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -361,10 +400,6 @@ class PlayerViewController: UIViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 60),
             pauseButton.widthAnchor.constraint(equalToConstant: 60),
             
-            showDanMuButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor, constant: 80),
-            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
-            showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
-            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
             
             changeOrientationButton.leadingAnchor.constraint(equalTo: showDanMuButton.trailingAnchor, constant: 12),
             changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
@@ -382,6 +417,17 @@ class PlayerViewController: UIViewController {
             ytVideoPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ytVideoPlayerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             ytVideoPlayerView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
+            
+            secondLabel.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor, constant: 24),
+            secondLabel.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
+            
+            videoDurationLabel.leadingAnchor.constraint(equalTo: secondLabel.trailingAnchor, constant: 4),
+            videoDurationLabel.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
+            
+            showDanMuButton.leadingAnchor.constraint(equalTo: videoDurationLabel.trailingAnchor, constant: 4),
+            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -4),
+            showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
+            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
             
             showNameLabel.topAnchor.constraint(equalTo: ytVideoPlayerView.bottomAnchor, constant: 10),
             showNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
@@ -406,10 +452,8 @@ class PlayerViewController: UIViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 60),
             pauseButton.widthAnchor.constraint(equalToConstant: 60),
             
-            showDanMuButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            showDanMuButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
-            showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
-            showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
+           
+        
             changeOrientationButton.leadingAnchor.constraint(equalTo: showDanMuButton.trailingAnchor, constant: 12),
             changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 30),
@@ -429,6 +473,8 @@ class PlayerViewController: UIViewController {
         showDanMuButton.isHidden = true
         pauseButton.isHidden = true
         videoSlider.isHidden = true
+        secondLabel.isHidden = true
+        videoDurationLabel.isHidden = true
         setBtnsAddtarget()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
@@ -481,6 +527,8 @@ extension PlayerViewController: YTPlayerViewDelegate {
     
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
         
+        secondLabel.text = formatSecondsToHHMMSS(seconds: playTime)
+        
         playerBulletChats.forEach({
             if playTime >= $0.popTime {
                 danmuView.danmuQueue.append(($0.content, false))
@@ -495,11 +543,12 @@ extension PlayerViewController: YTPlayerViewDelegate {
     }
     
     func getVideoDuratiion() {
-        ytVideoPlayerView.duration { (duration, error) in
+        ytVideoPlayerView.duration { [self] (duration, error) in
             if let error = error {
                 print("無法取得影片總時間：\(error.localizedDescription)")
             } else {
-                self.videoDuration = Int(duration)
+                self.videoDuration = duration
+                videoDurationLabel.text = "/ " + self.formatSecondsToHHMMSS(seconds: Float(videoDuration))
             }
         }
     }
@@ -751,10 +800,8 @@ extension PlayerViewController {
                 print(Result<Any>.failure(error))
             }
                 if let first = self.snapshot.itemIdentifiers(inSection: .playlist).first {
-                    
                     self.videoId = first.videoId
                     self.showName = first.title
-                    
                     let show = MKShow(id: id, videoId: first.videoId,
                                       image: "first.image", title: first.title,
                                       playlistId: first.playlistId)
@@ -784,7 +831,7 @@ extension PlayerViewController {
 }
 
 extension PlayerViewController: UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let itemIdentifier = dataSource.itemIdentifier(for: indexPath) else { return }
@@ -796,9 +843,36 @@ extension PlayerViewController: UITableViewDelegate {
             "showinfo": 0,
             "autoplay": 1
         ]
-                
+        
         showNameLabel.text = itemIdentifier.title
         ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
     }
+    
+    func formatSecondsToHHMMSS(seconds: Float) -> String {
+        let roundedSeconds = Int(seconds.rounded())
+        
+        let hours = roundedSeconds / 3600
+        let minutes = (roundedSeconds % 3600) / 60
+        let remainingSeconds = roundedSeconds % 60
+        
+        if hours > 0 {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss"
+            if let formattedTime = dateFormatter.date(from: "\(hours):\(minutes):\(remainingSeconds)") {
+                dateFormatter.dateFormat = "HH:mm:ss"
+                return dateFormatter.string(from: formattedTime)
+            } else {
+                return "00:00:00"
+            }
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "mm:ss"
+            if let formattedTime = dateFormatter.date(from: "\(minutes):\(remainingSeconds)") {
+                dateFormatter.dateFormat = "mm:ss"
+                return dateFormatter.string(from: formattedTime)
+            } else {
+                return "00:00:00"
+            }
+        }
+    }
 }
-
