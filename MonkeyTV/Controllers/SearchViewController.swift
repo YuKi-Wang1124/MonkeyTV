@@ -409,8 +409,6 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
             } else {
                 return false
             }
-        })
-        print(self.filterDataList)
-        
+        })        
     }
 }

@@ -9,6 +9,7 @@ import UIKit
 
 class CollectionTableViewCell: UITableViewCell {
     static let identifier = "\(CollectionTableViewCell.self)"
+    
     lazy var titleLabel: UILabel = {
         return UILabel.createTitleLabel(text: "")
     }()
@@ -25,10 +26,12 @@ class CollectionTableViewCell: UITableViewCell {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
+    
     var snapshot = NSDiffableDataSourceSnapshot<OneSection, Show>()
     var nextPageTableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, Playlist>()
     var dataSource: UICollectionViewDiffableDataSource<OneSection, Show>!
     var catalogType = 0
+    
     // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,11 +43,14 @@ class CollectionTableViewCell: UITableViewCell {
         }
         setupCellUI()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func prepareForReuse() {
     }
+    
     // MARK: - Configure CollectionView
     private func getSnapshotsData() async {
         snapshot.appendSections([OneSection.main])

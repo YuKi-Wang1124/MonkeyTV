@@ -7,17 +7,37 @@
 
 import UIKit
 
-class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTextFieldDelegate {
+class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTextFieldDelegate, ChangeCellButtonDelegate {
     static let identifier = "\(DanMuTextFieldTableViewCell.self)"
     // MARK: - UI
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
-    private lazy var danmuBackgroundView = {
+    
+    private lazy var addButtonView = {
         let view = UIView()
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray5, darkColor: .systemGray5)
+        view.backgroundColor = .yellow
+        view.layer.borderColor = UIColor.systemGray4.cgColor
+        view.layer.borderWidth = 0.3
         view.layer.cornerRadius = 4
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    lazy var addButton = {
+        return UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig),
+            color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
+            cornerRadius: 0, backgroundColor: .clear)
+    }()
+    
+    private lazy var addLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .center
+        label.text = "加入片單"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private var chatroomTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .lightGray)
@@ -27,13 +47,25 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     lazy var submitMessageButton = {
-        return UIButton.createPlayerButton(image: UIImage.systemAsset(.send),
-                                           color: .white, cornerRadius: 17)
+        let button = UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.paperplane, configuration: UIImage.symbolConfig),
+            color: UIColor.lightGray, cornerRadius: 4)
+        button.backgroundColor = UIColor.systemGray5
+        return button
     }()
+    
     lazy var danMuTextField = {
-        return UITextField.createTextField(text: "輸入彈幕")
+        let textfield = UITextField.createTextField(
+            text: "  輸入彈幕留下評論",
+            backgroundColor: UIColor.systemGray5)
+        textfield.layer.cornerRadius = 4
+        return textfield
     }()
+    
+    var id: String = ""
+    var playlistId: String = ""
     
     // MARK: - Clsoure
     var userInputHandler: ((String) -> Void)?
@@ -64,47 +96,45 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     
     // MARK: - Auto layout
     private func setupCellUI() {
-        contentView.addSubview(danmuBackgroundView)
-        contentView.addSubview(chatroomTitleLabel)
         contentView.addSubview(danMuTextField)
         contentView.addSubview(submitMessageButton)
+        contentView.addSubview(addButton)
+        contentView.addSubview(addLabel)
+
         contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
 
         NSLayoutConstraint.activate([
-            chatroomTitleLabel.leadingAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
-                constant: 18),
-            chatroomTitleLabel.trailingAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.trailingAnchor,
-                constant: -8),
-            chatroomTitleLabel.topAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.topAnchor,
-                constant: 8),
-            chatroomTitleLabel.heightAnchor.constraint(equalToConstant: 30),
-            danMuTextField.topAnchor.constraint(equalTo: chatroomTitleLabel.bottomAnchor, constant: 4),
-            danMuTextField.heightAnchor.constraint(equalToConstant: 35),
-            danMuTextField.leadingAnchor.constraint(equalTo: danmuBackgroundView.leadingAnchor, constant: 8),
-            danMuTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: -8),
-            danMuTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 4/5),
-            submitMessageButton.centerYAnchor.constraint(equalTo: danMuTextField.centerYAnchor),
-            submitMessageButton.heightAnchor.constraint(equalToConstant: 34),
-            submitMessageButton.widthAnchor.constraint(equalToConstant: 34),
-            danmuBackgroundView.leadingAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.leadingAnchor,
-                constant: 8),
-            danmuBackgroundView.trailingAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.trailingAnchor,
-                constant: -8),
-            danmuBackgroundView.topAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.topAnchor,
-                constant: 4),
-            danmuBackgroundView.bottomAnchor.constraint(
-                equalTo: contentView.safeAreaLayoutGuide.bottomAnchor,
-                constant: -8),
-            danmuBackgroundView.heightAnchor.constraint(equalToConstant: 80)
+            
+            addButton.heightAnchor.constraint(equalToConstant: 40),
+            addButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            addButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            addButton.bottomAnchor.constraint(equalTo: addLabel.topAnchor),
+            addButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
+            addButton.trailingAnchor.constraint(equalTo: danMuTextField.leadingAnchor, constant: -32),
+
+            addLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            addLabel.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
+
+            danMuTextField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            danMuTextField.trailingAnchor.constraint(equalTo: submitMessageButton.leadingAnchor, constant: 4),
+            danMuTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/5),
+            danMuTextField.heightAnchor.constraint(equalTo: submitMessageButton.heightAnchor),
+
+            submitMessageButton.heightAnchor.constraint(equalToConstant: 80),
+            submitMessageButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+
+            submitMessageButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            submitMessageButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
             ])
     }
     func emptyTextField() {
         danMuTextField.text = ""
     }
+    
+    func changeButtonImage() {
+        
+        addButton.setImage(UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
+    }
+    
 }

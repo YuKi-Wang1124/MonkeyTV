@@ -119,14 +119,11 @@ extension TabBarViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController,
                           shouldSelect viewController: UIViewController) -> Bool {
-       
-            if let index = tabBarController.viewControllers?.firstIndex(of: viewController) {
-                if index == 1 {
-                
-                }
-            }
-        
         return true
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
     }
 }
 
