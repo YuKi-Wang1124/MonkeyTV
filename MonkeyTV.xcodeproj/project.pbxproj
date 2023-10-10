@@ -41,9 +41,12 @@
 		CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */; };
 		CC1CCA652AC2B4B80010C63C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA642AC2B4B80010C63C /* StorageManager.swift */; };
 		CC1CCA892AC428C90010C63C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA882AC428C90010C63C /* String+Extension.swift */; };
-		CC1CCA8D2AC8415D0010C63C /* PlayerTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */; };
 		CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */; };
 		CC1CCA9B2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA9A2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift */; };
+		CC1CCA9F2ACE8C3D0010C63C /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */; };
+		CC755A8B2ACFD3D300B6CF1E /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */; };
+		CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */; };
+		CC755A8F2AD3038700B6CF1E /* DeleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
@@ -98,10 +101,13 @@
 		CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMu.swift; sourceTree = "<group>"; };
 		CC1CCA642AC2B4B80010C63C /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		CC1CCA882AC428C90010C63C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTitleTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA9A2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleTableViewCell.swift; sourceTree = "<group>"; };
 		CC1CCA9D2ACBB8F30010C63C /* MonkeyTV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonkeyTV.entitlements; sourceTree = "<group>"; };
+		CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
+		CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
+		CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithTableViewCell.swift; sourceTree = "<group>"; };
+		CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTableViewCell.swift; sourceTree = "<group>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 				CC0BF1D82AB1B1300075203C /* HTTPClientManager.swift */,
 				CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */,
 				CC1CCA642AC2B4B80010C63C /* StorageManager.swift */,
+				CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */,
 				CC963C162AB92F7D0047EEFA /* Delegate.swift */,
 			);
 			path = Manager;
@@ -266,6 +273,7 @@
 				CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */,
 				CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */,
 				CC963C1A2AB96B5C0047EEFA /* Observable.swift */,
+				CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -303,7 +311,6 @@
 		CC1CCA902AC84E730010C63C /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				CC1CCA8C2AC8415D0010C63C /* PlayerTitleTableViewCell.swift */,
 				CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */,
 				CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */,
 			);
@@ -314,6 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				CC1CCA9A2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift */,
+				CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */,
+				CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -488,15 +497,16 @@
 				CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */,
 				CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */,
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
+				CC755A8B2ACFD3D300B6CF1E /* UserInfoManager.swift in Sources */,
 				CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */,
 				CC03312F2AC2B05B00229900 /* MyData.xcdatamodeld in Sources */,
 				CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
 				CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */,
+				CC1CCA9F2ACE8C3D0010C63C /* KeychainItem.swift in Sources */,
 				CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
 				CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */,
-				CC1CCA8D2AC8415D0010C63C /* PlayerTitleTableViewCell.swift in Sources */,
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
@@ -506,6 +516,8 @@
 				CC0BF1E42AB1DB0F0075203C /* KeyChainManager.swift in Sources */,
 				CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */,
 				CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */,
+				CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */,
+				CC755A8F2AD3038700B6CF1E /* DeleteTableViewCell.swift in Sources */,
 				CC963C102AB898F90047EEFA /* ChatroomTableViewCell.swift in Sources */,
 				CC963C242ABAD6250047EEFA /* UIWindow+Extension.swift in Sources */,
 				CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */,

@@ -29,11 +29,36 @@ class HomeViewController: BaseViewController {
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
     
+    override func viewWillAppear(_ animated: Bool) {
+        Task { await showUserName() }
+    }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateTableViewDataSource()
         setupTableViewUI()
+             
+//        self.saveUserInKeychain("")
+    }
+    
+    private func saveUserInKeychain(_ userIdentifier: String) {
+        do {
+            try KeychainItem(service: "email", account: "userIdentifier").saveItem(userIdentifier)
+        } catch {
+            print("Unable to save userIdentifier to keychain.")
+        }
+    }
+    
+    func showUserName() async {
+        if KeychainItem.currentEmail.isEmpty {
+            self.navigationItem.title = "MonkeyTV"
+            return
+        }
+        
+        if let userInfo = await UserInfoManager.userInfo() {
+            self.navigationItem.title = userInfo.userName + "，歡迎您"
+        }
     }
     // MARK: - Update TableView DataSource
     func updateTableViewDataSource() {
@@ -98,4 +123,5 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         playerViewController.showImage = showImage
         self.present(playerViewController, animated: true)
     }
+
 }

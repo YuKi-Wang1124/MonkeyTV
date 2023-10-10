@@ -10,17 +10,17 @@ import LineSDK
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    var window: UIWindow?
+   static var window: UIWindow?
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         let firstVC = TabBarViewController()
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
-        window?.rootViewController = firstVC
-        window?.makeKeyAndVisible()
+        SceneDelegate.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        SceneDelegate.window?.windowScene = windowScene
+        SceneDelegate.window?.rootViewController = firstVC
+        SceneDelegate.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,6 +48,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        _ = LoginManager.shared.application( .shared, open: URLContexts.first?.url)
     }
 }
 

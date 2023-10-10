@@ -21,11 +21,13 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
         return tableView
     }()
     
-    private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, MyShow>()
-    private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, MyShow>!
+    private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, ShowData>()
+    private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, ShowData>!
+    
+    // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
-        updateTableViewDataSource()
+        Task { await updateTableViewDataSource() }
     }
     
     override func viewDidLoad() {
@@ -37,9 +39,9 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
     
     // MARK: - Update TableView DataSource
     
-    func updateTableViewDataSource() {
+    func updateTableViewDataSource() async {
         tableViewDataSource =
-        UITableViewDiffableDataSource<OneSection, MyShow>(
+        UITableViewDiffableDataSource<OneSection, ShowData>(
             tableView: tableView) { tableView, indexPath, itemIdentifier in
                 
                 let cell =
@@ -53,15 +55,26 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
                 
                 return cell
             }
-        if let showArray = StorageManager.shared.fetchSearchMyShows() {
+        
+        if var showArray = await FirestoreManager.fetchMyFavoriteShow(email: KeychainItem.currentEmail ) {
             print(showArray)
-            
+            showArray.remove(at: 0)
             tableView.dataSource = tableViewDataSource
-            tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, MyShow>()
+            tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, ShowData>()
             tableViewSnapshot.appendSections([OneSection.main])
             tableViewSnapshot.appendItems(showArray, toSection: .main)
-            tableViewDataSource.apply(tableViewSnapshot)
+            await tableViewDataSource.apply(tableViewSnapshot)
         }
+        
+//        if let showArray = StorageManager.shared.fetchSearchMyShows() {
+//            print(showArray)
+//
+//            tableView.dataSource = tableViewDataSource
+//            tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, MyShow>()
+//            tableViewSnapshot.appendSections([OneSection.main])
+//            tableViewSnapshot.appendItems(showArray, toSection: .main)
+//            tableViewDataSource.apply(tableViewSnapshot)
+//        }
     }
     
     private func setUI() {
@@ -72,7 +85,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -81,13 +94,13 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
 
         guard let itemIdentifier = tableViewDataSource.itemIdentifier(for: indexPath) else { return }
         
-        YouTubeParameter.shared.playlistId = itemIdentifier.playlistId!
+        YouTubeParameter.shared.playlistId = itemIdentifier.playlistId
         
         let playerViewController = PlayerViewController()
         playerViewController.modalPresentationStyle = .fullScreen
-        playerViewController.playlistId = itemIdentifier.playlistId!
-        playerViewController.id = itemIdentifier.id!
-        playerViewController.showImage = itemIdentifier.showImage!
+        playerViewController.playlistId = itemIdentifier.playlistId
+        playerViewController.id = itemIdentifier.id
+        playerViewController.showImage = itemIdentifier.showImage
         
         self.present(playerViewController, animated: true)
         

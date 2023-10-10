@@ -15,7 +15,10 @@ class DanMu: Hashable {
     var speed: CGFloat = 0
     var isMe: Bool = false
     init() {
-        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = UIColor(white: 1, alpha: 0.9)
+        label.shadowColor = UIColor.black
+        label.shadowOffset = CGSize(width: 1, height: 1)
     }
     
     static func == (lhs: DanMu, rhs: DanMu) -> Bool {
@@ -39,8 +42,8 @@ class DanMuView: UIView {
     var timer: Timer?
     var removeTime: Timer?
     
-    lazy var myFrameHeight = self.frame.size.height
-    lazy var myFrameWidth = self.frame.size.width
+    lazy var myFrameHeight = self.bounds.size.height
+    lazy var myFrameWidth = self.bounds.size.width
     
     func start() {
         displayLink = CADisplayLink(target: self, selector: #selector(update))
@@ -73,7 +76,7 @@ class DanMuView: UIView {
     @objc func addDanMu(text: String, isMycomment: Bool) {
         
         let danmu = DanMu()
-        danmu.label.frame.origin.x = myFrameWidth
+        danmu.label.frame.origin.x = self.bounds.size.width
         danmu.label.text = text
         danmu.label.sizeToFit()
         
@@ -81,13 +84,14 @@ class DanMuView: UIView {
             danmu.label.textColor = .systemYellow
         }
         var linelasts: [DanMu?] = []
-        let rows: Int = Int(myFrameHeight / lineHeight)
+        let rows: Int = Int(self.bounds.size.height / lineHeight)
+                
         for _ in 0..<rows {
             linelasts.append(nil)
         }
         
         for dumu in danmus {
-            if dumu.row >= linelasts.count {
+            if dumu.row >= rows {
                 return
             }
             if linelasts[dumu.row] != nil {
@@ -106,9 +110,9 @@ class DanMuView: UIView {
         for index in 0..<linelasts.count {
             if let dumu = linelasts[index] {
                 let endx = dumu.label.frame.origin.x + dumu.label.frame.size.width + gap
-                if endx < myFrameWidth {
+                if endx < self.bounds.size.width {
                     danmu.row = index
-                    var mySpeed = myFrameWidth / endx * dumu.speed
+                    var mySpeed = self.bounds.size.width / endx * dumu.speed
                     mySpeed = CGFloat.minimum(mySpeed, maxSpeed)
                     danmu.speed = CGFloat.random(in: minSpeed ... mySpeed)
                     isMatch = true
@@ -145,10 +149,19 @@ class DanMuView: UIView {
             }
         }
     }
+    
     @objc func removeDanMuQueue() {
         if let danmu = removeDanmus.first {
             danmu.label.removeFromSuperview()
             removeDanmus.removeFirst()
         }
+    }
+    
+    public func removeAllDanMuQueue() {
+        for danmu in danmus {
+            danmu.label.isHidden = true
+            removeDanmus.append(danmu)
+        }
+        danmus.removeAll()
     }
 }

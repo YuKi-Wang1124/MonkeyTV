@@ -9,7 +9,7 @@ import UIKit
 
 extension UINavigationController {
     static var home: UINavigationController {
-        return addNavigationController(for: HomeViewController(), title: "MonkeyTV")
+        return addNavigationController(for: HomeViewController(), title: "")
     }
     static var search: UINavigationController {
         return addNavigationController(for: SearchViewController(), title: "搜尋")
@@ -25,7 +25,7 @@ extension UINavigationController {
         for rootViewController: UIViewController,
         title: String?
     ) -> UINavigationController {
-        
+
         let navigationController = UINavigationController(rootViewController: rootViewController)
         let barApperance = UINavigationBarAppearance()
         barApperance.shadowColor = UIColor.clear
@@ -33,9 +33,11 @@ extension UINavigationController {
         navigationController.navigationBar.layer.backgroundColor = UIColor.clear.cgColor
        
         navigationController.navigationBar.prefersLargeTitles = true
+    
         navigationController.navigationItem.largeTitleDisplayMode = .automatic
         navigationController.navigationBar.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+            .foregroundColor: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
+            .font: UIFont.boldSystemFont(ofSize: 28)
         ]
 
         rootViewController.navigationItem.title = title

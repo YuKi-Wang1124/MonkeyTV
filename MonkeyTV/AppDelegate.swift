@@ -12,31 +12,47 @@ import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
     func application(
-      _ app: UIApplication,
-      open url: URL,
-      options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        
-      var handled: Bool
+        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+              let host = components.host else {
+            print("Invalid URL")
+            return false
+        }
 
-      handled = GIDSignIn.sharedInstance.handle(url)
-      if handled {
-        return true
-      }
+        print("components:\(components)")
 
-      // Handle other custom URL types.
+        guard let deepLink = DeepLink(rawValue: host) else {
+            print("Deeplink not found: \(host)")
+            return false
+        }
 
-      // If not handled by this app, return false.
-      return false
+        if let tabBarController = SceneDelegate.window?.rootViewController as? TabBarViewController {
+            tabBarController.handleDeepLink(deepLink)
+        }
+
+        var handled: Bool
+
+        handled = GIDSignIn.sharedInstance.handle(url)
+        if handled {
+            return true
+        }
+
+        // Handle other custom URL types.
+
+        // If not handled by this app, return false.
+        return LoginManager.shared.application(app, open: url)
     }
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
         LoginManager.shared.setup(channelID: "2000990858", universalLinkURL: nil)
-
+        
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = -34
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
@@ -64,5 +80,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+}
+
+
+enum DeepLink: String {
+    case home
+    case scan
+}
+
+extension TabBarViewController {
+    func handleDeepLink (_ deepLink: DeepLink) {
+        switch deepLink {
+        case .home:
+            present(TabBarViewController(), animated: true)
+        case .scan:
+            selectedIndex = 3
+        }
     }
 }
