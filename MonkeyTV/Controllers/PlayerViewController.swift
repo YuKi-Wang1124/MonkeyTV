@@ -42,7 +42,7 @@ class PlayerViewController: UIViewController {
     private var playerIsShrink = false
     private var isSideViewVisible = false
     static var chatroonIsShow = false
-
+    
     // MARK: - Views
     
     private lazy var ytVideoPlayerView: YTPlayerView = {
@@ -160,7 +160,7 @@ class PlayerViewController: UIViewController {
         getYouTubeVideoData()
         loadYoutubeVideo()
         changeOrientationButton.isHidden = true
-
+        
         showNameLabel.sizeToFit()
     }
     
@@ -196,18 +196,18 @@ class PlayerViewController: UIViewController {
         ytVideoPlayerView.removeWebView()
     }
     
-   private func setupMyShow() {
+    private func setupMyShow() {
         Task {
             await FirestoreManager.checkPlaylistIdInMyFavorite(
                 email: KeychainItem.currentEmail, playlistIdToCheck: playlistId) { (containsPlaylistId, error) in
-                if let error = error {
-                    print("Error: \(error)")
-                    return
+                    if let error = error {
+                        print("Error: \(error)")
+                        return
+                    }
+                    if let containsPlaylistId = containsPlaylistId {
+                        self.isMyShow = containsPlaylistId
+                    }
                 }
-                if let containsPlaylistId = containsPlaylistId {
-                    self.isMyShow = containsPlaylistId
-                }
-            }
         }
     }
     
@@ -585,14 +585,23 @@ extension PlayerViewController {
     private func setupTableView() {
         configureDataSource(tableView: tableView)
         snapshot.appendSections([.chatroom, .danmu, .playlist])
-       
+        
         let chatroom = MKShow(id: "chatroom",
                               videoId: videoId, image: showImage, title: showName, playlistId: playlistId)
         let danmu = MKShow(id: "danmu",
                            videoId: videoId, image: showImage, title: showName, playlistId: playlistId)
-
+        
         snapshot.appendItems([chatroom], toSection: .chatroom)
         snapshot.appendItems([danmu], toSection: .danmu)
+        
+        tableView.addRefreshFooter(refreshingBlock: { [weak self] in
+            
+            self?.footerLoader()
+        })
+    }
+    
+    private func footerLoader() {
+        
     }
     
     private func configureDataSource(tableView: UITableView) {
@@ -784,50 +793,32 @@ extension PlayerViewController {
             YoutubeRequest.playlistItems(
                 playlistId: YouTubeParameter.shared.playlistId),
             completion: { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                do {
-                    let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
-                    info.items.forEach {
-                        let playlist =
-                        Playlist(kind: $0.kind, etag: $0.etag, id: $0.id,
-                                 snippet: Snippet( publishedAt: $0.snippet.publishedAt,
-                                                   channelId: $0.snippet.channelId,
-                                                   title: $0.snippet.title,
-                                                   description: $0.snippet.description,
-                                                   thumbnails: Thumbnails(default: Thumbnail(
-                                                    url: $0.snippet.thumbnails.default.url)),
-                                                   channelTitle: $0.snippet.channelTitle,
-                                                   playlistId: $0.snippet.playlistId,
-                                                   position: $0.snippet.position,
-                                                   resourceId: ResourceId(
-                                                    kind: $0.snippet.resourceId.kind, videoId: $0.snippet.resourceId.videoId),
-                                                   videoOwnerChannelTitle: $0.snippet.videoOwnerChannelTitle,
-                                                   videoOwnerChannelId: $0.snippet.videoOwnerChannelId))
+                guard let self = self else { return }
+                switch result {
+                case .success(let data):
+                    do {
+                        let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
+                        print("\(playlistId)")
+                        print("\(info.nextPageToken)")
+                        info.items.forEach {
+                            let show = MKShow(id: self.id,
+                                              videoId: $0.snippet.resourceId.videoId,
+                                              image: $0.snippet.thumbnails.default.url,
+                                              title: $0.snippet.title,
+                                              playlistId: $0.snippet.playlistId)
+                            self.snapshot.appendItems([show], toSection: .playlist)
+                        }
+                        self.dataSource.apply(snapshot)
                         
-                        let show = MKShow(id: self.id,
-                                          videoId: $0.snippet.resourceId.videoId,
-                                          image: $0.snippet.thumbnails.default.url,
-                                          title: $0.snippet.title,
-                                          playlistId: $0.snippet.playlistId)
-                        
-                        self.snapshot.appendItems([show], toSection: .playlist)
+                    } catch {
+                        print(Result<Any>.failure(error))
                     }
-                    self.dataSource.apply(snapshot)
-
-                } catch {
+                case .failure(let error):
                     print(Result<Any>.failure(error))
                 }
-            case .failure(let error):
-                print(Result<Any>.failure(error))
-            }
                 if let first = self.snapshot.itemIdentifiers(inSection: .playlist).first {
                     self.videoId = first.videoId
                     self.showName = first.title
-                    let show = MKShow(id: id, videoId: first.videoId,
-                                      image: "first.image", title: first.title,
-                                      playlistId: first.playlistId)
                     DispatchQueue.main.async {
                         self.showNameLabel.text = first.title
                     }

@@ -838,6 +838,7 @@ PODS:
   - LineSDKSwift (5.10.1):
     - LineSDKSwift/Core (= 5.10.1)
   - LineSDKSwift/Core (5.10.1)
+  - MJRefresh (3.7.5)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -862,6 +863,7 @@ DEPENDENCIES:
   - KeychainAccess
   - Kingfisher (~> 7.0)
   - LineSDKSwift
+  - MJRefresh
   - SwiftLint
   - youtube-ios-player-helper
 
@@ -895,6 +897,7 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - LineSDKSwift
+    - MJRefresh
     - nanopb
     - PromisesObjC
     - PromisesSwift
@@ -931,6 +934,7 @@ SPEC CHECKSUMS:
   Kingfisher: 1d14e9f59cbe19389f591c929000332bf70efd32
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   LineSDKSwift: def4e6f05ebc25a5838d672670fa9e3c77eb7509
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
@@ -938,6 +942,6 @@ SPEC CHECKSUMS:
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 0fb9ccf22dfae7d383e64ef62b90a2da4981955c
+PODFILE CHECKSUM: 318226b94dad30ec016b9ee688f3d7955e30e425
 
 COCOAPODS: 1.12.1

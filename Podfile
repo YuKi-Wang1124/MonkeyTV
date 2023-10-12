@@ -30,6 +30,7 @@ target 'MonkeyTV' do
   pod 'LineSDKSwift'
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
+  pod 'MJRefresh'
 
   
   post_install do |installer|
