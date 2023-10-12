@@ -855,8 +855,7 @@ extension PlayerViewController: UITableViewDelegate {
             "playsigline": 1,
             "controls": 0,
             "showinfo": 0,
-            "autoplay": 1
-        ]
+            "autoplay": 1]
         
         showNameLabel.text = itemIdentifier.title
         ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
@@ -864,13 +863,12 @@ extension PlayerViewController: UITableViewDelegate {
     
     func formatSecondsToHHMMSS(seconds: Float) -> String {
         let roundedSeconds = Int(seconds.rounded())
-        
+        var dateFormatter = DateFormatter()
         let hours = roundedSeconds / 3600
         let minutes = (roundedSeconds % 3600) / 60
         let remainingSeconds = roundedSeconds % 60
         
         if hours > 0 {
-            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm:ss"
             if let formattedTime = dateFormatter.date(from: "\(hours):\(minutes):\(remainingSeconds)") {
                 dateFormatter.dateFormat = "HH:mm:ss"
@@ -879,7 +877,6 @@ extension PlayerViewController: UITableViewDelegate {
                 return "00:00:00"
             }
         } else {
-            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "mm:ss"
             if let formattedTime = dateFormatter.date(from: "\(minutes):\(remainingSeconds)") {
                 dateFormatter.dateFormat = "mm:ss"
@@ -890,3 +887,4 @@ extension PlayerViewController: UITableViewDelegate {
         }
     }
 }
+

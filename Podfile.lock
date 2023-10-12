@@ -844,6 +844,9 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
@@ -864,6 +867,7 @@ DEPENDENCIES:
   - Kingfisher (~> 7.0)
   - LineSDKSwift
   - MJRefresh
+  - NVActivityIndicatorView
   - SwiftLint
   - youtube-ios-player-helper
 
@@ -899,6 +903,7 @@ SPEC REPOS:
     - LineSDKSwift
     - MJRefresh
     - nanopb
+    - NVActivityIndicatorView
     - PromisesObjC
     - PromisesSwift
     - RecaptchaInterop
@@ -936,12 +941,13 @@ SPEC CHECKSUMS:
   LineSDKSwift: def4e6f05ebc25a5838d672670fa9e3c77eb7509
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 318226b94dad30ec016b9ee688f3d7955e30e425
+PODFILE CHECKSUM: 5ff73c639c689ed07ef3bdaf0eca94c3bad8ec38
 
 COCOAPODS: 1.12.1

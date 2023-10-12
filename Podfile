@@ -31,7 +31,7 @@ target 'MonkeyTV' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   pod 'MJRefresh'
-
+  pod 'NVActivityIndicatorView'
   
   post_install do |installer|
     installer.generated_projects.each do |project|

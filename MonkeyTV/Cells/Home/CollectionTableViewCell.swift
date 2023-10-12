@@ -6,6 +6,7 @@
 //
 
 import UIKit
+typealias DataFetchCompletion = () -> Void
 
 class CollectionTableViewCell: UITableViewCell {
     static let identifier = "\(CollectionTableViewCell.self)"
@@ -13,6 +14,9 @@ class CollectionTableViewCell: UITableViewCell {
     lazy var titleLabel: UILabel = {
         return UILabel.createTitleLabel(text: "")
     }()
+    
+    var dataFetchCompletion: DataFetchCompletion?
+
     var showVideoPlayerDelegate: ShowVideoPlayerDelegate?
     private lazy var collectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,9 +42,7 @@ class CollectionTableViewCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = dataSource
         configureCollectionViewDataSource()
-        Task {
-            await getSnapshotsData()
-        }
+        Task { await getSnapshotsData() }
         setupCellUI()
     }
     
@@ -52,11 +54,12 @@ class CollectionTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configure CollectionView
-    private func getSnapshotsData() async {
+    func getSnapshotsData() async {
         snapshot.appendSections([OneSection.main])
         let showArray = await FirestoreManager.findShowCatalogData(isEqualTo: catalogType)
         snapshot.appendItems(showArray, toSection: OneSection.main)
         await dataSource.apply(snapshot)
+        dataFetchCompletion?()
     }
     
     func configureCollectionViewDataSource() {

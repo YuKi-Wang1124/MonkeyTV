@@ -8,6 +8,7 @@
 import UIKit
 import FSPagerView
 import FirebaseFirestore
+import NVActivityIndicatorView
 
 class HomeViewController: BaseViewController {
     private lazy var tableView = {
@@ -25,6 +26,10 @@ class HomeViewController: BaseViewController {
         return tableView
     }()
     
+    private let activityIndicatorView = NVActivityIndicatorView(
+        frame: CGRect(x: 0, y: 0, width: 80, height: 80),
+        type: .ballSpinFadeLoader, color: UIColor.mainColor, padding: 10)
+    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
@@ -38,7 +43,6 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         updateTableViewDataSource()
         setupTableViewUI()
-        
     }
     
     private func showUserName() async {
@@ -77,6 +81,9 @@ class HomeViewController: BaseViewController {
                     cell.titleLabel.text = self.showCatalogArray[indexPath.row]
                     cell.catalogType = index
                     cell.showVideoPlayerDelegate = self
+                    cell.dataFetchCompletion = { [weak self] in
+                        self?.activityIndicatorView.stopAnimating()
+                    }
                     return cell
                 }
             }
@@ -94,6 +101,13 @@ extension HomeViewController {
         view.addSubview(tableView)
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.center = view.center
+        activityIndicatorView.startAnimating()
+        activityIndicatorView.layer.cornerRadius = 10
+        activityIndicatorView.backgroundColor = UIColor.setColor(
+            lightColor: UIColor(white: 0.5, alpha: 0.4),
+            darkColor: UIColor(white: 0.1, alpha: 0.5))
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
