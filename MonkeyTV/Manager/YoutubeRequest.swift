@@ -45,7 +45,7 @@ enum YoutubeRequest: Request {
         case .show:
             return "/playlists?part=snippet&channelId=\(YouTubeParameter.shared.channelID)&maxResults=50&key=\(Constant.API_KEY)"
         case .playlistItems:
-            return "/playlistItems?part=snippet&playlistId=\(YouTubeParameter.shared.playlistId)&maxResults=20&key=\(Constant.API_KEY)"
+            return "/playlistItems?part=snippet&playlistId=\(YouTubeParameter.shared.playlistId)&maxResults=25&key=\(Constant.API_KEY)"
         case .hot:
             return
             "/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=15&regionCode=TW&key=\(Constant.API_KEY)"

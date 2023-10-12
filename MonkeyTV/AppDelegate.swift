@@ -9,6 +9,7 @@ import FirebaseCore
 import GoogleSignIn
 import LineSDK
 import IQKeyboardManagerSwift
+import FirebaseCrashlytics
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

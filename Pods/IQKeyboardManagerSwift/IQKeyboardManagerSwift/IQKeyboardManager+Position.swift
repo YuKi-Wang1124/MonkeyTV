@@ -146,10 +146,25 @@ public extension IQKeyboardManager {
         }
     }
 
-    internal func optimizedAdjustPosition() {
+    @objc internal func applicationDidBecomeActive(_ notificatin: Notification) {
+
+        guard privateIsEnabled(),
+            keyboardShowing,
+            topViewBeginOrigin.equalTo(IQKeyboardManager.kIQCGPointInvalid) == false, let textFieldView = textFieldView,
+            textFieldView.isAlertViewTextField() == false else {
+                return
+        }
+        optimizedAdjustPosition()
+     }
+
+    @objc internal func optimizedAdjustPosition() {
+        guard UIApplication.shared.applicationState == .active else {
+            return
+        }
+
         if !hasPendingAdjustRequest {
             hasPendingAdjustRequest = true
-            OperationQueue.main.addOperation {
+            DispatchQueue.main.async {
                 self.adjustPosition()
                 self.hasPendingAdjustRequest = false
             }
@@ -177,16 +192,20 @@ public extension IQKeyboardManager {
         var rootViewOrigin = rootController.view.frame.origin
 
         // Maintain keyboardDistanceFromTextField
-        var specialKeyboardDistanceFromTextField = textFieldView.keyboardDistanceFromTextField
+        let specialKeyboardDistanceFromTextField: CGFloat
 
         if let searchBar = textFieldView.textFieldSearchBar() {
             specialKeyboardDistanceFromTextField = searchBar.keyboardDistanceFromTextField
+        } else {
+            specialKeyboardDistanceFromTextField = textFieldView.keyboardDistanceFromTextField
         }
 
         let newKeyboardDistanceFromTextField = (specialKeyboardDistanceFromTextField == kIQUseDefaultKeyboardDistance) ? keyboardDistanceFromTextField : specialKeyboardDistanceFromTextField
 
-        var kbSize = keyboardFrame.size
+        let kbSize: CGSize
+        let originalKbSize: CGSize
 
+        // Calculating actual keyboard covered size respect to window, keyboard frame may be different when hardware keyboard is attached (Bug ID: #469) (Bug ID: #381) (Bug ID: #1506)
         do {
             var kbFrame = keyboardFrame
 
@@ -196,13 +215,20 @@ public extension IQKeyboardManager {
             kbFrame.origin.y -= topViewBeginSafeAreaInsets.bottom
             kbFrame.size.height += topViewBeginSafeAreaInsets.bottom
 
-            // Calculating actual keyboard covered size respect to window, keyboard frame may be different when hardware keyboard is attached (Bug ID: #469) (Bug ID: #381) (Bug ID: #1506)
             let intersectRect = kbFrame.intersection(window.frame)
-
             if intersectRect.isNull {
                 kbSize = CGSize(width: kbFrame.size.width, height: 0)
             } else {
                 kbSize = intersectRect.size
+            }
+        }
+
+        do {
+            let intersectRect = keyboardFrame.intersection(window.frame)
+            if intersectRect.isNull {
+                originalKbSize = CGSize(width: keyboardFrame.size.width, height: 0)
+            } else {
+                originalKbSize = intersectRect.size
             }
         }
 
@@ -224,7 +250,7 @@ public extension IQKeyboardManager {
             navigationBarAreaHeight = statusBarHeight
         }
 
-        let layoutAreaHeight: CGFloat = rootController.view.layoutMargins.bottom
+        let layoutAreaHeight: CGFloat = rootController.view.directionalLayoutMargins.bottom
 
         let isTextView: Bool
         let isNonScrollableTextView: Bool
@@ -241,7 +267,7 @@ public extension IQKeyboardManager {
         let topLayoutGuide: CGFloat = max(navigationBarAreaHeight, layoutAreaHeight) + 5
 
         // Validation of textView for case where there is a tab bar at the bottom or running on iPhone X and textView is at the bottom.
-        let bottomLayoutGuide: CGFloat = (isTextView && !isNonScrollableTextView) ? 0 : rootController.view.layoutMargins.bottom
+        let bottomLayoutGuide: CGFloat = (isTextView && !isNonScrollableTextView) ? 0 : rootController.view.directionalLayoutMargins.bottom
         let visibleHeight: CGFloat = window.frame.height-kbSize.height
 
         //  Move positive = textField is hidden.
@@ -518,7 +544,7 @@ public extension IQKeyboardManager {
                 lastScrollView.shouldIgnoreContentInsetAdjustment == false {
 
                 var bottomInset: CGFloat = (kbSize.height)-(window.frame.height-lastScrollViewRect.maxY)
-                var bottomScrollIndicatorInset = bottomInset - newKeyboardDistanceFromTextField
+                var bottomScrollIndicatorInset = bottomInset - newKeyboardDistanceFromTextField - topViewBeginSafeAreaInsets.bottom
 
                 // Update the insets so that the scroll vew doesn't shift incorrectly when the offset is near the bottom of the scroll view.
                 bottomInset = max(startingContentInsets.bottom, bottomInset)
@@ -561,7 +587,7 @@ public extension IQKeyboardManager {
         // [_textFieldView isKindOfClass:[UITextView class]] If is a UITextView type
         if let textView = textFieldView as? UIScrollView, textView.isScrollEnabled, textFieldView.responds(to: #selector(getter: UITextView.isEditable)) {
 
-            let keyboardYPosition = window.frame.height - (kbSize.height-newKeyboardDistanceFromTextField)
+            let keyboardYPosition = window.frame.height - originalKbSize.height
             var rootSuperViewFrameInWindow = window.frame
             if let rootSuperview = rootController.view.superview {
                 rootSuperViewFrameInWindow = rootSuperview.convert(rootSuperview.bounds, to: window)
@@ -608,7 +634,7 @@ public extension IQKeyboardManager {
         // +Positive or zero.
         if move >= 0 {
 
-            rootViewOrigin.y = max(rootViewOrigin.y - move, min(0, -(kbSize.height-newKeyboardDistanceFromTextField)))
+            rootViewOrigin.y = max(rootViewOrigin.y - move, min(0, -originalKbSize.height))
 
             if rootController.view.frame.origin.equalTo(rootViewOrigin) == false {
                 showLog("Moving Upward")
@@ -684,8 +710,6 @@ public extension IQKeyboardManager {
             // Used UIViewAnimationOptionBeginFromCurrentState to minimize strange animations.
             UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: { () -> Void in
 
-                self.showLog("Restoring \(rootViewController) origin to: \(self.topViewBeginOrigin)")
-
                 // Setting it's new frame
                 var rect = rootViewController.view.frame
                 rect.origin = self.topViewBeginOrigin
@@ -697,6 +721,8 @@ public extension IQKeyboardManager {
                     rootViewController.view.setNeedsLayout()
                     rootViewController.view.layoutIfNeeded()
                 }
+
+                self.showLog("Restoring \(rootViewController) origin to: \(self.topViewBeginOrigin)")
             })
         }
 

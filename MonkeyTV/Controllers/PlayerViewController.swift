@@ -84,7 +84,7 @@ class PlayerViewController: UIViewController {
     
     private lazy var videoDurationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor(white: 0.9, alpha: 1)
         label.font = UIFont.systemFont(ofSize: 18)
         label.sizeToFit()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -342,23 +342,23 @@ class PlayerViewController: UIViewController {
         isDanMuDisplayed.toggle()
     }
 }
-    // MARK: - Setup UILayout
-    
-    extension PlayerViewController {
+// MARK: - Setup UILayout
 
+extension PlayerViewController {
+    
     private func setupUILayout() {
         
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         ytVideoPlayerView.backgroundColor = .black
-
+        
         setBtnsAddtarget()
         view.addSubview(ytVideoPlayerView)
         view.addSubview(tableView)
         view.addSubview(danmuView)
         view.addSubview(buttonsView)
         view.addSubview(showNameLabel)
-
+        
         buttonsView.addSubview(showDanMuButton)
         buttonsView.addSubview(pauseButton)
         buttonsView.addSubview(videoSlider)
@@ -381,7 +381,7 @@ class PlayerViewController: UIViewController {
             
             secondLabel.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor, constant: 80),
             secondLabel.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
-        
+            
             videoDurationLabel.leadingAnchor.constraint(equalTo: secondLabel.trailingAnchor, constant: 4),
             videoDurationLabel.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -32),
             
@@ -451,8 +451,6 @@ class PlayerViewController: UIViewController {
             pauseButton.heightAnchor.constraint(equalToConstant: 60),
             pauseButton.widthAnchor.constraint(equalToConstant: 60),
             
-           
-        
             changeOrientationButton.leadingAnchor.constraint(equalTo: showDanMuButton.trailingAnchor, constant: 12),
             changeOrientationButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -8),
             changeOrientationButton.heightAnchor.constraint(equalToConstant: 30),

@@ -38,19 +38,10 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         updateTableViewDataSource()
         setupTableViewUI()
-             
-//        self.saveUserInKeychain("")
+        
     }
     
-    private func saveUserInKeychain(_ userIdentifier: String) {
-        do {
-            try KeychainItem(service: "email", account: "userIdentifier").saveItem(userIdentifier)
-        } catch {
-            print("Unable to save userIdentifier to keychain.")
-        }
-    }
-    
-    func showUserName() async {
+    private func showUserName() async {
         if KeychainItem.currentEmail.isEmpty {
             self.navigationItem.title = "MonkeyTV"
             return
@@ -60,7 +51,9 @@ class HomeViewController: BaseViewController {
             self.navigationItem.title = userInfo.userName + "，歡迎您"
         }
     }
+    
     // MARK: - Update TableView DataSource
+    
     func updateTableViewDataSource() {
         tableViewDataSource =
         UITableViewDiffableDataSource<OneSection, String>(
@@ -123,5 +116,5 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         playerViewController.showImage = showImage
         self.present(playerViewController, animated: true)
     }
-
+    
 }

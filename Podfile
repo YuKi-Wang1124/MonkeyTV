@@ -28,6 +28,8 @@ target 'MonkeyTV' do
   pod 'FSPagerView'
   pod 'KeychainAccess'
   pod 'LineSDKSwift'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Analytics'
 
   
   post_install do |installer|
