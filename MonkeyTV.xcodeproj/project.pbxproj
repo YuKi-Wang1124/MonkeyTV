@@ -47,6 +47,7 @@
 		CC755A8B2ACFD3D300B6CF1E /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */; };
 		CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */; };
 		CC755A8F2AD3038700B6CF1E /* DeleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */; };
+		CC755A922AD7D06D00B6CF1E /* CopyRightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A912AD7D06D00B6CF1E /* CopyRightViewController.swift */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
@@ -108,6 +109,7 @@
 		CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithTableViewCell.swift; sourceTree = "<group>"; };
 		CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTableViewCell.swift; sourceTree = "<group>"; };
+		CC755A912AD7D06D00B6CF1E /* CopyRightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyRightViewController.swift; sourceTree = "<group>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */,
 				CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */,
 				CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */,
+				CC755A912AD7D06D00B6CF1E /* CopyRightViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
 				CC0BF1C92AB02BBA0075203C /* UINavigationController+Extension.swift in Sources */,
 				CC0BF1D92AB1B1300075203C /* HTTPClientManager.swift in Sources */,
+				CC755A922AD7D06D00B6CF1E /* CopyRightViewController.swift in Sources */,
 				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
 				CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */,
 				CC963C0E2AB84A260047EEFA /* UITextField+Extension.swift in Sources */,

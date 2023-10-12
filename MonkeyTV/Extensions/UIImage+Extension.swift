@@ -39,6 +39,7 @@ enum ImageAsset: String {
     case xmark
     case flag
     case nosign
+    case cCircle = "c.circle"
 }
 
 extension UIImage {

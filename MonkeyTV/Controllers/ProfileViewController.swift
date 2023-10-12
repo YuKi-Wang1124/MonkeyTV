@@ -54,6 +54,14 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
+    private lazy var copyRightButton = {
+        let button = UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.cCircle, configuration: UIImage.smallSymbolConfig),
+            color: .white, cornerRadius: 5, backgroundColor: UIColor.mainColor!)
+        button.setTitle("  MonkeyTV 版權宣告", for: .normal)
+        return button
+    }()
+    
     private lazy var appleSignInButton = {
         let button = ASAuthorizationAppleIDButton()
         button.layer.cornerRadius = 6
@@ -107,6 +115,12 @@ class ProfileViewController: UIViewController {
         
         rightButton = UIBarButtonItem(title: "登出", style: .plain, target: self, action: #selector(rightButtonTapped))
         self.navigationItem.rightBarButtonItem = rightButton
+        copyRightButton.addTarget(self, action: #selector(presentCopyRightViewController), for: .touchUpInside)
+    }
+    
+    @objc func presentCopyRightViewController() {
+        let copyRightViewController = CopyRightViewController()
+        self.navigationController?.pushViewController(copyRightViewController, animated: true)
     }
     
     @objc func rightButtonTapped() {
@@ -236,7 +250,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(googleSignInButton)
         view.addSubview(appleSignInButton)
-        //        view.addSubview(lineSignInButton)
+        view.addSubview(copyRightButton )
         
         NSLayoutConstraint.activate([
             personalImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
@@ -258,7 +272,12 @@ class ProfileViewController: UIViewController {
             appleSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 24),
             appleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             appleSignInButton.widthAnchor.constraint(equalToConstant: 245),
-            appleSignInButton.heightAnchor.constraint(equalToConstant: 45)
+            appleSignInButton.heightAnchor.constraint(equalToConstant: 45),
+            
+            copyRightButton.topAnchor.constraint(equalTo: appleSignInButton.bottomAnchor, constant: 24),
+            copyRightButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            copyRightButton.widthAnchor.constraint(equalToConstant: 245),
+            copyRightButton.heightAnchor.constraint(equalToConstant: 45)
             
             //            lineSignInButton.topAnchor.constraint(equalTo: appleSignInButton.bottomAnchor, constant: 24),
             //            lineSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
