@@ -369,7 +369,7 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
         do {
             try fetchedResultController.performFetch()
         } catch {
-            print("Fetch failed")
+            print("Fetch SearchHistory failed")
         }
         
     }

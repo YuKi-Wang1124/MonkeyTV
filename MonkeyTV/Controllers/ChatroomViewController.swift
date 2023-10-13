@@ -302,8 +302,10 @@ extension ChatroomViewController {
 
     // MARK: - Setup UI
     private func setupUI() {
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        
+        view.backgroundColor = .baseBackgroundColor
+        tableView.backgroundColor = .baseBackgroundColor
+        
         showNameLabel.sizeToFit()
         blockUserNameLabel.sizeToFit()
         blocklistBackgroundView.isHidden = true

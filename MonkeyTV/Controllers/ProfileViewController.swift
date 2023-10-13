@@ -14,7 +14,7 @@ import AuthenticationServices
 class ProfileViewController: UIViewController {
     
     private var username: String = ""
-    var cleanSearchHistoryDelegate: CleanSearchHistoryDelegate?
+    private var cleanSearchHistoryDelegate: CleanSearchHistoryDelegate?
     
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController {
     
     private var myUserInfo: UserInfo?
     
-    var rightButton = UIBarButtonItem()
+    private var rightButton = UIBarButtonItem()
     
     private lazy var bindAccountBoolArray: [Bool] = [false, false]
     
