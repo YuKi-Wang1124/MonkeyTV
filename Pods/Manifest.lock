@@ -834,9 +834,6 @@ PODS:
   - IQKeyboardManagerSwift (6.5.15)
   - Kingfisher (7.9.1)
   - leveldb-library (1.22.2)
-  - LineSDKSwift (5.10.1):
-    - LineSDKSwift/Core (= 5.10.1)
-  - LineSDKSwift/Core (5.10.1)
   - MJRefresh (3.7.5)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -863,7 +860,6 @@ DEPENDENCIES:
   - GoogleSignIn
   - IQKeyboardManagerSwift
   - Kingfisher (~> 7.0)
-  - LineSDKSwift
   - MJRefresh
   - NVActivityIndicatorView
   - SwiftLint
@@ -897,7 +893,6 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Kingfisher
     - leveldb-library
-    - LineSDKSwift
     - MJRefresh
     - nanopb
     - NVActivityIndicatorView
@@ -934,7 +929,6 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 79fab21f451441935788dc5d80ded21c32685904
   Kingfisher: 1d14e9f59cbe19389f591c929000332bf70efd32
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
-  LineSDKSwift: def4e6f05ebc25a5838d672670fa9e3c77eb7509
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
@@ -944,6 +938,6 @@ SPEC CHECKSUMS:
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 35f75603c542927fb4dd3307da53a2e87ae30732
+PODFILE CHECKSUM: 1c8832a581bd9f02d2f17f7e5dfbeff04f0ba82a
 
 COCOAPODS: 1.12.1

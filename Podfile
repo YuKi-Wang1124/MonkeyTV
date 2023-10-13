@@ -26,7 +26,6 @@ target 'MonkeyTV' do
   pod "youtube-ios-player-helper"
   pod 'IQKeyboardManagerSwift'
   pod 'FSPagerView'
-  pod 'LineSDKSwift'
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   pod 'MJRefresh'

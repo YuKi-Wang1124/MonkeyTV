@@ -116,8 +116,8 @@ extension HomeViewController {
         view.addSubview(tableView)
         view.addSubview(activityIndicatorView)
         
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        view.backgroundColor = .baseBackgroundColor
+        tableView.backgroundColor = .baseBackgroundColor
         
         activityIndicatorView.center = view.center
         activityIndicatorView.startAnimating()

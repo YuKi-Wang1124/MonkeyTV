@@ -7,13 +7,8 @@
 
 import UIKit
 
-protocol OrientationChangeDelegate: AnyObject {
-    func didChangeOrientation(to newOrientation: UIInterfaceOrientation)
-}
-
 protocol ShowVideoPlayerDelegate: AnyObject {
     func showVideoPlayer(showName: String, playlistId: String, id: String, showImage: String)
-    
 }
 
 protocol EmptyTextFieldDelegate: AnyObject {
@@ -21,6 +16,9 @@ protocol EmptyTextFieldDelegate: AnyObject {
 }
 
 protocol ChangeCellButtonDelegate: AnyObject {
-    
     func changeButtonImage()
+}
+
+protocol CleanSearchHistoryDelegate: AnyObject {
+    func cleanSearchHistory()
 }

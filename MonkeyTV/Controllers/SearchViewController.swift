@@ -9,7 +9,7 @@ import UIKit
 import youtube_ios_player_helper
 import CoreData
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     
     private var tapGesture: UITapGestureRecognizer?
     
@@ -107,7 +107,6 @@ class SearchViewController: UIViewController {
         setupUI()
         setupSearchBar()
         setupTableViewData()
-        
     }
     
     // MARK: - Button Views
@@ -205,7 +204,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
             return
         }
         tableView.isHidden = false
-//        self.searchController.searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -217,10 +215,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
         tableView.isHidden = true
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-    }
-    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         isSearchBarActive = false
     }
@@ -230,8 +224,8 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
 extension SearchViewController {
     private func setupUI() {
         
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        tableView.backgroundColor = .baseBackgroundColor
+        view.backgroundColor = .baseBackgroundColor
         view.addSubview(hiddenView)
         view.addSubview(buttonsView)
         view.addSubview(titleView)
@@ -284,7 +278,6 @@ extension SearchViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-            
         ])
     }
     
@@ -320,18 +313,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return filterDataList.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ShowTableViewCell.identifier,
                                                  for: indexPath) as? ShowTableViewCell
-        
         guard let cell = cell else { return UITableViewCell() }
-        
         tapGesture?.cancelsTouchesInView = false
-        
         cell.showNameLabel.text = filterDataList[indexPath.row].showName
         cell.showImageView.loadImage(filterDataList[indexPath.row].image)
         cell.playlistId = filterDataList[indexPath.row].playlistId
@@ -342,9 +331,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        print("\(indexPath.row)")
-        
+                
         YouTubeParameter.shared.playlistId = filterDataList[indexPath.row].playlistId
         
         let playerViewController = PlayerViewController()

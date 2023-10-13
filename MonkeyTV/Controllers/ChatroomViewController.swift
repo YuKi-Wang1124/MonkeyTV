@@ -92,23 +92,11 @@ class ChatroomViewController: UIViewController {
     }()
     
     var showNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.darkGray
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel.createLabel(fontSize: 17, textColor: UIColor.darkGray)
     }()
     
     var blockUserNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .black, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel.createLabel(fontSize: 17, textColor: UIColor.setColor(lightColor: .black, darkColor: .white))
     }()
     
     private lazy var submitMessageButton = {
@@ -359,14 +347,14 @@ extension ChatroomViewController {
             alertTextView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 16),
             alertTextView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -16),
 
-            chatroomTitleLabel.topAnchor.constraint(equalTo: showNameLabel.bottomAnchor, constant: 0),
+            chatroomTitleLabel.topAnchor.constraint(equalTo: showNameLabel.bottomAnchor, constant: 4),
             chatroomTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             chatroomTitleLabel.trailingAnchor.constraint(
                 equalTo: closeButton.leadingAnchor, constant: -16),
             
             showNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             showNameLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: 0),
-            showNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            showNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             
             closeButton.trailingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),

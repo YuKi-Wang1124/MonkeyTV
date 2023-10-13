@@ -7,7 +7,6 @@
 import UIKit
 import FirebaseCore
 import GoogleSignIn
-import LineSDK
 import IQKeyboardManagerSwift
 import FirebaseCrashlytics
 
@@ -46,14 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Handle other custom URL types.
 
         // If not handled by this app, return false.
-        return LoginManager.shared.application(app, open: url)
+        return false
     }
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        LoginManager.shared.setup(channelID: "2000990858", universalLinkURL: nil)
-        
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.keyboardDistanceFromTextField = -34
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in

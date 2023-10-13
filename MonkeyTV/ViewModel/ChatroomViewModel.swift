@@ -37,6 +37,7 @@ class ChatroomViewModel {
             }
         )
     }
+    
     func fetchConversation(currentTime: Date) {
         
         if isLoading.value ?? true {
@@ -44,7 +45,8 @@ class ChatroomViewModel {
         }
         isLoading.value = true
         
-        blocklistListener = FirestoreManager.userBlockList.document(KeychainItem.currentEmail).addSnapshotListener { [weak self] documentSnapshot, error in
+        blocklistListener = FirestoreManager.userBlockList.document(
+            KeychainItem.currentEmail).addSnapshotListener { [weak self] documentSnapshot, error in
             guard let self = self else { return }
             
             if let error = error {

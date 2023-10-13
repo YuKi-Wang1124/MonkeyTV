@@ -39,24 +39,16 @@ class CopyRightViewController: UIViewController {
 
     private func setupUI() {
 
-
         view.addSubview(copyRightTextView)
         copyRightTextView.contentOffset = CGPoint.zero
-//        view.addSubview(copyRightLabel)
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         copyRightTextView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         
         NSLayoutConstraint.activate([
-//            copyRightLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            copyRightLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-//            copyRightLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            copyRightLabel.bottomAnchor.constraint(equalTo: copyRightTextView.safeAreaLayoutGuide.topAnchor, constant: -16),
-//
             copyRightTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             copyRightTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             copyRightTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             copyRightTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-
         ])
     }
 }

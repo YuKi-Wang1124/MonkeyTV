@@ -44,7 +44,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     
     var label: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        label.textColor = UIColor.darkAndWhite
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         label.numberOfLines = 0
