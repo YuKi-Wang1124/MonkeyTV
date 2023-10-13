@@ -18,7 +18,6 @@ class YouTubeParameter {
     var maxResults: Int = 25
 }
 
-
 enum YoutubeRequest: Request {
     
     case channel

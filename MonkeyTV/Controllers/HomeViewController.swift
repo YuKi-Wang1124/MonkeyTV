@@ -27,14 +27,28 @@ class HomeViewController: BaseViewController {
     }()
     
     private let activityIndicatorView = NVActivityIndicatorView(
-        frame: CGRect(x: 0, y: 0, width: 80, height: 80),
-        type: .ballSpinFadeLoader, color: UIColor.mainColor, padding: 10)
+        frame: CGRect(x: 0, y: 0, width: 60, height: 60),
+        type: .lineSpinFadeLoader, color: UIColor.mainColor, padding: 10)
     
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
     
+    private lazy var copyRightTextView = {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.backgroundColor = UIColor.setColor(
+            lightColor: UIColor(white: 1, alpha: 0.9),
+            darkColor: UIColor(white: 0.1, alpha: 1))
+        textView.text = Constant.COPYRIGHT_TEXT
+        textView.font = UIFont.systemFont(ofSize: 17)
+        textView.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         Task { await showUserName() }
     }
     
@@ -47,18 +61,18 @@ class HomeViewController: BaseViewController {
     
     private func showUserName() async {
         if KeychainItem.currentEmail.isEmpty {
-            self.navigationItem.title = "MonkeyTV"
+            self.navigationItem.title = Constant.monkeyTV
             return
         }
         
         if let userInfo = await UserInfoManager.userInfo() {
-            self.navigationItem.title = userInfo.userName + "，歡迎您"
+            self.navigationItem.title = userInfo.userName + Constant.welcome
         }
     }
     
     // MARK: - Update TableView DataSource
     
-    func updateTableViewDataSource() {
+    private func updateTableViewDataSource() {
         tableViewDataSource =
         UITableViewDiffableDataSource<OneSection, String>(
             tableView: tableView) { tableView, indexPath, _ in
@@ -68,7 +82,6 @@ class HomeViewController: BaseViewController {
                         withIdentifier: HomeAnimationTableViewCell.identifier,
                         for: indexPath) as? HomeAnimationTableViewCell
                     guard let cell = cell else { return UITableViewCell() }
-                    
                     cell.showVideoPlayerDelegate = self
                     return cell
                 } else {
@@ -97,16 +110,20 @@ class HomeViewController: BaseViewController {
 
 // MARK: - UI configuration
 extension HomeViewController {
+    
     private func setupTableViewUI() {
+        
         view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
+        
         view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
         tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        view.addSubview(activityIndicatorView)
+        
         activityIndicatorView.center = view.center
         activityIndicatorView.startAnimating()
         activityIndicatorView.layer.cornerRadius = 10
         activityIndicatorView.backgroundColor = UIColor.setColor(
-            lightColor: UIColor(white: 0.5, alpha: 0.4),
+            lightColor: UIColor(white: 1, alpha: 0.4),
             darkColor: UIColor(white: 0.1, alpha: 0.5))
         
         NSLayoutConstraint.activate([

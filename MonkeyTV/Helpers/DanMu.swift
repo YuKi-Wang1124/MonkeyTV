@@ -30,6 +30,7 @@ class DanMu: Hashable {
 }
 
 class DanMuView: UIView {
+    
     var displayLink: CADisplayLink?
     var lineHeight: CGFloat = 26
     var gap: CGFloat = 20

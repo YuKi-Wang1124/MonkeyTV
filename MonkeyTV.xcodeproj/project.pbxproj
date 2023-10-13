@@ -31,7 +31,6 @@
 		CC0BF1DD2AB1B6880075203C /* YoutubeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */; };
 		CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DE2AB1B8130075203C /* Video.swift */; };
 		CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */; };
-		CC0BF1E42AB1DB0F0075203C /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E32AB1DB0F0075203C /* KeyChainManager.swift */; };
 		CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */; };
 		CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */; };
 		CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */; };
@@ -93,7 +92,6 @@
 		CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeRequest.swift; sourceTree = "<group>"; };
 		CC0BF1DE2AB1B8130075203C /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
-		CC0BF1E32AB1DB0F0075203C /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeData.swift; sourceTree = "<group>"; };
 		CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */,
-				CC0BF1E32AB1DB0F0075203C /* KeyChainManager.swift */,
 				CC0BF1D82AB1B1300075203C /* HTTPClientManager.swift */,
 				CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */,
 				CC1CCA642AC2B4B80010C63C /* StorageManager.swift */,
@@ -547,7 +544,6 @@
 				CC1CCA9B2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift in Sources */,
 				CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */,
 				CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */,
-				CC0BF1E42AB1DB0F0075203C /* KeyChainManager.swift in Sources */,
 				CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */,
 				CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */,
 				CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */,
@@ -702,7 +698,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -732,7 +728,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonkeyTV/Info.plist;

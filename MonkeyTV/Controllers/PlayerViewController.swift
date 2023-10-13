@@ -594,10 +594,10 @@ extension PlayerViewController {
         snapshot.appendItems([chatroom], toSection: .chatroom)
         snapshot.appendItems([danmu], toSection: .danmu)
         
-        tableView.addRefreshFooter(refreshingBlock: { [weak self] in
-            
-            self?.footerLoader()
-        })
+//        tableView.addRefreshFooter(refreshingBlock: { [weak self] in
+//
+//            self?.footerLoader()
+//        })
     }
     
     private func footerLoader() {
@@ -706,7 +706,7 @@ extension PlayerViewController {
     @objc func addToMyShow(sender: UIButton) {
         
         if KeychainItem.currentEmail == "" {
-            showLogInAlert(message: "若要加入片單請先登入或註冊會員帳號")
+            showLogInAlert(message: Constant.addShowLogInAlertMessage)
         } else {
             if isMyShow == true {
                 sender.setImage(UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig),
@@ -732,7 +732,7 @@ extension PlayerViewController {
     // MARK: - Show Chatroom Button Action
     @objc func showChatroom(sender: UIButton) {
         if KeychainItem.currentEmail == "" {
-            showLogInAlert(message: "若要加入即時聊天室請先登入或註冊會員帳號")
+            showLogInAlert(message: Constant.addChatLogInAlertMessage)
         } else {
             PlayerViewController.chatroonIsShow = true
             var statusBarHeigh: CGFloat = 0.0
