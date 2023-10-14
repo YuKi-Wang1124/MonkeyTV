@@ -13,12 +13,18 @@ enum PlayerSection {
     case playlist
 }
 
+struct UseDefaultData: Codable {
+    let isDefault: Bool
+}
+
 struct Show: Codable, Hashable {
+    
     let type: Int
     let playlistId: String
     let image: String
     let id: String
     let showName: String
+    
     enum CodingKeys: String, CodingKey {
           case type
           case playlistId

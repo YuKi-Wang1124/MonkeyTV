@@ -304,7 +304,6 @@ extension PlayerViewController: YTPlayerViewDelegate {
             } else {
                 self.videoDuration = duration
                 let timeString = TimeFormatter.shared.formatSecondsToHHMMSS(seconds: Float(videoDuration))
-
                 videoDurationLabel.text = "/ " + timeString
     
             }
