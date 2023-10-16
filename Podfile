@@ -30,6 +30,8 @@ target 'MonkeyTV' do
   pod 'Firebase/Analytics'
   pod 'MJRefresh'
   pod 'NVActivityIndicatorView'
+  pod 'lottie-ios'
+
   
   post_install do |installer|
     installer.generated_projects.each do |project|

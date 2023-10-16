@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import youtube_ios_player_helper
 import CoreData
+import Lottie
 
 class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     
@@ -19,7 +19,7 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
         return searchController
     }()
     
-    private lazy var cleanHistoryButton = {
+    private lazy var cleanHistoryButton: UIButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.trash, configuration: UIImage.symbolConfig),
             color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
@@ -27,7 +27,7 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
             backgroundColor: UIColor.clear)
     }()
     
-    private lazy var clockImageView = {
+    private lazy var clockImageView: UIImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFill
         imageview.image = UIImage.systemAsset(.clock)
@@ -50,7 +50,7 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     private var historyArray: [String] = [String]()
     private var width: CGFloat = 0
     private var height: CGFloat = 0
-    private var isSearchBarActive = false
+    private var isSearchBarActive: Bool = false
     
     // MARK: - Table View
     
@@ -73,18 +73,20 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private lazy var titleView = {
+
+    private lazy var titleView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var buttonsView = {
+    private lazy var buttonsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private var animationView: LottieAnimationView?
     
     // MARK: - supports
     
@@ -226,8 +228,9 @@ extension SearchViewController {
         
         tableView.backgroundColor = .baseBackgroundColor
         view.backgroundColor = .baseBackgroundColor
-        view.addSubview(hiddenView)
         view.addSubview(buttonsView)
+        view.addSubview(hiddenView)
+        
         view.addSubview(titleView)
         titleView.addSubview(clockImageView)
         titleView.addSubview(titleLabel)
@@ -238,6 +241,13 @@ extension SearchViewController {
         tableView.isHidden = true
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         view.addGestureRecognizer(tapGesture!)
+        
+        animationView = .init(name: "notFound")
+        guard let animationView = animationView else { return }
+        animationView.loopMode = .loop
+        tableView.addSubview(animationView)
+        animationView.play()
+        animationView.isHidden = true
         
         NSLayoutConstraint.activate([
             
@@ -279,6 +289,7 @@ extension SearchViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        animationView.frame = view.bounds
     }
     
     @objc func cleanSearchHistory() {
@@ -375,7 +386,6 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
     }
     
     func removeAllSearchHistory() {
-        
         if let data = StorageManager.shared.fetchSearchHistorys(),
            data.count == 0 {
             print("目前沒有搜尋紀錄")
@@ -386,16 +396,24 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
     }
     
     // MARK: - filterDataSource
+    
     private func filterDataSource(for searchText: String) {
-        
+
         self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
             let showName = show.showName
             if showName.localizedCaseInsensitiveContains(searchText) {
+                guard let animationView = animationView else { return true }
+                animationView.isHidden = true
                 filterDataList.append(show)
                 return true
             } else {
                 return false
             }
-        })        
+        })
+        
+        if self.filterDataList.isEmpty == true {
+            guard let animationView = animationView else { return }
+            animationView.isHidden = false
+        }
     }
 }
