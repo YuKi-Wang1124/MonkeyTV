@@ -166,12 +166,15 @@ class PlayerViewController: UIViewController {
     // MARK: - Button View & Gesture
     
     private func addButtonViewGesture() {
+        
         let singleFinger = UITapGestureRecognizer(target: self, action: #selector(showButtonView))
         singleFinger.numberOfTapsRequired = 1
         singleFinger.numberOfTouchesRequired = 1
         buttonsView.addGestureRecognizer(singleFinger)
+        
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         buttonsView.addGestureRecognizer(dragGesture)
+        
     }
     
     @objc func showButtonView() {
