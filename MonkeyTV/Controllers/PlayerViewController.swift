@@ -15,6 +15,7 @@ class PlayerViewController: UIViewController {
     var id: String = ""
     var showName: String = ""
     var showImage: String = ""
+    private var nextPageToken: String = ""
     private var userName: String = ""
     private var userImage: String = ""
     private var danMuText: String = ""
@@ -368,14 +369,53 @@ extension PlayerViewController {
         snapshot.appendItems([chatroom], toSection: .chatroom)
         snapshot.appendItems([danmu], toSection: .danmu)
         
-//        tableView.addRefreshFooter(refreshingBlock: { [weak self] in
-//
-//            self?.footerLoader()
-//        })
+        tableView.addRefreshFooter(refreshingBlock: { [weak self] in
+            self?.loadMore()
+        })
     }
     
-    private func footerLoader() {
-        
+    private func loadMore() {
+        let decoder = JSONDecoder()
+        HTTPClientManager.shared.request(
+            YoutubeRequest.nextPageToken, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                do {
+                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
+                    YouTubeParameter.shared.nextPageToken = info.nextPageToken
+                    addToSnapshot(data: info.items)
+                    loadMore()
+                } catch {
+                    do {
+                        let info = try decoder.decode(PlaylistListLastResponse.self, from: data)
+                        self.nextPageToken = info.prevPageToken
+                        if YouTubeParameter.shared.nextPageToken == nextPageToken {
+                            tableView.endWithNoMoreData()
+                            return
+                        }
+                        addToSnapshot(data: info.items)
+                    } catch {
+                        print(Result<Any>.failure(error))
+                    }
+                }
+            case .failure(let error):
+                print(Result<Any>.failure(error))
+            }
+        })
+        tableView.endWithNoMoreData()
+    }
+    
+    private func addToSnapshot(data: [Playlist]) {
+        data.forEach({
+            let show = MKShow(id: $0.snippet.resourceId.videoId,
+                              videoId: $0.snippet.resourceId.videoId,
+                              image: $0.snippet.thumbnails.default.url,
+                              title: $0.snippet.title,
+                              playlistId: self.playlistId)
+            self.snapshot.appendItems([show], toSection: .playlist)
+            self.dataSource.apply(self.snapshot)
+        })
     }
     
     private func configureDataSource(tableView: UITableView) {
@@ -520,7 +560,6 @@ extension PlayerViewController {
                 sheet.detents = [
                     .custom { _ in chatroomHeight }, .large()]
                 sheet.largestUndimmedDetentIdentifier = .large
-                
                 self.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
                 self.present(chatroomVC, animated: true)
             }
@@ -564,18 +603,8 @@ extension PlayerViewController {
                 case .success(let data):
                     do {
                         let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
-                        print("\(playlistId)")
-                        print("\(info.nextPageToken)")
-                        info.items.forEach {
-                            let show = MKShow(id: self.id,
-                                              videoId: $0.snippet.resourceId.videoId,
-                                              image: $0.snippet.thumbnails.default.url,
-                                              title: $0.snippet.title,
-                                              playlistId: $0.snippet.playlistId)
-                            self.snapshot.appendItems([show], toSection: .playlist)
-                        }
-                        self.dataSource.apply(snapshot)
-                        
+                        YouTubeParameter.shared.nextPageToken = info.nextPageToken
+                        addToSnapshot(data: info.items)
                     } catch {
                         print(Result<Any>.failure(error))
                     }

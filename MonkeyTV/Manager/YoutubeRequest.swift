@@ -26,12 +26,17 @@ enum YoutubeRequest: Request {
     case hot
     case nextPageToken
     
-    var headers: [String: String] {
+    var headers: [String: String]? {
         switch self {
-        case .channel, .show, .playlistItems, .nextPageToken, .hot: return [
-            HTTPHeaderField.auth.rawValue: "\(Constant.YOUR_ACCESS_TOKEN)",
-            HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.json.rawValue
-        ]
+        case .channel, .show, .playlistItems, .hot:
+            return [
+                HTTPHeaderField.auth.rawValue: "\(Constant.YOUR_ACCESS_TOKEN)",
+                HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.json.rawValue
+            ]
+        case .nextPageToken:
+            return [
+                HTTPHeaderField.auth.rawValue: "\(Constant.YOUR_ACCESS_TOKEN)"
+            ]
         }
     }
     
@@ -83,12 +88,11 @@ enum YoutubeRequest: Request {
         case .nextPageToken:
             
             return "/playlistItems?part=\(YouTubeParameter.shared.part)"
-            + "&maxResults=\(YouTubeParameter.shared.part)"
+            + "&maxResults=\(YouTubeParameter.shared.maxResults)"
             + "&pageToken=\(YouTubeParameter.shared.nextPageToken)"
             + "&playlistId=\(YouTubeParameter.shared.playlistId)"
             + "&key=\(Constant.API_KEY)"
             
         }
     }
-    
 }

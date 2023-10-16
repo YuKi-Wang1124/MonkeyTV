@@ -34,7 +34,7 @@ enum HTTPHeaderValue: String {
 }
 
 protocol Request {
-    var headers: [String: String] { get }
+    var headers: [String: String]? { get }
     var body: Data? { get }
     var method: String { get }
     var endPoint: String { get }
