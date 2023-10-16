@@ -3,4 +3,102 @@
    uuid = "954907AB-F727-497E-A529-C0E1C095BAE2"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9EFC0EA0-3E66-4DE0-AD3C-CC8028ECC335"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/PlayerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "getVideoDuratiion()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9EFC0EA0-3E66-4DE0-AD3C-CC8028ECC335 - 9eab1bedd15a587b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Double, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.PlayerViewController.getVideoDuratiion() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/PlayerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "408">
+               </Location>
+               <Location
+                  uuid = "9EFC0EA0-3E66-4DE0-AD3C-CC8028ECC335 - 9eab1bedd15a587b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Double, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.PlayerViewController.getVideoDuratiion() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/PlayerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "972">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "01FB02A6-7588-49E3-8041-71A4063C4247"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonkeyTV/Controllers/PlayerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
+            landmarkName = "getVideoDuratiion()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "01FB02A6-7588-49E3-8041-71A4063C4247 - 9eab1bedd15a5935"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Double, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.PlayerViewController.getVideoDuratiion() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/PlayerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "313"
+                  endingLineNumber = "313"
+                  offsetFromSymbolStart = "352">
+               </Location>
+               <Location
+                  uuid = "01FB02A6-7588-49E3-8041-71A4063C4247 - 9eab1bedd15a5916"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Double, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MonkeyTV.PlayerViewController.getVideoDuratiion() -&gt; ()"
+                  moduleName = "MonkeyTV"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wangyuqi/Desktop/MonkeyTV/MonkeyTV/Controllers/PlayerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "312"
+                  endingLineNumber = "312"
+                  offsetFromSymbolStart = "496">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

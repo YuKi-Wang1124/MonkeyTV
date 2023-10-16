@@ -309,6 +309,7 @@ extension PlayerViewController: YTPlayerViewDelegate {
                 self.videoDuration = duration
                 let timeString = TimeFormatter.shared.formatSecondsToHHMMSS(seconds: Float(videoDuration))
                 videoDurationLabel.text = "/ " + timeString
+                print("\(timeString)")
     
             }
         }
@@ -317,7 +318,6 @@ extension PlayerViewController: YTPlayerViewDelegate {
     // MARK: - Get Dan Mu Data
     
     private func getDanMuData(videoId: String) {
-        
         FirestoreManager.bulletChat.whereField(
             "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
                 if let querySnapshot = querySnapshot {
@@ -651,6 +651,12 @@ extension PlayerViewController: UITableViewDelegate {
             "showinfo": 0,
             "autoplay": 1]
         
+        getVideoDuratiion()
+        danmuView.removeAllDanMuQueue()
+        bulletChats.removeAll()
+        getDanMuData(videoId: itemIdentifier.videoId)
+        restartPlayerBulletChats()
+        self.videoId = itemIdentifier.videoId
         showNameLabel.text = itemIdentifier.title
         ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
     }
