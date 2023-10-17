@@ -115,17 +115,15 @@ extension HomeViewController {
         
         view.addSubview(tableView)
         view.addSubview(activityIndicatorView)
-        
         view.backgroundColor = .baseBackgroundColor
         tableView.backgroundColor = .baseBackgroundColor
-        
         activityIndicatorView.center = view.center
         activityIndicatorView.startAnimating()
         activityIndicatorView.layer.cornerRadius = 10
         activityIndicatorView.backgroundColor = UIColor.setColor(
             lightColor: UIColor(white: 1, alpha: 0.4),
             darkColor: UIColor(white: 0.1, alpha: 0.5))
-        
+
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),

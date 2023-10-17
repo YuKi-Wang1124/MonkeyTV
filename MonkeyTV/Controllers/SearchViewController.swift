@@ -37,11 +37,22 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     }()
     
     private var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        let label = UILabel.createLabel(
+            fontSize: 17,
+            textColor: UIColor.darkAndWhite,
+            numberOfLines: 0,
+            textAlignment: .left)
         label.text = "最近搜尋"
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var noDataLabel: UILabel = {
+        let label = UILabel.createLabel(
+            fontSize: 17,
+            textColor: UIColor.darkAndWhite,
+            numberOfLines: 0,
+            textAlignment: .left)
+        label.text = "沒有搜尋資料"
         return label
     }()
     
@@ -246,6 +257,7 @@ extension SearchViewController {
         guard let animationView = animationView else { return }
         animationView.loopMode = .loop
         tableView.addSubview(animationView)
+        animationView.addSubview(noDataLabel)
         animationView.play()
         animationView.isHidden = true
         
@@ -287,7 +299,12 @@ extension SearchViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            noDataLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
+            noDataLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            noDataLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            noDataLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
         animationView.frame = view.bounds
     }
