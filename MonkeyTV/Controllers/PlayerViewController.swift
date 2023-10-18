@@ -537,7 +537,7 @@ extension PlayerViewController {
     @objc func showChatroom(sender: UIButton) {
         
         if KeychainItem.currentEmail == "" {
-            showLogInAlert(message: Constant.addShowLogInAlertMessage)
+            showLogInAlert(message: Constant.addChatLogInAlertMessage)
         } else {
             PlayerViewController.chatroonIsShow = true
             var statusBarHeigh: CGFloat = 0.0

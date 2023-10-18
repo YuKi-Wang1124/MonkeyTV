@@ -175,7 +175,6 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
                 width = button.frame.size.width + button.frame.origin.x
                 buttonArray.append(button)
                 buttonsView.addSubview(button)
-                
             }
         }
     }
@@ -189,7 +188,6 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
             tableView.isHidden = false
             tableView.reloadData()
         }
-        
     }
 }
 
