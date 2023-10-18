@@ -161,7 +161,11 @@ public extension IQKeyboardManager {
             }
 
             //  Getting keyboard animation duration
-            animationDuration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
+            if let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval, duration != 0 {
+                animationDuration = duration
+            } else {
+                animationDuration = 0.25
+            }
 
             //  Getting UIKeyboardSize.
             if let kbFrame = info[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
@@ -228,7 +232,8 @@ public extension IQKeyboardManager {
 
         guard privateIsEnabled(),
             let textFieldView = textFieldView,
-            let parentController = textFieldView.parentContainerViewController(), (parentController.modalPresentationStyle == UIModalPresentationStyle.formSheet || parentController.modalPresentationStyle == UIModalPresentationStyle.pageSheet),
+            let parentController = textFieldView.parentContainerViewController(),
+              (parentController.modalPresentationStyle == .formSheet || parentController.modalPresentationStyle == .pageSheet),
             textFieldView.isAlertViewTextField() == false else {
                 return
         }
@@ -264,7 +269,11 @@ public extension IQKeyboardManager {
             }
 
             //  Getting keyboard animation duration
-            animationDuration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
+            if let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval, duration != 0 {
+                animationDuration = duration
+            } else {
+                animationDuration = 0.25
+            }
         }
 
         // If not enabled then do nothing.

@@ -24,7 +24,7 @@ class ChatroomTableViewCell: UITableViewCell {
     
     var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .lightGray, darkColor: .lightGray)
+        label.textColor = UIColor.lightGray
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -32,11 +32,12 @@ class ChatroomTableViewCell: UITableViewCell {
     
     var messageLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        label.textColor = UIColor.darkAndWhite
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

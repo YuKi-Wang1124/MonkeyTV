@@ -31,7 +31,6 @@
 		CC0BF1DD2AB1B6880075203C /* YoutubeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */; };
 		CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1DE2AB1B8130075203C /* Video.swift */; };
 		CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */; };
-		CC0BF1E42AB1DB0F0075203C /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E32AB1DB0F0075203C /* KeyChainManager.swift */; };
 		CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */; };
 		CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */; };
 		CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */; };
@@ -47,6 +46,10 @@
 		CC755A8B2ACFD3D300B6CF1E /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */; };
 		CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */; };
 		CC755A8F2AD3038700B6CF1E /* DeleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */; };
+		CC755A922AD7D06D00B6CF1E /* CopyRightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A912AD7D06D00B6CF1E /* CopyRightViewController.swift */; };
+		CC755A942AD7E6FF00B6CF1E /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A932AD7E6FF00B6CF1E /* MJRefreshWrapper.swift */; };
+		CC755A982AD923BE00B6CF1E /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A972AD923BE00B6CF1E /* TimeFormatter.swift */; };
+		CC755A9E2ADD840100B6CF1E /* notFound.json in Resources */ = {isa = PBXBuildFile; fileRef = CC755A9D2ADD840100B6CF1E /* notFound.json */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
@@ -91,7 +94,6 @@
 		CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeRequest.swift; sourceTree = "<group>"; };
 		CC0BF1DE2AB1B8130075203C /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
-		CC0BF1E32AB1DB0F0075203C /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeData.swift; sourceTree = "<group>"; };
 		CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
@@ -108,6 +110,10 @@
 		CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		CC755A8C2ACFE73700B6CF1E /* SignInWithTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithTableViewCell.swift; sourceTree = "<group>"; };
 		CC755A8E2AD3038700B6CF1E /* DeleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTableViewCell.swift; sourceTree = "<group>"; };
+		CC755A912AD7D06D00B6CF1E /* CopyRightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyRightViewController.swift; sourceTree = "<group>"; };
+		CC755A932AD7E6FF00B6CF1E /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
+		CC755A972AD923BE00B6CF1E /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
+		CC755A9D2ADD840100B6CF1E /* notFound.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = notFound.json; path = ../../../../Downloads/notFound.json; sourceTree = "<group>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -174,9 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				CC1CCA9D2ACBB8F30010C63C /* MonkeyTV.entitlements */,
-				CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */,
-				CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */,
-				CC0331252ABDA5F200229900 /* posDataToFirebase.swift */,
+				CC0BF1B82AB00BF70075203C /* Info.plist */,
+				CC755A992ADD80C100B6CF1E /* Supporting Files */,
 				CC0BF1F32AB2F3B00075203C /* Helpers */,
 				CC0BF1D42AB055450075203C /* Constants */,
 				CC0BF1CE2AB03D730075203C /* Third Party Wrappers */,
@@ -187,10 +192,7 @@
 				CC963C1C2AB996BA0047EEFA /* ViewModel */,
 				CC963C132AB92CA60047EEFA /* Base */,
 				CC0BF1C32AB014920075203C /* Controllers */,
-				CC0BF1B32AB00BF70075203C /* Assets.xcassets */,
-				CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */,
-				CC0BF1B82AB00BF70075203C /* Info.plist */,
-				CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */,
+				CC755A9A2ADD819A00B6CF1E /* Assets */,
 				CC03312D2AC2B05B00229900 /* MyData.xcdatamodeld */,
 			);
 			path = MonkeyTV;
@@ -222,6 +224,7 @@
 				CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */,
 				CC0BF1C62AB02AF80075203C /* FavoriteViewController.swift */,
 				CC0BF1CA2AB02E010075203C /* ProfileViewController.swift */,
+				CC755A912AD7D06D00B6CF1E /* CopyRightViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1CF2AB03DC30075203C /* KingFisherWrapper.swift */,
+				CC755A932AD7E6FF00B6CF1E /* MJRefreshWrapper.swift */,
 			);
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
@@ -238,7 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1DC2AB1B6880075203C /* YoutubeRequest.swift */,
-				CC0BF1E32AB1DB0F0075203C /* KeyChainManager.swift */,
 				CC0BF1D82AB1B1300075203C /* HTTPClientManager.swift */,
 				CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */,
 				CC1CCA642AC2B4B80010C63C /* StorageManager.swift */,
@@ -274,6 +277,7 @@
 				CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */,
 				CC963C1A2AB96B5C0047EEFA /* Observable.swift */,
 				CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */,
+				CC755A972AD923BE00B6CF1E /* TimeFormatter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -327,6 +331,27 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		CC755A992ADD80C100B6CF1E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */,
+				CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */,
+				CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */,
+				CC0331252ABDA5F200229900 /* posDataToFirebase.swift */,
+				CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CC755A9A2ADD819A00B6CF1E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CC755A9D2ADD840100B6CF1E /* notFound.json */,
+				CC0BF1B32AB00BF70075203C /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		CC963C132AB92CA60047EEFA /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +381,7 @@
 				CC0BF1A52AB00BF60075203C /* Resources */,
 				CC0BF1D72AB1A4610075203C /* Run Script */,
 				52840DC1BC9DE97C954E66FB /* [CP] Embed Pods Frameworks */,
+				CC755A902AD78D0A00B6CF1E /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -409,6 +435,7 @@
 			files = (
 				CC0BF1B72AB00BF70075203C /* LaunchScreen.storyboard in Resources */,
 				CC0BF1B42AB00BF70075203C /* Assets.xcassets in Resources */,
+				CC755A9E2ADD840100B6CF1E /* notFound.json in Resources */,
 				CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +500,31 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		CC755A902AD78D0A00B6CF1E /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -484,6 +536,7 @@
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
 				CC0BF1C92AB02BBA0075203C /* UINavigationController+Extension.swift in Sources */,
 				CC0BF1D92AB1B1300075203C /* HTTPClientManager.swift in Sources */,
+				CC755A922AD7D06D00B6CF1E /* CopyRightViewController.swift in Sources */,
 				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
 				CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */,
 				CC963C0E2AB84A260047EEFA /* UITextField+Extension.swift in Sources */,
@@ -507,13 +560,14 @@
 				CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
 				CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */,
+				CC755A982AD923BE00B6CF1E /* TimeFormatter.swift in Sources */,
+				CC755A942AD7E6FF00B6CF1E /* MJRefreshWrapper.swift in Sources */,
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
 				CC0BF1CB2AB02E010075203C /* ProfileViewController.swift in Sources */,
 				CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */,
 				CC1CCA9B2ACAF7BC0010C63C /* ProfileTitleTableViewCell.swift in Sources */,
 				CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */,
 				CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */,
-				CC0BF1E42AB1DB0F0075203C /* KeyChainManager.swift in Sources */,
 				CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */,
 				CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */,
 				CC755A8D2ACFE73700B6CF1E /* SignInWithTableViewCell.swift in Sources */,
@@ -579,7 +633,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -668,13 +722,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6.5;
+				CURRENT_PROJECT_VERSION = 12;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -682,9 +738,12 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -696,13 +755,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6.5;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -710,9 +770,12 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

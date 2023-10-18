@@ -9,12 +9,12 @@ import UIKit
 import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
-import LineSDK
 import AuthenticationServices
 
 class ProfileViewController: UIViewController {
     
-    var username: String = ""
+    private var username: String = ""
+    private var cleanSearchHistoryDelegate: CleanSearchHistoryDelegate?
     
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
@@ -45,13 +45,20 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textAlignment = .center
+        let label = UILabel.createLabel(
+            fontSize: 20,
+            textColor: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
+            textAlignment: .center)
         label.text = "歡迎 註冊 / 登入 MonkeyTV"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+
+    private lazy var copyRightButton = {
+        let button = UIButton.createPlayerButton(
+            image: UIImage.systemAsset(.cCircle, configuration: UIImage.smallSymbolConfig),
+            color: .white, cornerRadius: 5, backgroundColor: UIColor.mainColor!)
+        button.setTitle("  MonkeyTV 版權宣告", for: .normal)
+        return button
     }()
     
     private lazy var appleSignInButton = {
@@ -70,16 +77,9 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    private var lineSignInButton = {
-        let button = LoginButton()
-        button.buttonSize = .normal
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     private var myUserInfo: UserInfo?
     
-    var rightButton = UIBarButtonItem()
+    private var rightButton = UIBarButtonItem()
     
     private lazy var bindAccountBoolArray: [Bool] = [false, false]
     
@@ -100,13 +100,16 @@ class ProfileViewController: UIViewController {
         setupButtonLayout()
         setupTableView()
         buttonAddTarget()
-        
-        lineSignInButton.delegate = self
-        lineSignInButton.permissions = [.profile]
-        lineSignInButton.presentingViewController = self
-        
+   
         rightButton = UIBarButtonItem(title: "登出", style: .plain, target: self, action: #selector(rightButtonTapped))
         self.navigationItem.rightBarButtonItem = rightButton
+        copyRightButton.addTarget(self, action: #selector(presentCopyRightViewController), for: .touchUpInside)
+        self.cleanSearchHistoryDelegate = SearchViewController()
+    }
+    
+    @objc func presentCopyRightViewController() {
+        let copyRightViewController = CopyRightViewController()
+        self.navigationController?.pushViewController(copyRightViewController, animated: true)
     }
     
     @objc func rightButtonTapped() {
@@ -118,6 +121,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupTableView() {
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
@@ -136,22 +140,6 @@ class ProfileViewController: UIViewController {
     private func buttonAddTarget() {
         googleSignInButton.addTarget(self, action: #selector(googleSignIn), for: .touchUpInside)
         appleSignInButton.addTarget(self, action: #selector(appleSignIn), for: .touchUpInside)
-        lineSignInButton.addTarget(self, action: #selector(lineSignIn), for: .touchUpInside)
-    }
-    
-    @objc func lineSignIn() {
-        LoginManager.shared.login(permissions: [.profile], in: self) { result in
-            switch result {
-            case .success(let loginResult):
-                if let profile = loginResult.userProfile {
-                    print("User ID: \(profile.userID)")
-                    print("User Display Name: \(profile.displayName)")
-                    print("User Icon: \(String(describing: profile.pictureURL))")
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
     
     @objc func appleSignIn() {
@@ -166,6 +154,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func googleSignIn() {
+        
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
@@ -236,7 +225,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(googleSignInButton)
         view.addSubview(appleSignInButton)
-        //        view.addSubview(lineSignInButton)
+        view.addSubview(copyRightButton )
         
         NSLayoutConstraint.activate([
             personalImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
@@ -258,16 +247,18 @@ class ProfileViewController: UIViewController {
             appleSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 24),
             appleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             appleSignInButton.widthAnchor.constraint(equalToConstant: 245),
-            appleSignInButton.heightAnchor.constraint(equalToConstant: 45)
+            appleSignInButton.heightAnchor.constraint(equalToConstant: 45),
             
-            //            lineSignInButton.topAnchor.constraint(equalTo: appleSignInButton.bottomAnchor, constant: 24),
-            //            lineSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //            lineSignInButton.widthAnchor.constraint(equalToConstant: 240)
+            copyRightButton.topAnchor.constraint(equalTo: appleSignInButton.bottomAnchor, constant: 24),
+            copyRightButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            copyRightButton.widthAnchor.constraint(equalToConstant: 245),
+            copyRightButton.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row != 0 {
             return 58.0
@@ -340,6 +331,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             self.saveUserInKeychain("")
             self.rightButton.setTitleTextAttributes(
                 [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+            self.cleanSearchHistoryDelegate?.cleanSearchHistory()
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         alertController.addAction(okAction)
@@ -482,21 +474,6 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
 extension ProfileViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
-    }
-}
-
-extension ProfileViewController: LoginButtonDelegate {
-    
-    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
-        print("Login Succeeded.")
-    }
-    
-    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
-        print("Error: \(error)")
-    }
-    
-    func loginButtonDidStartLogin(_ button: LoginButton) {
-        print("Login Started.")
     }
 }
 

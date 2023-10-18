@@ -70,12 +70,13 @@ extension TabBarViewController {
             case .profile: controller = UINavigationController.profile
             }
             controller.tabBarItem = makeTabBarItem()
-            controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
             return controller
         }
+        
         private func makeTabBarItem() -> UITabBarItem {
             return UITabBarItem(title: title, image: image, selectedImage: selectedImage)
         }
+        
         private var title: String {
             switch self {
             case .home:

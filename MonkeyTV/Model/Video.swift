@@ -21,6 +21,14 @@ struct MKShow: Hashable {
     var image: String
     var title: String
     var playlistId: String
+    
+    static func == (lhs: MKShow, rhs: MKShow) -> Bool {
+         lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 struct SuccessParser<T: Codable>: Codable {
