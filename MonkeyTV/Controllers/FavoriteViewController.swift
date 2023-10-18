@@ -65,22 +65,12 @@ class FavoriteViewController: UIViewController, UITableViewDelegate {
             tableViewSnapshot.appendItems(showArray, toSection: .main)
             await tableViewDataSource.apply(tableViewSnapshot)
         }
-        
-//        if let showArray = StorageManager.shared.fetchSearchMyShows() {
-//            print(showArray)
-//
-//            tableView.dataSource = tableViewDataSource
-//            tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, MyShow>()
-//            tableViewSnapshot.appendSections([OneSection.main])
-//            tableViewSnapshot.appendItems(showArray, toSection: .main)
-//            tableViewDataSource.apply(tableViewSnapshot)
-//        }
     }
     
     private func setUI() {
         view.addSubview(tableView)
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        view.backgroundColor = .baseBackgroundColor
+        tableView.backgroundColor = .baseBackgroundColor
 
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),

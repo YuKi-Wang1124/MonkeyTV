@@ -84,7 +84,7 @@ class HomeAnimationTableViewCell: UITableViewCell {
             pagerView.scrollToItem(at: nextPage, animated: true)
             currentPage = nextPage
         } else {
-            pagerView.scrollToItem(at: 0 , animated: false)
+            pagerView.scrollToItem(at: 0, animated: false)
             currentPage = 0
         }
     }

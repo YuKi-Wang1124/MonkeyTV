@@ -21,4 +21,14 @@ extension UILabel {
         return label
     }
     
+    static func createLabel(fontSize: CGFloat, textColor: UIColor, numberOfLines: Int = 0, textAlignment: NSTextAlignment = .left) -> UILabel {
+        let label = UILabel()
+        label.textColor = textColor
+        label.font = UIFont.systemFont(ofSize: fontSize)
+        label.numberOfLines = numberOfLines
+        label.textAlignment = textAlignment
+        label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
 }

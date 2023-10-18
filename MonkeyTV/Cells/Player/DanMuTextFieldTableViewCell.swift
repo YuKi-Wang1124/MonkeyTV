@@ -30,7 +30,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     
     private lazy var addLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        label.textColor = UIColor.darkAndWhite
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .center
         label.text = "加入片單"
@@ -128,6 +128,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
             submitMessageButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
             ])
     }
+    
     func emptyTextField() {
         danMuTextField.text = ""
     }

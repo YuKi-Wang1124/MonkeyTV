@@ -9,6 +9,7 @@ import FirebaseCore
 import FirebaseFirestore
 
 class FirestoreManager {
+
     static let shared = Firestore.firestore()
     static let user = FirestoreManager.shared.collection("User")
     static let bulletChat = FirestoreManager.shared.collection("BulletChat")
@@ -18,6 +19,8 @@ class FirestoreManager {
     static let userBlockList = FirestoreManager.shared.collection("UserBlockList")
     static let userReportList = FirestoreManager.shared.collection("UserReportList")
     static let myFavoriteShow = FirestoreManager.shared.collection("MyFavoriteShow")
+    static let useDefaultData = FirestoreManager.shared.collection("UseDefaultData")
+    static let defaultShow = FirestoreManager.shared.collection("DefaultShow")
     
     // MARK: - Block & Report
     
@@ -258,16 +261,44 @@ class FirestoreManager {
     // MARK: - Show
     
     static func fetchHotShowData() async -> [Show] {
+        
         var array = [Show]()
+        var isDefault: Bool?
+        
         do {
-            let querySnapshot = try await self.hotShow.getDocuments()
+            let querySnapshot = try await self.useDefaultData.getDocuments()
             for document in querySnapshot.documents {
                 let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
-                array.append(decodedObject)
+                let decodedObject = try JSONDecoder().decode(UseDefaultData.self, from: jsonData)
+                print(decodedObject)
+                isDefault = decodedObject.isDefault
             }
         } catch {
             print("\(error)")
+        }
+        
+        if isDefault == true {
+            do {
+                let querySnapshot = try await self.defaultShow.getDocuments()
+                for document in querySnapshot.documents {
+                    let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                    let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
+                    array.append(decodedObject)
+                }
+            } catch {
+                print("\(error)")
+            }
+        } else {
+            do {
+                let querySnapshot = try await self.hotShow.getDocuments()
+                for document in querySnapshot.documents {
+                    let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                    let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
+                    array.append(decodedObject)
+                }
+            } catch {
+                print("\(error)")
+            }
         }
         return array
     }
@@ -275,17 +306,46 @@ class FirestoreManager {
     static func findShowCatalogData(
         isEqualTo value: Int
     ) async -> [Show] {
+        
+        var isDefault: Bool?
         var array = [Show]()
+        
         do {
-            let querySnapshot = try await self.show.whereField("type", isEqualTo: value).getDocuments()
+            let querySnapshot = try await self.useDefaultData.getDocuments()
             for document in querySnapshot.documents {
                 let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
-                array.append(decodedObject)
+                let decodedObject = try JSONDecoder().decode(UseDefaultData.self, from: jsonData)
+                print(decodedObject)
+                isDefault = decodedObject.isDefault
             }
         } catch {
             print("\(error)")
         }
+        
+        if isDefault == true {
+            do {
+                let querySnapshot = try await self.defaultShow.whereField("type", isEqualTo: value).getDocuments()
+                for document in querySnapshot.documents {
+                    let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                    let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
+                    array.append(decodedObject)
+                }
+            } catch {
+                print("\(error)")
+            }
+        } else {
+            do {
+                let querySnapshot = try await self.show.whereField("type", isEqualTo: value).getDocuments()
+                for document in querySnapshot.documents {
+                    let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                    let decodedObject = try JSONDecoder().decode(Show.self, from: jsonData)
+                    array.append(decodedObject)
+                }
+            } catch {
+                print("\(error)")
+            }
+        }
+        
         return array
     }
     

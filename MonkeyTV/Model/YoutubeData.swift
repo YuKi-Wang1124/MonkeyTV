@@ -59,9 +59,26 @@ struct PlaylistListResponse: Codable, Hashable {
     let nextPageToken: String
     let pageInfo: PageInfo
     let items: [Playlist]
+    
     static func == (lhs: PlaylistListResponse, rhs: PlaylistListResponse) -> Bool {
         true
     }
+    
+    func hash(into hasher: inout Hasher) {
+    }
+}
+
+struct PlaylistListLastResponse: Codable, Hashable {
+    let kind: String
+    let etag: String
+    let prevPageToken: String
+    let pageInfo: PageInfo
+    let items: [Playlist]
+    
+    static func == (lhs: PlaylistListLastResponse, rhs: PlaylistListLastResponse) -> Bool {
+        true
+    }
+    
     func hash(into hasher: inout Hasher) {
     }
 }
@@ -77,6 +94,7 @@ struct Playlist: Codable, Hashable {
     }
     
     func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

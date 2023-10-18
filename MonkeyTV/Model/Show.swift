@@ -13,12 +13,18 @@ enum PlayerSection {
     case playlist
 }
 
+struct UseDefaultData: Codable {
+    let isDefault: Bool
+}
+
 struct Show: Codable, Hashable {
+    
     let type: Int
     let playlistId: String
     let image: String
     let id: String
     let showName: String
+    
     enum CodingKeys: String, CodingKey {
           case type
           case playlistId
@@ -26,6 +32,7 @@ struct Show: Codable, Hashable {
           case id
           case showName
       }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -34,6 +41,7 @@ struct Show: Codable, Hashable {
         showName = try container.decode(String.self, forKey: .showName)
         type = try container.decode(Int.self, forKey: .type)
     }
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -53,9 +61,9 @@ enum ShowCatalog: String, CaseIterable {
     case animation = "二次元輕鬆看 🐹"
     case drama = "有點甜，有點鹹，一起追劇 🎬"
     case entertainment = "娛樂一下，放鬆身心 👨‍👩‍👧"
-    case sport = "體育賽事隨你看 🏋🏻‍♀️"
+    case sport = "上知天文，閱曆人生🪞"
     case food = "用眼睛吃美食不會胖 🍔"
-    case health = "少一點醫生，多一點健康 🍀"
+    case health = "療療自己，快樂生活🍀"
 //    case internationalShow = "國外節目看到飽 🌎"
 }
 

@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import youtube_ios_player_helper
 import CoreData
+import Lottie
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     
     private var tapGesture: UITapGestureRecognizer?
     
@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
         return searchController
     }()
     
-    private lazy var cleanHistoryButton = {
+    private lazy var cleanHistoryButton: UIButton = {
         return UIButton.createPlayerButton(
             image: UIImage.systemAsset(.trash, configuration: UIImage.symbolConfig),
             color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
@@ -27,7 +27,7 @@ class SearchViewController: UIViewController {
             backgroundColor: UIColor.clear)
     }()
     
-    private lazy var clockImageView = {
+    private lazy var clockImageView: UIImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFill
         imageview.image = UIImage.systemAsset(.clock)
@@ -37,11 +37,22 @@ class SearchViewController: UIViewController {
     }()
     
     private var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        let label = UILabel.createLabel(
+            fontSize: 17,
+            textColor: UIColor.darkAndWhite,
+            numberOfLines: 0,
+            textAlignment: .left)
         label.text = "最近搜尋"
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var noDataLabel: UILabel = {
+        let label = UILabel.createLabel(
+            fontSize: 17,
+            textColor: UIColor.darkAndWhite,
+            numberOfLines: 0,
+            textAlignment: .left)
+        label.text = "沒有搜尋資料"
         return label
     }()
     
@@ -50,7 +61,7 @@ class SearchViewController: UIViewController {
     private var historyArray: [String] = [String]()
     private var width: CGFloat = 0
     private var height: CGFloat = 0
-    private var isSearchBarActive = false
+    private var isSearchBarActive: Bool = false
     
     // MARK: - Table View
     
@@ -73,18 +84,20 @@ class SearchViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private lazy var titleView = {
+
+    private lazy var titleView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var buttonsView = {
+    private lazy var buttonsView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private var animationView: LottieAnimationView?
     
     // MARK: - supports
     
@@ -107,7 +120,6 @@ class SearchViewController: UIViewController {
         setupUI()
         setupSearchBar()
         setupTableViewData()
-        
     }
     
     // MARK: - Button Views
@@ -163,7 +175,6 @@ class SearchViewController: UIViewController {
                 width = button.frame.size.width + button.frame.origin.x
                 buttonArray.append(button)
                 buttonsView.addSubview(button)
-                
             }
         }
     }
@@ -177,7 +188,6 @@ class SearchViewController: UIViewController {
             tableView.isHidden = false
             tableView.reloadData()
         }
-        
     }
 }
 
@@ -205,7 +215,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
             return
         }
         tableView.isHidden = false
-//        self.searchController.searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -217,10 +226,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
         tableView.isHidden = true
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-    }
-    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         isSearchBarActive = false
     }
@@ -230,10 +235,11 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
 extension SearchViewController {
     private func setupUI() {
         
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        view.addSubview(hiddenView)
+        tableView.backgroundColor = .baseBackgroundColor
+        view.backgroundColor = .baseBackgroundColor
         view.addSubview(buttonsView)
+        view.addSubview(hiddenView)
+        
         view.addSubview(titleView)
         titleView.addSubview(clockImageView)
         titleView.addSubview(titleLabel)
@@ -244,6 +250,14 @@ extension SearchViewController {
         tableView.isHidden = true
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         view.addGestureRecognizer(tapGesture!)
+        
+        animationView = .init(name: "notFound")
+        guard let animationView = animationView else { return }
+        animationView.loopMode = .loop
+        tableView.addSubview(animationView)
+        animationView.addSubview(noDataLabel)
+        animationView.play()
+        animationView.isHidden = true
         
         NSLayoutConstraint.activate([
             
@@ -283,9 +297,14 @@ extension SearchViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
+            noDataLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
+            noDataLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            noDataLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            noDataLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
+        animationView.frame = view.bounds
     }
     
     @objc func cleanSearchHistory() {
@@ -320,18 +339,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return filterDataList.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ShowTableViewCell.identifier,
                                                  for: indexPath) as? ShowTableViewCell
-        
         guard let cell = cell else { return UITableViewCell() }
-        
         tapGesture?.cancelsTouchesInView = false
-        
         cell.showNameLabel.text = filterDataList[indexPath.row].showName
         cell.showImageView.loadImage(filterDataList[indexPath.row].image)
         cell.playlistId = filterDataList[indexPath.row].playlistId
@@ -342,9 +357,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        print("\(indexPath.row)")
-        
+                
         YouTubeParameter.shared.playlistId = filterDataList[indexPath.row].playlistId
         
         let playerViewController = PlayerViewController()
@@ -382,13 +395,12 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
         do {
             try fetchedResultController.performFetch()
         } catch {
-            print("Fetch failed")
+            print("Fetch SearchHistory failed")
         }
         
     }
     
     func removeAllSearchHistory() {
-        
         if let data = StorageManager.shared.fetchSearchHistorys(),
            data.count == 0 {
             print("目前沒有搜尋紀錄")
@@ -399,16 +411,24 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
     }
     
     // MARK: - filterDataSource
+    
     private func filterDataSource(for searchText: String) {
-        
+
         self.filterDataList = searchedDataSource.filter({ (show) -> Bool in
             let showName = show.showName
             if showName.localizedCaseInsensitiveContains(searchText) {
+                guard let animationView = animationView else { return true }
+                animationView.isHidden = true
                 filterDataList.append(show)
                 return true
             } else {
                 return false
             }
-        })        
+        })
+        
+        if self.filterDataList.isEmpty == true {
+            guard let animationView = animationView else { return }
+            animationView.isHidden = false
+        }
     }
 }

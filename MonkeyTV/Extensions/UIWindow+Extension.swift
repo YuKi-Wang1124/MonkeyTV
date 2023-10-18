@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIViewController {
+    
     static func getFirstViewController() -> UIViewController {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
@@ -15,4 +16,5 @@ extension UIViewController {
         }
         return UIViewController()
     }
+    
 }

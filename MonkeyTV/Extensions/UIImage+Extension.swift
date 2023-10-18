@@ -39,12 +39,12 @@ enum ImageAsset: String {
     case xmark
     case flag
     case nosign
+    case cCircle = "c.circle"
 }
 
 extension UIImage {
     static let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     static let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
-
 
     static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage {
         if let image = UIImage(systemName: asset.rawValue, withConfiguration: configuration) {

@@ -32,6 +32,48 @@ class ChatroomViewController: UIViewController {
         return label
     }()
     
+    private let alertView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.setColor(
+            lightColor: UIColor(white: 1, alpha: 0.9),
+            darkColor: UIColor(white: 0.1, alpha: 1))
+        view.layer.cornerRadius = 15
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private var alertLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.textAlignment = .center
+        label.text = "黑名單＆檢舉"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var alertTextView = {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.backgroundColor = UIColor.setColor(
+            lightColor: UIColor(white: 1, alpha: 0.9),
+            darkColor: UIColor(white: 0.1, alpha: 1))
+        textView.text = "與他人聊天時，請遵守法律規範，若有需要，可長按他人留言將其加入黑名單，若有違反社會規範者，可進行檢舉，我們將會進行審核。"
+        textView.font = UIFont.systemFont(ofSize: 17)
+        textView.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+
+    private lazy var comfirmButton = {
+        let button = UIButton()
+        button.setTitle("確認", for: .normal)
+        button.layer.cornerRadius = 15
+        button.setTitleColor(UIColor.mainColor, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let blocklistBackgroundView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
@@ -41,31 +83,20 @@ class ChatroomViewController: UIViewController {
     
     private let blocklistView = {
         let view = UIView()
-        view.backgroundColor = UIColor.setColor(lightColor: UIColor.white,
-                                                darkColor: UIColor(white: 0.1, alpha: 1))
+        view.backgroundColor = UIColor.setColor(
+            lightColor: UIColor.white,
+            darkColor: UIColor(white: 0.1, alpha: 1))
         view.layer.cornerRadius = 15
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     var showNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.darkGray
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel.createLabel(fontSize: 17, textColor: UIColor.darkGray)
     }()
     
     var blockUserNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .black, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        return UILabel.createLabel(fontSize: 17, textColor: UIColor.setColor(lightColor: .black, darkColor: .white))
     }()
     
     private lazy var submitMessageButton = {
@@ -114,12 +145,12 @@ class ChatroomViewController: UIViewController {
             text: "    輸入即時聊天訊息",
             backgroundColor: UIColor.setColor(lightColor: .white, darkColor: .systemGray5))
     }()
+    
     private var viewModel: ChatroomViewModel = ChatroomViewModel()
     private var userId: String = ""
     private var userName: String = ""
     private var userImage: String = ""
     private var blockUserId: String = ""
-//    private var blockUserName: String = ""
     private var reportUserContent: String = ""
     var videoId: String = ""
     
@@ -185,7 +216,9 @@ class ChatroomViewController: UIViewController {
                 }
             }
         }
+        messageTextField.resignFirstResponder()
     }
+    
     func bindingViewModel() {
         let now = FirebaseFirestore.Timestamp().dateValue()
         viewModel.fetchConversation(currentTime: now)
@@ -212,6 +245,12 @@ extension ChatroomViewController {
         closeBlocklistViewＢutton.addTarget(self, action: #selector(closeBlocklistView), for: .touchUpInside)
         blockButton.addTarget(self, action: #selector(blockUser), for: .touchUpInside)
         reportButton.addTarget(self, action: #selector(report), for: .touchUpInside)
+        messageTextField.addDoneOnKeyboardWithTarget(self, action: #selector(submitMessage), titleText: "")
+        comfirmButton.addTarget(self, action: #selector(hideAlertView), for: .touchUpInside)
+    }
+    
+    @objc func hideAlertView() {
+        alertView.isHidden = true
     }
     
     @objc func blockUser() {
@@ -263,8 +302,10 @@ extension ChatroomViewController {
 
     // MARK: - Setup UI
     private func setupUI() {
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        
+        view.backgroundColor = .baseBackgroundColor
+        tableView.backgroundColor = .baseBackgroundColor
+        
         showNameLabel.sizeToFit()
         blockUserNameLabel.sizeToFit()
         blocklistBackgroundView.isHidden = true
@@ -280,16 +321,42 @@ extension ChatroomViewController {
         blocklistBackgroundView.addSubview(blockUserNameLabel)
         blocklistBackgroundView.addSubview(blockButton)
         blocklistBackgroundView.addSubview(reportButton)
+        
+        alertView.addSubview(alertTextView)
+        alertView.addSubview(comfirmButton)
+        alertView.addSubview(alertLabel)
+        view.addSubview(alertView)
 
         NSLayoutConstraint.activate([
-            chatroomTitleLabel.topAnchor.constraint(equalTo: showNameLabel.bottomAnchor, constant: 0),
+            
+            alertView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 2/5),
+            alertView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 2/3),
+            alertView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            alertView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            
+            comfirmButton.heightAnchor.constraint(equalToConstant: 40),
+            comfirmButton.widthAnchor.constraint(equalTo: alertView.widthAnchor, multiplier: 0.5),
+            comfirmButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: -10),
+            comfirmButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
+
+            alertLabel.topAnchor.constraint(equalTo: alertView.topAnchor, constant: 8),
+            alertLabel.bottomAnchor.constraint(equalTo: alertTextView.topAnchor, constant: 8),
+            alertLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 16),
+            alertLabel.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -16),
+
+            alertTextView.topAnchor.constraint(equalTo: alertView.topAnchor, constant: 48),
+            alertTextView.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: -16),
+            alertTextView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 16),
+            alertTextView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -16),
+
+            chatroomTitleLabel.topAnchor.constraint(equalTo: showNameLabel.bottomAnchor, constant: 4),
             chatroomTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             chatroomTitleLabel.trailingAnchor.constraint(
                 equalTo: closeButton.leadingAnchor, constant: -16),
             
             showNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             showNameLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: 0),
-            showNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            showNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             
             closeButton.trailingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
@@ -311,7 +378,7 @@ extension ChatroomViewController {
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             submitMessageButton.centerYAnchor.constraint(equalTo: messageTextField.centerYAnchor),
             submitMessageButton.heightAnchor.constraint(equalTo: messageTextField.heightAnchor),
-            messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 7)
+            messageTextField.widthAnchor.constraint(equalTo: submitMessageButton.widthAnchor, multiplier: 5)
         ])
         
         NSLayoutConstraint.activate([
