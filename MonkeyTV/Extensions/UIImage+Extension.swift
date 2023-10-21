@@ -10,14 +10,17 @@ import Kingfisher
 
 enum ImageAsset: String {
     case chatroom = "text.bubble.fill"
+    case cCircle = "c.circle"
     case checkmark
     case checkmarkSquare = "checkmark.square"
     case clock = "clock.fill"
+    case flag
     case heart
     case history = "clock.arrow.circlepath"
     case house
     case enlarge = "arrow.up.left.and.arrow.down.right"
     case magnifyingglass
+    case nosign
     case pause = "pause.fill"
     case pencil
     case person
@@ -37,23 +40,28 @@ enum ImageAsset: String {
     case thumbImage = "circle.fill"
     case trash = "trash.fill"
     case xmark
-    case flag
-    case nosign
-    case cCircle = "c.circle"
 }
 
 extension UIImage {
+    
     static let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30)
     static let smallSymbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
 
-    static func systemAsset(_ asset: ImageAsset, configuration: UIImage.Configuration? = nil) -> UIImage {
+    static func systemAsset(
+        _ asset: ImageAsset,
+        configuration: UIImage.Configuration? = nil
+    ) -> UIImage {
         if let image = UIImage(systemName: asset.rawValue, withConfiguration: configuration) {
             return image
         } else {
             return UIImage()
         }
     }
-    static func displayThumbnailImage(from url: String, completion: @escaping (UIImage?) -> Void) {
+    
+    static func displayThumbnailImage(
+        from url: String,
+        completion: @escaping (UIImage?) -> Void) {
+            
         if let imageUrl = URL(string: url) {
             let session = URLSession.shared
             let task = session.dataTask(with: imageUrl) { (data, _, error) in
@@ -81,7 +89,11 @@ extension UIImage {
             }
         }
     }
-    func loadImage(with url: String, into imageView: UIImageView) {
+    
+    func loadImage(
+        with url: String,
+        into imageView: UIImageView
+    ) {
         if let imageUrl = URL(string: url) {
             let processor = DownsamplingImageProcessor(size: imageView.bounds.size)
             imageView.kf.indicatorType = .activity

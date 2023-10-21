@@ -270,7 +270,6 @@ class FirestoreManager {
             for document in querySnapshot.documents {
                 let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                 let decodedObject = try JSONDecoder().decode(UseDefaultData.self, from: jsonData)
-                print(decodedObject)
                 isDefault = decodedObject.isDefault
             }
         } catch {
@@ -369,4 +368,56 @@ class FirestoreManager {
             }
         }
     }
+    
+    static func addBulletChatData(
+        text: String,
+        popTime: Float,
+        videoId: String,
+        completion: @escaping () -> Void
+    ) {
+        
+        let id = FirestoreManager.bulletChat.document().documentID
+        
+        let data: [String: Any] = ["bulletChat":
+                                    ["chatId": UUID().uuidString,
+                                     "content": text,
+                                     "contentType": 0,
+                                     "popTime": popTime,
+                                     "userId": KeychainItem.currentEmail] as [String: Any],
+                                   "videoId": videoId,
+                                   "id": id]
+        
+        FirestoreManager.bulletChat.document(id).setData(data) { error in
+            if error != nil {
+                print("Error adding document: (error)")
+            } else {
+                completion()
+            }
+        }
+    }
+    
+    static func getBulletChatData(
+        videoId: String,
+        completion: @escaping ([BulletChat]) -> Void
+    ) {
+        var bulletChats = [BulletChat]()
+        
+        FirestoreManager.bulletChat.whereField(
+            "videoId", isEqualTo: videoId
+        ).getDocuments { querySnapshot, error in
+            if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                        let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
+                        bulletChats.append(decodedObject.bulletChat)
+                    } catch {
+                        print("\(error)")
+                    }
+                }
+                completion(bulletChats)
+            }
+        }
+    }
+    
 }

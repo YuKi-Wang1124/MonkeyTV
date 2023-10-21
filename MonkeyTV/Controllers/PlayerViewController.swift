@@ -18,7 +18,7 @@ class PlayerViewController: UIViewController {
     private var nextPageToken: String = ""
     private var userName: String = ""
     private var userImage: String = ""
-    private var danMuText: String = ""
+    private var bulletChatText: String = ""
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
     
@@ -51,8 +51,8 @@ class PlayerViewController: UIViewController {
         return view
     }()
     
-    private lazy var danmuView: DanMuView = {
-        let view = DanMuView()
+    private lazy var bulletChatView: BulletChatView = {
+        let view = BulletChatView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -64,32 +64,25 @@ class PlayerViewController: UIViewController {
     }()
     
     private lazy var showNameLabel: UILabel = {
-        return UILabel.createLabel(fontSize: 20, textColor: UIColor.darkAndWhite)
+        return CustomLabel(fontSize: 20, textColor: UIColor.darkAndWhite)
     }()
-
+    
     private lazy var secondLabel: UILabel = {
-        return UILabel.createLabel(fontSize: 18, textColor: .white)
+        return CustomLabel(fontSize: 18, textColor: .white)
     }()
-
+    
     private lazy var videoDurationLabel: UILabel = {
-        return UILabel.createLabel(fontSize: 18, textColor: UIColor(white: 0.9, alpha: 1))
+        return CustomLabel(fontSize: 18, textColor: UIColor(white: 0.9, alpha: 1))
     }()
-
-    private var tableView: UITableView = {
-        var tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.register(ChatroomButtonTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ChatroomButtonTableViewCell.identifier)
-        tableView.register(DanMuTextFieldTableViewCell.self,
-                           forCellReuseIdentifier:
-                            DanMuTextFieldTableViewCell.identifier)
-        tableView.register(ShowTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ShowTableViewCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    
+    private lazy var tableView: UITableView = {
+        return  CustomTableView(
+            rowHeight: UITableView.automaticDimension,
+            separatorStyle: .none,
+            allowsSelection: false,
+            registerCells: [ChatroomButtonTableViewCell.self,
+                            BulletChatTextFieldTableViewCell.self,
+                            ShowTableViewCell.self])
     }()
     
     // MARK: - Snapshot & DataSource
@@ -98,7 +91,7 @@ class PlayerViewController: UIViewController {
     private var dataSource: UITableViewDiffableDataSource<PlayerSection, MKShow>!
     
     private lazy var showDanMuButton = {
-        let button = UIButton.createPlayerButton(
+        let button = CustomButton(
             image: UIImage.systemAsset(.square, configuration: UIImage.smallSymbolConfig),
             color: .white, cornerRadius: 10, backgroundColor: UIColor.clear)
         button.setTitle(" 彈幕", for: .normal)
@@ -106,7 +99,7 @@ class PlayerViewController: UIViewController {
     }()
     
     private lazy var pauseButton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
             color: .white, cornerRadius: 30)
     }()
@@ -122,8 +115,8 @@ class PlayerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Task { await showUserName() }
-        setupMyShow()
+        Task { await getUserName() }
+        getMyFavoriteShowData()
     }
     
     override func viewDidLoad() {
@@ -136,9 +129,11 @@ class PlayerViewController: UIViewController {
         loadYoutubeVideo()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator
+    ) {
         super.viewWillTransition(to: size, with: coordinator)
-        
         coordinator.animate(alongsideTransition: { [self] _ in
             if size.width > size.height {
                 tableView.removeFromSuperview()
@@ -152,13 +147,12 @@ class PlayerViewController: UIViewController {
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
             }
-            
-            danmuView.removeAllDanMuQueue()
+            bulletChatView.removeAllDanMuQueue()
             self.restartPlayerBulletChats()
-            
         }, completion: { _ in
         })
     }
+    
     deinit {
         timer = nil
         ytVideoPlayerView.removeWebView()
@@ -172,57 +166,67 @@ class PlayerViewController: UIViewController {
         singleFinger.numberOfTapsRequired = 1
         singleFinger.numberOfTouchesRequired = 1
         buttonsView.addGestureRecognizer(singleFinger)
-        
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         buttonsView.addGestureRecognizer(dragGesture)
-        
     }
     
     @objc func showButtonView() {
         buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.3)
-        showControls(shouldShow: true)
-        
+        videoControls(isHidden: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
             self?.buttonsView.backgroundColor = UIColor(white: 0, alpha: 0)
-            self?.showControls(shouldShow: false)
+            self?.videoControls(isHidden: false)
         }
     }
-
-    private func showControls(shouldShow: Bool) {
-        showDanMuButton.isHidden = !shouldShow
-        pauseButton.isHidden = !shouldShow
-        videoSlider.isHidden = !shouldShow
-        secondLabel.isHidden = !shouldShow
-        videoDurationLabel.isHidden = !shouldShow
+    
+    private func videoControls(isHidden: Bool) {
+        showDanMuButton.isHidden = !isHidden
+        pauseButton.isHidden = !isHidden
+        videoSlider.isHidden = !isHidden
+        secondLabel.isHidden = !isHidden
+        videoDurationLabel.isHidden = !isHidden
     }
     
     @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        
         if PlayerViewController.chatroonIsShow == true {
             return
         }
+        
         let translation = gesture.translation(in: buttonsView)
         switch gesture.state {
+            
         case .began:
+            
             initialY = self.view.frame.origin.y
             finalY = initialY + translation.y
             isPanning = true
+            
         case .changed:
+            
             finalY = initialY + translation.y
             if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 {
                 self.view.frame.origin.y = finalY
             }
+            
         case .ended, .cancelled:
+            
             isPanning = false
+            
             let velocity = gesture.velocity(in: self.view)
             if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 && velocity.y > 100 {
+                
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = self.view.frame.height
                     self.dismiss(animated: true)
                 }
+                
             } else {
+                
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = 0
                 }
+                
             }
         default:
             break
@@ -233,44 +237,50 @@ class PlayerViewController: UIViewController {
     
     private func setBtnsAddtarget() {
         
-        showDanMuButton.addTarget(self, action: #selector(showDanMuView(sender:)),
-                                  for: .touchUpInside)
-        pauseButton.addTarget(self, action: #selector(pauseVideo(sender:)), for: .touchUpInside)
-        videoSlider.addTarget(self, action: #selector(handleSliderChange(sender:)),
-                              for: .valueChanged)
+        showDanMuButton.addTarget(
+            self, action: #selector(showBullet(sender:)), for: .touchUpInside)
+        pauseButton.addTarget(
+            self, action: #selector(pauseVideo(sender:)), for: .touchUpInside)
+        videoSlider.addTarget(
+            self, action: #selector(handleSliderChange(sender:)), for: .valueChanged)
     }
-        
+    
     @objc func handleSliderChange(sender: UISlider) {
+        
         let desiredTime = sender.value
         secondLabel.text = TimeFormatter.shared.formatSecondsToHHMMSS(seconds: desiredTime)
         ytVideoPlayerView.seek(toSeconds: desiredTime, allowSeekAhead: true)
-        danmuView.removeAllDanMuQueue()
+        bulletChatView.removeAllDanMuQueue()
         restartPlayerBulletChats()
     }
     
     @objc func pauseVideo(sender: UIButton) {
-        danmuView.isPause = !danmuView.isPause
+        
+        bulletChatView.isPause = !bulletChatView.isPause
+        
         if videoIsPlaying {
-            sender.setImage(UIImage.systemAsset(.play, configuration: UIImage.symbolConfig),
-                            for: .normal)
+            sender.setImage(
+                UIImage.systemAsset(.play, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.pauseVideo()
         } else {
-            sender.setImage(UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig),
-                            for: .normal)
+            sender.setImage(
+                UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.playVideo()
         }
+        
         videoIsPlaying.toggle()
+        
     }
     
-    @objc func showDanMuView(sender: UIButton) {
+    @objc func showBullet(sender: UIButton) {
         if !isDanMuDisplayed {
-            sender.setImage(UIImage.systemAsset(.checkmarkSquare,
-                                                configuration: UIImage.smallSymbolConfig), for: .normal)
-            danmuView.isHidden = false
+            sender.setImage(
+                UIImage.systemAsset(.checkmarkSquare, configuration: UIImage.smallSymbolConfig), for: .normal)
+            bulletChatView.isHidden = false
         } else {
-            sender.setImage(UIImage.systemAsset(.square,
-                                                configuration: UIImage.smallSymbolConfig), for: .normal)
-            danmuView.isHidden = true
+            sender.setImage(
+                UIImage.systemAsset(.square, configuration: UIImage.smallSymbolConfig), for: .normal)
+            bulletChatView.isHidden = true
         }
         isDanMuDisplayed.toggle()
     }
@@ -280,17 +290,21 @@ class PlayerViewController: UIViewController {
 
 extension PlayerViewController: YTPlayerViewDelegate {
     
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+    func playerViewDidBecomeReady(
+        _ playerView: YTPlayerView
+    ) {
         getVideoDuratiion()
     }
     
-    func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
-        
+    func playerView(
+        _ playerView: YTPlayerView,
+        didPlayTime playTime: Float
+    ) {
         secondLabel.text = TimeFormatter.shared.formatSecondsToHHMMSS(seconds: playTime)
         
         playerBulletChats.forEach({
             if playTime >= $0.popTime {
-                danmuView.danmuQueue.append(($0.content, false))
+                bulletChatView.danmuQueue.append(($0.content, false))
                 self.playerBulletChats.remove(at: 0)
             }
         })
@@ -300,56 +314,16 @@ extension PlayerViewController: YTPlayerViewDelegate {
             videoSlider.value = playTime
         }
     }
-    
-    private func getVideoDuratiion() {
-        ytVideoPlayerView.duration { [self] (duration, error) in
-            if let error = error {
-                print("無法取得影片總時間：\(error.localizedDescription)")
-            } else {
-                self.videoDuration = duration
-                let timeString = TimeFormatter.shared.formatSecondsToHHMMSS(seconds: Float(videoDuration))
-                videoDurationLabel.text = "/ " + timeString
-                print("\(timeString)")
-    
-            }
-        }
-    }
-    
-    // MARK: - Get Dan Mu Data
-    
-    private func getDanMuData(videoId: String) {
-        FirestoreManager.bulletChat.whereField(
-            "videoId", isEqualTo: videoId).getDocuments { querySnapshot, error in
-                if let querySnapshot = querySnapshot {
-                    for document in querySnapshot.documents {
-                        do {
-                            let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                            let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
-                            self.bulletChats.append(decodedObject.bulletChat)
-                            
-                        } catch {
-                            print("\(error)")
-                        }
-                    }
-                    self.restartPlayerBulletChats()
-                }
-            }
-    }
-    
-    private func restartPlayerBulletChats() {
-        
-        self.playerBulletChats.removeAll()
-        self.playerBulletChats.append(contentsOf: self.bulletChats.filter {
-            $0.popTime >= videoSlider.value - 2
-        })
-        self.playerBulletChats.sort()
-    }
 }
 
 // MARK: -
 extension PlayerViewController {
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    func tableView(
+        _ tableView: UITableView,
+        willSelectRowAt indexPath: IndexPath
+    ) -> IndexPath? {
+        
         if indexPath.section == 2 {
             return indexPath
         }
@@ -357,6 +331,7 @@ extension PlayerViewController {
     }
     
     private func setupTableView() {
+        
         tableView.delegate = self
         configureDataSource(tableView: tableView)
         snapshot.appendSections([.chatroom, .danmu, .playlist])
@@ -370,42 +345,10 @@ extension PlayerViewController {
         snapshot.appendItems([danmu], toSection: .danmu)
         
         tableView.addRefreshFooter(refreshingBlock: { [weak self] in
-            self?.loadMore()
+            self?.loadMoreYouTubeVideoData()
         })
     }
-    
-    private func loadMore() {
-        let decoder = JSONDecoder()
-        HTTPClientManager.shared.request(
-            YoutubeRequest.nextPageToken, completion: { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                do {
-                    let info = try decoder.decode(PlaylistListResponse.self, from: data)
-                    YouTubeParameter.shared.nextPageToken = info.nextPageToken
-                    addToSnapshot(data: info.items)
-                    loadMore()
-                } catch {
-                    do {
-                        let info = try decoder.decode(PlaylistListLastResponse.self, from: data)
-                        self.nextPageToken = info.prevPageToken
-                        if YouTubeParameter.shared.nextPageToken == nextPageToken {
-                            tableView.endWithNoMoreData()
-                            return
-                        }
-                        addToSnapshot(data: info.items)
-                    } catch {
-                        print(Result<Any>.failure(error))
-                    }
-                }
-            case .failure(let error):
-                print(Result<Any>.failure(error))
-            }
-        })
-        tableView.endWithNoMoreData()
-    }
-    
+
     private func addToSnapshot(data: [Playlist]) {
         data.forEach({
             let show = MKShow(id: $0.snippet.resourceId.videoId,
@@ -424,7 +367,27 @@ extension PlayerViewController {
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
                 
-                if indexPath.section == 1 {
+                if indexPath.section == 0 {
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: BulletChatTextFieldTableViewCell.identifier,
+                        for: indexPath) as? BulletChatTextFieldTableViewCell
+                    
+                    guard let cell = cell else { return UITableViewCell() }
+                    cell.danMuTextField.delegate = cell
+                    cell.userInputHandler = { [weak self] userInput in
+                        self?.bulletChatText = userInput
+                    }
+                    cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
+                    self.emptyTextFieldDelegate = cell
+                    cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
+                    self.setupCellButtonDelegate = cell
+                    cell.addButton.setImage(self.isMyShow ?
+                                            UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig) :
+                                                UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig), for: .normal)
+                    cell.selectionStyle = .none
+                    return cell
+                    
+                } else if indexPath.section == 1 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ChatroomButtonTableViewCell.identifier,
                         for: indexPath) as? ChatroomButtonTableViewCell
@@ -434,39 +397,10 @@ extension PlayerViewController {
                         self, action: #selector(self.showChatroom(sender:)),
                         for: .touchUpInside)
                     cell.personalImageView.loadImage(self.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
-                    
-                    if KeychainItem.currentEmail == "" {
-                        cell.chatroomNameLabel.text = "  登入會員後即可與大家聊天..."
-                    } else {
-                        cell.chatroomNameLabel.text = "  以\(self.userName)的身份與大家聊天..."
-                    }
+                    cell.chatroomNameLabel.text =
+                    KeychainItem.currentEmail.isEmpty ? Constant.logInCanChat : "  以\(self.userName)的身份與大家聊天..."
                     cell.selectionStyle = .none
                     return cell
-                } else if indexPath.section == 0 {
-                    let cell = tableView.dequeueReusableCell(
-                        withIdentifier: DanMuTextFieldTableViewCell.identifier,
-                        for: indexPath) as? DanMuTextFieldTableViewCell
-                    
-                    guard let cell = cell else { return UITableViewCell() }
-                    cell.danMuTextField.delegate = cell
-                    cell.userInputHandler = { [weak self] userInput in
-                        self?.danMuText = userInput
-                    }
-                    cell.submitMessageButton.addTarget(self, action: #selector(self.submitMyDanMu), for: .touchUpInside)
-                    self.emptyTextFieldDelegate = cell
-                    cell.addButton.addTarget(self, action: #selector(self.addToMyShow(sender:)), for: .touchUpInside)
-                    self.setupCellButtonDelegate = cell
-                    
-                    if self.isMyShow {
-                        cell.addButton.setImage(
-                            UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
-                    } else {
-                        cell.addButton.setImage(
-                            UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig), for: .normal)
-                    }
-                    cell.selectionStyle = .none
-                    return cell
-                    
                 } else if indexPath.section == 2 {
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: ShowTableViewCell.identifier,
@@ -487,42 +421,27 @@ extension PlayerViewController {
         self.dataSource.apply(snapshot)
     }
     
-    private func showLogInAlert(message: String) {
-        let alertController = UIAlertController(
-            title: "請先加入會員",
-            message: message,
-            preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "前往登入", style: .default) { [weak self] _ in
-            self?.handleLoginAction()
-        })
-        alertController.addAction(UIAlertAction(title: "先看看", style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
-    }
-
-    private func handleLoginAction() {
-        dismiss(animated: true)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
-            tabBarController.selectedIndex = 3
-        }
-    }
-
     @objc func addToMyShow(sender: UIButton) {
         
         if KeychainItem.currentEmail == "" {
-            showLogInAlert(message: Constant.addShowLogInAlertMessage)
+            UIAlertController.showLogInAlert(message: Constant.addShowLogInAlertMessage, delegate: self)
         } else {
             if isMyShow == true {
-                sender.setImage(UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig),
-                                for: .normal)
+                sender.setImage(
+                    UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig), for: .normal)
                 
-                Task { await  FirestoreManager.deleteToMyFavorite(
-                    email: KeychainItem.currentEmail,
-                    playlistId: playlistId) }
+                Task {
+                    await FirestoreManager.deleteToMyFavorite(
+                        email: KeychainItem.currentEmail,
+                        playlistId: playlistId)
+                }
+                
                 isMyShow = false
+                
             } else {
-                sender.setImage(UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig),
-                                for: .normal)
+                sender.setImage(
+                    UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig), for: .normal)
+                
                 FirestoreManager.addToMyFavorite(
                     email: KeychainItem.currentEmail,
                     playlistId: playlistId,
@@ -537,7 +456,7 @@ extension PlayerViewController {
     @objc func showChatroom(sender: UIButton) {
         
         if KeychainItem.currentEmail == "" {
-            showLogInAlert(message: Constant.addChatLogInAlertMessage)
+            UIAlertController.showLogInAlert(message: Constant.addChatLogInAlertMessage, delegate: self)
         } else {
             PlayerViewController.chatroonIsShow = true
             var statusBarHeigh: CGFloat = 0.0
@@ -566,25 +485,15 @@ extension PlayerViewController {
         }
     }
     
-    @objc func submitMyDanMu(sender: UIButton) {
-        if danMuText != "" {
-            danmuView.danmuQueue.append((danMuText, false))
-            let id = FirestoreManager.bulletChat.document().documentID
-            let data: [String: Any] = ["bulletChat":
-                                        ["chatId": UUID().uuidString,
-                                         "content": danMuText,
-                                         "contentType": 0,
-                                         "popTime": videoSlider.value,
-                                         "userId": KeychainItem.currentEmail] as [String: Any],
-                                       "videoId": videoId,
-                                       "id": id]
-            FirestoreManager.bulletChat.document(id).setData(data) { error in
-                if error != nil {
-                    print("Error adding document: (error)")
-                } else {
+    @objc func submitMyDanMu() {
+        if bulletChatText != "" {
+            bulletChatView.danmuQueue.append((bulletChatText, false))
+            FirestoreManager.addBulletChatData(
+                text: bulletChatText,
+                popTime: videoSlider.value,
+                videoId: videoId) {
                     self.emptyTextFieldDelegate?.emptyTextField()
                 }
-            }
         }
     }
 }
@@ -593,35 +502,6 @@ extension PlayerViewController {
 
 extension PlayerViewController {
     
-    func getYouTubeVideoData() {
-        HTTPClientManager.shared.request(
-            YoutubeRequest.playlistItems(
-                playlistId: YouTubeParameter.shared.playlistId),
-            completion: { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let data):
-                    do {
-                        let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
-                        YouTubeParameter.shared.nextPageToken = info.nextPageToken
-                        addToSnapshot(data: info.items)
-                    } catch {
-                        print(Result<Any>.failure(error))
-                    }
-                case .failure(let error):
-                    print(Result<Any>.failure(error))
-                }
-                if let first = self.snapshot.itemIdentifiers(inSection: .playlist).first {
-                    self.videoId = first.videoId
-                    self.showName = first.title
-                    DispatchQueue.main.async {
-                        self.showNameLabel.text = first.title
-                    }
-                    getDanMuData(videoId: self.videoId)
-                    self.dataSource.apply(snapshot)
-                }
-            })
-    }
     private func loadYoutubeVideo() {
         let playerVars: [AnyHashable: Any] = [
             "frameborder": 0,
@@ -652,9 +532,9 @@ extension PlayerViewController: UITableViewDelegate {
             "autoplay": 1]
         
         getVideoDuratiion()
-        danmuView.removeAllDanMuQueue()
+        bulletChatView.removeAllDanMuQueue()
         bulletChats.removeAll()
-        getDanMuData(videoId: itemIdentifier.videoId)
+        getBulletChatData(videoId: itemIdentifier.videoId)
         restartPlayerBulletChats()
         self.videoId = itemIdentifier.videoId
         showNameLabel.text = itemIdentifier.title
@@ -697,9 +577,9 @@ extension PlayerViewController {
             buttonsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             buttonsView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16),
             
-            danmuView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            danmuView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16, constant: -30),
+            bulletChatView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            bulletChatView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            bulletChatView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 9 / 16, constant: -30),
             
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
@@ -711,7 +591,6 @@ extension PlayerViewController {
             videoSlider.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -40),
             videoSlider.heightAnchor.constraint(equalToConstant: 10)
         ]
-        
         NSLayoutConstraint.activate(portraitConstraints)
     }
     
@@ -738,10 +617,10 @@ extension PlayerViewController {
             showDanMuButton.widthAnchor.constraint(equalToConstant: 90),
             showDanMuButton.heightAnchor.constraint(equalToConstant: 30),
             
-            danmuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            danmuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            danmuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            danmuView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            bulletChatView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bulletChatView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bulletChatView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            bulletChatView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             
             pauseButton.centerXAnchor.constraint(equalTo: ytVideoPlayerView.centerXAnchor),
             pauseButton.centerYAnchor.constraint(equalTo: ytVideoPlayerView.centerYAnchor),
@@ -761,10 +640,9 @@ extension PlayerViewController {
         tableView.backgroundColor = .baseBackgroundColor
         ytVideoPlayerView.backgroundColor = .black
         
-        setBtnsAddtarget()
         view.addSubview(ytVideoPlayerView)
         view.addSubview(tableView)
-        view.addSubview(danmuView)
+        view.addSubview(bulletChatView)
         view.addSubview(buttonsView)
         view.addSubview(showNameLabel)
         
@@ -779,20 +657,9 @@ extension PlayerViewController {
         protraitLayout()
     }
     
-    private func showUserName() async {
-        if KeychainItem.currentEmail.isEmpty {
-            return
-        }
-        if let userInfo = await UserInfoManager.userInfo() {
-            userName = userInfo.userName
-            userImage = userInfo.userImage
-        }
-        tableView.reloadData()
-    }
-    
     private func setupVideoLauncher() {
-        buttonsView.backgroundColor = UIColor(white: 0, alpha: 0.0)
-        showControls(shouldShow: false)
+        buttonsView.backgroundColor = UIColor.clear
+        videoControls(isHidden: false)
         setBtnsAddtarget()
         ytVideoPlayerView.delegate = self
         ytVideoPlayerView.backgroundColor = .black
@@ -801,12 +668,12 @@ extension PlayerViewController {
     
     // MARK: - Dan Mu
     private func setDanMu() {
-        danmuView.isHidden = true
-        danmuView.minSpeed = 1
-        danmuView.maxSpeed = 2
-        danmuView.gap = 20
-        danmuView.lineHeight = 30
-        danmuView.start()
+        bulletChatView.isHidden = true
+        bulletChatView.minSpeed = 1
+        bulletChatView.maxSpeed = 2
+        bulletChatView.gap = 20
+        bulletChatView.lineHeight = 30
+        bulletChatView.start()
         timer = Timer.scheduledTimer(timeInterval: 0.4,
                                      target: self, selector: #selector(addDanMuText),
                                      userInfo: nil, repeats: false)
@@ -818,19 +685,118 @@ extension PlayerViewController {
                              target: self, selector: #selector(addDanMuText),
                              userInfo: nil, repeats: false)
     }
+}
+
+// MARK: - GET DATA
+
+extension PlayerViewController {
     
-    private func setupMyShow() {
+    private func getUserName() async {
+        if KeychainItem.currentEmail.isEmpty {
+            return
+        }
+        if let userInfo = await UserInfoManager.userInfo() {
+            userName = userInfo.userName
+            userImage = userInfo.userImage
+        }
+        tableView.reloadData()
+    }
+    
+    private func getMyFavoriteShowData() {
         Task {
             await FirestoreManager.checkPlaylistIdInMyFavorite(
-                email: KeychainItem.currentEmail, playlistIdToCheck: playlistId) { (containsPlaylistId, error) in
-                    if let error = error {
-                        print("Error: \(error)")
-                        return
-                    }
-                    if let containsPlaylistId = containsPlaylistId {
-                        self.isMyShow = containsPlaylistId
-                    }
+                email: KeychainItem.currentEmail,
+                playlistIdToCheck: playlistId
+            ) { (containsPlaylistId, error) in
+                if let error = error {
+                    return
                 }
+                if let containsPlaylistId = containsPlaylistId {
+                    self.isMyShow = containsPlaylistId
+                }
+            }
+        }
+    }
+    
+    private func getYouTubeVideoData() {
+        HTTPClientManager.shared.getYouTubeVideoData(
+            complettion: { playlistArray in
+                self.addToSnapshot(data: playlistArray)
+                if let first = self.snapshot.itemIdentifiers(inSection: .playlist).first {
+                    self.videoId = first.videoId
+                    self.showName = first.title
+                    DispatchQueue.main.async {
+                        self.showNameLabel.text = first.title
+                    }
+                    self.dataSource.apply(self.snapshot)
+                }
+                self.getBulletChatData(videoId: self.videoId)
+            })
+    }
+    
+    private func getBulletChatData(videoId: String) {
+        FirestoreManager.getBulletChatData(videoId: videoId) { bulletChats in
+            self.bulletChats = bulletChats
+            self.restartPlayerBulletChats()
+        }
+    }
+
+    private func restartPlayerBulletChats() {
+        playerBulletChats.removeAll()
+        playerBulletChats.append(contentsOf: self.bulletChats.filter {
+            $0.popTime >= videoSlider.value - 2
+        })
+        playerBulletChats.sort()
+    }
+    
+    private func loadMoreYouTubeVideoData() {
+        HTTPClientManager.shared.request(
+            YoutubeRequest.nextPageToken,
+            completion: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let data):
+                    do {
+                        let info = try  JSONDecoder().decode(PlaylistListResponse.self, from: data)
+                        YouTubeParameter.shared.nextPageToken = info.nextPageToken
+                        addToSnapshot(data: info.items)
+                        loadMoreYouTubeVideoData()
+                    } catch {
+                        decodePreTokenData(data, self)
+                    }
+                case .failure(let error):
+                    print(Result<Any>.failure(error))
+                }
+            })
+        tableView.endWithNoMoreData()
+    }
+    
+    private func decodePreTokenData(
+        _ data: Data,
+        _ self: PlayerViewController
+    ) {
+        do {
+            let info = try JSONDecoder().decode(PlaylistListLastResponse.self, from: data)
+            self.nextPageToken = info.prevPageToken
+            if YouTubeParameter.shared.nextPageToken == nextPageToken {
+                tableView.endWithNoMoreData()
+                return
+            }
+            addToSnapshot(data: info.items)
+        } catch {
+            print(Result<Any>.failure(error))
+        }
+    }
+    
+    private func getVideoDuratiion() {
+        ytVideoPlayerView.duration { [self] (duration, error) in
+            if let error = error {
+                print("無法取得影片總時間：\(error.localizedDescription)")
+            } else {
+                self.videoDuration = duration
+                let timeString = TimeFormatter.shared.formatSecondsToHHMMSS(seconds: Float(videoDuration))
+                videoDurationLabel.text = "/ " + timeString
+            }
         }
     }
 }

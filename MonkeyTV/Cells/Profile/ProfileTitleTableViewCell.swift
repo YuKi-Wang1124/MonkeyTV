@@ -42,7 +42,7 @@ class ProfileTitleTableViewCell: UITableViewCell {
     }()
     
     private lazy var pencilButton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.pencil, configuration: UIImage.symbolConfig),
             color: .white, cornerRadius: 30)
     }()

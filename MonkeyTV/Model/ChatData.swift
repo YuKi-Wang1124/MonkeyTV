@@ -18,6 +18,7 @@ struct BulletChatData: Codable {
         case bulletChat = "bulletChat"
     }
 }
+
 struct BulletChat: Codable, Comparable {
     let content: String
     let contentType: Int

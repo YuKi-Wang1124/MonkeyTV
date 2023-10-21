@@ -17,20 +17,12 @@ class ProfileViewController: UIViewController {
     private var cleanSearchHistoryDelegate: CleanSearchHistoryDelegate?
     
     private lazy var tableView: UITableView = {
-        var tableView = UITableView()
-        tableView.separatorStyle = .singleLine
-        tableView.register(ProfileTitleTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ProfileTitleTableViewCell.identifier)
-        tableView.register(SignInWithTableViewCell.self,
-                           forCellReuseIdentifier:
-                            SignInWithTableViewCell.identifier)
-        tableView.register(DeleteTableViewCell.self,
-                           forCellReuseIdentifier:
-                            DeleteTableViewCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.allowsSelection = false
-        return tableView
+        return  CustomTableView(rowHeight: UITableView.automaticDimension,
+                                separatorStyle: .singleLine,
+                                allowsSelection: false,
+                                registerCells: [ProfileTitleTableViewCell.self,
+                                                SignInWithTableViewCell.self,
+                                                DeleteTableViewCell.self])
     }()
     
     // MARK: - UI
@@ -45,16 +37,16 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel.createLabel(
+        let label = CustomLabel(
             fontSize: 20,
             textColor: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
             textAlignment: .center)
-        label.text = "歡迎 註冊 / 登入 MonkeyTV"
+        label.text = Constant.welcomeSignIn
         return label
     }()
 
     private lazy var copyRightButton = {
-        let button = UIButton.createPlayerButton(
+        let button = CustomButton(
             image: UIImage.systemAsset(.cCircle, configuration: UIImage.smallSymbolConfig),
             color: .white, cornerRadius: 5, backgroundColor: UIColor.mainColor!)
         button.setTitle("  MonkeyTV 版權宣告", for: .normal)
@@ -70,7 +62,7 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    private var googleSignInButton = {
+    private lazy var googleSignInButton = {
         let button = GIDSignInButton()
         button.style = .wide
         button.translatesAutoresizingMaskIntoConstraints = false

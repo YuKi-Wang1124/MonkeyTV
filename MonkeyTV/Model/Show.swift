@@ -64,7 +64,6 @@ enum ShowCatalog: String, CaseIterable {
     case sport = "上知天文，閱曆人生🪞"
     case food = "用眼睛吃美食不會胖 🍔"
     case health = "療療自己，快樂生活🍀"
-//    case internationalShow = "國外節目看到飽 🌎"
 }
 
 struct MyFavoriteShowData: Codable, Hashable {

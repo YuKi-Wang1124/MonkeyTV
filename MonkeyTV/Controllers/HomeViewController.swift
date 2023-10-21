@@ -11,19 +11,14 @@ import FirebaseFirestore
 import NVActivityIndicatorView
 
 class HomeViewController: BaseViewController {
+    
     private lazy var tableView = {
-        var tableView = UITableView()
-        tableView.rowHeight = 250
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.register(CollectionTableViewCell.self,
-                           forCellReuseIdentifier:
-                            CollectionTableViewCell.identifier)
-        tableView.register(HomeAnimationTableViewCell.self,
-                           forCellReuseIdentifier:
-                            HomeAnimationTableViewCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+        return  CustomTableView(
+            rowHeight: 250,
+            separatorStyle: .none,
+            allowsSelection: false,
+            registerCells: [CollectionTableViewCell.self,
+                            HomeAnimationTableViewCell.self])
     }()
     
     private let activityIndicatorView = NVActivityIndicatorView(
@@ -42,7 +37,7 @@ class HomeViewController: BaseViewController {
             darkColor: UIColor(white: 0.1, alpha: 1))
         textView.text = Constant.COPYRIGHT_TEXT
         textView.font = UIFont.systemFont(ofSize: 17)
-        textView.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        textView.textColor = .darkAndWhite
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()

@@ -12,7 +12,7 @@ class CollectionTableViewCell: UITableViewCell {
     static let identifier = "\(CollectionTableViewCell.self)"
     
     lazy var titleLabel: UILabel = {
-        return UILabel.createTitleLabel(text: "")
+        return CustomLabel()
     }()
     
     var dataFetchCompletion: DataFetchCompletion?

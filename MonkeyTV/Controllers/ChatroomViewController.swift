@@ -12,23 +12,19 @@ import FirebaseFirestore
 class ChatroomViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
-        var tableView = UITableView()
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.register(ChatroomTableViewCell.self,
-                           forCellReuseIdentifier: ChatroomTableViewCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+        return  CustomTableView(
+            rowHeight: UITableView.automaticDimension,
+            separatorStyle: .none,
+            allowsSelection: true,
+            registerCells: [ChatroomTableViewCell.self])
     }()
     
     private var chatroomTitleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.lightGray
-        label.font = UIFont.boldSystemFont(ofSize: 26)
-        label.textAlignment = .left
+        let label = CustomLabel(textColor: .lightGray,
+                                numberOfLines: 0,
+                                textAlignment: .left,
+                                font: UIFont.boldSystemFont(ofSize: 26))
         label.text = "即時聊天室"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -42,14 +38,10 @@ class ChatroomViewController: UIViewController {
         return view
     }()
     
-    private var alertLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textAlignment = .center
-        label.text = "黑名單＆檢舉"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var alertLabel: UILabel = {
+        return CustomLabel(
+            fontSize: 17, textColor: UIColor.darkAndWhite,
+            numberOfLines: 0, textAlignment: .center)
     }()
     
     private lazy var alertTextView = {
@@ -58,9 +50,9 @@ class ChatroomViewController: UIViewController {
         textView.backgroundColor = UIColor.setColor(
             lightColor: UIColor(white: 1, alpha: 0.9),
             darkColor: UIColor(white: 0.1, alpha: 1))
-        textView.text = "與他人聊天時，請遵守法律規範，若有需要，可長按他人留言將其加入黑名單，若有違反社會規範者，可進行檢舉，我們將會進行審核。"
+        textView.text = Constant.blockInfo
         textView.font = UIFont.systemFont(ofSize: 17)
-        textView.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
+        textView.textColor = UIColor.darkAndWhite
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -74,14 +66,14 @@ class ChatroomViewController: UIViewController {
         return button
     }()
     
-    private let blocklistBackgroundView = {
+    private lazy var blocklistBackgroundView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let blocklistView = {
+    private lazy var blocklistView = {
         let view = UIView()
         view.backgroundColor = UIColor.setColor(
             lightColor: UIColor.white,
@@ -91,37 +83,37 @@ class ChatroomViewController: UIViewController {
         return view
     }()
     
-    var showNameLabel: UILabel = {
-        return UILabel.createLabel(fontSize: 17, textColor: UIColor.darkGray)
+    lazy var showNameLabel: UILabel = {
+        return CustomLabel(fontSize: 17, textColor: UIColor.darkGray)
     }()
     
-    var blockUserNameLabel: UILabel = {
-        return UILabel.createLabel(fontSize: 17, textColor: UIColor.setColor(lightColor: .black, darkColor: .white))
+    lazy var blockUserNameLabel: UILabel = {
+        return CustomLabel(fontSize: 17, textColor: UIColor.setColor(lightColor: .black, darkColor: .white))
     }()
     
     private lazy var submitMessageButton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.paperplane),
             color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
             cornerRadius: 0, backgroundColor: .systemGray4)
     }()
     
     private lazy var closeButton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.xmark, configuration: UIImage.smallSymbolConfig),
             color: UIColor.lightGray,
             cornerRadius: 0, backgroundColor: .clear)
     }()
     
     private lazy var closeBlocklistViewＢutton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.xmark, configuration: UIImage.smallSymbolConfig),
             color: UIColor.lightGray,
             cornerRadius: 0, backgroundColor: .clear)
     }()
     
     private lazy var blockButton = {
-        let button = UIButton.createPlayerButton(
+        let button = CustomButton(
             image: UIImage.systemAsset(.nosign, configuration: UIImage.smallSymbolConfig),
             color: UIColor.setColor(lightColor: .black, darkColor: .white),
             cornerRadius: 0, backgroundColor: UIColor.clear)
@@ -131,7 +123,7 @@ class ChatroomViewController: UIViewController {
     }()
     
     private lazy var reportButton = {
-        let button = UIButton.createPlayerButton(
+        let button = CustomButton(
             image: UIImage.systemAsset(.flag, configuration: UIImage.smallSymbolConfig),
             color: UIColor.setColor(lightColor: .black, darkColor: .white),
             cornerRadius: 0, backgroundColor: UIColor.clear)
@@ -141,7 +133,7 @@ class ChatroomViewController: UIViewController {
     }()
     
     private lazy var messageTextField = {
-        return UITextField.createTextField(
+        return CustomTextField(
             text: "    輸入即時聊天訊息",
             backgroundColor: UIColor.setColor(lightColor: .white, darkColor: .systemGray5))
     }()
@@ -208,6 +200,7 @@ class ChatroomViewController: UIViewController {
                  "userImage": userImage
                 ] as [String: Any],
              "videoId": videoId, "id": id]
+            
             FirestoreManager.chatroom.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")
@@ -305,7 +298,8 @@ extension ChatroomViewController {
         
         view.backgroundColor = .baseBackgroundColor
         tableView.backgroundColor = .baseBackgroundColor
-        
+        tableView.estimatedRowHeight = 100
+
         showNameLabel.sizeToFit()
         blockUserNameLabel.sizeToFit()
         blocklistBackgroundView.isHidden = true
