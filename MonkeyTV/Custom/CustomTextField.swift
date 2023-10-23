@@ -9,7 +9,10 @@ import UIKit
 
 class CustomTextField: UITextField {
     
-    init(text: String, backgroundColor: UIColor) {
+    init(
+        text: String,
+         backgroundColor: UIColor
+    ) {
         super.init(frame: .zero)
         self.attributedPlaceholder = NSAttributedString(
             string: text,

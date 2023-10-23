@@ -191,16 +191,12 @@ class ChatroomViewController: UIViewController {
     @objc func submitMessage() {
         if let text = messageTextField.text, text.isEmpty == false {
             let id = FirestoreManager.chatroom.document().documentID
-            let data: [String: Any] =
-            ["chatroomChat":
-                ["chatId": UUID().uuidString, "content": text, "contentType": 0,
-                 "createdTime": FirebaseFirestore.Timestamp(),
-                 "userId": userId,
-                 "userName": userName,
-                 "userImage": userImage
-                ] as [String: Any],
-             "videoId": videoId, "id": id]
-            
+            let chatData = ChatroomChatData(text: text,
+                                            userId: userId,
+                                            userName: userName,
+                                            userImage: userImage,
+                                            videoId: videoId, id: id)
+            let data = chatData.asDictionary()
             FirestoreManager.chatroom.document(id).setData(data) { error in
                 if error != nil {
                     print("Error adding document: (error)")

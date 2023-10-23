@@ -10,7 +10,7 @@ import FSPagerView
 import FirebaseFirestore
 import NVActivityIndicatorView
 
-class HomeViewController: BaseViewController {
+class HomeViewController: UIViewController {
     
     private lazy var tableView = {
         return  CustomTableView(
@@ -24,7 +24,6 @@ class HomeViewController: BaseViewController {
     private let activityIndicatorView = NVActivityIndicatorView(
         frame: CGRect(x: 0, y: 0, width: 60, height: 60),
         type: .lineSpinFadeLoader, color: UIColor.mainColor, padding: 10)
-    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
