@@ -8,7 +8,6 @@
 import XCTest
 @testable import MonkeyTV
 
-
 final class MonkeyTVPlayerPageTestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {

@@ -134,7 +134,7 @@
 		CC0331292ABEE70700229900 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		CC03312B2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletChatTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		CC03312E2AC2B05B00229900 /* MyData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyData.xcdatamodel; sourceTree = "<group>"; };
-		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MonkeyTV.app; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTV.app"; sourceTree = "<absolute>"; };
 		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -178,17 +178,17 @@
 		CC755AA42AE397C500B6CF1E /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		CC755AA62AE39C1C00B6CF1E /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		CC755AA82AE4DF9B00B6CF1E /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
-		CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUinitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVTests.xctest; sourceTree = "<absolute>"; };
+		CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUITests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUITests.xctest"; sourceTree = "<absolute>"; };
+		CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUinitTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVUinitTests.xctest; sourceTree = "<absolute>"; };
 		CC755AD22AE614A100B6CF1E /* MonkeyTVUinitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVUinitTests.swift; sourceTree = "<group>"; };
 		CC755AD92AE61F8B00B6CF1E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVLogInTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVLogInTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVLogInTests.xctest; sourceTree = "<absolute>"; };
 		CC755AE12AE64A8500B6CF1E /* MonkeyTVLogInTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVLogInTests.swift; sourceTree = "<group>"; };
-		CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVPlayerPageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVPlayerPageTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVPlayerPageTests.xctest"; sourceTree = "<absolute>"; };
 		CC755AEE2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVPlayerPageTests.swift; sourceTree = "<group>"; };
 		CC755AF02AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVPlayerPageTestsLaunchTests.swift; sourceTree = "<group>"; };
-		CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUIXXXXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXXXTests.xctest"; sourceTree = "<absolute>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 		CC963C1A2AB96B5C0047EEFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
-		CCAA41552AE667D600F1510D /*  */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = ""; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXTests.xctest"; sourceTree = "<absolute>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -289,25 +289,9 @@
 				CC755AD12AE614A000B6CF1E /* MonkeyTVUinitTests */,
 				CC755AE02AE64A8500B6CF1E /* MonkeyTVLogInTests */,
 				CC755AED2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */,
-				CC0BF1A82AB00BF60075203C /* Products */,
 				BDDF742B41051EABE8D6BBDA /* Pods */,
 				930EC078E689AC759C01C47B /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		CC0BF1A82AB00BF60075203C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CC0BF1A72AB00BF60075203C /* MonkeyTV.app */,
-				CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */,
-				CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */,
-				CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */,
-				CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */,
-				CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */,
-				CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */,
-				CCAA41552AE667D600F1510D /*  */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		CC0BF1A92AB00BF60075203C /* MonkeyTV */ = {
@@ -678,7 +662,7 @@
 			);
 			name = MonkeyTVUIXXTests;
 			productName = MonkeyTVUIXXTests;
-			productReference = CCAA41552AE667D600F1510D /*  */;
+			productReference = CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -736,7 +720,7 @@
 				Base,
 			);
 			mainGroup = CC0BF19E2AB00BF60075203C;
-			productRefGroup = CC0BF1A82AB00BF60075203C /* Products */;
+			productRefGroup = CC0BF19E2AB00BF60075203C;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
