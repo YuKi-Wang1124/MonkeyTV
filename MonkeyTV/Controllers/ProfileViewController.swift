@@ -476,8 +476,3 @@ extension ProfileViewController: ASAuthorizationControllerPresentationContextPro
         return self.view.window!
     }
 }
-
-enum LogInMethod: String, CaseIterable {
-    case google = "Google"
-    case apple = "Apple"
-}

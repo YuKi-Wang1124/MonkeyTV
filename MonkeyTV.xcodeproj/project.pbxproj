@@ -62,6 +62,7 @@
 		CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1A2AB96B5C0047EEFA /* Observable.swift */; };
 		CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */; };
 		CC963C242ABAD6250047EEFA /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */; };
+		CCAA41642AE66B2300F1510D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAA41632AE66B2300F1510D /* User.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +127,7 @@
 		CC963C1A2AB96B5C0047EEFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
+		CCAA41632AE66B2300F1510D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -266,6 +268,7 @@
 				CC0331272ABDA6F900229900 /* Show.swift */,
 				CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */,
 				CC963C072AB6F9A20047EEFA /* ChatData.swift */,
+				CCAA41632AE66B2300F1510D /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCAA41642AE66B2300F1510D /* User.swift in Sources */,
 				CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */,
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
 				CC0BF1C92AB02BBA0075203C /* UINavigationController+Extension.swift in Sources */,
