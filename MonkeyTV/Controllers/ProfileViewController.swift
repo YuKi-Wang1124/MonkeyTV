@@ -18,13 +18,14 @@ class ProfileViewController: UIViewController, LogInDelegate {
     private var cleanSearchHistoryDelegate: CleanSearchHistoryDelegate?
     var myUserInfo: UserInfo?
     
-    private lazy var tableView: UITableView = {
-        return  CustomTableView(rowHeight: UITableView.automaticDimension,
-                                separatorStyle: .singleLine,
-                                allowsSelection: false,
-                                registerCells: [ProfileTitleTableViewCell.self,
-                                                SignInWithTableViewCell.self,
-                                                DeleteTableViewCell.self])
+    private lazy var tableView: CustomTableView = {
+        return  CustomTableView(
+            rowHeight: UITableView.automaticDimension,
+            separatorStyle: .singleLine,
+            allowsSelection: false,
+            registerCells: [ProfileTitleTableViewCell.self,
+                            SignInWithTableViewCell.self,
+                            DeleteTableViewCell.self])
     }()
     
     private lazy var personalImageView = {
@@ -271,7 +272,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 withIdentifier: ProfileTitleTableViewCell.identifier,
                 for: indexPath) as? ProfileTitleTableViewCell
             guard let cell = cell else { return UITableViewCell() }
-            
             guard let myUserInfo = myUserInfo else { return UITableViewCell() }
             cell.nameLabel.text = myUserInfo.userName
             cell.personalImageView.loadImage(myUserInfo.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
@@ -488,6 +488,3 @@ extension ProfileViewController: ASAuthorizationControllerPresentationContextPro
         return self.view.window!
     }
 }
-
-
-

@@ -12,7 +12,7 @@ import NVActivityIndicatorView
 
 class HomeViewController: UIViewController {
     
-    private lazy var tableView = {
+    private lazy var tableView: CustomTableView = {
         return  CustomTableView(
             rowHeight: 250,
             separatorStyle: .none,
@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     private let activityIndicatorView = NVActivityIndicatorView(
         frame: CGRect(x: 0, y: 0, width: 60, height: 60),
         type: .lineSpinFadeLoader, color: UIColor.mainColor, padding: 10)
+    
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, String>()
     private var tableViewDataSource: UITableViewDiffableDataSource<OneSection, String>!
     private let showCatalogArray = ShowCatalog.allCases.map { $0.rawValue }
@@ -71,20 +72,12 @@ class HomeViewController: UIViewController {
         UITableViewDiffableDataSource<OneSection, String>(
             tableView: tableView) { tableView, indexPath, _ in
                 if indexPath.row == 0 {
-                    let cell =
-                    tableView.dequeueReusableCell(
-                        withIdentifier: HomeAnimationTableViewCell.identifier,
-                        for: indexPath) as? HomeAnimationTableViewCell
-                    guard let cell = cell else { return UITableViewCell() }
+                    let cell: HomeAnimationTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                     cell.showVideoPlayerDelegate = self
                     return cell
                 } else {
                     let index = indexPath.row - 1
-                    let cell =
-                    tableView.dequeueReusableCell(
-                        withIdentifier: CollectionTableViewCell.identifier,
-                        for: indexPath) as? CollectionTableViewCell
-                    guard let cell = cell else { return UITableViewCell() }
+                    let cell: CollectionTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                     cell.titleLabel.text = self.showCatalogArray[indexPath.row]
                     cell.catalogType = index
                     cell.showVideoPlayerDelegate = self
@@ -117,7 +110,7 @@ extension HomeViewController {
         activityIndicatorView.backgroundColor = UIColor.setColor(
             lightColor: UIColor(white: 1, alpha: 0.4),
             darkColor: UIColor(white: 0.1, alpha: 0.5))
-
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),

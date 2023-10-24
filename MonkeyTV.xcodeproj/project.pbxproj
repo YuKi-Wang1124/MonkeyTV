@@ -134,7 +134,6 @@
 		CC0331292ABEE70700229900 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		CC03312B2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletChatTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		CC03312E2AC2B05B00229900 /* MyData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyData.xcdatamodel; sourceTree = "<group>"; };
-		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MonkeyTV.app; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTV.app"; sourceTree = "<absolute>"; };
 		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +200,7 @@
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXTests.xctest"; sourceTree = "<absolute>"; };
+		CCAA41652AE76AD200F1510D /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -291,6 +291,7 @@
 				CC755AED2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */,
 				BDDF742B41051EABE8D6BBDA /* Pods */,
 				930EC078E689AC759C01C47B /* Frameworks */,
+				CCAA41652AE76AD200F1510D /* MonkeyTV.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -536,7 +537,7 @@
 			);
 			name = MonkeyTV;
 			productName = MonkeyTV;
-			productReference = CC0BF1A72AB00BF60075203C /* MonkeyTV.app */;
+			productReference = CCAA41652AE76AD200F1510D /* MonkeyTV.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CC755AAD2AE4E68900B6CF1E /* MonkeyTVTests */ = {
@@ -1174,7 +1175,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1187,7 +1188,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1207,7 +1208,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
@@ -1219,7 +1220,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

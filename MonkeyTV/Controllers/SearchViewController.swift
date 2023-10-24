@@ -61,7 +61,7 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     private var height: CGFloat = 0
     private var isSearchBarActive: Bool = false
     
-    private lazy var tableView: UITableView = {
+    private lazy var tableView: CustomTableView = {
         return  CustomTableView(rowHeight: UITableView.automaticDimension,
                                 separatorStyle: .none,
                                 allowsSelection: true,

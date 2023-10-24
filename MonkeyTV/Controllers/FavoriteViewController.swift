@@ -10,7 +10,7 @@ import WebKit
 
 class FavoriteViewController: UIViewController, UITableViewDelegate {
     
-    private lazy var tableView: UITableView = {
+    private lazy var tableView: CustomTableView = {
         return  CustomTableView(rowHeight: UITableView.automaticDimension,
                                 separatorStyle: .none,
                                 allowsSelection: true,

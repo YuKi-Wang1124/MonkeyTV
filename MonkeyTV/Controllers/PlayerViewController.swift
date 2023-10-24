@@ -75,7 +75,7 @@ class PlayerViewController: UIViewController {
         return CustomLabel(fontSize: 18, textColor: UIColor(white: 0.9, alpha: 1))
     }()
     
-    private lazy var tableView: UITableView = {
+    private lazy var tableView: CustomTableView = {
         return  CustomTableView(
             rowHeight: UITableView.automaticDimension,
             separatorStyle: .none,
@@ -368,11 +368,7 @@ extension PlayerViewController {
             cellProvider: { tableView, indexPath, item in
                 
                 if indexPath.section == 0 {
-                    let cell = tableView.dequeueReusableCell(
-                        withIdentifier: BulletChatTextFieldTableViewCell.identifier,
-                        for: indexPath) as? BulletChatTextFieldTableViewCell
-                    
-                    guard let cell = cell else { return UITableViewCell() }
+                    let cell: BulletChatTextFieldTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                     cell.danMuTextField.delegate = cell
                     cell.userInputHandler = { [weak self] userInput in
                         self?.bulletChatText = userInput
@@ -383,16 +379,12 @@ extension PlayerViewController {
                     self.setupCellButtonDelegate = cell
                     cell.addButton.setImage(self.isMyShow ?
                                             UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig) :
-                                                UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig), for: .normal)
+                                                UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig),
+                                            for: .normal)
                     cell.selectionStyle = .none
                     return cell
-                    
                 } else if indexPath.section == 1 {
-                    let cell = tableView.dequeueReusableCell(
-                        withIdentifier: ChatroomButtonTableViewCell.identifier,
-                        for: indexPath) as? ChatroomButtonTableViewCell
-                    
-                    guard let cell = cell else { return UITableViewCell() }
+                    let cell: ChatroomButtonTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                     cell.chatRoomButton.addTarget(
                         self, action: #selector(self.showChatroom(sender:)),
                         for: .touchUpInside)
@@ -401,12 +393,8 @@ extension PlayerViewController {
                     KeychainItem.currentEmail.isEmpty ? Constant.logInCanChat : "  以\(self.userName)的身份與大家聊天..."
                     cell.selectionStyle = .none
                     return cell
-                } else if indexPath.section == 2 {
-                    let cell = tableView.dequeueReusableCell(
-                        withIdentifier: ShowTableViewCell.identifier,
-                        for: indexPath) as? ShowTableViewCell
-                    
-                    guard let cell = cell else { return UITableViewCell() }
+                } else {
+                    let cell: ShowTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                     cell.showImageView.loadImage(item.image)
                     cell.showNameLabel.text = item.title
                     cell.playlistId = item.playlistId
@@ -414,7 +402,6 @@ extension PlayerViewController {
                     cell.selectionStyle = .none
                     return cell
                 }
-                return UITableViewCell()
             }
         )
         tableView.dataSource = dataSource
@@ -429,19 +416,15 @@ extension PlayerViewController {
             if isMyShow == true {
                 sender.setImage(
                     UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig), for: .normal)
-                
                 Task {
                     await FirestoreManager.deleteToMyFavorite(
                         email: KeychainItem.currentEmail,
                         playlistId: playlistId)
                 }
-                
                 isMyShow = false
-                
             } else {
                 sender.setImage(
                     UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig), for: .normal)
-                
                 FirestoreManager.addToMyFavorite(
                     email: KeychainItem.currentEmail,
                     playlistId: playlistId,
@@ -453,6 +436,7 @@ extension PlayerViewController {
     }
     
     // MARK: - Show Chatroom Button Action
+    
     @objc func showChatroom(sender: UIButton) {
         
         if KeychainItem.currentEmail == "" {
@@ -486,6 +470,7 @@ extension PlayerViewController {
     }
     
     @objc func submitMyDanMu() {
+        
         if bulletChatText != "" {
             bulletChatView.danmuQueue.append((bulletChatText, false))
             FirestoreManager.addBulletChatData(
