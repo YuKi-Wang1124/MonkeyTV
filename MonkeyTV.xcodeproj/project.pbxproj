@@ -10,8 +10,8 @@
 		CC0331242ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */; };
 		CC0331262ABDA5F200229900 /* posDataToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331252ABDA5F200229900 /* posDataToFirebase.swift */; };
 		CC0331282ABDA6F900229900 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331272ABDA6F900229900 /* Show.swift */; };
-		CC03312A2ABEE70700229900 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331292ABEE70700229900 /* UILabel+Extension.swift */; };
-		CC03312C2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */; };
+		CC03312A2ABEE70700229900 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0331292ABEE70700229900 /* CustomLabel.swift */; };
+		CC03312C2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03312B2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift */; };
 		CC03312F2AC2B05B00229900 /* MyData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC03312D2AC2B05B00229900 /* MyData.xcdatamodeld */; };
 		CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */; };
 		CC0BF1AD2AB00BF60075203C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */; };
@@ -37,7 +37,7 @@
 		CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F52AB418E40075203C /* HomeAnimationTableViewCell.swift */; };
 		CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */; };
 		CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */; };
-		CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */; };
+		CC0BF1FE2AB5E7BC0075203C /* BulletChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1FD2AB5E7BC0075203C /* BulletChat.swift */; };
 		CC1CCA652AC2B4B80010C63C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA642AC2B4B80010C63C /* StorageManager.swift */; };
 		CC1CCA892AC428C90010C63C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA882AC428C90010C63C /* String+Extension.swift */; };
 		CC1CCA982AC9486A0010C63C /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */; };
@@ -50,20 +50,80 @@
 		CC755A942AD7E6FF00B6CF1E /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A932AD7E6FF00B6CF1E /* MJRefreshWrapper.swift */; };
 		CC755A982AD923BE00B6CF1E /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A972AD923BE00B6CF1E /* TimeFormatter.swift */; };
 		CC755A9E2ADD840100B6CF1E /* notFound.json in Resources */ = {isa = PBXBuildFile; fileRef = CC755A9D2ADD840100B6CF1E /* notFound.json */; };
+		CC755AA02AE24C5800B6CF1E /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755A9F2AE24C5800B6CF1E /* UIAlertController+Extension.swift */; };
+		CC755AA52AE397C500B6CF1E /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AA42AE397C500B6CF1E /* UITableView+Extension.swift */; };
+		CC755AA72AE39C1C00B6CF1E /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AA62AE39C1C00B6CF1E /* CustomTableView.swift */; };
+		CC755AA92AE4DF9B00B6CF1E /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AA82AE4DF9B00B6CF1E /* LogInManager.swift */; };
+		CC755AD32AE614A100B6CF1E /* MonkeyTVUinitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AD22AE614A100B6CF1E /* MonkeyTVUinitTests.swift */; };
+		CC755ADA2AE61F8B00B6CF1E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AD92AE61F8B00B6CF1E /* User.swift */; };
+		CC755AE22AE64A8500B6CF1E /* MonkeyTVLogInTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AE12AE64A8500B6CF1E /* MonkeyTVLogInTests.swift */; };
+		CC755AEF2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AEE2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift */; };
+		CC755AF12AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AF02AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
-		CC963C0E2AB84A260047EEFA /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0D2AB84A260047EEFA /* UITextField+Extension.swift */; };
+		CC963C0E2AB84A260047EEFA /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0D2AB84A260047EEFA /* CustomTextField.swift */; };
 		CC963C102AB898F90047EEFA /* ChatroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */; };
 		CC963C122AB8A3190047EEFA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C112AB8A3190047EEFA /* UIColor+Extension.swift */; };
-		CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C142AB92CC00047EEFA /* BaseViewController.swift */; };
 		CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C162AB92F7D0047EEFA /* Delegate.swift */; };
-		CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C182AB951180047EEFA /* UIBotton+Extension.swift */; };
+		CC963C192AB951180047EEFA /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C182AB951180047EEFA /* CustomButton.swift */; };
 		CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1A2AB96B5C0047EEFA /* Observable.swift */; };
 		CC963C1E2AB996D50047EEFA /* ChatroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */; };
 		CC963C242ABAD6250047EEFA /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC755AB22AE4E68900B6CF1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+		CC755AC32AE60F6700B6CF1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+		CC755AD42AE614A100B6CF1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+		CC755AE32AE64A8500B6CF1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+		CC755AF22AE65C2A00B6CF1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+		CC755B032AE665D200B6CF1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+		CCAA415B2AE667D600F1510D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
+			remoteInfo = MonkeyTV;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonkeyTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,10 +131,9 @@
 		CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomButtonTableViewCell.swift; sourceTree = "<group>"; };
 		CC0331252ABDA5F200229900 /* posDataToFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = posDataToFirebase.swift; sourceTree = "<group>"; };
 		CC0331272ABDA6F900229900 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
-		CC0331292ABEE70700229900 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
-		CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMuTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		CC0331292ABEE70700229900 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		CC03312B2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletChatTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		CC03312E2AC2B05B00229900 /* MyData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyData.xcdatamodel; sourceTree = "<group>"; };
-		CC0BF1A72AB00BF60075203C /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0BF1AA2AB00BF60075203C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AC2AB00BF60075203C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CC0BF1AE2AB00BF60075203C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +159,7 @@
 		CC0BF1F52AB418E40075203C /* HomeAnimationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAnimationTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
-		CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanMu.swift; sourceTree = "<group>"; };
+		CC0BF1FD2AB5E7BC0075203C /* BulletChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletChat.swift; sourceTree = "<group>"; };
 		CC1CCA642AC2B4B80010C63C /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		CC1CCA882AC428C90010C63C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CC1CCA972AC9486A0010C63C /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
@@ -114,18 +173,34 @@
 		CC755A932AD7E6FF00B6CF1E /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
 		CC755A972AD923BE00B6CF1E /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		CC755A9D2ADD840100B6CF1E /* notFound.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = notFound.json; path = ../../../../Downloads/notFound.json; sourceTree = "<group>"; };
+		CC755A9F2AE24C5800B6CF1E /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
+		CC755AA42AE397C500B6CF1E /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		CC755AA62AE39C1C00B6CF1E /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
+		CC755AA82AE4DF9B00B6CF1E /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
+		CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVTests.xctest; sourceTree = "<absolute>"; };
+		CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUITests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUITests.xctest"; sourceTree = "<absolute>"; };
+		CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUinitTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVUinitTests.xctest; sourceTree = "<absolute>"; };
+		CC755AD22AE614A100B6CF1E /* MonkeyTVUinitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVUinitTests.swift; sourceTree = "<group>"; };
+		CC755AD92AE61F8B00B6CF1E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVLogInTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVLogInTests.xctest; sourceTree = "<absolute>"; };
+		CC755AE12AE64A8500B6CF1E /* MonkeyTVLogInTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVLogInTests.swift; sourceTree = "<group>"; };
+		CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVPlayerPageTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVPlayerPageTests.xctest"; sourceTree = "<absolute>"; };
+		CC755AEE2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVPlayerPageTests.swift; sourceTree = "<group>"; };
+		CC755AF02AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVPlayerPageTestsLaunchTests.swift; sourceTree = "<group>"; };
+		CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXXXTests.xctest"; sourceTree = "<absolute>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
-		CC963C0D2AB84A260047EEFA /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		CC963C0D2AB84A260047EEFA /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		CC963C0F2AB898F90047EEFA /* ChatroomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomTableViewCell.swift; sourceTree = "<group>"; };
 		CC963C112AB8A3190047EEFA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		CC963C142AB92CC00047EEFA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CC963C162AB92F7D0047EEFA /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
-		CC963C182AB951180047EEFA /* UIBotton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBotton+Extension.swift"; sourceTree = "<group>"; };
+		CC963C182AB951180047EEFA /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		CC963C1A2AB96B5C0047EEFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
+		CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXTests.xctest"; sourceTree = "<absolute>"; };
+		CCAA41652AE76AD200F1510D /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +210,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AAB2AE4E68900B6CF1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ABA2AE60F6700B6CF1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ACD2AE614A000B6CF1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ADC2AE64A8500B6CF1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AE92AE65C2A00B6CF1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AFA2AE665D200B6CF1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAA41522AE667D600F1510D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,18 +286,13 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1A92AB00BF60075203C /* MonkeyTV */,
-				CC0BF1A82AB00BF60075203C /* Products */,
+				CC755AD12AE614A000B6CF1E /* MonkeyTVUinitTests */,
+				CC755AE02AE64A8500B6CF1E /* MonkeyTVLogInTests */,
+				CC755AED2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */,
 				BDDF742B41051EABE8D6BBDA /* Pods */,
 				930EC078E689AC759C01C47B /* Frameworks */,
+				CCAA41652AE76AD200F1510D /* MonkeyTV.app */,
 			);
-			sourceTree = "<group>";
-		};
-		CC0BF1A82AB00BF60075203C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CC0BF1A72AB00BF60075203C /* MonkeyTV.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		CC0BF1A92AB00BF60075203C /* MonkeyTV */ = {
@@ -182,17 +301,17 @@
 				CC1CCA9D2ACBB8F30010C63C /* MonkeyTV.entitlements */,
 				CC0BF1B82AB00BF70075203C /* Info.plist */,
 				CC755A992ADD80C100B6CF1E /* Supporting Files */,
+				CC755A9A2ADD819A00B6CF1E /* Assets */,
+				CC0BF1C32AB014920075203C /* Controllers */,
 				CC0BF1F32AB2F3B00075203C /* Helpers */,
-				CC0BF1D42AB055450075203C /* Constants */,
 				CC0BF1CE2AB03D730075203C /* Third Party Wrappers */,
+				CC755AA32AE3912100B6CF1E /* Custom */,
 				CC0BF1C22AB014000075203C /* Extensions */,
 				CC0BF1E02AB1B8190075203C /* Model */,
+				CC0BF1D42AB055450075203C /* Constants */,
 				CC0BF1D12AB052B40075203C /* Manager */,
-				CC0BF1F42AB418CA0075203C /* Cells */,
 				CC963C1C2AB996BA0047EEFA /* ViewModel */,
-				CC963C132AB92CA60047EEFA /* Base */,
-				CC0BF1C32AB014920075203C /* Controllers */,
-				CC755A9A2ADD819A00B6CF1E /* Assets */,
+				CC0BF1F42AB418CA0075203C /* Cells */,
 				CC03312D2AC2B05B00229900 /* MyData.xcdatamodeld */,
 			);
 			path = MonkeyTV;
@@ -204,12 +323,11 @@
 				CC0BF1C02AB0120B0075203C /* UIImage+Extension.swift */,
 				CC0BF1C82AB02BBA0075203C /* UINavigationController+Extension.swift */,
 				CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */,
-				CC963C0D2AB84A260047EEFA /* UITextField+Extension.swift */,
 				CC963C112AB8A3190047EEFA /* UIColor+Extension.swift */,
-				CC963C182AB951180047EEFA /* UIBotton+Extension.swift */,
 				CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */,
-				CC0331292ABEE70700229900 /* UILabel+Extension.swift */,
 				CC1CCA882AC428C90010C63C /* String+Extension.swift */,
+				CC755A9F2AE24C5800B6CF1E /* UIAlertController+Extension.swift */,
+				CC755AA42AE397C500B6CF1E /* UITableView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -246,6 +364,7 @@
 				CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */,
 				CC1CCA642AC2B4B80010C63C /* StorageManager.swift */,
 				CC755A8A2ACFD3D300B6CF1E /* UserInfoManager.swift */,
+				CC755AA82AE4DF9B00B6CF1E /* LogInManager.swift */,
 				CC963C162AB92F7D0047EEFA /* Delegate.swift */,
 			);
 			path = Manager;
@@ -266,6 +385,7 @@
 				CC0331272ABDA6F900229900 /* Show.swift */,
 				CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */,
 				CC963C072AB6F9A20047EEFA /* ChatData.swift */,
+				CC755AD92AE61F8B00B6CF1E /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -274,7 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */,
-				CC0BF1FD2AB5E7BC0075203C /* DanMu.swift */,
+				CC0BF1FD2AB5E7BC0075203C /* BulletChat.swift */,
 				CC963C1A2AB96B5C0047EEFA /* Observable.swift */,
 				CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */,
 				CC755A972AD923BE00B6CF1E /* TimeFormatter.swift */,
@@ -316,7 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0331232ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift */,
-				CC03312B2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift */,
+				CC03312B2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -352,12 +472,40 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		CC963C132AB92CA60047EEFA /* Base */ = {
+		CC755AA32AE3912100B6CF1E /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				CC963C142AB92CC00047EEFA /* BaseViewController.swift */,
+				CC0331292ABEE70700229900 /* CustomLabel.swift */,
+				CC963C182AB951180047EEFA /* CustomButton.swift */,
+				CC963C0D2AB84A260047EEFA /* CustomTextField.swift */,
+				CC755AA62AE39C1C00B6CF1E /* CustomTableView.swift */,
 			);
-			path = Base;
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		CC755AD12AE614A000B6CF1E /* MonkeyTVUinitTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC755AD22AE614A100B6CF1E /* MonkeyTVUinitTests.swift */,
+			);
+			path = MonkeyTVUinitTests;
+			sourceTree = "<group>";
+		};
+		CC755AE02AE64A8500B6CF1E /* MonkeyTVLogInTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC755AE12AE64A8500B6CF1E /* MonkeyTVLogInTests.swift */,
+			);
+			path = MonkeyTVLogInTests;
+			sourceTree = "<group>";
+		};
+		CC755AED2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC755AEE2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift */,
+				CC755AF02AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift */,
+			);
+			path = MonkeyTVPlayerPageTests;
 			sourceTree = "<group>";
 		};
 		CC963C1C2AB996BA0047EEFA /* ViewModel */ = {
@@ -389,8 +537,134 @@
 			);
 			name = MonkeyTV;
 			productName = MonkeyTV;
-			productReference = CC0BF1A72AB00BF60075203C /* MonkeyTV.app */;
+			productReference = CCAA41652AE76AD200F1510D /* MonkeyTV.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CC755AAD2AE4E68900B6CF1E /* MonkeyTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC755AB42AE4E68900B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVTests" */;
+			buildPhases = (
+				CC755AAA2AE4E68900B6CF1E /* Sources */,
+				CC755AAB2AE4E68900B6CF1E /* Frameworks */,
+				CC755AAC2AE4E68900B6CF1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC755AB32AE4E68900B6CF1E /* PBXTargetDependency */,
+			);
+			name = MonkeyTVTests;
+			productName = MonkeyTVTests;
+			productReference = CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC755ABC2AE60F6700B6CF1E /* MonkeyTVUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC755AC52AE60F6700B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUITests" */;
+			buildPhases = (
+				CC755AB92AE60F6700B6CF1E /* Sources */,
+				CC755ABA2AE60F6700B6CF1E /* Frameworks */,
+				CC755ABB2AE60F6700B6CF1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC755AC42AE60F6700B6CF1E /* PBXTargetDependency */,
+			);
+			name = MonkeyTVUITests;
+			productName = MonkeyTVUITests;
+			productReference = CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CC755ACF2AE614A000B6CF1E /* MonkeyTVUinitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC755AD62AE614A100B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUinitTests" */;
+			buildPhases = (
+				CC755ACC2AE614A000B6CF1E /* Sources */,
+				CC755ACD2AE614A000B6CF1E /* Frameworks */,
+				CC755ACE2AE614A000B6CF1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC755AD52AE614A100B6CF1E /* PBXTargetDependency */,
+			);
+			name = MonkeyTVUinitTests;
+			productName = MonkeyTVUinitTests;
+			productReference = CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC755ADE2AE64A8500B6CF1E /* MonkeyTVLogInTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC755AE52AE64A8500B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVLogInTests" */;
+			buildPhases = (
+				CC755ADB2AE64A8500B6CF1E /* Sources */,
+				CC755ADC2AE64A8500B6CF1E /* Frameworks */,
+				CC755ADD2AE64A8500B6CF1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC755AE42AE64A8500B6CF1E /* PBXTargetDependency */,
+			);
+			name = MonkeyTVLogInTests;
+			productName = MonkeyTVLogInTests;
+			productReference = CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC755AEB2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC755AF42AE65C2A00B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVPlayerPageTests" */;
+			buildPhases = (
+				CC755AE82AE65C2A00B6CF1E /* Sources */,
+				CC755AE92AE65C2A00B6CF1E /* Frameworks */,
+				CC755AEA2AE65C2A00B6CF1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC755AF32AE65C2A00B6CF1E /* PBXTargetDependency */,
+			);
+			name = MonkeyTVPlayerPageTests;
+			productName = MonkeyTVPlayerPageTests;
+			productReference = CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CC755AFC2AE665D200B6CF1E /* MonkeyTVUIXXXXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC755B072AE665D200B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXXXTests" */;
+			buildPhases = (
+				CC755AF92AE665D200B6CF1E /* Sources */,
+				CC755AFA2AE665D200B6CF1E /* Frameworks */,
+				CC755AFB2AE665D200B6CF1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC755B042AE665D200B6CF1E /* PBXTargetDependency */,
+			);
+			name = MonkeyTVUIXXXXTests;
+			productName = MonkeyTVUIXXXXTests;
+			productReference = CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CCAA41542AE667D600F1510D /* MonkeyTVUIXXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCAA415D2AE667D600F1510D /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXTests" */;
+			buildPhases = (
+				CCAA41512AE667D600F1510D /* Sources */,
+				CCAA41522AE667D600F1510D /* Frameworks */,
+				CCAA41532AE667D600F1510D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CCAA415C2AE667D600F1510D /* PBXTargetDependency */,
+			);
+			name = MonkeyTVUIXXTests;
+			productName = MonkeyTVUIXXTests;
+			productReference = CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -408,6 +682,34 @@
 					CC0BF1A62AB00BF60075203C = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					CC755AAD2AE4E68900B6CF1E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
+					CC755ABC2AE60F6700B6CF1E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
+					CC755ACF2AE614A000B6CF1E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
+					CC755ADE2AE64A8500B6CF1E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
+					CC755AEB2AE65C2A00B6CF1E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
+					CC755AFC2AE665D200B6CF1E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
+					CCAA41542AE667D600F1510D = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = CC0BF1A62AB00BF60075203C;
+					};
 				};
 			};
 			buildConfigurationList = CC0BF1A22AB00BF60075203C /* Build configuration list for PBXProject "MonkeyTV" */;
@@ -419,11 +721,18 @@
 				Base,
 			);
 			mainGroup = CC0BF19E2AB00BF60075203C;
-			productRefGroup = CC0BF1A82AB00BF60075203C /* Products */;
+			productRefGroup = CC0BF19E2AB00BF60075203C;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				CC0BF1A62AB00BF60075203C /* MonkeyTV */,
+				CC755AAD2AE4E68900B6CF1E /* MonkeyTVTests */,
+				CC755ABC2AE60F6700B6CF1E /* MonkeyTVUITests */,
+				CC755ACF2AE614A000B6CF1E /* MonkeyTVUinitTests */,
+				CC755ADE2AE64A8500B6CF1E /* MonkeyTVLogInTests */,
+				CC755AEB2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */,
+				CC755AFC2AE665D200B6CF1E /* MonkeyTVUIXXXXTests */,
+				CCAA41542AE667D600F1510D /* MonkeyTVUIXXTests */,
 			);
 		};
 /* End PBXProject section */
@@ -437,6 +746,55 @@
 				CC0BF1B42AB00BF70075203C /* Assets.xcassets in Resources */,
 				CC755A9E2ADD840100B6CF1E /* notFound.json in Resources */,
 				CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AAC2AE4E68900B6CF1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ABB2AE60F6700B6CF1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ACE2AE614A000B6CF1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ADD2AE64A8500B6CF1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AEA2AE65C2A00B6CF1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AFB2AE665D200B6CF1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAA41532AE667D600F1510D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,18 +890,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC0BF1FE2AB5E7BC0075203C /* DanMu.swift in Sources */,
+				CC0BF1FE2AB5E7BC0075203C /* BulletChat.swift in Sources */,
 				CC0BF1CD2AB036BD0075203C /* PlayerViewController.swift in Sources */,
 				CC0BF1C92AB02BBA0075203C /* UINavigationController+Extension.swift in Sources */,
 				CC0BF1D92AB1B1300075203C /* HTTPClientManager.swift in Sources */,
 				CC755A922AD7D06D00B6CF1E /* CopyRightViewController.swift in Sources */,
 				CC0BF1AF2AB00BF60075203C /* SearchViewController.swift in Sources */,
-				CC963C152AB92CC00047EEFA /* BaseViewController.swift in Sources */,
-				CC963C0E2AB84A260047EEFA /* UITextField+Extension.swift in Sources */,
+				CC963C0E2AB84A260047EEFA /* CustomTextField.swift in Sources */,
 				CC0BF1BF2AB010080075203C /* TabBarController.swift in Sources */,
 				CC0BF1DD2AB1B6880075203C /* YoutubeRequest.swift in Sources */,
 				CC963C122AB8A3190047EEFA /* UIColor+Extension.swift in Sources */,
-				CC03312C2AC16D5700229900 /* DanMuTextFieldTableViewCell.swift in Sources */,
+				CC03312C2AC16D5700229900 /* BulletChatTextFieldTableViewCell.swift in Sources */,
 				CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */,
 				CC1CCA892AC428C90010C63C /* String+Extension.swift in Sources */,
 				CC0BF1C12AB0120B0075203C /* UIImage+Extension.swift in Sources */,
@@ -552,6 +909,7 @@
 				CC0BF1C72AB02AF80075203C /* FavoriteViewController.swift in Sources */,
 				CC755A8B2ACFD3D300B6CF1E /* UserInfoManager.swift in Sources */,
 				CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */,
+				CC755AA92AE4DF9B00B6CF1E /* LogInManager.swift in Sources */,
 				CC03312F2AC2B05B00229900 /* MyData.xcdatamodeld in Sources */,
 				CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
@@ -559,7 +917,7 @@
 				CC1CCA9F2ACE8C3D0010C63C /* KeychainItem.swift in Sources */,
 				CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
-				CC963C192AB951180047EEFA /* UIBotton+Extension.swift in Sources */,
+				CC963C192AB951180047EEFA /* CustomButton.swift in Sources */,
 				CC755A982AD923BE00B6CF1E /* TimeFormatter.swift in Sources */,
 				CC755A942AD7E6FF00B6CF1E /* MJRefreshWrapper.swift in Sources */,
 				CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */,
@@ -575,18 +933,113 @@
 				CC963C102AB898F90047EEFA /* ChatroomTableViewCell.swift in Sources */,
 				CC963C242ABAD6250047EEFA /* UIWindow+Extension.swift in Sources */,
 				CC0BF1DF2AB1B8130075203C /* Video.swift in Sources */,
-				CC03312A2ABEE70700229900 /* UILabel+Extension.swift in Sources */,
+				CC755ADA2AE61F8B00B6CF1E /* User.swift in Sources */,
+				CC755AA72AE39C1C00B6CF1E /* CustomTableView.swift in Sources */,
+				CC03312A2ABEE70700229900 /* CustomLabel.swift in Sources */,
 				CC0BF1C52AB014C10075203C /* HomeViewController.swift in Sources */,
+				CC755AA52AE397C500B6CF1E /* UITableView+Extension.swift in Sources */,
 				CC963C1B2AB96B5C0047EEFA /* Observable.swift in Sources */,
 				CC1CCA652AC2B4B80010C63C /* StorageManager.swift in Sources */,
 				CC963C172AB92F7D0047EEFA /* Delegate.swift in Sources */,
 				CC0331282ABDA6F900229900 /* Show.swift in Sources */,
+				CC755AA02AE24C5800B6CF1E /* UIAlertController+Extension.swift in Sources */,
 				CC0331242ABD5DFF00229900 /* ChatroomButtonTableViewCell.swift in Sources */,
 				CC0BF1D32AB0553D0075203C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CC755AAA2AE4E68900B6CF1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AB92AE60F6700B6CF1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ACC2AE614A000B6CF1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC755AD32AE614A100B6CF1E /* MonkeyTVUinitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755ADB2AE64A8500B6CF1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC755AE22AE64A8500B6CF1E /* MonkeyTVLogInTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AE82AE65C2A00B6CF1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC755AEF2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift in Sources */,
+				CC755AF12AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC755AF92AE665D200B6CF1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAA41512AE667D600F1510D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CC755AB32AE4E68900B6CF1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CC755AB22AE4E68900B6CF1E /* PBXContainerItemProxy */;
+		};
+		CC755AC42AE60F6700B6CF1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CC755AC32AE60F6700B6CF1E /* PBXContainerItemProxy */;
+		};
+		CC755AD52AE614A100B6CF1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CC755AD42AE614A100B6CF1E /* PBXContainerItemProxy */;
+		};
+		CC755AE42AE64A8500B6CF1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CC755AE32AE64A8500B6CF1E /* PBXContainerItemProxy */;
+		};
+		CC755AF32AE65C2A00B6CF1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CC755AF22AE65C2A00B6CF1E /* PBXContainerItemProxy */;
+		};
+		CC755B042AE665D200B6CF1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CC755B032AE665D200B6CF1E /* PBXContainerItemProxy */;
+		};
+		CCAA415C2AE667D600F1510D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
+			targetProxy = CCAA415B2AE667D600F1510D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */ = {
@@ -722,7 +1175,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -735,7 +1188,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -755,7 +1208,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MonkeyTV/MonkeyTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonkeyTV/Info.plist;
@@ -767,7 +1220,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -776,6 +1229,281 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		CC755AB52AE4E68900B6CF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
+			};
+			name = Debug;
+		};
+		CC755AB62AE4E68900B6CF1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
+			};
+			name = Release;
+		};
+		CC755AC62AE60F6700B6CF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Debug;
+		};
+		CC755AC72AE60F6700B6CF1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Release;
+		};
+		CC755AD72AE614A100B6CF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUinitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
+			};
+			name = Debug;
+		};
+		CC755AD82AE614A100B6CF1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUinitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
+			};
+			name = Release;
+		};
+		CC755AE62AE64A8500B6CF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVLogInTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
+			};
+			name = Debug;
+		};
+		CC755AE72AE64A8500B6CF1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVLogInTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
+			};
+			name = Release;
+		};
+		CC755AF52AE65C2A00B6CF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVPlayerPageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Debug;
+		};
+		CC755AF62AE65C2A00B6CF1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVPlayerPageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Release;
+		};
+		CC755B052AE665D200B6CF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXXXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Debug;
+		};
+		CC755B062AE665D200B6CF1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXXXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Release;
+		};
+		CCAA415E2AE667D600F1510D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
+			};
+			name = Debug;
+		};
+		CCAA415F2AE667D600F1510D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MonkeyTV;
 			};
 			name = Release;
 		};
@@ -796,6 +1524,69 @@
 			buildConfigurations = (
 				CC0BF1BC2AB00BF70075203C /* Debug */,
 				CC0BF1BD2AB00BF70075203C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC755AB42AE4E68900B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC755AB52AE4E68900B6CF1E /* Debug */,
+				CC755AB62AE4E68900B6CF1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC755AC52AE60F6700B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC755AC62AE60F6700B6CF1E /* Debug */,
+				CC755AC72AE60F6700B6CF1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC755AD62AE614A100B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUinitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC755AD72AE614A100B6CF1E /* Debug */,
+				CC755AD82AE614A100B6CF1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC755AE52AE64A8500B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVLogInTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC755AE62AE64A8500B6CF1E /* Debug */,
+				CC755AE72AE64A8500B6CF1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC755AF42AE65C2A00B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVPlayerPageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC755AF52AE65C2A00B6CF1E /* Debug */,
+				CC755AF62AE65C2A00B6CF1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC755B072AE665D200B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXXXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC755B052AE665D200B6CF1E /* Debug */,
+				CC755B062AE665D200B6CF1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCAA415D2AE667D600F1510D /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCAA415E2AE667D600F1510D /* Debug */,
+				CCAA415F2AE667D600F1510D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

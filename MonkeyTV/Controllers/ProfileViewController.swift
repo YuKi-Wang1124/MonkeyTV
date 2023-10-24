@@ -11,29 +11,23 @@ import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, LogInDelegate {
     
     private var username: String = ""
+    var bindAccountBoolArray: [Bool] = [false, false]
     private var cleanSearchHistoryDelegate: CleanSearchHistoryDelegate?
+    var myUserInfo: UserInfo?
     
-    private lazy var tableView: UITableView = {
-        var tableView = UITableView()
-        tableView.separatorStyle = .singleLine
-        tableView.register(ProfileTitleTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ProfileTitleTableViewCell.identifier)
-        tableView.register(SignInWithTableViewCell.self,
-                           forCellReuseIdentifier:
-                            SignInWithTableViewCell.identifier)
-        tableView.register(DeleteTableViewCell.self,
-                           forCellReuseIdentifier:
-                            DeleteTableViewCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.allowsSelection = false
-        return tableView
+    private lazy var tableView: CustomTableView = {
+        return  CustomTableView(
+            rowHeight: UITableView.automaticDimension,
+            separatorStyle: .singleLine,
+            allowsSelection: false,
+            registerCells: [ProfileTitleTableViewCell.self,
+                            SignInWithTableViewCell.self,
+                            DeleteTableViewCell.self])
     }()
     
-    // MARK: - UI
     private lazy var personalImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -45,19 +39,19 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel.createLabel(
+        let label = CustomLabel(
             fontSize: 20,
             textColor: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
             textAlignment: .center)
-        label.text = "歡迎 註冊 / 登入 MonkeyTV"
+        label.text = Constant.welcomeSignIn
         return label
     }()
-
+    
     private lazy var copyRightButton = {
-        let button = UIButton.createPlayerButton(
+        let button = CustomButton(
             image: UIImage.systemAsset(.cCircle, configuration: UIImage.smallSymbolConfig),
             color: .white, cornerRadius: 5, backgroundColor: UIColor.mainColor!)
-        button.setTitle("  MonkeyTV 版權宣告", for: .normal)
+        button.setTitle(Constant.copyrightNotice, for: .normal)
         return button
     }()
     
@@ -70,54 +64,45 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    private var googleSignInButton = {
+    private lazy var googleSignInButton = {
         let button = GIDSignInButton()
         button.style = .wide
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private var myUserInfo: UserInfo?
-    
     private var rightButton = UIBarButtonItem()
     
-    private lazy var bindAccountBoolArray: [Bool] = [false, false]
+    // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         Task {
             if KeychainItem.currentEmail.isEmpty != true {
                 await self.showLogInTableView()
             } else {
-                rightButtonTapped()
+                logOut()
             }
         }
     }
     
-    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupButtonLayout()
         setupTableView()
         buttonAddTarget()
-   
-        rightButton = UIBarButtonItem(title: "登出", style: .plain, target: self, action: #selector(rightButtonTapped))
-        self.navigationItem.rightBarButtonItem = rightButton
-        copyRightButton.addTarget(self, action: #selector(presentCopyRightViewController), for: .touchUpInside)
         self.cleanSearchHistoryDelegate = SearchViewController()
     }
     
-    @objc func presentCopyRightViewController() {
-        let copyRightViewController = CopyRightViewController()
-        self.navigationController?.pushViewController(copyRightViewController, animated: true)
-    }
+    // MARK: -
     
-    @objc func rightButtonTapped() {
+    @objc func logOut() {
         self.saveUserInKeychain("")
         self.myUserInfo = nil
         tableView.reloadData()
         tableView.isHidden = true
-        rightButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+        rightButton.setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
     }
     
     private func setupTableView() {
@@ -126,8 +111,8 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.isHidden = true
         view.addSubview(tableView)
-        view.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
-        tableView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        view.backgroundColor = .baseBackgroundColor
+        tableView.backgroundColor = .baseBackgroundColor
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -140,6 +125,14 @@ class ProfileViewController: UIViewController {
     private func buttonAddTarget() {
         googleSignInButton.addTarget(self, action: #selector(googleSignIn), for: .touchUpInside)
         appleSignInButton.addTarget(self, action: #selector(appleSignIn), for: .touchUpInside)
+        rightButton = UIBarButtonItem(title: "登出", style: .plain, target: self, action: #selector(logOut))
+        self.navigationItem.rightBarButtonItem = rightButton
+        copyRightButton.addTarget(self, action: #selector(presentCopyRightViewController), for: .touchUpInside)
+    }
+    
+    @objc func presentCopyRightViewController() {
+        let copyRightViewController = CopyRightViewController()
+        self.navigationController?.pushViewController(copyRightViewController, animated: true)
     }
     
     @objc func appleSignIn() {
@@ -176,10 +169,11 @@ class ProfileViewController: UIViewController {
                     Task {
                         if await FirestoreManager.userIsExist(email: email) == false {
                             let id = FirestoreManager.user.document().documentID
-                            let data: [String: Any] = ["id": id, "email": email, "userName": name,
-                                                       "userImage": image, "userStatus": 0,
-                                                       "appleId": "", "googleToken": accessToken.tokenString,
-                                                       "googleIsBind": true, "appleIsBind": false]
+                            let userData = UserData(id: id, email: email, userName: name,
+                                                    userImage: image, userStatus: 0,
+                                                    appleId: "", googleToken: accessToken.tokenString,
+                                                    googleIsBind: true, appleIsBind: false)
+                            let data = userData.asDictionary()
                             DispatchQueue.main.async {
                                 FirestoreManager.signInUserInfo(email: email, data: data)
                             }
@@ -278,7 +272,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 withIdentifier: ProfileTitleTableViewCell.identifier,
                 for: indexPath) as? ProfileTitleTableViewCell
             guard let cell = cell else { return UITableViewCell() }
-            
             guard let myUserInfo = myUserInfo else { return UITableViewCell() }
             cell.nameLabel.text = myUserInfo.userName
             cell.personalImageView.loadImage(myUserInfo.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
@@ -309,7 +302,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.signInButton.setTitle("綁定", for: .normal)
             }
-            
             cell.signInButton.tag = index
             cell.signInButton.addTarget(self, action: #selector(bindAccount(sender:)), for: .touchUpInside)
             return cell
@@ -333,58 +325,61 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
             self.cleanSearchHistoryDelegate?.cleanSearchHistory()
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        let cancelAction = UIAlertAction(title: Constant.cancel, style: .cancel)
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
     
     @objc func bindAccount(sender: UIButton) {
-        if sender.titleLabel?.text == "取消綁定" {
+        guard let buttonTitle = sender.titleLabel?.text else {
+            return
+        }
+        
+        if buttonTitle == "取消綁定" {
+            let title: String
+            let message: String
+            let bindKey: String
+            
             if sender.tag == 0 {
-                let alertController = UIAlertController(
-                    title: "刪除 Google 綁定",
-                    message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，是否取消綁定？",
-                    preferredStyle: .actionSheet)
-                let okAction = UIAlertAction(title: "確定刪除 Google 綁定", style: .default) { _ in
-                    let data: [String: Any] = ["googleIsBind": false]
-                    DispatchQueue.main.async {
-                        FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
-                    }
-                    self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
-                    self.tableView.reloadData()
-                }
-                let cancelAction = UIAlertAction(title: "取消", style: .cancel)
-                alertController.addAction(okAction)
-                alertController.addAction(cancelAction)
-                present(alertController, animated: true, completion: nil)
-                GIDSignIn.sharedInstance.signOut()
+                title = "刪除 Google 綁定"
+                message = Constant.cancelBindingMessage
+                bindKey = "googleIsBind"
             } else {
-                print("cancel Apple")
-                let alertController = UIAlertController(
-                    title: "刪除 Apple 綁定",
-                    message: "若取消綁定，您在 MonkeyTV 留存的資料將可能遺失，請確認是否取消綁定？",
-                    preferredStyle: .actionSheet)
-                
-                let okAction = UIAlertAction(
-                    title: "確定刪除 Apple 綁定", style: .default) { _ in
-                        let data: [String: Any] = ["appleIsBind": false]
-                        DispatchQueue.main.async {
-                            FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
-                        }
-                        self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
-                        self.tableView.reloadData()
-                    }
-                let cancelAction = UIAlertAction(title: "取消", style: .cancel)
-                alertController.addAction(okAction)
-                alertController.addAction(cancelAction)
-                present(alertController, animated: true, completion: nil)
+                title = "刪除 Apple 綁定"
+                message = Constant.cancelBindingMessage
+                bindKey = "appleIsBind"
             }
-        } else if sender.titleLabel?.text == "綁定" {
+            
+            let alertController = UIAlertController(
+                title: title,
+                message: message,
+                preferredStyle: .actionSheet)
+            
+            let okAction = UIAlertAction(
+                title: "\(title)",
+                style: .default) { _ in
+                    
+                let data: [String: Any] = [bindKey: false]
+                    
+                DispatchQueue.main.async {
+                    FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
+                }
+                self.bindAccountBoolArray[sender.tag] = !self.bindAccountBoolArray[sender.tag]
+                self.tableView.reloadData()
+            }
+            let cancelAction = UIAlertAction(title: Constant.cancel, style: .cancel)
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
+            
+            if sender.tag == 0 {
+                GIDSignIn.sharedInstance.signOut()
+            }
+        } else if buttonTitle == Constant.bind {
             if sender.tag == 0 {
                 googleSignIn()
             } else {
-                print("bind Apple")
                 appleSignIn()
             }
         }
@@ -397,58 +392,84 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
     
     func authorizationController(
         controller: ASAuthorizationController,
-        didCompleteWithAuthorization authorization: ASAuthorization) {
-            switch authorization.credential {
-            case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                let userIdentifier = appleIDCredential.user
-                if let name = appleIDCredential.fullName,
-                   let email = appleIDCredential.email {
-                    let id = FirestoreManager.user.document().documentID
-                    let userName = "\(name.givenName ?? "") \(name.familyName ?? "")"
-                    self.saveUserInKeychain(email)
-                    Task {
-                        if await FirestoreManager.userIsExist(email: email) == false {
-                            let data: [String: Any] = ["id": id, "email": email, "userName": userName,
-                                                       "userImage": "", "userStatus": 0,
-                                                       "appleId": userIdentifier, "googleToken": "",
-                                                       "googleIsBind": false, "appleIsBind": true]
-                            DispatchQueue.main.async {
-                                FirestoreManager.signInUserInfo(email: email, data: data)
-                            }
-                        } else {
-                            let data: [String: Any] = ["appleId": userIdentifier, "appleIsBind": true]
-                            FirestoreManager.updateUserInfo(email: email, data: data)
-                        }
-                        await self.showLogInTableView()
-                    }
-                } else {
-                    if KeychainItem.currentEmail.isEmpty != true {
-                        let data: [String: Any] = ["appleId": userIdentifier, "appleIsBind": true]
-                        FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
-                        Task { await self.showLogInTableView() }
-                    } else {
-                        Task {
-                            let querySnapshot = try await FirestoreManager.user.whereField(
-                                "appleId", isEqualTo: userIdentifier).getDocuments()
-                            do {
-                                for document in querySnapshot.documents {
-                                    let jsonData = try JSONSerialization.data(withJSONObject: document.data())
-                                    let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
-                                    self.saveUserInKeychain(decodedObject.email)
-                                    let data: [String: Any] = ["appleId": userIdentifier, "appleIsBind": true]
-                                    FirestoreManager.updateUserInfo(email: decodedObject.email, data: data)
-                                }
-                            } catch { print("\(error)") }
-                            await self.showLogInTableView()
-                        }
-                    }
-                }
-            case _ as ASPasswordCredential:
-                tableView.isHidden = false
-            default:
-                break
-            }
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            handleAppleIDCredential(appleIDCredential)
+        case _ as ASPasswordCredential:
+            tableView.isHidden = false
+        default:
+            break
         }
+    }
+
+    func handleAppleIDCredential(
+        _ appleIDCredential: ASAuthorizationAppleIDCredential
+    ) {
+        let userIdentifier = appleIDCredential.user
+
+        guard let name = appleIDCredential.fullName,
+                let email = appleIDCredential.email else {
+            if !KeychainItem.currentEmail.isEmpty {
+                updateUserInfoAndShowTableView(userIdentifier)
+            } else {
+                findUserByAppleIDAndShowTableView(userIdentifier)
+            }
+            return
+        }
+
+        let id = FirestoreManager.user.document().documentID
+        let userName = "\(name.givenName ?? "") \(name.familyName ?? "")"
+        self.saveUserInKeychain(email)
+
+        Task {
+            if await FirestoreManager.userIsExist(email: email) == false {
+                let userData = UserData(id: id, email: email, userName: userName,
+                                        userImage: "", userStatus: 0, appleId: userIdentifier, googleToken: "",
+                                        googleIsBind: false, appleIsBind: true)
+                let data = userData.asDictionary()
+                DispatchQueue.main.async {
+                    FirestoreManager.signInUserInfo(email: email, data: data)
+                }
+            } else {
+                let data: [String: Any] = ["appleId": userIdentifier, "appleIsBind": true]
+                FirestoreManager.updateUserInfo(email: email, data: data)
+            }
+            await self.showLogInTableView()
+        }
+    }
+
+    func updateUserInfoAndShowTableView(
+        _ userIdentifier: String
+    ) {
+        Task {
+            let data: [String: Any] = ["appleId": userIdentifier, "appleIsBind": true]
+            FirestoreManager.updateUserInfo(email: KeychainItem.currentEmail, data: data)
+            await self.showLogInTableView()
+        }
+    }
+
+    func findUserByAppleIDAndShowTableView(
+        _ userIdentifier: String
+    ) {
+        Task {
+            let querySnapshot = try await FirestoreManager.user.whereField(
+                "appleId", isEqualTo: userIdentifier).getDocuments()
+            do {
+                for document in querySnapshot.documents {
+                    let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                    let decodedObject = try JSONDecoder().decode(UserInfo.self, from: jsonData)
+                    self.saveUserInKeychain(decodedObject.email)
+                    let data: [String: Any] = ["appleId": userIdentifier, "appleIsBind": true]
+                    FirestoreManager.updateUserInfo(email: decodedObject.email, data: data)
+                }
+            } catch {
+                print("\(error)")
+            }
+            await self.showLogInTableView()
+        }
+    }
     
     private func saveUserInKeychain(_ userIdentifier: String) {
         do {
@@ -457,27 +478,13 @@ extension ProfileViewController: ASAuthorizationControllerDelegate {
             print("Unable to save userIdentifier to keychain.")
         }
     }
-    
-    func checkIfLoginIsRequired() -> Bool {
-        if let lastLoginDate = UserDefaults.standard.object(forKey: "lastLoginDate") as? Date {
-            let currentDate = Date()
-            let calendar = Calendar.current
-            if let days = calendar.dateComponents([.day], from: lastLoginDate, to: currentDate).day, days >= 30 {
-                return true
-            }
-        }
-        return false
-    }
-    
 }
 
 extension ProfileViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    
+    func presentationAnchor(
+        for controller: ASAuthorizationController
+    ) -> ASPresentationAnchor {
         return self.view.window!
     }
-}
-
-enum LogInMethod: String, CaseIterable {
-    case google = "Google"
-    case apple = "Apple"
 }

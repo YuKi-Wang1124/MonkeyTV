@@ -8,10 +8,13 @@
 import UIKit
 
 extension UIColor {
+    
     static let mainColor = UIColor(hex: "#3DC27E")
     static let darkAndWhite = UIColor.setColor(lightColor: .darkGray, darkColor: .white)
     static let baseBackgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+    
     convenience init?(hex: String) {
+        
         var hexSanitized = hex.trimmingCharacters(in: .whitespaces)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
         var rgb: UInt64 = 0
@@ -36,10 +39,12 @@ extension UIColor {
         }
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
+    
     // MARK: - Computed Properties
     var toHex: String? {
         return toHex()
     }
+    
     // MARK: - From UIColor to String
     func toHex(alphaBool: Bool = false) -> String? {
         guard let components = cgColor.components, components.count >= 3 else {

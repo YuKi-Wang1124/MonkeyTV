@@ -22,3 +22,11 @@ protocol ChangeCellButtonDelegate: AnyObject {
 protocol CleanSearchHistoryDelegate: AnyObject {
     func cleanSearchHistory()
 }
+
+protocol LogInDelegate: AnyObject {
+    func logOut()
+}
+
+protocol NotificationSearchViewControllerIsSelectDelegate: AnyObject {
+    func reloadSearchHistoryCoreData()
+}

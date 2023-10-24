@@ -14,6 +14,7 @@ class DanMu: Hashable {
     var label: UILabel = UILabel()
     var speed: CGFloat = 0
     var isMe: Bool = false
+    
     init() {
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor(white: 1, alpha: 0.9)
@@ -29,7 +30,7 @@ class DanMu: Hashable {
     }
 }
 
-class DanMuView: UIView {
+class BulletChatView: UIView {
     
     var displayLink: CADisplayLink?
     var lineHeight: CGFloat = 26

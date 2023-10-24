@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1430"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC0BF1A62AB00BF60075203C"
+               BuildableName = "MonkeyTV.app"
+               BlueprintName = "MonkeyTV"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:../MonkeyTV.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AAD2AE4E68900B6CF1E"
+               BuildableName = "MonkeyTVTests.xctest"
+               BlueprintName = "MonkeyTVTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755ABC2AE60F6700B6CF1E"
+               BuildableName = "MonkeyTVUITests.xctest"
+               BlueprintName = "MonkeyTVUITests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755ACF2AE614A000B6CF1E"
+               BuildableName = "MonkeyTVUinitTests.xctest"
+               BlueprintName = "MonkeyTVUinitTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755ADE2AE64A8500B6CF1E"
+               BuildableName = "MonkeyTVLogInTests.xctest"
+               BlueprintName = "MonkeyTVLogInTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AEB2AE65C2A00B6CF1E"
+               BuildableName = "MonkeyTVPlayerPageTests.xctest"
+               BlueprintName = "MonkeyTVPlayerPageTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AEB2AE65C2A00B6CF1E"
+               BuildableName = "MonkeyTVPlayerPageTests.xctest"
+               BlueprintName = "MonkeyTVPlayerPageTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AEB2AE65C2A00B6CF1E"
+               BuildableName = "MonkeyTVPlayerPageTests.xctest"
+               BlueprintName = "MonkeyTVPlayerPageTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AFC2AE665D200B6CF1E"
+               BuildableName = "MonkeyTVUIXXXXTests.xctest"
+               BlueprintName = "MonkeyTVUIXXXXTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AFC2AE665D200B6CF1E"
+               BuildableName = "MonkeyTVUIXXXXTests.xctest"
+               BlueprintName = "MonkeyTVUIXXXXTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC755AFC2AE665D200B6CF1E"
+               BuildableName = "MonkeyTVUIXXXXTests.xctest"
+               BlueprintName = "MonkeyTVUIXXXXTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CCAA41542AE667D600F1510D"
+               BuildableName = "MonkeyTVUIXXTests.xctest"
+               BlueprintName = "MonkeyTVUIXXTests"
+               ReferencedContainer = "container:MonkeyTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CC0BF1A62AB00BF60075203C"
+            BuildableName = "MonkeyTV.app"
+            BlueprintName = "MonkeyTV"
+            ReferencedContainer = "container:MonkeyTV.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CC0BF1A62AB00BF60075203C"
+            BuildableName = "MonkeyTV.app"
+            BlueprintName = "MonkeyTV"
+            ReferencedContainer = "container:MonkeyTV.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
