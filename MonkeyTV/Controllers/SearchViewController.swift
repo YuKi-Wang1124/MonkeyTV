@@ -10,17 +10,15 @@ import CoreData
 import Lottie
 
 class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
-    
-    private var tapGesture: UITapGestureRecognizer?
-    
-    private let searchController: UISearchController = {
+        
+    private lazy var searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "請輸入片名"
         return searchController
     }()
     
     private lazy var cleanHistoryButton: UIButton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.trash, configuration: UIImage.symbolConfig),
             color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
             cornerRadius: 30,
@@ -36,8 +34,8 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
         return imageview
     }()
     
-    private var titleLabel: UILabel = {
-        let label = UILabel.createLabel(
+    private lazy var titleLabel: UILabel = {
+        let label = CustomLabel(
             fontSize: 17,
             textColor: UIColor.darkAndWhite,
             numberOfLines: 0,
@@ -46,8 +44,8 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
         return label
     }()
     
-    private var noDataLabel: UILabel = {
-        let label = UILabel.createLabel(
+    private lazy var noDataLabel: UILabel = {
+        let label = CustomLabel(
             fontSize: 17,
             textColor: UIColor.darkAndWhite,
             numberOfLines: 0,
@@ -63,24 +61,16 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     private var height: CGFloat = 0
     private var isSearchBarActive: Bool = false
     
-    // MARK: - Table View
-    
-    private var tableView: UITableView = {
-        var tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.register(ShowTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ShowTableViewCell.identifier)
-        tableView.allowsSelection = true
-        tableView.isUserInteractionEnabled = true
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    private lazy var tableView: CustomTableView = {
+        return  CustomTableView(rowHeight: UITableView.automaticDimension,
+                                separatorStyle: .none,
+                                allowsSelection: true,
+                                registerCells: [ShowTableViewCell.self])
     }()
     
-    private var hiddenView: UIView = {
+    private lazy var hiddenView: UIView = {
         let view = UIView()
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -98,6 +88,7 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
     }()
     
     private var animationView: LottieAnimationView?
+    private var tapGesture: UITapGestureRecognizer?
     
     // MARK: - supports
     
@@ -154,7 +145,6 @@ class SearchViewController: UIViewController, CleanSearchHistoryDelegate {
         } else {
             
             for index in 0 ..< historyArray.count {
-                
                 let button = UIButton(type: .system)
                 button.tag = 100 + index
                 button.addTarget(self, action: #selector(handleClick(_:)), for: .touchUpInside)
@@ -232,22 +222,23 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate,
 }
 
 // MARK: - UI configuration
+
 extension SearchViewController {
     private func setupUI() {
-        
         tableView.backgroundColor = .baseBackgroundColor
+        tableView.isUserInteractionEnabled = true
+        tableView.isHidden = true
+        
         view.backgroundColor = .baseBackgroundColor
         view.addSubview(buttonsView)
         view.addSubview(hiddenView)
-        
         view.addSubview(titleView)
         titleView.addSubview(clockImageView)
         titleView.addSubview(titleLabel)
         titleView.addSubview(cleanHistoryButton)
         view.addSubview(tableView)
+        
         cleanHistoryButton.addTarget(self, action: #selector(cleanSearchHistory), for: .touchUpInside)
-        hiddenView.isHidden = true
-        tableView.isHidden = true
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         view.addGestureRecognizer(tapGesture!)
         
@@ -378,7 +369,6 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
     func loadSaveData() {
         
         if fetchedResultController == nil {
-            
             let request = NSFetchRequest<SearchHistory>(entityName: "SearchHistory")
             let sort = NSSortDescriptor(key: "showName", ascending: false)
             request.sortDescriptors = [sort]
@@ -397,7 +387,6 @@ extension SearchViewController: NSFetchedResultsControllerDelegate {
         } catch {
             print("Fetch SearchHistory failed")
         }
-        
     }
     
     func removeAllSearchHistory() {

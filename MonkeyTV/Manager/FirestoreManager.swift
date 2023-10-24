@@ -9,7 +9,7 @@ import FirebaseCore
 import FirebaseFirestore
 
 class FirestoreManager {
-
+    
     static let shared = Firestore.firestore()
     static let user = FirestoreManager.shared.collection("User")
     static let bulletChat = FirestoreManager.shared.collection("BulletChat")
@@ -22,51 +22,49 @@ class FirestoreManager {
     static let useDefaultData = FirestoreManager.shared.collection("UseDefaultData")
     static let defaultShow = FirestoreManager.shared.collection("DefaultShow")
     
-    // MARK: - Block & Report
-    
     static func userBlock(
         userId: String,
-        blockUserId: String) {
-            
-            let userIdDocumentRef = self.userBlockList.document(userId)
-            let blockUserIdDocumentRef = self.userBlockList.document(blockUserId)
-            
-            userIdDocumentRef.updateData([
-                "blocklist": FieldValue.arrayUnion([blockUserId])
-            ]) { error in
-                if let error = error {
-                    print("Error updating document: \(error)")
-                } else {
-                    print("Value added to the array.")
-                }
-            }
-            
-            blockUserIdDocumentRef.updateData([
-                "blocklist": FieldValue.arrayUnion([userId])
-            ]) { error in
-                if let error = error {
-                    print("Error updating document: \(error)")
-                } else {
-                    print("Value added to the array.")
-                }
+        blockUserId: String
+    ) {
+        let userIdDocumentRef = self.userBlockList.document(userId)
+        let blockUserIdDocumentRef = self.userBlockList.document(blockUserId)
+        
+        userIdDocumentRef.updateData([
+            "blocklist": FieldValue.arrayUnion([blockUserId])
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Value added to the array.")
             }
         }
+        
+        blockUserIdDocumentRef.updateData([
+            "blocklist": FieldValue.arrayUnion([userId])
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Value added to the array.")
+            }
+        }
+    }
     
     static func report(
         userId: String,
         reportId: String,
         reason: String,
-        message: String) {
-            
-            let id = FirestoreManager.userReportList.document().documentID
-            let data: [String: Any] = [ "id": id, "userId": userId, "reportId": reportId,
-                                        "reason": reason, "message": message]
-            FirestoreManager.userReportList.document(id).setData(data) { error in
-                if error != nil {
-                    print("Error adding document: \(String(describing: error))")
-                } else { }
-            }
+        message: String
+    ) {
+        let id = FirestoreManager.userReportList.document().documentID
+        let data: [String: Any] = [ "id": id, "userId": userId, "reportId": reportId,
+                                    "reason": reason, "message": message]
+        FirestoreManager.userReportList.document(id).setData(data) { error in
+            if error != nil {
+                print("Error adding document: \(String(describing: error))")
+            } else { }
         }
+    }
     
     // MARK: - my favorite
     
@@ -77,7 +75,6 @@ class FirestoreManager {
         if email == "" {
             return nil
         }
-        
         do {
             let document = try await self.myFavoriteShow.document(email).getDocument()
             let jsonData = try JSONSerialization.data(withJSONObject: document.data()!)
@@ -93,22 +90,22 @@ class FirestoreManager {
         email: String,
         playlistId: String,
         showImage: String,
-        showName: String) {
-            
-            let myFavoriteShowDocumentRef = self.myFavoriteShow.document(email)
-            let id = FirestoreManager.myFavoriteShow.document().documentID
-            let myShowData: [String: Any] = ["id": id, "playlistId": playlistId,
-                                             "showImage": showImage, "showName": showName]
-            myFavoriteShowDocumentRef.updateData([
-                "myFavoriteShow": FieldValue.arrayUnion([myShowData])
-            ]) { error in
-                if let error = error {
-                    print("Error updating document: \(error)")
-                } else {
-                    print("Value added to the array.")
-                }
+        showName: String
+    ) {
+        let myFavoriteShowDocumentRef = self.myFavoriteShow.document(email)
+        let id = FirestoreManager.myFavoriteShow.document().documentID
+        let myShowData: [String: Any] = ["id": id, "playlistId": playlistId,
+                                         "showImage": showImage, "showName": showName]
+        myFavoriteShowDocumentRef.updateData([
+            "myFavoriteShow": FieldValue.arrayUnion([myShowData])
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Value added to the array.")
             }
         }
+    }
     
     static func deleteToMyFavorite(
         email: String,
@@ -171,13 +168,10 @@ class FirestoreManager {
         if email == "" {
             completion(false, nil)
         }
-        
         if let showarray = await FirestoreManager.fetchMyFavoriteShow(email: email) {
-            
             let containsPlaylistId = showarray.contains { showData in
                 return showData.playlistId == playlistIdToCheck
             }
-            
             if containsPlaylistId {
                 completion(true, nil)
             } else {
@@ -185,11 +179,15 @@ class FirestoreManager {
             }
         }
     }
-    
+}
     // MARK: - User
     
-    static func signInUserInfo(email: String,
-                               data: [String: Any]) {
+    extension FirestoreManager {
+    
+    static func signInUserInfo(
+        email: String,
+        data: [String: Any]
+    ) {
         
         FirestoreManager.user.document(email).setData(data) { error in
             if error != nil {
@@ -270,7 +268,6 @@ class FirestoreManager {
             for document in querySnapshot.documents {
                 let jsonData = try JSONSerialization.data(withJSONObject: document.data())
                 let decodedObject = try JSONDecoder().decode(UseDefaultData.self, from: jsonData)
-                print(decodedObject)
                 isDefault = decodedObject.isDefault
             }
         } catch {
@@ -369,4 +366,56 @@ class FirestoreManager {
             }
         }
     }
+    
+    static func addBulletChatData(
+        text: String,
+        popTime: Float,
+        videoId: String,
+        completion: @escaping () -> Void
+    ) {
+        
+        let id = FirestoreManager.bulletChat.document().documentID
+        
+        let data: [String: Any] = ["bulletChat":
+                                    ["chatId": UUID().uuidString,
+                                     "content": text,
+                                     "contentType": 0,
+                                     "popTime": popTime,
+                                     "userId": KeychainItem.currentEmail] as [String: Any],
+                                   "videoId": videoId,
+                                   "id": id]
+        
+        FirestoreManager.bulletChat.document(id).setData(data) { error in
+            if error != nil {
+                print("Error adding document: (error)")
+            } else {
+                completion()
+            }
+        }
+    }
+    
+    static func getBulletChatData(
+        videoId: String,
+        completion: @escaping ([BulletChat]) -> Void
+    ) {
+        var bulletChats = [BulletChat]()
+        
+        FirestoreManager.bulletChat.whereField(
+            "videoId", isEqualTo: videoId
+        ).getDocuments { querySnapshot, error in
+            if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: document.data())
+                        let decodedObject = try JSONDecoder().decode(BulletChatData.self, from: jsonData)
+                        bulletChats.append(decodedObject.bulletChat)
+                    } catch {
+                        print("\(error)")
+                    }
+                }
+                completion(bulletChats)
+            }
+        }
+    }
+    
 }

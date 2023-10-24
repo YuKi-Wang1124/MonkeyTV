@@ -48,8 +48,8 @@ class StorageManager {
         showName: String,
         id: String,
         playlistId: String,
-        showImage: String) -> MyShow? {
-            
+        showImage: String
+    ) -> MyShow? {
             let context = persistentContainer.viewContext
             let myShow = NSEntityDescription.insertNewObject(forEntityName: "MyShow",
                                                                     into: context) as? MyShow
@@ -69,8 +69,8 @@ class StorageManager {
         }
     
     func createSearchHistoryObject(
-        showName: String) -> SearchHistory? {
-            
+        showName: String
+    ) -> SearchHistory? {
             let context = persistentContainer.viewContext
             let searchHistory = NSEntityDescription.insertNewObject(forEntityName: "SearchHistory",
                                                                     into: context) as? SearchHistory
@@ -82,7 +82,6 @@ class StorageManager {
             } catch let createError {
                 print("Failed to create search history: \(createError)")
             }
-            
             return nil
         }
     

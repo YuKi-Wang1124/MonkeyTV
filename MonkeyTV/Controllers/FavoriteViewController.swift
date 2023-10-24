@@ -9,16 +9,12 @@ import UIKit
 import WebKit
 
 class FavoriteViewController: UIViewController, UITableViewDelegate {
-  
-    private var tableView: UITableView = {
-        var tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.register(ShowTableViewCell.self,
-                           forCellReuseIdentifier:
-                            ShowTableViewCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    
+    private lazy var tableView: CustomTableView = {
+        return  CustomTableView(rowHeight: UITableView.automaticDimension,
+                                separatorStyle: .none,
+                                allowsSelection: true,
+                                registerCells: [ShowTableViewCell.self])
     }()
     
     private var tableViewSnapshot = NSDiffableDataSourceSnapshot<OneSection, ShowData>()

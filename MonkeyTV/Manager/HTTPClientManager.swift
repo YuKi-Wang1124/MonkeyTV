@@ -97,4 +97,27 @@ class HTTPClientManager {
                 }
             }).resume()
     }
+    
+    func getYouTubeVideoData(
+        complettion: @escaping ([Playlist]) -> Void
+    ) {
+        HTTPClientManager.shared.request(
+            YoutubeRequest.playlistItems(
+                playlistId: YouTubeParameter.shared.playlistId),
+            completion: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let data):
+                    do {
+                        let info = try JSONDecoder().decode(PlaylistListResponse.self, from: data)
+                        YouTubeParameter.shared.nextPageToken = info.nextPageToken
+                        complettion(info.items)
+                    } catch {
+                        print(Result<Any>.failure(error))
+                    }
+                case .failure(let error):
+                    print(Result<Any>.failure(error))
+                }
+            })
+    }
 }

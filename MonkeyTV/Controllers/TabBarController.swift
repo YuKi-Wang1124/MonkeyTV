@@ -18,9 +18,6 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         self.delegate = self
         changeInterfaceStyleColor(traitCollection.userInterfaceStyle)
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(userInterfaceStyleDidChange),
-            name: .userInterfaceStyle, object: nil)
         viewControllers = tabs.map { $0.makeViewController() }
         let barAppearance =  UITabBarAppearance()
         barAppearance.configureWithDefaultBackground()
@@ -118,18 +115,10 @@ extension TabBarViewController {
 
 extension TabBarViewController: UITabBarControllerDelegate {
     
-    func tabBarController(_ tabBarController: UITabBarController,
-                          shouldSelect viewController: UIViewController) -> Bool {
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        shouldSelect viewController: UIViewController
+    ) -> Bool {
         return true
     }
-    
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        
-    }
-}
-
-protocol NotificationSearchViewControllerIsSelectDelegate: AnyObject {
-    
-    func reloadSearchHistoryCoreData()
-    
 }

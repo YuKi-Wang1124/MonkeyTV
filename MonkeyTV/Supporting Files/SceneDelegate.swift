@@ -8,19 +8,24 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-   static var window: UIWindow?
-
+    
+    static var window: UIWindow?
+    private var logInDelegate: LogInDelegate?
+    
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
-               options connectionOptions: UIScene.ConnectionOptions) {
-        
+               options connectionOptions: UIScene.ConnectionOptions
+    ) {
         let firstVC = TabBarViewController()
         guard let windowScene = (scene as? UIWindowScene) else { return }
         SceneDelegate.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         SceneDelegate.window?.windowScene = windowScene
         SceneDelegate.window?.rootViewController = firstVC
         SceneDelegate.window?.makeKeyAndVisible()
+        if LogInManager.checkIfLoginIsRequired() {
+            self.logInDelegate = ProfileViewController()
+            logInDelegate?.logOut()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

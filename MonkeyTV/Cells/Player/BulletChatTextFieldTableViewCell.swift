@@ -7,14 +7,13 @@
 
 import UIKit
 
-class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTextFieldDelegate, ChangeCellButtonDelegate {
-    static let identifier = "\(DanMuTextFieldTableViewCell.self)"
-    // MARK: - UI
+class BulletChatTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTextFieldDelegate, ChangeCellButtonDelegate {
+    
+    static let identifier = "\(BulletChatTextFieldTableViewCell.self)"
     private let symbolConfig = UIImage.SymbolConfiguration(pointSize: 60)
     
     private lazy var addButtonView = {
         let view = UIView()
-        view.backgroundColor = .yellow
         view.layer.borderColor = UIColor.systemGray4.cgColor
         view.layer.borderWidth = 0.3
         view.layer.cornerRadius = 4
@@ -22,34 +21,31 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     }()
     
     lazy var addButton = {
-        return UIButton.createPlayerButton(
+        return CustomButton(
             image: UIImage.systemAsset(.plus, configuration: UIImage.symbolConfig),
             color: UIColor.setColor(lightColor: .darkGray, darkColor: .white),
             cornerRadius: 0, backgroundColor: .clear)
     }()
     
     private lazy var addLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.darkAndWhite
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
+        let label = CustomLabel(
+            fontSize: 14,
+            textColor: .darkAndWhite,
+            numberOfLines: 0,
+            textAlignment: .center)
         label.text = "加入片單"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private var chatroomTitleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.setColor(lightColor: .darkGray, darkColor: .lightGray)
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textAlignment = .left
-        label.text = "彈幕"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var chatroomTitleLabel: UILabel = {
+        return CustomLabel(textColor: .darkAndWhite,
+                           numberOfLines: 0,
+                           textAlignment: .left,
+                           font: UIFont.boldSystemFont(ofSize: 20))
     }()
     
     lazy var submitMessageButton = {
-        let button = UIButton.createPlayerButton(
+        let button = CustomButton(
             image: UIImage.systemAsset(.paperplane, configuration: UIImage.symbolConfig),
             color: UIColor.lightGray, cornerRadius: 4)
         button.backgroundColor = UIColor.systemGray5
@@ -57,7 +53,7 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     }()
     
     lazy var danMuTextField = {
-        let textfield = UITextField.createTextField(
+        let textfield = CustomTextField(
             text: "  輸入彈幕留下評論",
             backgroundColor: UIColor.systemGray5)
         textfield.layer.cornerRadius = 4
@@ -101,7 +97,8 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
         contentView.addSubview(addButton)
         contentView.addSubview(addLabel)
 
-        contentView.backgroundColor = UIColor.setColor(lightColor: .systemGray6, darkColor: .black)
+        contentView.backgroundColor = UIColor.setColor(
+            lightColor: .systemGray6, darkColor: .black)
 
         NSLayoutConstraint.activate([
             
@@ -134,8 +131,9 @@ class DanMuTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate, EmptyTe
     }
     
     func changeButtonImage() {
-        
-        addButton.setImage(UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig), for: .normal)
+        addButton.setImage(
+            UIImage.systemAsset(.checkmark, configuration: UIImage.symbolConfig),
+            for: .normal)
     }
     
 }
