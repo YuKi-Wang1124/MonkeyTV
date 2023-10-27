@@ -1,6 +1,4 @@
-![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 39 58](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/4764f33e-d749-485f-9679-624a7c6ec46a)# MonkeyTV - 互動式影音軟體
-
-[![](https://i.imgur.com/LKYoCCe.png)](https://apps.apple.com/tw/app/monkeytv/id6467018396)
+# MonkeyTV - 互動式影音軟體
 
 MonkeyTV 是一款互動式影音軟體，讓您輕鬆享受影音內容，並與其他使用者互動。以下是 MonkeyTV 使用的技術和功能的簡要介紹。
 
