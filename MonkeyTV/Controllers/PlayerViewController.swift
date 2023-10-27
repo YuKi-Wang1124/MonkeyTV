@@ -258,11 +258,12 @@ class PlayerViewController: UIViewController {
         
         bulletChatView.isPause = !bulletChatView.isPause
         
-        if videoIsPlaying {
+        switch videoIsPlaying {
+        case true:
             sender.setImage(
                 UIImage.systemAsset(.play, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.pauseVideo()
-        } else {
+        case false:
             sender.setImage(
                 UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.playVideo()
@@ -273,14 +274,15 @@ class PlayerViewController: UIViewController {
     }
     
     @objc func showBullet(sender: UIButton) {
-        if !isDanMuDisplayed {
-            sender.setImage(
-                UIImage.systemAsset(.checkmarkSquare, configuration: UIImage.smallSymbolConfig), for: .normal)
-            bulletChatView.isHidden = false
-        } else {
+        switch isDanMuDisplayed {
+        case true:
             sender.setImage(
                 UIImage.systemAsset(.square, configuration: UIImage.smallSymbolConfig), for: .normal)
             bulletChatView.isHidden = true
+        case false:
+            sender.setImage(
+                UIImage.systemAsset(.checkmarkSquare, configuration: UIImage.smallSymbolConfig), for: .normal)
+            bulletChatView.isHidden = false
         }
         isDanMuDisplayed.toggle()
     }
