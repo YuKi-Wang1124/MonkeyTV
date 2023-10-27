@@ -12,6 +12,10 @@ MonkeyTV 是一款互動式影音軟體，讓您輕鬆享受影音內容，並�
 - 彈幕功能
 - 儲存片單功能
 - 高性能的UI和UX設計
+  
+![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 22 59](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/1fdc79e5-8d7b-4575-823e-fd166ada360f)
+
+
 
 ## 技術
 
@@ -34,10 +38,13 @@ MonkeyTV 是一款互動式影音軟體，讓您輕鬆享受影音內容，並�
 
 ## 安裝
 
-要安裝MonkeyTV，請按照以下步驟執行：
+要下載 MonkeyTV，請按照以下步驟執行：
+1. 到 Apple Store 上搜尋並下載 MonkeyTV
 
-1. 克隆存儲庫到本地計算機
-2. 使用Xcode打開項目
+要安裝 MonkeyTV，請按照以下步驟執行：
+
+1. 複製存儲庫到電腦
+2. 使用 Xcode 打開項目
 3. 編譯和運行應用程序
 
 ## 貢獻
