@@ -1,4 +1,4 @@
-# MonkeyTV - 互動式影音軟體
+![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 39 58](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/4764f33e-d749-485f-9679-624a7c6ec46a)# MonkeyTV - 互動式影音軟體
 
 [![](https://i.imgur.com/LKYoCCe.png)](https://apps.apple.com/tw/app/monkeytv/id6467018396)
 
@@ -11,9 +11,12 @@ MonkeyTV 是一款互動式影音軟體，讓您輕鬆享受影音內容，並�
 - 即時聊天室
 - 彈幕功能
 - 儲存片單功能
+- 深色模式
 - 高性能的UI和UX設計
   
-![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 22 59](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/1fdc79e5-8d7b-4575-823e-fd166ada360f)
+![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 22 59](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/1fdc79e5-8d7b-4575-823e-fd166ada360f)           ![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 32 12](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/2a12083c-1ef7-460d-baa1-f3590cce2a4f)      
+![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 36 59](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/69a232ec-8618-45af-8db1-3157ed959234)            ![Simulator Screen Recording - iPhone 14 - 2023-10-27 at 15 39 58](https://github.com/YuKi-Wang1124/MonkeyTV/assets/69345200/9b963c81-ca1e-46f5-ab76-464a8220160e)
+
 
 
 
@@ -40,6 +43,7 @@ MonkeyTV 是一款互動式影音軟體，讓您輕鬆享受影音內容，並�
 
 要下載 MonkeyTV，請按照以下步驟執行：
 1. 到 Apple Store 上搜尋並下載 MonkeyTV
+   
 
 要安裝 MonkeyTV，請按照以下步驟執行：
 
