@@ -53,11 +53,7 @@
 		CC755AA52AE397C500B6CF1E /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AA42AE397C500B6CF1E /* UITableView+Extension.swift */; };
 		CC755AA72AE39C1C00B6CF1E /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AA62AE39C1C00B6CF1E /* CustomTableView.swift */; };
 		CC755AA92AE4DF9B00B6CF1E /* LogInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AA82AE4DF9B00B6CF1E /* LogInManager.swift */; };
-		CC755AD32AE614A100B6CF1E /* MonkeyTVUinitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AD22AE614A100B6CF1E /* MonkeyTVUinitTests.swift */; };
 		CC755ADA2AE61F8B00B6CF1E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AD92AE61F8B00B6CF1E /* User.swift */; };
-		CC755AE22AE64A8500B6CF1E /* MonkeyTVLogInTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AE12AE64A8500B6CF1E /* MonkeyTVLogInTests.swift */; };
-		CC755AEF2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AEE2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift */; };
-		CC755AF12AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC755AF02AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift */; };
 		CC963C082AB6F9A20047EEFA /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C072AB6F9A20047EEFA /* ChatData.swift */; };
 		CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */; };
 		CC963C0C2AB835890047EEFA /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */; };
@@ -71,58 +67,6 @@
 		CC963C242ABAD6250047EEFA /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */; };
 		D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		CC755AB22AE4E68900B6CF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-		CC755AC32AE60F6700B6CF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-		CC755AD42AE614A100B6CF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-		CC755AE32AE64A8500B6CF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-		CC755AF22AE65C2A00B6CF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-		CC755B032AE665D200B6CF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-		CCAA415B2AE667D600F1510D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC0BF19F2AB00BF60075203C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC0BF1A62AB00BF60075203C;
-			remoteInfo = MonkeyTV;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		7839ED4794885FD18774A395 /* Pods_MonkeyTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonkeyTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,13 +136,6 @@
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		CCAA41652AE76AD200F1510D /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA416D2AEA630300F1510D /* MonkeyTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA416E2AEA630300F1510D /* MonkeyTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA416F2AEA630300F1510D /* MonkeyTVUinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUinitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA41702AEA630300F1510D /* MonkeyTVLogInTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVLogInTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA41712AEA630300F1510D /* MonkeyTVPlayerPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVPlayerPageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA41722AEA630300F1510D /* MonkeyTVUIXXXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUIXXXXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAA41732AEA630300F1510D /* MonkeyTVUIXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUIXXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -208,55 +145,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D771EE5AE27EFCD24467E910 /* Pods_MonkeyTV.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AAB2AE4E68900B6CF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ABA2AE60F6700B6CF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ACD2AE614A000B6CF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ADC2AE64A8500B6CF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AE92AE65C2A00B6CF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AFA2AE665D200B6CF1E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CCAA41522AE667D600F1510D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,13 +178,6 @@
 				BDDF742B41051EABE8D6BBDA /* Pods */,
 				930EC078E689AC759C01C47B /* Frameworks */,
 				CCAA41652AE76AD200F1510D /* MonkeyTV.app */,
-				CCAA416D2AEA630300F1510D /* MonkeyTVTests.xctest */,
-				CCAA416E2AEA630300F1510D /* MonkeyTVUITests.xctest */,
-				CCAA416F2AEA630300F1510D /* MonkeyTVUinitTests.xctest */,
-				CCAA41702AEA630300F1510D /* MonkeyTVLogInTests.xctest */,
-				CCAA41712AEA630300F1510D /* MonkeyTVPlayerPageTests.xctest */,
-				CCAA41722AEA630300F1510D /* MonkeyTVUIXXXXTests.xctest */,
-				CCAA41732AEA630300F1510D /* MonkeyTVUIXXTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -544,132 +425,6 @@
 			productReference = CCAA41652AE76AD200F1510D /* MonkeyTV.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CC755AAD2AE4E68900B6CF1E /* MonkeyTVTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC755AB42AE4E68900B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVTests" */;
-			buildPhases = (
-				CC755AAA2AE4E68900B6CF1E /* Sources */,
-				CC755AAB2AE4E68900B6CF1E /* Frameworks */,
-				CC755AAC2AE4E68900B6CF1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC755AB32AE4E68900B6CF1E /* PBXTargetDependency */,
-			);
-			name = MonkeyTVTests;
-			productName = MonkeyTVTests;
-			productReference = CCAA416D2AEA630300F1510D /* MonkeyTVTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		CC755ABC2AE60F6700B6CF1E /* MonkeyTVUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC755AC52AE60F6700B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUITests" */;
-			buildPhases = (
-				CC755AB92AE60F6700B6CF1E /* Sources */,
-				CC755ABA2AE60F6700B6CF1E /* Frameworks */,
-				CC755ABB2AE60F6700B6CF1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC755AC42AE60F6700B6CF1E /* PBXTargetDependency */,
-			);
-			name = MonkeyTVUITests;
-			productName = MonkeyTVUITests;
-			productReference = CCAA416E2AEA630300F1510D /* MonkeyTVUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		CC755ACF2AE614A000B6CF1E /* MonkeyTVUinitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC755AD62AE614A100B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUinitTests" */;
-			buildPhases = (
-				CC755ACC2AE614A000B6CF1E /* Sources */,
-				CC755ACD2AE614A000B6CF1E /* Frameworks */,
-				CC755ACE2AE614A000B6CF1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC755AD52AE614A100B6CF1E /* PBXTargetDependency */,
-			);
-			name = MonkeyTVUinitTests;
-			productName = MonkeyTVUinitTests;
-			productReference = CCAA416F2AEA630300F1510D /* MonkeyTVUinitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		CC755ADE2AE64A8500B6CF1E /* MonkeyTVLogInTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC755AE52AE64A8500B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVLogInTests" */;
-			buildPhases = (
-				CC755ADB2AE64A8500B6CF1E /* Sources */,
-				CC755ADC2AE64A8500B6CF1E /* Frameworks */,
-				CC755ADD2AE64A8500B6CF1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC755AE42AE64A8500B6CF1E /* PBXTargetDependency */,
-			);
-			name = MonkeyTVLogInTests;
-			productName = MonkeyTVLogInTests;
-			productReference = CCAA41702AEA630300F1510D /* MonkeyTVLogInTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		CC755AEB2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC755AF42AE65C2A00B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVPlayerPageTests" */;
-			buildPhases = (
-				CC755AE82AE65C2A00B6CF1E /* Sources */,
-				CC755AE92AE65C2A00B6CF1E /* Frameworks */,
-				CC755AEA2AE65C2A00B6CF1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC755AF32AE65C2A00B6CF1E /* PBXTargetDependency */,
-			);
-			name = MonkeyTVPlayerPageTests;
-			productName = MonkeyTVPlayerPageTests;
-			productReference = CCAA41712AEA630300F1510D /* MonkeyTVPlayerPageTests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		CC755AFC2AE665D200B6CF1E /* MonkeyTVUIXXXXTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC755B072AE665D200B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXXXTests" */;
-			buildPhases = (
-				CC755AF92AE665D200B6CF1E /* Sources */,
-				CC755AFA2AE665D200B6CF1E /* Frameworks */,
-				CC755AFB2AE665D200B6CF1E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC755B042AE665D200B6CF1E /* PBXTargetDependency */,
-			);
-			name = MonkeyTVUIXXXXTests;
-			productName = MonkeyTVUIXXXXTests;
-			productReference = CCAA41722AEA630300F1510D /* MonkeyTVUIXXXXTests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		CCAA41542AE667D600F1510D /* MonkeyTVUIXXTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CCAA415D2AE667D600F1510D /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXTests" */;
-			buildPhases = (
-				CCAA41512AE667D600F1510D /* Sources */,
-				CCAA41522AE667D600F1510D /* Frameworks */,
-				CCAA41532AE667D600F1510D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CCAA415C2AE667D600F1510D /* PBXTargetDependency */,
-			);
-			name = MonkeyTVUIXXTests;
-			productName = MonkeyTVUIXXTests;
-			productReference = CCAA41732AEA630300F1510D /* MonkeyTVUIXXTests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -685,34 +440,6 @@
 				TargetAttributes = {
 					CC0BF1A62AB00BF60075203C = {
 						CreatedOnToolsVersion = 14.3.1;
-					};
-					CC755AAD2AE4E68900B6CF1E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
-					};
-					CC755ABC2AE60F6700B6CF1E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
-					};
-					CC755ACF2AE614A000B6CF1E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
-					};
-					CC755ADE2AE64A8500B6CF1E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
-					};
-					CC755AEB2AE65C2A00B6CF1E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
-					};
-					CC755AFC2AE665D200B6CF1E = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
-					};
-					CCAA41542AE667D600F1510D = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = CC0BF1A62AB00BF60075203C;
 					};
 				};
 			};
@@ -730,13 +457,6 @@
 			projectRoot = "";
 			targets = (
 				CC0BF1A62AB00BF60075203C /* MonkeyTV */,
-				CC755AAD2AE4E68900B6CF1E /* MonkeyTVTests */,
-				CC755ABC2AE60F6700B6CF1E /* MonkeyTVUITests */,
-				CC755ACF2AE614A000B6CF1E /* MonkeyTVUinitTests */,
-				CC755ADE2AE64A8500B6CF1E /* MonkeyTVLogInTests */,
-				CC755AEB2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */,
-				CC755AFC2AE665D200B6CF1E /* MonkeyTVUIXXXXTests */,
-				CCAA41542AE667D600F1510D /* MonkeyTVUIXXTests */,
 			);
 		};
 /* End PBXProject section */
@@ -750,55 +470,6 @@
 				CC0BF1B42AB00BF70075203C /* Assets.xcassets in Resources */,
 				CC755A9E2ADD840100B6CF1E /* notFound.json in Resources */,
 				CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AAC2AE4E68900B6CF1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ABB2AE60F6700B6CF1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ACE2AE614A000B6CF1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ADD2AE64A8500B6CF1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AEA2AE65C2A00B6CF1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AFB2AE665D200B6CF1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CCAA41532AE667D600F1510D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,98 +622,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC755AAA2AE4E68900B6CF1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AB92AE60F6700B6CF1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ACC2AE614A000B6CF1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC755AD32AE614A100B6CF1E /* MonkeyTVUinitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755ADB2AE64A8500B6CF1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC755AE22AE64A8500B6CF1E /* MonkeyTVLogInTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AE82AE65C2A00B6CF1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC755AEF2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift in Sources */,
-				CC755AF12AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC755AF92AE665D200B6CF1E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CCAA41512AE667D600F1510D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CC755AB32AE4E68900B6CF1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CC755AB22AE4E68900B6CF1E /* PBXContainerItemProxy */;
-		};
-		CC755AC42AE60F6700B6CF1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CC755AC32AE60F6700B6CF1E /* PBXContainerItemProxy */;
-		};
-		CC755AD52AE614A100B6CF1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CC755AD42AE614A100B6CF1E /* PBXContainerItemProxy */;
-		};
-		CC755AE42AE64A8500B6CF1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CC755AE32AE64A8500B6CF1E /* PBXContainerItemProxy */;
-		};
-		CC755AF32AE65C2A00B6CF1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CC755AF22AE65C2A00B6CF1E /* PBXContainerItemProxy */;
-		};
-		CC755B042AE665D200B6CF1E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CC755B032AE665D200B6CF1E /* PBXContainerItemProxy */;
-		};
-		CCAA415C2AE667D600F1510D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC0BF1A62AB00BF60075203C /* MonkeyTV */;
-			targetProxy = CCAA415B2AE667D600F1510D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CC0BF1B52AB00BF70075203C /* LaunchScreen.storyboard */ = {
@@ -1191,7 +771,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1223,7 +803,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTV.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1232,281 +812,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		CC755AB52AE4E68900B6CF1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
-			};
-			name = Debug;
-		};
-		CC755AB62AE4E68900B6CF1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
-			};
-			name = Release;
-		};
-		CC755AC62AE60F6700B6CF1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Debug;
-		};
-		CC755AC72AE60F6700B6CF1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Release;
-		};
-		CC755AD72AE614A100B6CF1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUinitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
-			};
-			name = Debug;
-		};
-		CC755AD82AE614A100B6CF1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUinitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
-			};
-			name = Release;
-		};
-		CC755AE62AE64A8500B6CF1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVLogInTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
-			};
-			name = Debug;
-		};
-		CC755AE72AE64A8500B6CF1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVLogInTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MonkeyTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MonkeyTV";
-			};
-			name = Release;
-		};
-		CC755AF52AE65C2A00B6CF1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVPlayerPageTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Debug;
-		};
-		CC755AF62AE65C2A00B6CF1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVPlayerPageTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Release;
-		};
-		CC755B052AE665D200B6CF1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXXXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Debug;
-		};
-		CC755B062AE665D200B6CF1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXXXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Release;
-		};
-		CCAA415E2AE667D600F1510D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
-			};
-			name = Debug;
-		};
-		CCAA415F2AE667D600F1510D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP4GBKDNYR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KikiWang.MonkeyTVUIXXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MonkeyTV;
 			};
 			name = Release;
 		};
@@ -1527,69 +832,6 @@
 			buildConfigurations = (
 				CC0BF1BC2AB00BF70075203C /* Debug */,
 				CC0BF1BD2AB00BF70075203C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC755AB42AE4E68900B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC755AB52AE4E68900B6CF1E /* Debug */,
-				CC755AB62AE4E68900B6CF1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC755AC52AE60F6700B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC755AC62AE60F6700B6CF1E /* Debug */,
-				CC755AC72AE60F6700B6CF1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC755AD62AE614A100B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUinitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC755AD72AE614A100B6CF1E /* Debug */,
-				CC755AD82AE614A100B6CF1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC755AE52AE64A8500B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVLogInTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC755AE62AE64A8500B6CF1E /* Debug */,
-				CC755AE72AE64A8500B6CF1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC755AF42AE65C2A00B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVPlayerPageTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC755AF52AE65C2A00B6CF1E /* Debug */,
-				CC755AF62AE65C2A00B6CF1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC755B072AE665D200B6CF1E /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXXXTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC755B052AE665D200B6CF1E /* Debug */,
-				CC755B062AE665D200B6CF1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CCAA415D2AE667D600F1510D /* Build configuration list for PBXNativeTarget "MonkeyTVUIXXTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CCAA415E2AE667D600F1510D /* Debug */,
-				CCAA415F2AE667D600F1510D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
