@@ -33,7 +33,6 @@
 		CC0BF1E22AB1BAE20075203C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */; };
 		CC0BF1EA2AB1E4880075203C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */; };
 		CC0BF1EC2AB2CA0A0075203C /* YoutubeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */; };
-		CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */; };
 		CC0BF1F62AB418E40075203C /* HomeAnimationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F52AB418E40075203C /* HomeAnimationTableViewCell.swift */; };
 		CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */; };
 		CC0BF1FA2AB446860075203C /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */; };
@@ -155,7 +154,6 @@
 		CC0BF1E12AB1BAE20075203C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		CC0BF1E92AB1E4880075203C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC0BF1EB2AB2CA0A0075203C /* YoutubeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeData.swift; sourceTree = "<group>"; };
-		CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
 		CC0BF1F52AB418E40075203C /* HomeAnimationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAnimationTableViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F72AB441830075203C /* HomePageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewCell.swift; sourceTree = "<group>"; };
 		CC0BF1F92AB446860075203C /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -177,17 +175,11 @@
 		CC755AA42AE397C500B6CF1E /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		CC755AA62AE39C1C00B6CF1E /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		CC755AA82AE4DF9B00B6CF1E /* LogInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInManager.swift; sourceTree = "<group>"; };
-		CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVTests.xctest; sourceTree = "<absolute>"; };
-		CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUITests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUITests.xctest"; sourceTree = "<absolute>"; };
-		CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUinitTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVUinitTests.xctest; sourceTree = "<absolute>"; };
 		CC755AD22AE614A100B6CF1E /* MonkeyTVUinitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVUinitTests.swift; sourceTree = "<group>"; };
 		CC755AD92AE61F8B00B6CF1E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVLogInTests.xctest; path = /Users/wangyuqi/Desktop/MonkeyTV/build/Debug/MonkeyTVLogInTests.xctest; sourceTree = "<absolute>"; };
 		CC755AE12AE64A8500B6CF1E /* MonkeyTVLogInTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVLogInTests.swift; sourceTree = "<group>"; };
-		CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVPlayerPageTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVPlayerPageTests.xctest"; sourceTree = "<absolute>"; };
 		CC755AEE2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVPlayerPageTests.swift; sourceTree = "<group>"; };
 		CC755AF02AE65C2A00B6CF1E /* MonkeyTVPlayerPageTestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTVPlayerPageTestsLaunchTests.swift; sourceTree = "<group>"; };
-		CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXXXTests.xctest"; sourceTree = "<absolute>"; };
 		CC963C072AB6F9A20047EEFA /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		CC963C092AB7F8BE0047EEFA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		CC963C0B2AB835890047EEFA /* ChatroomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -199,8 +191,14 @@
 		CC963C1A2AB96B5C0047EEFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		CC963C1D2AB996D50047EEFA /* ChatroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomViewModel.swift; sourceTree = "<group>"; };
 		CC963C232ABAD6250047EEFA /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
-		CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MonkeyTVUIXXTests.xctest; path = "/Users/wangyuqi/Desktop/MonkeyTV/build/Debug-iphoneos/MonkeyTVUIXXTests.xctest"; sourceTree = "<absolute>"; };
 		CCAA41652AE76AD200F1510D /* MonkeyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA416D2AEA630300F1510D /* MonkeyTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA416E2AEA630300F1510D /* MonkeyTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA416F2AEA630300F1510D /* MonkeyTVUinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUinitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA41702AEA630300F1510D /* MonkeyTVLogInTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVLogInTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA41712AEA630300F1510D /* MonkeyTVPlayerPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVPlayerPageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA41722AEA630300F1510D /* MonkeyTVUIXXXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUIXXXXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAA41732AEA630300F1510D /* MonkeyTVUIXXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonkeyTVUIXXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8BDDBFDFA3DCDE6647F563 /* Pods-MonkeyTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyTV.release.xcconfig"; path = "Target Support Files/Pods-MonkeyTV/Pods-MonkeyTV.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -292,6 +290,13 @@
 				BDDF742B41051EABE8D6BBDA /* Pods */,
 				930EC078E689AC759C01C47B /* Frameworks */,
 				CCAA41652AE76AD200F1510D /* MonkeyTV.app */,
+				CCAA416D2AEA630300F1510D /* MonkeyTVTests.xctest */,
+				CCAA416E2AEA630300F1510D /* MonkeyTVUITests.xctest */,
+				CCAA416F2AEA630300F1510D /* MonkeyTVUinitTests.xctest */,
+				CCAA41702AEA630300F1510D /* MonkeyTVLogInTests.xctest */,
+				CCAA41712AEA630300F1510D /* MonkeyTVPlayerPageTests.xctest */,
+				CCAA41722AEA630300F1510D /* MonkeyTVUIXXXXTests.xctest */,
+				CCAA41732AEA630300F1510D /* MonkeyTVUIXXTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -393,7 +398,6 @@
 		CC0BF1F32AB2F3B00075203C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				CC0BF1F12AB2EC730075203C /* VideoLauncher.swift */,
 				CC0BF1FD2AB5E7BC0075203C /* BulletChat.swift */,
 				CC963C1A2AB96B5C0047EEFA /* Observable.swift */,
 				CC1CCA9E2ACE8C3D0010C63C /* KeychainItem.swift */,
@@ -555,7 +559,7 @@
 			);
 			name = MonkeyTVTests;
 			productName = MonkeyTVTests;
-			productReference = CC755AAE2AE4E68900B6CF1E /* MonkeyTVTests.xctest */;
+			productReference = CCAA416D2AEA630300F1510D /* MonkeyTVTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		CC755ABC2AE60F6700B6CF1E /* MonkeyTVUITests */ = {
@@ -573,7 +577,7 @@
 			);
 			name = MonkeyTVUITests;
 			productName = MonkeyTVUITests;
-			productReference = CC755ABD2AE60F6700B6CF1E /* MonkeyTVUITests.xctest */;
+			productReference = CCAA416E2AEA630300F1510D /* MonkeyTVUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		CC755ACF2AE614A000B6CF1E /* MonkeyTVUinitTests */ = {
@@ -591,7 +595,7 @@
 			);
 			name = MonkeyTVUinitTests;
 			productName = MonkeyTVUinitTests;
-			productReference = CC755AD02AE614A000B6CF1E /* MonkeyTVUinitTests.xctest */;
+			productReference = CCAA416F2AEA630300F1510D /* MonkeyTVUinitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		CC755ADE2AE64A8500B6CF1E /* MonkeyTVLogInTests */ = {
@@ -609,7 +613,7 @@
 			);
 			name = MonkeyTVLogInTests;
 			productName = MonkeyTVLogInTests;
-			productReference = CC755ADF2AE64A8500B6CF1E /* MonkeyTVLogInTests.xctest */;
+			productReference = CCAA41702AEA630300F1510D /* MonkeyTVLogInTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		CC755AEB2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests */ = {
@@ -627,7 +631,7 @@
 			);
 			name = MonkeyTVPlayerPageTests;
 			productName = MonkeyTVPlayerPageTests;
-			productReference = CC755AEC2AE65C2A00B6CF1E /* MonkeyTVPlayerPageTests.xctest */;
+			productReference = CCAA41712AEA630300F1510D /* MonkeyTVPlayerPageTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		CC755AFC2AE665D200B6CF1E /* MonkeyTVUIXXXXTests */ = {
@@ -645,7 +649,7 @@
 			);
 			name = MonkeyTVUIXXXXTests;
 			productName = MonkeyTVUIXXXXTests;
-			productReference = CC755AFD2AE665D200B6CF1E /* MonkeyTVUIXXXXTests.xctest */;
+			productReference = CCAA41722AEA630300F1510D /* MonkeyTVUIXXXXTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		CCAA41542AE667D600F1510D /* MonkeyTVUIXXTests */ = {
@@ -663,7 +667,7 @@
 			);
 			name = MonkeyTVUIXXTests;
 			productName = MonkeyTVUIXXTests;
-			productReference = CCAA41552AE667D600F1510D /* MonkeyTVUIXXTests.xctest */;
+			productReference = CCAA41732AEA630300F1510D /* MonkeyTVUIXXTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -913,7 +917,6 @@
 				CC03312F2AC2B05B00229900 /* MyData.xcdatamodeld in Sources */,
 				CC0BF1F82AB441830075203C /* HomePageCollectionViewCell.swift in Sources */,
 				CC0BF1AB2AB00BF60075203C /* AppDelegate.swift in Sources */,
-				CC0BF1F22AB2EC740075203C /* VideoLauncher.swift in Sources */,
 				CC1CCA9F2ACE8C3D0010C63C /* KeychainItem.swift in Sources */,
 				CC963C0A2AB7F8BE0047EEFA /* FirestoreManager.swift in Sources */,
 				CC0BF1D02AB03DC30075203C /* KingFisherWrapper.swift in Sources */,
