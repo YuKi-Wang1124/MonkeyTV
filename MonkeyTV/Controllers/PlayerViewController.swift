@@ -269,9 +269,7 @@ class PlayerViewController: UIViewController {
                 UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.playVideo()
         }
-        
         videoIsPlaying.toggle()
-        
     }
     
     @objc func showBullet(sender: UIButton) {
