@@ -19,8 +19,12 @@ class PlayerViewController: UIViewController {
     private var userName: String = ""
     private var userImage: String = ""
     private var bulletChatText: String = ""
+    
     private var landscapeConstraints: [NSLayoutConstraint] = []
     private var portraitConstraints: [NSLayoutConstraint] = []
+        
+    private var snapshot = NSDiffableDataSourceSnapshot<PlayerSection, MKShow>()
+    private var dataSource: UITableViewDiffableDataSource<PlayerSection, MKShow>!
     
     // MARK: - support
     private var initialY: CGFloat = 0
@@ -31,7 +35,14 @@ class PlayerViewController: UIViewController {
     private var playerBulletChats = [BulletChat]()
     private var emptyTextFieldDelegate: EmptyTextFieldDelegate?
     private var setupCellButtonDelegate: ChangeCellButtonDelegate?
-    
+    private let playerVars: [AnyHashable: Any] = [
+        "frameborder": 0,
+        "loop": 0,
+        "playsigline": 1,
+        "controls": 0,
+        "showinfo": 0,
+        "autoplay": 1
+    ]
     // MARK: - Bools
     
     private var isMyShow: Bool = false
@@ -79,16 +90,11 @@ class PlayerViewController: UIViewController {
         return  CustomTableView(
             rowHeight: UITableView.automaticDimension,
             separatorStyle: .none,
-            allowsSelection: false,
+            allowsSelection: true,
             registerCells: [ChatroomButtonTableViewCell.self,
                             BulletChatTextFieldTableViewCell.self,
                             ShowTableViewCell.self])
     }()
-    
-    // MARK: - Snapshot & DataSource
-    
-    private var snapshot = NSDiffableDataSourceSnapshot<PlayerSection, MKShow>()
-    private var dataSource: UITableViewDiffableDataSource<PlayerSection, MKShow>!
     
     private lazy var showDanMuButton = {
         let button = CustomButton(
@@ -212,21 +218,16 @@ class PlayerViewController: UIViewController {
         case .ended, .cancelled:
             
             isPanning = false
-            
             let velocity = gesture.velocity(in: self.view)
             if finalY > initialY && (finalY - initialY) > self.view.frame.height / 3 && velocity.y > 100 {
-                
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = self.view.frame.height
                     self.dismiss(animated: true)
                 }
-                
             } else {
-                
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = 0
                 }
-                
             }
         default:
             break
@@ -258,29 +259,29 @@ class PlayerViewController: UIViewController {
         
         bulletChatView.isPause = !bulletChatView.isPause
         
-        if videoIsPlaying {
+        switch videoIsPlaying {
+        case true:
             sender.setImage(
                 UIImage.systemAsset(.play, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.pauseVideo()
-        } else {
+        case false:
             sender.setImage(
                 UIImage.systemAsset(.pause, configuration: UIImage.symbolConfig), for: .normal)
             ytVideoPlayerView.playVideo()
         }
-        
         videoIsPlaying.toggle()
-        
     }
     
     @objc func showBullet(sender: UIButton) {
-        if !isDanMuDisplayed {
-            sender.setImage(
-                UIImage.systemAsset(.checkmarkSquare, configuration: UIImage.smallSymbolConfig), for: .normal)
-            bulletChatView.isHidden = false
-        } else {
+        switch isDanMuDisplayed {
+        case true:
             sender.setImage(
                 UIImage.systemAsset(.square, configuration: UIImage.smallSymbolConfig), for: .normal)
             bulletChatView.isHidden = true
+        case false:
+            sender.setImage(
+                UIImage.systemAsset(.checkmarkSquare, configuration: UIImage.smallSymbolConfig), for: .normal)
+            bulletChatView.isHidden = false
         }
         isDanMuDisplayed.toggle()
     }
@@ -413,7 +414,8 @@ extension PlayerViewController {
         if KeychainItem.currentEmail == "" {
             UIAlertController.showLogInAlert(message: Constant.addShowLogInAlertMessage, delegate: self)
         } else {
-            if isMyShow == true {
+            switch isMyShow {
+            case true:
                 sender.setImage(
                     UIImage.systemAsset( .plus, configuration: UIImage.symbolConfig), for: .normal)
                 Task {
@@ -422,7 +424,7 @@ extension PlayerViewController {
                         playlistId: playlistId)
                 }
                 isMyShow = false
-            } else {
+            case false:
                 sender.setImage(
                     UIImage.systemAsset( .checkmark, configuration: UIImage.symbolConfig), for: .normal)
                 FirestoreManager.addToMyFavorite(
@@ -488,14 +490,6 @@ extension PlayerViewController {
 extension PlayerViewController {
     
     private func loadYoutubeVideo() {
-        let playerVars: [AnyHashable: Any] = [
-            "frameborder": 0,
-            "loop": 0,
-            "playsigline": 1,
-            "controls": 0,
-            "showinfo": 0,
-            "autoplay": 1
-        ]
         if playlistId == "" {
             ytVideoPlayerView.load(withVideoId: videoId)
         } else {
@@ -507,14 +501,8 @@ extension PlayerViewController {
 extension PlayerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+                
         guard let itemIdentifier = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        let playerVars: [AnyHashable: Any] = [
-            "frameborder": 0, "loop": 0,
-            "playsigline": 1,
-            "controls": 0,
-            "showinfo": 0,
-            "autoplay": 1]
         
         getVideoDuratiion()
         bulletChatView.removeAllDanMuQueue()
@@ -526,6 +514,7 @@ extension PlayerViewController: UITableViewDelegate {
         ytVideoPlayerView.load(withVideoId: itemIdentifier.videoId, playerVars: playerVars)
     }
 }
+
 // MARK: - Layout & Setting
 
 extension PlayerViewController {
@@ -693,7 +682,7 @@ extension PlayerViewController {
                 email: KeychainItem.currentEmail,
                 playlistIdToCheck: playlistId
             ) { (containsPlaylistId, error) in
-                if let error = error {
+                if error != nil {
                     return
                 }
                 if let containsPlaylistId = containsPlaylistId {
