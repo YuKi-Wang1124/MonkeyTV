@@ -38,11 +38,12 @@ MonkeyTV 是一款互動式影音軟體，讓您輕鬆享受影音內容，並�
 - 使用 Unit Test 來測試存入 UserDefaults 紀錄的登入天數的判斷函式是否正確
 - 遵守 Git flow 版本控管開發模式
 
-## 安裝
+## 下載
 
 要下載 MonkeyTV，請按照以下步驟執行：
 1. 到 Apple Store 上搜尋並下載 MonkeyTV
-   
+
+## 安裝
 
 要安裝 MonkeyTV，請按照以下步驟執行：
 
