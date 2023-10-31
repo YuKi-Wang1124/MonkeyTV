@@ -25,10 +25,7 @@ class ChatroomViewModel {
         dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(
-                    withIdentifier: ChatroomTableViewCell.identifier,
-                    for: indexPath) as? ChatroomTableViewCell
-                guard let cell = cell else { return UITableViewCell() }
+                let cell: ChatroomTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.personalImageView.loadImage(item.chatroomChat.userImage,
                                                  placeHolder: UIImage.systemAsset(.personalPicture))
                 cell.nameLabel.text = item.chatroomChat.userName

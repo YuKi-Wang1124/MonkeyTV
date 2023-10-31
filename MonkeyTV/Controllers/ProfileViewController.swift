@@ -75,6 +75,14 @@ class ProfileViewController: UIViewController, LogInDelegate {
     
     // MARK: - Life Cycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupButtonLayout()
+        setupTableView()
+        buttonAddTarget()
+        self.cleanSearchHistoryDelegate = SearchViewController()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Task {
@@ -85,16 +93,6 @@ class ProfileViewController: UIViewController, LogInDelegate {
             }
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupButtonLayout()
-        setupTableView()
-        buttonAddTarget()
-        self.cleanSearchHistoryDelegate = SearchViewController()
-    }
-    
-    // MARK: -
     
     @objc func logOut() {
         self.saveUserInKeychain("")
@@ -267,30 +265,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: ProfileTitleTableViewCell.identifier,
-                for: indexPath) as? ProfileTitleTableViewCell
-            guard let cell = cell else { return UITableViewCell() }
+            let cell: ProfileTitleTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             guard let myUserInfo = myUserInfo else { return UITableViewCell() }
             cell.nameLabel.text = myUserInfo.userName
             cell.personalImageView.loadImage(myUserInfo.userImage, placeHolder: UIImage.systemAsset(.personalPicture))
             cell.emailLabel.text = myUserInfo.email
             return cell
         } else if indexPath.row == 3 {
-            let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: DeleteTableViewCell.identifier,
-                for: indexPath) as? DeleteTableViewCell
-            guard let cell = cell else { return UITableViewCell() }
+            let cell: DeleteTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.deleteAccountButton.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
             return cell
         } else {
-            let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: SignInWithTableViewCell.identifier,
-                for: indexPath) as? SignInWithTableViewCell
-            guard let cell = cell else { return UITableViewCell() }
+            let cell: SignInWithTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             let index = indexPath.row - 1
             let logInMethodStrings = LogInMethod.allCases.map { $0.rawValue }
             let lowercaseLogInMethodStrings = logInMethodStrings.map { $0.lowercased() }

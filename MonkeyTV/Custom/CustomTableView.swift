@@ -22,6 +22,7 @@ class CustomTableView: UITableView {
         for cellClass in registerCells {
             self.registerCell(cellClass)
         }
+        self.backgroundColor = .baseBackgroundColor
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
