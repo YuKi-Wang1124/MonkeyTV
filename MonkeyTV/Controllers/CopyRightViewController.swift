@@ -31,12 +31,12 @@ class CopyRightViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-
+    
     private func setupUI() {
 
         view.addSubview(copyRightTextView)

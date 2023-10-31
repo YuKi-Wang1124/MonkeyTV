@@ -42,16 +42,16 @@ class HomeViewController: UIViewController {
         return textView
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Task { await showUserName() }
-    }
-    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateTableViewDataSource()
         setupTableViewUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task { await showUserName() }
     }
     
     private func showUserName() async {

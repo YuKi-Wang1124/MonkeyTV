@@ -229,18 +229,20 @@ class FirestoreManager {
         return nil
     }
     
-    static func updateUserInfo(email: String, data: [String: Any]) {
-        
+    static func updateUserInfo(
+        email: String,
+        data: [String: Any]
+    ) {
         FirestoreManager.user.document(email).updateData(data) { error in
             if error != nil {
                 print("Error adding document: \(String(describing: error))") } else { }
         }
     }
     
-    static func userIsExist(email: String) async -> Bool {
-        
+    static func userIsExist(
+        email: String
+    ) async -> Bool {
         let documentRef = self.user.document(email)
-        
         do {
             let documentSnapshot = try await documentRef.getDocument()
             if documentSnapshot.exists {
