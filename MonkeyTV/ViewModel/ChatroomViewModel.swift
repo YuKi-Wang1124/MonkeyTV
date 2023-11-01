@@ -36,7 +36,6 @@ class ChatroomViewModel {
     }
     
     func fetchConversation(currentTime: Date) {
-        
         if isLoading.value ?? true {
             return
         }
@@ -98,7 +97,8 @@ class ChatroomViewModel {
                         let object = ChatroomData(
                             chatroomChat: ChatroomChat(
                                 chatId: chatId, content: content, contentType: contentType,
-                                createdTime: createdTime.dateValue(), userId: userId, userName: userName, userImage: userImage),
+                                createdTime: createdTime.dateValue(), userId: userId,
+                                userName: userName, userImage: userImage),
                             videoId: videoId, id: id)
                         if !(self?.snapshot.itemIdentifiers.contains(object))! {
                             newItems.append(object)
