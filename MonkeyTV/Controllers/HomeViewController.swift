@@ -10,6 +10,7 @@ import FSPagerView
 import FirebaseFirestore
 import NVActivityIndicatorView
 
+
 class HomeViewController: UIViewController {
     
     private lazy var tableView: CustomTableView = {
@@ -78,6 +79,7 @@ class HomeViewController: UIViewController {
                 } else {
                     let index = indexPath.row - 1
                     let cell: CollectionTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+                    // TODO: 檢查 indexPath.row 有沒有這個 array
                     cell.titleLabel.text = self.showCatalogArray[indexPath.row]
                     cell.catalogType = index
                     cell.showVideoPlayerDelegate = self
@@ -132,5 +134,4 @@ extension HomeViewController: ShowVideoPlayerDelegate {
         playerViewController.showImage = showImage
         self.present(playerViewController, animated: true)
     }
-    
 }

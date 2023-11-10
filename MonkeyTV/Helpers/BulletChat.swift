@@ -151,7 +151,7 @@ class BulletChatView: UIView {
             }
         }
     }
-    
+        
     @objc func removeDanMuQueue() {
         if let danmu = removeDanmus.first {
             danmu.label.removeFromSuperview()

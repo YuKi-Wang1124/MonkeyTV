@@ -26,7 +26,6 @@ class StorageManager {
     // MARK: - Create Object
     
     @discardableResult
-    
     func isContainMyShow(id: String) -> Bool {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<MyShow> = MyShow.fetchRequest()

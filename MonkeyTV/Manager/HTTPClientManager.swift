@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum Result<T> {
     case success(T)
@@ -57,7 +58,7 @@ class HTTPClientManager {
     static let shared = HTTPClientManager()
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
-    private var cache = [String: Data]()
+    private let cache = NSCache<NSString, NSData>()
 
     private init() {}
 
@@ -65,11 +66,12 @@ class HTTPClientManager {
         _ request: Request,
         completion: @escaping (Result<Data>) -> Void
     ) {
-        let cacheData = cache[request.endPoint]
-        if cacheData != nil {
-            completion(Result.success(cacheData!))
+        
+        if let cache = cache.object(forKey: request.endPoint as NSString) {
+            completion(Result.success(cache as Data))
             return
         }
+        
         URLSession.shared.dataTask(
             with: request.makeRequest(),
             completionHandler: { (data, response, error) in
@@ -82,7 +84,7 @@ class HTTPClientManager {
                 let statusCode = httpResponse.statusCode
                 switch statusCode {
                 case 200..<300:
-                    self.cache[request.endPoint] = data
+                    self.cache.setObject(data! as NSData, forKey: request.endPoint as NSString)
                     print("StatusCode: \(statusCode)")
                     completion(Result.success(data!))
                 case 400..<500:
