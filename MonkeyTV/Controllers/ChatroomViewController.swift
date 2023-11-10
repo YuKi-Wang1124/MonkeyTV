@@ -187,6 +187,7 @@ class ChatroomViewController: UIViewController {
     @objc func closeChatroomViewController() {
         dismiss(animated: true)
     }
+    
     // MARK: - Submit Message To DB
     @objc func submitMessage() {
         if let text = messageTextField.text, text.isEmpty == false {
@@ -222,9 +223,9 @@ class ChatroomViewController: UIViewController {
                 }
             }
         }
-       
     }
 }
+
 extension ChatroomViewController {
     
     // MARK: - buttonAddTarget

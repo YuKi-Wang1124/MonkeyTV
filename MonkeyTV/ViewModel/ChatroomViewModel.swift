@@ -21,6 +21,7 @@ class ChatroomViewModel {
         listener?.remove()
         blocklistListener?.remove()
     }
+    
     func configureDataSource(tableView: UITableView) {
         dataSource = UITableViewDiffableDataSource<OneSection, ChatroomData>(
             tableView: tableView,
@@ -40,10 +41,12 @@ class ChatroomViewModel {
         if isLoading.value ?? true {
             return
         }
+        
         isLoading.value = true
         
         blocklistListener = FirestoreManager.userBlockList.document(
-            KeychainItem.currentEmail).addSnapshotListener { [weak self] documentSnapshot, error in
+            KeychainItem.currentEmail).addSnapshotListener {
+                [weak self] documentSnapshot, error in
             guard let self = self else { return }
             
             if let error = error {
@@ -80,7 +83,7 @@ class ChatroomViewModel {
                 let data = document.data()
                 let dict = data["chatroomChat"] as? [String: Any]
                 if let dict = dict,
-                    let createdTime = dict["createdTime"] as? Timestamp,
+                   let createdTime = dict["createdTime"] as? Timestamp,
                    let chatId = dict["chatId"] as? String,
                    let content = dict["content"] as? String,
                    let contentType = dict["contentType"] as? Int,
@@ -89,16 +92,15 @@ class ChatroomViewModel {
                    let userImage = dict["userImage"] as? String,
                    let videoId = data["videoId"] as? String,
                    let id = data["id"] as? String,
+                   
                    createdTime.dateValue() >= currentTime {
-                    
                     let isBlocked = self?.blocklistArray.contains(userId) ?? false
-
                     if !isBlocked {
-                        
                         let object = ChatroomData(
                             chatroomChat: ChatroomChat(
                                 chatId: chatId, content: content, contentType: contentType,
-                                createdTime: createdTime.dateValue(), userId: userId, userName: userName, userImage: userImage),
+                                createdTime: createdTime.dateValue(), userId: userId,
+                                userName: userName, userImage: userImage),
                             videoId: videoId, id: id)
                         if !(self?.snapshot.itemIdentifiers.contains(object))! {
                             newItems.append(object)
@@ -106,6 +108,7 @@ class ChatroomViewModel {
                     }
                 }
             }
+            
             guard let self = self else { return }
             if !(self.snapshot.sectionIdentifiers.contains(OneSection.main)) {
                 self.snapshot.appendSections([OneSection.main])
@@ -115,6 +118,7 @@ class ChatroomViewModel {
         }
     }
 }
+
 
 struct BlocklistData: Codable {
     let blocklist: [String]

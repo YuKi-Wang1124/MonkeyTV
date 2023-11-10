@@ -161,6 +161,7 @@ class PlayerViewController: UIViewController {
     
     deinit {
         timer = nil
+        ytVideoPlayerView.pauseVideo()
         ytVideoPlayerView.removeWebView()
     }
     
@@ -472,7 +473,6 @@ extension PlayerViewController {
     }
     
     @objc func submitMyDanMu() {
-        
         if bulletChatText != "" {
             bulletChatView.danmuQueue.append((bulletChatText, false))
             FirestoreManager.addBulletChatData(
@@ -611,7 +611,6 @@ extension PlayerViewController {
     private func setupUILayout() {
         
         view.backgroundColor = .baseBackgroundColor
-        tableView.backgroundColor = .baseBackgroundColor
         ytVideoPlayerView.backgroundColor = .black
         
         view.addSubview(ytVideoPlayerView)
